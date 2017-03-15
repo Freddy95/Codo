@@ -25,12 +25,13 @@
 	</properties>
 
 	<dependencies>
-		<!-- Compile/runtime dependencies -->
+		<!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring4 -->
 		<dependency>
 			<groupId>org.thymeleaf</groupId>
-			<artifactId>thymeleaf-spring3</artifactId>
-			<version>3.0.0.RELEASE</version>
+			<artifactId>thymeleaf-spring4</artifactId>
+			<version>2.1.2.RELEASE</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>com.google.appengine</groupId>
