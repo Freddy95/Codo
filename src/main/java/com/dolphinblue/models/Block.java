@@ -19,7 +19,8 @@ public class Block {
         PLUS,
         MINUs,
         MULTIPLY,
-        DIVIDE;
+        DIVIDE,
+        BRACKET;
     }
 
     public Block(){}
