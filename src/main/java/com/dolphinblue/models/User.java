@@ -10,19 +10,17 @@ public class User {
     private String last_name;
     private String email;
     private String password;
-    private String username;
     private String avatar; //Gotten through third party site
     private List<String> admin_msg;//list of moderator messages received
     private boolean is_moderator;
     private List<Long> lessons; // list of lessons the user has started or completed
 
-    public User(long user_id, String first_name, String last_name, String email, String password, String username, String avatar) {
+    public User(long user_id, String first_name, String last_name, String email, String password,  String avatar) {
         this.user_id = user_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.password = password;
-        this.username = username;
         this.avatar = avatar;
     }
 
@@ -70,13 +68,6 @@ public class User {
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getAvatar() {
         return avatar;
