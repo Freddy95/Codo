@@ -1,8 +1,24 @@
 <html lang="en">
 <head>
     <title>Hello World</title>
+    <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDgROSmcG7ZHZTCvEGb0ylrNrg6RstZlvE",
+            authDomain: "codo-cse-308.firebaseapp.com",
+            databaseURL: "https://codo-cse-308.firebaseio.com",
+            storageBucket: "codo-cse-308.appspot.com",
+            messagingSenderId: "783959654115"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script th:src="@{/public/js/login.js}"></script>
 </head>
-<body>
+<body onload="makeLogin()">
 <p>Hello</p>
+<div id="firebase-login-container"></div>
 </body>
 </html>
