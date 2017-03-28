@@ -1,34 +1,45 @@
 package com.dolphinblue.models;
+import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
 import java.util.*;
 /**
  * Created by FreddyEstevez on 3/21/17.
  * Represent model for lessons
  */
+@Entity
 public class Lesson {
 
-    private long lesson_id;
+    @Id private Long lesson_id;
     private String title;
-    private long user_id;//user who is working on the lesson
-    private long creator_id;//user who created the lesson
-    private List<Long> tasks;//holds lists of tasks ids for this lesson
+    private Ref<User> user_id;//user who is working on the lesson
+    private Ref<User> creator_id;//user who created the lesson
+    private List<Ref<Task>> tasks;//holds lists of tasks ids for this lesson
     private boolean is_public;
     private  boolean site_owned;
 
-    public Lesson(long lesson_id, String title, long user_id, long creator_id, List<Long> tasks, boolean is_public, boolean site_owned) {
+    public Lesson(){
+        tasks = new ArrayList<>();
+    }
+
+    public Lesson(Long lesson_id, String title, User user, User creator, List<Task> ta, boolean is_public, boolean site_owned) {
         this.lesson_id = lesson_id;
         this.title = title;
-        this.user_id = user_id;
+        this.user_id = Ref.create(user);
+        this.creator_id = Ref.create(creator);
         this.creator_id = creator_id;
-        this.tasks = tasks;
+        tasks = new ArrayList<>();
+        setTasks(ta);
         this.is_public = is_public;
         this.site_owned = site_owned;
     }
 
-    public long getLesson_id() {
+    public Long getLesson_id() {
         return lesson_id;
     }
 
-    public void setLesson_id(long lesson_id) {
+    public void setLesson_id(Long lesson_id) {
         this.lesson_id = lesson_id;
     }
 
@@ -40,28 +51,43 @@ public class Lesson {
         this.title = title;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public User getUser_id() {
+        return user_id.get();
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUser_id(User user) {
+        this.user_id = Ref.create(user);
     }
 
-    public long getCreator_id() {
-        return creator_id;
+    public User getCreator_id() {
+        return creator_id.get();
     }
 
-    public void setCreator_id(long creator_id) {
-        this.creator_id = creator_id;
+    public void setCreator_id(User creator) {
+        this.creator_id = Ref.create(creator);
     }
 
-    public List<Long> getTasks() {
-        return tasks;
+    /**
+     * get the tasks objects by using the references
+     * @return
+     */
+    public List<Task> getTasks() {
+        List<Task> t = new ArrayList<>();
+        for(int i = 0; i < tasks.size(); i++){
+            t.add(tasks.get(0).get());
+        }
+        return t;
     }
 
-    public void setTasks(List<Long> tasks) {
-        this.tasks = tasks;
+    /**
+     * Turn tasks objects into references and save them
+     * @param ta
+     */
+    public void setTasks(List<Task> ta) {
+        tasks.clear();
+        for (int i = 0; i < ta.size(); i++){
+            tasks.add(Ref.create(ta.get(i)));
+        }
     }
 
     public boolean isIs_public() {

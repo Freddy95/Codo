@@ -1,36 +1,47 @@
 package com.dolphinblue.models;
 
+import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by FreddyEstevez on 3/21/17.
  * Model representing a task.
  */
+@Entity
 public class Task {
 
-    private long task_id;
+    @Id private Long task_id;
     private String title;
     private String instructions;
     private String hint;
     private String test_case;
     private String expected_output;
-    private List<Long> toolbox;//list of block ids in the toolbox
-    private List<Long> editor;//list of blocks in the editor
+    private List<Ref<Block>> toolbox;//list of block ids in the toolbox
+    private List<Ref<Block>> editor;//list of blocks in the editor
     private String freecode;
     private boolean completed;
     private Type type;
 
-    public Task(){}
+    public Task(){
+        editor = new ArrayList<>();
+        toolbox = new ArrayList<>();
+    }
 
-    public Task(long task_id, String title, String instructions, String hint, String test_case, String expected_output, List<Long> toolbox, List<Long> editor, String freecode, boolean completed, Type type) {
+    public Task(Long task_id, String title, String instructions, String hint, String test_case, String expected_output, List<Block> tool, List<Block> edit, String freecode, boolean completed, Type type) {
         this.task_id = task_id;
         this.title = title;
         this.instructions = instructions;
         this.hint = hint;
         this.test_case = test_case;
         this.expected_output = expected_output;
-        this.toolbox = toolbox;
-        this.editor = editor;
+        editor = new ArrayList<>();
+        toolbox = new ArrayList<>();
+        setEditor(edit);
+        setToolbox(tool);
         this.freecode = freecode;
         this.completed = completed;
         this.type = type;
@@ -42,11 +53,11 @@ public class Task {
         CSS;
     }
 
-    public long getTask_id() {
+    public Long getTask_id() {
         return task_id;
     }
 
-    public void setTask_id(long task_id) {
+    public void setTask_id(Long task_id) {
         this.task_id = task_id;
     }
 
@@ -90,20 +101,34 @@ public class Task {
         this.expected_output = expected_output;
     }
 
-    public List<Long> getToolbox() {
-        return toolbox;
+    public List<Block> getToolbox() {
+        List<Block> ret = new ArrayList<>();
+        for(int i = 0; i < toolbox.size(); i++){
+            ret.add(toolbox.get(i).get());
+        }
+        return ret;
     }
 
-    public void setToolbox(List<Long> toolbox) {
-        this.toolbox = toolbox;
+    public void setToolbox(List<Block> tool) {
+        toolbox.clear();
+        for(int i = 0; i < tool.size(); i++){
+            toolbox.add(Ref.create(tool.get(i)));
+        }
     }
 
-    public List<Long> getEditor() {
-        return editor;
+    public List<Block> getEditor() {
+        List<Block> ret = new ArrayList<>();
+        for(int i = 0; i < editor.size(); i++){
+            ret.add(editor.get(i).get());
+        }
+        return ret;
     }
 
-    public void setEditor(List<Long> editor) {
-        this.editor = editor;
+    public void setEditor(List<Block> edit) {
+        editor.clear();
+        for(int i = 0; i < edit.size(); i++){
+            editor.add(Ref.create(edit.get(i)));
+        }
     }
 
     public String getFreecode() {

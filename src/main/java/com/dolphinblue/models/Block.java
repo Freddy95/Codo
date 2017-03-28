@@ -1,12 +1,16 @@
 package com.dolphinblue.models;
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
 /**
  * Created by FreddyEstevez on 3/21/17.
  * Model representing a block
  */
+@Entity
 public class Block {
 
-    private long block_id;
+    @Id private Long block_id;
     private String value;
     private Type type;
     private boolean can_edit;
@@ -25,18 +29,18 @@ public class Block {
 
     public Block(){}
 
-    public Block(long block_id, String value, Type type, boolean can_edit) {
+    public Block(Long block_id, String value, Type type, boolean can_edit) {
         this.block_id = block_id;
         this.value = value;
         this.type = type;
         this.can_edit = can_edit;
     }
 
-    public long getBlock_id() {
+    public Long getBlock_id() {
         return block_id;
     }
 
-    public void setBlock_id(long block_id) {
+    public void setBlock_id(Long block_id) {
         this.block_id = block_id;
     }
 
