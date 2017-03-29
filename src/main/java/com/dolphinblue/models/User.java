@@ -19,6 +19,7 @@ public class User {
     private List<String> admin_msg;//list of moderator messages received
     private boolean is_moderator;
     private List<Ref<Lesson>> lessons; // list of lessons the user has started or completed
+    private Ref<Lesson> current_lesson;//current lesson user is on
 
     public User(Long user_id, String first_name, String last_name, String email, String password,  String avatar) {
         this.user_id = user_id;
@@ -115,4 +116,12 @@ public class User {
             lessons.add(Ref.create(l.get(i)));
         }
     }
+
+    public Lesson getCurrent_lesson(){
+        return current_lesson.get();
+    }
+    public void setCurrent_lesson(Lesson l){
+        current_lesson = Ref.create(l);
+    }
 }
+
