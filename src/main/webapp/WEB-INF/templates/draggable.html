@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+ 
+<title>A jQuery Drag-and-Drop Number Cards Game</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link rel="stylesheet" type="text/css" href="draggable-style.css">
+ 
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+ 
+<script type="text/javascript">
+ 
+var correctCards = 0;
+$( init );
+
+function handleBlockDrop(event, ui) {
+  $(ui.draggable).detach().css({top: 0,left: 0}).appendTo($(this));
+}
+
+function handleBlockReturn(event, ui) {
+  $(ui.draggable).detach().css({top: 0,left: 0}).appendTo($(this));
+}
+
+function run() {
+  var s = "";
+
+  $.each($('#editor').children(), function(index, value) {
+    s += $(value).data('code') + "\n";
+  });
+
+  window.console.log = function(msg) {
+    $('#output').text(msg);
+  }
+
+  window.onerror = function(messageOrEvent, source, lineno, colno, error) {
+    $('#output').text(messageOrEvent);
+  }
+
+  eval(s);
+}
+ 
+function init() {
+  var blocks = ["x += 5;", "x = 2;", "console.log(x);"]
+
+  for (var i = 0; i < blocks.length; i++) {
+    $('<span class="code-block">' + blocks[i] + '</span>').data('code', blocks[i])
+      .attr('id', 'block' + i)
+      .appendTo('#toolbox');
+  }
+
+  $('#editor, #toolbox').sortable({
+    connectWith: ".code-placement"
+  }).disableSelection();
+} 
+</script>
+ 
+</head>
+<body>
+
+<div class="container">
+  <div id="blockContent">
+    <div class="card" id="editor-div">
+      <div class="card-header">
+        <h3>Editor</h3>
+        <btn class="btn btn-primary float-right" onClick="run()">Run</btn>
+      </div>
+      <div class="card-block code-placement" id="editor"></div>
+    </div>
+    <div class="card" id="toolbox-div">
+      <h3 class="card-header">Toolbox</h3>
+      <div class="card-block code-placement" id="toolbox"></div>
+    </div>
+    <div class="card" id="output-div">
+      <h3 class="card-header">Output</h3>
+      <div class="card-block code-placement" id="output"></div>
+    </div>
+  </div>
+</div>
+ 
+</body>
+</html>
