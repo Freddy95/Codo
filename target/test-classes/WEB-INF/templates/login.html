@@ -4,6 +4,10 @@
     <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
     <script>
         // Initialize Firebase
         var config = {
@@ -15,10 +19,15 @@
         };
         firebase.initializeApp(config);
     </script>
-    <script th:src="@{/public/js/login.js}"></script>
+    <script th:src="@{/public/js/main.js}"></script>
 </head>
 <body onload="makeLogin()">
 <p>Hello</p>
-<div id="firebase-login-container"></div>
+<div class ="logged-out">
+    <div id="firebase-login-container"></div>
+</div>
+<div class = "logged-in" style="display:hidden;">
+    <p>Logged in succesfully</p>
+    </div>
 </body>
 </html>
