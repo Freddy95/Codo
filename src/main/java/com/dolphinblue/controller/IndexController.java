@@ -13,6 +13,6 @@ public class IndexController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(){
-        return "index.html";
+        return "index";
     }
 }

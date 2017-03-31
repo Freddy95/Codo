@@ -26,7 +26,7 @@ public class LoginController{
 //        String url = req.getRequestURL().toString();
 //        //return the login controller
 //        Principal usr = req.getUserPrincipal();
-        return "login.html";
+        return "login";
     }
 
 

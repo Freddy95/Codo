@@ -25,13 +25,22 @@ public class UserController {
      * gets user and adds him to @param model
      * @return
      */
-    @RequestMapping(value = "/userpage", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public String get_user_page(@RequestParam(value = "id") Long id, Model model){
         Objectify ofy = OfyService.ofy();
 
         User user = ofy.load().type(User.class).id(id).now();
         model.addAttribute("user", user);
-        return "UserPage";
+        return "user";
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String get_user_page(Model model){
+        // Objectify ofy = OfyService.ofy();
+
+        // User user = ofy.load().type(User.class).id(id).now();
+        // model.addAttribute("user", user);
+        return "user";
     }
 
 }
