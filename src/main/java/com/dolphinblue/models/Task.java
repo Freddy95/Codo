@@ -26,6 +26,7 @@ public class Task {
     private String freecode;
     private boolean completed;
     private Type type;
+    @Load private Ref<Task> original_task;//reference to original task
 
     public Task(){
         editor = new ArrayList<>();
@@ -154,5 +155,13 @@ public class Task {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public void setOriginal_task(Task t){
+        original_task = Ref.create(t);
+    }
+
+    public Task getOriginal_task(){
+        return original_task.get();
     }
 }
