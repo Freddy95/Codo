@@ -19,7 +19,7 @@ public class Lesson {
     private List<Ref<Task>> tasks;//holds lists of tasks ids for this lesson
     @Index private boolean is_public;
     @Index private  boolean site_owned;
-    @Index private Ref<Lesson> original_lesson;
+    private Ref<Lesson> original_lesson;
     public Lesson(){
         tasks = new ArrayList<>();
     }

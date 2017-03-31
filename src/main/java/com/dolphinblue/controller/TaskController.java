@@ -8,10 +8,7 @@ import com.dolphinblue.service.OfyService;
 import com.googlecode.objectify.Objectify;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,26 +29,24 @@ public class TaskController {
     /**
      * gets tasks for a lesson
      * also gets the blocks for each task
+     * @param id - id of lesson to get tasks from
      * @return
      */
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
-    public String get_task(@RequestParam(value = "lesson") Lesson lesson, Model model){
-        Objectify ofy = OfyService.ofy();
-
+    public String get_task(@RequestParam(value = "lesson") Long id, Model model){
+        Lesson lesson = OfyService.ofy().load().type(Lesson.class).id(id).now();
         model.addAttribute("tasks", lesson.getTasks());
         return "lesson";
     }
 
     /**
-     * Updates blocks for program and toolbox
-     * @param edit
-     * @param prog
+     * Updates a task
      * @param task
      */
-    @RequestMapping(value = "/updatelesson", method = RequestMethod.POST)
-    public void update_task(@ModelAttribute List<Block> edit, @ModelAttribute List<Block> prog, Task task){
-        Objectify ofy = OfyService.ofy();
-        ofy.save().entity(task);
+    @RequestMapping(value = "/updatetask", method = RequestMethod.POST)
+    public void update_task(@RequestBody Task task){
+
+        OfyService.ofy().save().entity(task);
 
     }
 
@@ -71,7 +66,7 @@ public class TaskController {
 
     /**
      * restart a task
-     * @param id
+     * @param id the Id of the original task to retrieve from datastore
      * @param model
      * @return
      */
@@ -82,4 +77,46 @@ public class TaskController {
         model.addAttribute("task", t);
         return "lesson";
     }
+
+    /**
+     * Makes a new lesson and saves it in the datastore
+     * Currently all values of that lesson are the null.
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/makelesson")
+    public String make_lesson(Model model){
+        Lesson l = new Lesson();
+        model.addAttribute("lesson", l);
+        OfyService.ofy().save().entity(l);
+        return "index";
+    }
+
+    /**
+     * Gets a lesson based on its id
+     * @param id - id of lesson to retrieve
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/getlesson")
+    public String get_lesson(@RequestParam(value = "id") Long id, Model model){
+        model.addAttribute("lesson", OfyService.ofy().load().type(Lesson.class).id(id).now());
+        return "lessoncard";
+    }
+
+    /**
+     *
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/updatelesson")
+    public String update_lesson(@RequestParam(value = "id")Long id, Model model){
+        Lesson l = OfyService.ofy().load().type(Lesson.class).id(id).now();
+        l.setTitle("My Title");
+        model.addAttribute("lesson", l);
+        OfyService.ofy().save().entity(l);
+        return "lessoncard";
+    }
+
 }
