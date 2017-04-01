@@ -2,6 +2,7 @@ package com.dolphinblue.models;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 import java.util.*;
 /**
@@ -13,12 +14,12 @@ public class Lesson {
 
     @Id private Long lesson_id;
     private String title;
-    private Ref<User> user_id;//user who is working on the lesson
+    @Index private Ref<User> user_id;//user who is working on the lesson
     private Ref<User> creator_id;//user who created the lesson
     private List<Ref<Task>> tasks;//holds lists of tasks ids for this lesson
-    private boolean is_public;
-    private  boolean site_owned;
-
+    @Index private boolean is_public;
+    @Index private  boolean site_owned;
+    private Ref<Lesson> original_lesson;
     public Lesson(){
         tasks = new ArrayList<>();
     }
@@ -105,4 +106,14 @@ public class Lesson {
     public void setSite_owned(boolean site_owned) {
         this.site_owned = site_owned;
     }
+
+    public Lesson getOriginal_lesson() {
+        return original_lesson.get();
+    }
+
+    public void setOriginal_lesson(Lesson original_lesson) {
+        this.original_lesson = Ref.create(original_lesson);
+    }
+
+
 }

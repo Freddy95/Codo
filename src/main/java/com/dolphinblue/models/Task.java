@@ -3,6 +3,7 @@ package com.dolphinblue.models;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Load;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +21,12 @@ public class Task {
     private String hint;
     private String test_case;
     private String expected_output;
-    private List<Ref<Block>> toolbox;//list of block ids in the toolbox
-    private List<Ref<Block>> editor;//list of blocks in the editor
+    @Load private List<Ref<Block>> toolbox;//list of block ids in the toolbox. Must be fetched when task is fetched.
+    @Load private List<Ref<Block>> editor;//list of blocks in the editor. Must be fetched when task is fetched
     private String freecode;
     private boolean completed;
     private Type type;
+    @Load private Ref<Task> original_task;//reference to original task
 
     public Task(){
         editor = new ArrayList<>();
@@ -153,5 +155,13 @@ public class Task {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public void setOriginal_task(Task t){
+        original_task = Ref.create(t);
+    }
+
+    public Task getOriginal_task(){
+        return original_task.get();
     }
 }

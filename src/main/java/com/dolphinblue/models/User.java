@@ -2,6 +2,7 @@ package com.dolphinblue.models;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Load;
 
 import java.util.*;
 /**
@@ -18,8 +19,8 @@ public class User {
     private String avatar; //Gotten through third party site
     private List<String> admin_msg;//list of moderator messages received
     private boolean is_moderator;
-    private List<Ref<Lesson>> lessons; // list of lessons the user has started or completed
-    private Ref<Lesson> current_lesson;//current lesson user is on
+    @Load private List<Ref<Lesson>> lessons; // list of lessons the user has started or completed
+    @Load private Ref<Lesson> current_lesson;//current lesson user is on
 
     public User(Long user_id, String first_name, String last_name, String email, String password,  String avatar) {
         this.user_id = user_id;
