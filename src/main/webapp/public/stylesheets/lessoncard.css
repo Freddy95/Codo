@@ -1,0 +1,13 @@
+.title-box, .description-box {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.title-box {
+    text-align: center;
+}
+
+.description-box {
+    display: flex;
+    align-items: center;
+}
