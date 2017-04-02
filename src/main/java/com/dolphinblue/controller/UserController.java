@@ -1,16 +1,22 @@
 package com.dolphinblue.controller;
 
+import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.User;
+import com.dolphinblue.service.LessonService;
 import com.dolphinblue.service.OfyService;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 /**
  * Created by FreddyEstevez on 3/29/17.
@@ -22,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class UserController {
+    @Autowired
+    LessonService lessonService;
 
     /**
      * gets user and adds him to @param model
@@ -32,7 +40,11 @@ public class UserController {
         Objectify ofy = OfyService.ofy();
 
         User user = ofy.load().type(User.class).id(id).now();
-        model.addAttribute("user", user);
+        model.addAttribute("user_info", user);
+
+        List<Key<Lesson>> lesson_keys = user.getLessons();
+        List<Lesson> main_lessons = lessonService.get_main_lessons_by_id(lesson_keys);
+        model.addAttribute("main_lessons", main_lessons);
 
         return "user";
     }
