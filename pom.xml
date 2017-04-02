@@ -31,13 +31,17 @@
 			<artifactId>thymeleaf-spring4</artifactId>
 			<version>2.1.2.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.http-client</groupId>
+			<artifactId>google-http-client-jackson2</artifactId>
+			<version>1.16.0-rc</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.google.auth</groupId>
 			<artifactId>google-auth-library-oauth2-http</artifactId>
 			<version>0.6.0</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>com.google.appengine</groupId>
@@ -96,12 +100,7 @@
 			<version>${spring.framework.version}</version>
 		</dependency>
 		<!-- Spring testing dependencies -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.2.1</version>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -137,6 +136,11 @@
 			<artifactId>spring-test</artifactId>
 			<version>${spring.framework.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client-appengine</artifactId>
+			<version>1.22.0</version>
 		</dependency>
 	</dependencies>
 

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+   
+  <title>Codo - Home</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"></meta>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"></link>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script src="https://use.fontawesome.com/7e4c107e18.js"></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/lessoncard.css}"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/settings.css}"></link>
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div th:replace="settings-navbar :: navbar"></div>
+    </div>
+  </div>
+  <div class="row">
+    <h2 id="settings-title" class="col text-center">Settings</h2>
+  </div>
+  <div class="row">
+    <div id="settings-box" class="col">
+      <div class="row justify-content-center">
+        <div id="img-box" class="col-2 text-center align-items-center">
+          <img src="" alt="Avatar Image" class="img-thumbnail"></img>
+        </div>
+        <div class="col-4">
+          <dl class="row">
+            <dt class="col-3">Username</dt>
+            <dd class="col-9">
+              Boaty McBoatFace
+              <div class="float-right"><i class="fa fa-lg fa-pencil" aria-hidden="true"></i></div>
+            </dd>
+
+            <dt class="col-3">Email</dt>
+            <dd class="col-9">
+              fake.user@gmail.com
+              <div class="float-right"><i class="fa fa-lg fa-pencil" aria-hidden="true"></i></div>
+            </dd>
+
+            <dt class="col-3">Password</dt>
+            <dd class="col-9">
+              ******
+              <div class="float-right"><i class="fa fa-lg fa-pencil" aria-hidden="true"></i></div>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-4 text-center">
+      <i class="fa fa-lg fa-repeat" aria-hidden="true"></i>
+      Reset Account Progress
+    </div>
+    <div class="col-4 text-center">
+      <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+      Delete Account
+    </div>
+  </div>
+</div>
+ 
+</body>
+</html>

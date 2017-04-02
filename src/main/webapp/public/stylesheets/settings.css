@@ -1,0 +1,18 @@
+#settings-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+#settings-title, nav {
+    margin-bottom: 25px;
+}
+
+#img-box {
+    display: flex;
+    align-items: center;
+}
+
+dl {
+    margin: 0px;
+}

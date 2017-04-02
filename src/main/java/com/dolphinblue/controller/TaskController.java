@@ -26,9 +26,18 @@ import java.util.List;
  */
 @Controller
 public class TaskController {
+    @RequestMapping(value = "/debug-block-task", method = RequestMethod.GET)
+    public String get_task(Model model){
+        return "block-task";
+    }
+
+
     /**
      * gets tasks for a lesson
      * also gets the blocks for each task
+     * 
+     * TODO: Add a way to differentiate between which type of task to get.
+     *
      * @param id - id of lesson to get tasks from
      * @return
      */
