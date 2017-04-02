@@ -1,15 +1,22 @@
 package com.dolphinblue.controller;
 
+import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
 import com.dolphinblue.service.LessonJSONService;
+import com.dolphinblue.service.LessonService;
 import com.dolphinblue.service.OfyService;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -27,6 +34,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 
 public class TaskController {
+
+    @Autowired
+    LessonService lessonService;
     @RequestMapping(value = "/debug-block-task", method = RequestMethod.GET)
     public String get_task(Model model){
         return "block-task";
@@ -42,9 +52,12 @@ public class TaskController {
      * @return
      */
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
-    public String get_task(@RequestParam(value = "lesson") Long id, Model model){
-        Lesson lesson = OfyService.ofy().load().type(Lesson.class).id(id).now();
-        model.addAttribute("tasks", lesson.getTasks());
+    public String get_tasks(@RequestParam(value = "lesson") Long id, Model model){
+        Objectify ofy = OfyService.ofy();
+        Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
+        List<Key<Task>> task_keys = lesson.getTasks();
+        List<Task> tasks = lessonService.get_tasks_by_id(task_keys);
+        model.addAttribute("tasks", tasks);
         return "lesson";
     }
 
@@ -115,18 +128,16 @@ public class TaskController {
 
     /**
      *
-     * @param id
      * @param model
      * @return
      */
-    @RequestMapping(value = "/updatelesson")
-    public String update_lesson(@RequestParam(value = "id")Long id, Model model){
-        // TODO: Add call to LessonService to update the percent complete & request entire lesson object
+    @RequestMapping(value = "/updatelesson", method = RequestMethod.POST)
+    public String update_lesson(@RequestBody Lesson lesson, Model model){
         // get_percent_complete(lesson) --> returns a double
-        Lesson l = OfyService.ofy().load().type(Lesson.class).id(id).now();
-        l.setTitle("My Title");
-        model.addAttribute("lesson", l);
-        OfyService.ofy().save().entity(l);
+
+        lesson.setPercent_complete(lessonService.get_percent_complete(lesson));
+
+        OfyService.ofy().save().entity(lesson);
         return "lessoncard";
     }
 
