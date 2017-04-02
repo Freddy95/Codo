@@ -1,6 +1,5 @@
 package com.dolphinblue.controller;
 
-import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
 import com.dolphinblue.service.LessonJSONService;
@@ -15,9 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * Created by FreddyEstevez on 3/29/17.
@@ -31,12 +28,12 @@ import java.util.List;
  * Restart Task
  * Restart Lesson
  */
+
 @Controller
-
 public class TaskController {
-
     @Autowired
     LessonService lessonService;
+
     @RequestMapping(value = "/debug-block-task", method = RequestMethod.GET)
     public String get_task(Model model){
         return "block-task";
@@ -133,10 +130,8 @@ public class TaskController {
      */
     @RequestMapping(value = "/updatelesson", method = RequestMethod.POST)
     public String update_lesson(@RequestBody Lesson lesson, Model model){
-        // get_percent_complete(lesson) --> returns a double
 
         lesson.setPercent_complete(lessonService.get_percent_complete(lesson));
-
         OfyService.ofy().save().entity(lesson);
         return "lessoncard";
     }
