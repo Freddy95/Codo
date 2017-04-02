@@ -62,7 +62,7 @@ public class LessonJSONService {
 
         List<Key<Task>> keys = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++){
-            keys.add(OfyService.ofy().save().entity(tasks.get(0)).now());
+            keys.add(OfyService.ofy().save().entity(tasks.get(i)).now());
         }
         return keys;
     }
@@ -100,7 +100,7 @@ public class LessonJSONService {
         }
         List<Key<Block>> keys = new ArrayList<>();
         for (int i = 0; i < blocks.size(); i++){
-            keys.add(OfyService.ofy().save().entity(blocks.get(0)).now());
+            keys.add(OfyService.ofy().save().entity(blocks.get(i)).now());
         }
         return keys;
     }

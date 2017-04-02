@@ -8,14 +8,14 @@
 			"instructions" : "A sort of “before you begin this is useful” kind of thing, show that order matters? Note that each statement is followed by a semicolon",
 			"program_blocks":[
 				{
-					"value" : "console.log(\"Hello,\")",
+					"value" : "console.log(\"Hello,\");",
 					"type" : "LOG",
 					"can_edit" : false
 				}
 			],
 			"toolbox":[
 				{
-					"value" : "console.log(\"World!\")",
+					"value" : "console.log(\"World!\");",
 					"type" : "LOG",
 					"can_edit" : false
 				}
@@ -157,7 +157,7 @@
 
 			]
 		}
-	]//end of tasks
-}//end of lesson
+	]
+}
 
 
