@@ -69,3 +69,5 @@ fabric.properties
 
 # Any generated files
 target/
+#for mac peeps
+.DS_Store

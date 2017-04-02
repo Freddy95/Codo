@@ -1,6 +1,7 @@
 package com.dolphinblue.service;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,6 +23,7 @@ public class LessonJSONService {
     public static Lesson create_lesson_from_JSON(String file_path){
         JSONParser parser = new JSONParser();
         try{
+
             File file = new File(file_path);
             System.out.println("##########not here");
             if (file.exists()){
