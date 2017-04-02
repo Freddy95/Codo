@@ -2,26 +2,35 @@
 <html lang="en">
 <head>
    
-  <title>A jQuery Drag-and-Drop Number Cards Game</title>
+  <title>Codo - Home</title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"></meta>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"></link>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> 
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script src="https://use.fontawesome.com/7e4c107e18.js"></script>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/lessoncard.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/user.css}"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/js/user.js}"></link>
 </head>
 <body>
 
 <div class="container">
+  <div th:replace="user-navbar :: navbar"></div>
   <div class="row justify-content-center user-section" id="badges">
-    <h2>Badges</h2>
+    <div class="col">
+      <div class="row justify-content-center user-section-header">
+        <h2>Badges</h2>
+      </div>
+      <div class="row justify-content-center">
+      </div>
+    </div>
   </div>
   <div class="row justify-content-center user-section" id="progress">
     <div class="col">
-      <div class="row justify-content-center">
-        <h2>Current Lessons</h2>
+      <div class="row justify-content-center user-section-header">
+        <h2>You're learning</h2>
       </div>
       <div class="row justify-content-center">
         <div th:replace="lessoncard :: lesson"></div>
@@ -29,7 +38,74 @@
     </div>
   </div>
   <div class="row justify-content-center user-section" id="lessons-tab">
-    <h2>Badges</h2>
+    <div class="col">
+      <div class="row justify-content-center user-section-header">
+        <h2>Lessons</h2>
+      </div>
+      <div class="row justify-content-center lesson-nav">
+        <ul class="nav nav-pills nav-fill">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="pill" href="#main">Main Lessons</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="pill" href="#shared">Shared Lessons</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="pill" href="#your">Your Lessons</a>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="main" role="tabpanel">
+          <div class="row justify-content-center">
+            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: lesson"></div>
+          </div>
+          <div class="row justify-content-center">
+            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: lesson"></div>
+          </div>
+          <div class="row justify-content-center">
+            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: lesson"></div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="shared" role="tabpanel">
+          <div class="row justify-content-center">
+            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: lesson"></div>
+          </div>
+          <div class="row justify-content-center">
+            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: lesson"></div>
+          </div>
+          <div class="row justify-content-center">
+            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: lesson"></div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="your" role="tabpanel">
+          <div class="row justify-content-center add-button">
+            <a class="btn btn-primary" href="#"
+                data-toggle="tooltip" data-placement="left" title="Add Lesson">
+              <i class="fa fa-lg fa-plus" aria-hidden="true"></i>
+            </a>
+          </div>
+          <div class="row justify-content-center">
+            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: lesson"></div>
+          </div>
+          <div class="row justify-content-center">
+            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: lesson"></div>
+          </div>
+          <div class="row justify-content-center">
+            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: lesson"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
  
