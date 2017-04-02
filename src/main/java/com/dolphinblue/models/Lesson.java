@@ -19,20 +19,20 @@ public class Lesson {
     private Key<User> creator_id; //user who created the lesson
     private List<Key<Task>> tasks; //holds lists of tasks ids for this lesson
     private double percent_complete; // Hold the percent of task the user has completed
-    @Index private boolean is_public;
+    @Index private boolean shared;
     @Index private  boolean site_owned;
     private Key<Lesson> original_lesson;
     public Lesson(){
         this.tasks = new ArrayList<>();
     }
 
-    public Lesson(Long lesson_id, String title, Key user, Key creator, List<Key<Task>> tasks, boolean is_public, boolean site_owned) {
+    public Lesson(Long lesson_id, String title, Key user, Key creator, List<Key<Task>> tasks, boolean shared, boolean site_owned) {
         this.lesson_id = lesson_id;
         this.title = title;
         this.user_id = user;
         this.creator_id = creator;
         this.tasks = tasks;
-        this.is_public = is_public;
+        this.shared = shared;
         this.site_owned = site_owned;
     }
 
@@ -84,12 +84,12 @@ public class Lesson {
         this.percent_complete = percent_complete;
     }
 
-    public boolean isIs_public() {
-        return is_public;
+    public boolean isShared() {
+        return shared;
     }
 
-    public void setIs_public(boolean is_public) {
-        this.is_public = is_public;
+    public void setShared(boolean shared) {
+        this.shared = shared;
     }
 
     public boolean isSite_owned() {
