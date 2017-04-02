@@ -12,21 +12,15 @@ function onSignIn(googleUser) {
     xhr.setRequestHeader('Authorization',token);
     xhr.onload = function() {
         console.log('Signed in as: ' + xhr.responseText);
+        //store the token in a cookie
+        document.cookie="token="+token;
         window.location.href = baseurl + "/user";
     };
+    xhr.onerror = function (e) {
+       console.log(e.getStacktrace()) ;
+    };
     xhr.send();
-    // $.ajax({
-    //     url: baseurl + "/login",
-    //     method: "POST",
-    //     contentType: "text/html; charset=utf-8",
-    //     cache: false,
-    //     beforeSend: function (xhr) {
-    //         /* Authorization header */
-    //         xhr.setRequestHeader("Authorization",  token);
-    //     },success:function () {
-    //        window.location = baseurl + "/user" ;
-    //     },erro
-    // });
+
 }
 function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();

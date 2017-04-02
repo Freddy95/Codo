@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * Created by FreddyEstevez on 3/29/17.
@@ -25,11 +24,19 @@ import java.util.List;
  * Restart Lesson
  */
 @Controller
-public class
-TaskController {
+
+public class TaskController {
+    @RequestMapping(value = "/debug-block-task", method = RequestMethod.GET)
+    public String get_task(Model model){
+        return "block-task";
+    }
+
     /**
      * gets tasks for a lesson
      * also gets the blocks for each task
+     * 
+     * TODO: Add a way to differentiate between which type of task to get.
+     *
      * @param id - id of lesson to get tasks from
      * @return
      */

@@ -7,6 +7,7 @@ import com.googlecode.objectify.Objectify;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String get_user_page(Model model){
+    public String get_user_page(Model model, @CookieValue("token") String token){
         // Objectify ofy = OfyService.ofy();
 
         // User user = ofy.load().type(User.class).id(id).now();

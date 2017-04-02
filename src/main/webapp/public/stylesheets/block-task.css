@@ -1,0 +1,15 @@
+.task-col {
+    padding: 10px;
+}
+
+.card-title {
+    margin-bottom: 0px;
+}
+
+.card-title-block {
+    border-bottom: 1px solid #ddd;
+}
+
+nav, .nav {
+    margin-bottom: 25px;
+}
