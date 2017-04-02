@@ -31,7 +31,7 @@ public class LessonJSONService {
             JSONObject json_object = (JSONObject) obj;
             Lesson l = new Lesson();
             l.setTitle((String) json_object.get("title"));
-            l.setIs_public((Boolean) json_object.get("is_public"));
+            l.setShared((Boolean) json_object.get("shared"));
             l.setSite_owned((Boolean) json_object.get("site_owned"));
 
             JSONArray json_tasks = (JSONArray) json_object.get("tasks");
@@ -41,11 +41,6 @@ public class LessonJSONService {
             System.out.println("ERROR HERE");
             e.printStackTrace();
             System.out.println(e.toString());
-        }catch (AccessControlException e){
-            System.out.println("Access denied");
-            System.out.println(e.getMessage());
-            System.out.println(e.getPermission().toString());
-            System.out.println(e.getCause());
         }
         return null;
     }
