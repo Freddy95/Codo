@@ -32,7 +32,7 @@ public class LoginController{
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String postLogin(HttpServletRequest req, HttpServletResponse resp){
+    public ModelAndView postLogin(HttpServletRequest req, HttpServletResponse resp){
         String CLIENT_ID = "441622834163-c890l3f1krej8tfgv0sl78b3tqqo10fo.apps.googleusercontent.com";
         String idTokenString = req.getHeader("Authorization");
         JacksonFactory jsonFactory = new JacksonFactory();
@@ -56,6 +56,7 @@ public class LoginController{
             e.printStackTrace();
         }
         if (idToken != null) {
+
             Payload payload = idToken.getPayload();
 
 //            // Print user identifier
@@ -74,11 +75,13 @@ public class LoginController{
             // Use or store profile information
             // ...
             System.out.println("valid token");
-            return "redirect:userpage";
+            resp.setStatus(303);
+            return new ModelAndView("redirect:user");
 
         } else {
             System.out.println("Invalid ID token.");
-            return "redirect:login";
+            resp.setStatus(303);
+            return new ModelAndView("redirect:login");
         }
 
     }
