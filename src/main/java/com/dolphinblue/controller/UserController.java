@@ -1,8 +1,10 @@
 package com.dolphinblue.controller;
+
 import com.dolphinblue.models.User;
 import com.dolphinblue.service.OfyService;
-import com.googlecode.objectify.Key;
+
 import com.googlecode.objectify.Objectify;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  * Created by FreddyEstevez on 3/29/17.
  * This controller should handle all requests for the user page.
  *
+ * User Request
  * Main Lessons Request
- * Name Request
- * Percent Complete (calculated from tasks completed)
  * Current Lesson Request
  */
 @Controller
@@ -31,6 +32,7 @@ public class UserController {
 
         User user = ofy.load().type(User.class).id(id).now();
         model.addAttribute("user", user);
+
         return "user";
     }
 

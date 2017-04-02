@@ -1,11 +1,11 @@
 package com.dolphinblue.controller;
 
-import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
-import com.dolphinblue.models.User;
 import com.dolphinblue.service.OfyService;
+
 import com.googlecode.objectify.Objectify;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,8 @@ import java.util.List;
  * Restart Lesson
  */
 @Controller
-public class TaskController {
+public class
+TaskController {
     /**
      * gets tasks for a lesson
      * also gets the blocks for each task
@@ -112,6 +113,8 @@ public class TaskController {
      */
     @RequestMapping(value = "/updatelesson")
     public String update_lesson(@RequestParam(value = "id")Long id, Model model){
+        // TODO: Add call to LessonService to update the percent complete & request entire lesson object
+        // get_percent_complete(lesson) --> returns a double
         Lesson l = OfyService.ofy().load().type(Lesson.class).id(id).now();
         l.setTitle("My Title");
         model.addAttribute("lesson", l);
