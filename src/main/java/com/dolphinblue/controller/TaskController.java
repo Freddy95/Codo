@@ -130,6 +130,13 @@ public class TaskController {
         return "lessoncard";
     }
 
+    /**
+     * Creates a lesson and saves it in the datastore via JSON.
+     * NOTE: when supplying the path in url it should be WEB-INF/FILENAME.json
+     * dont put quotes ex - "WEB-INF-/FILENAME.json"
+     * @param path - path to json file
+     * @return
+     */
     @RequestMapping(value = "/createlesson")
     public String create_lesson(@RequestParam(value = "path") String path){
         Lesson l = LessonJSONService.create_lesson_from_JSON(path);
