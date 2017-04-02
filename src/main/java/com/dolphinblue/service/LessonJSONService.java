@@ -1,5 +1,8 @@
 package com.dolphinblue.service;
+import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +13,8 @@ import com.dolphinblue.models.Task;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import com.googlecode.objectify.Key;
+
 /**
  * Created by FreddyEstevez on 4/2/17.
  */
@@ -18,23 +23,31 @@ public class LessonJSONService {
     public static Lesson create_lesson_from_JSON(String file_path){
         JSONParser parser = new JSONParser();
         try{
-            Object obj = parser.parse(new FileReader(file_path));
+
+            File file = new File(file_path);
+            System.out.println("##########not here");
+            if (file.exists()){
+                System.out.println("it exists");
+            }
+            Object obj = parser.parse(new FileReader(file));
             JSONObject json_object = (JSONObject) obj;
             Lesson l = new Lesson();
             l.setTitle((String) json_object.get("title"));
-            l.setIs_public((Boolean) json_object.get("is_public"));
+            l.setShared((Boolean) json_object.get("shared"));
             l.setSite_owned((Boolean) json_object.get("site_owned"));
 
             JSONArray json_tasks = (JSONArray) json_object.get("tasks");
             l.setTasks(create_tasks_from_json(json_tasks));
             return l;
         }catch (Exception e){
+            System.out.println("ERROR HERE");
+            e.printStackTrace();
             System.out.println(e.toString());
         }
         return null;
     }
 
-    public static List<Task> create_tasks_from_json(JSONArray json_tasks){
+    public static List<Key<Task>> create_tasks_from_json(JSONArray json_tasks){
         List<Task> tasks = new ArrayList<>();
         Iterator<JSONObject> iter = json_tasks.iterator();
         while (iter.hasNext()){
@@ -45,10 +58,15 @@ public class LessonJSONService {
             t.setEditor(create_blocks_from_json((JSONArray) json_t.get("program_blocks")));
             tasks.add(t);
         }
-        return tasks;
+
+        List<Key<Task>> keys = new ArrayList<>();
+        for (int i = 0; i < tasks.size(); i++){
+            keys.add(OfyService.ofy().save().entity(tasks.get(0)).now());
+        }
+        return keys;
     }
 
-    public static List<Block> create_blocks_from_json(JSONArray json_blocks){
+    public static List<Key<Block>> create_blocks_from_json(JSONArray json_blocks){
         List<Block> blocks = new ArrayList<>();
         Iterator<JSONObject> iterator = json_blocks.iterator();
         while(iterator.hasNext()){
@@ -67,6 +85,10 @@ public class LessonJSONService {
             }
             blocks.add(b);
         }
-        return blocks;
+        List<Key<Block>> keys = new ArrayList<>();
+        for (int i = 0; i < blocks.size(); i++){
+            keys.add(OfyService.ofy().save().entity(blocks.get(0)).now());
+        }
+        return keys;
     }
 }

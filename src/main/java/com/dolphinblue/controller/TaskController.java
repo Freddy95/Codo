@@ -2,15 +2,19 @@ package com.dolphinblue.controller;
 
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
+import com.dolphinblue.service.LessonJSONService;
 import com.dolphinblue.service.LessonService;
 import com.dolphinblue.service.OfyService;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by FreddyEstevez on 3/29/17.
@@ -45,9 +49,12 @@ public class TaskController {
      * @return
      */
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
-    public String get_task(@RequestParam(value = "lesson") Long id, Model model){
-        Lesson lesson = OfyService.ofy().load().type(Lesson.class).id(id).now();
-        model.addAttribute("tasks", lesson.getTasks());
+    public String get_tasks(@RequestParam(value = "lesson") Long id, Model model){
+        Objectify ofy = OfyService.ofy();
+        Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
+        List<Key<Task>> task_keys = lesson.getTasks();
+        List<Task> tasks = lessonService.get_tasks_by_id(task_keys);
+        model.addAttribute("tasks", tasks);
         return "lesson";
     }
 
@@ -118,20 +125,29 @@ public class TaskController {
 
     /**
      *
-     * @param id
      * @param model
      * @return
      */
-    @RequestMapping(value = "/updatelesson")
-    public String update_lesson(@RequestParam(value = "id")Long id, Model model){
-        // TODO: Add call to LessonService to update the percent complete & request entire lesson object
-        // lessonService.get_percent_complete(lesson);
+    @RequestMapping(value = "/updatelesson", method = RequestMethod.POST)
+    public String update_lesson(@RequestBody Lesson lesson, Model model){
 
-        Lesson lesson = OfyService.ofy().load().type(Lesson.class).id(id).now();
-        lesson.setTitle("My Title");
-        model.addAttribute("lesson", lesson);
+        lesson.setPercent_complete(lessonService.get_percent_complete(lesson));
         OfyService.ofy().save().entity(lesson);
         return "lessoncard";
+    }
+
+    /**
+     * Creates a lesson and saves it in the datastore via JSON.
+     * NOTE: when supplying the path in url it should be WEB-INF/FILENAME.json
+     * dont put quotes ex - "WEB-INF-/FILENAME.json"
+     * @param path - path to json file
+     * @return
+     */
+    @RequestMapping(value = "/createlesson")
+    public String create_lesson(@RequestParam(value = "path") String path){
+        Lesson l = LessonJSONService.create_lesson_from_JSON(path);
+        OfyService.ofy().save().entity(l).now();
+        return "index";
     }
 
 }

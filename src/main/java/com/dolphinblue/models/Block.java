@@ -24,6 +24,7 @@ public class Block {
         MINUs,
         MULTIPLY,
         DIVIDE,
+        LOG,
         BRACKET;
     }
 

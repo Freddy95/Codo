@@ -1,0 +1,27 @@
+{
+	"title": "Types",
+	"shared": false,
+	"site_owned": true,
+	"tasks" :[
+		{
+			"title" : "Printing & Strings",
+			"instructions" : "A sort of “before you begin this is useful” kind of thing, show that order matters? Note that each statement is followed by a semicolon",
+			"program_blocks":[
+				{
+					"value" : "console.log(\"Hello,\")",
+					"type" : "LOG",
+					"can_edit" : false
+				}
+			],
+			"editor_blocks":[
+				{
+					"value" : "console.log(\"World!\")",
+					"type" : "LOG",
+					"can_edit" : false
+				}
+			]
+		}
+	]
+}
+
+

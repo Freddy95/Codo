@@ -1,5 +1,6 @@
 package com.dolphinblue.service;
 
+import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
 
@@ -50,5 +51,23 @@ public class LessonService {
         }
         return main_lessons;
     }
+
+    public List<Block> get_blocks_by_id(List<Key<Block>> block_keys){
+        Objectify ofy = OfyService.ofy();
+        List<Block> blocks = new ArrayList<>();
+        for(int i = 0; i < block_keys.size(); i++){
+            blocks.add(ofy.load().key(block_keys.get(i)).now());
+        }
+        return blocks;
+    }
+    public List<Task> get_tasks_by_id(List<Key<Task>> task_keys){
+        Objectify ofy = OfyService.ofy();
+        List<Task> tasks = new ArrayList<>();
+        for (Key<Task> key : task_keys){
+            tasks.add(ofy.load().key(key).now());
+        }
+        return tasks;
+    }
+
 
 }
