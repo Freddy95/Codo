@@ -1,3 +1,8 @@
 #settings-box {
     border: 1px solid #ddd;
+    padding: 20px;
+}
+
+#settings-title, nav {
+    margin-bottom: 25px;
 }

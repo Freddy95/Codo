@@ -4,10 +4,10 @@
 }
 
 .user-section-header {
-    margin: 25px;
+    margin-bottom: 25px;
 }
 
-.lesson-nav, .add-button {
+nav, .add-button {
     margin-bottom: 25px;
 }
 
