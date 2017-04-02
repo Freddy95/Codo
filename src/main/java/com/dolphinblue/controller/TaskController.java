@@ -2,6 +2,7 @@ package com.dolphinblue.controller;
 
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
+import com.dolphinblue.service.LessonJSONService;
 import com.dolphinblue.service.OfyService;
 
 import com.googlecode.objectify.Objectify;
@@ -127,6 +128,13 @@ public class TaskController {
         model.addAttribute("lesson", l);
         OfyService.ofy().save().entity(l);
         return "lessoncard";
+    }
+
+    @RequestMapping(value = "/createlesson")
+    public String create_lesson(@RequestParam(value = "path") String path){
+        Lesson l = LessonJSONService.create_lesson_from_JSON(path);
+        OfyService.ofy().save().entity(l).now();
+        return "index";
     }
 
 }

@@ -25,6 +25,7 @@ public class Task {
     @Load private List<Key<Block>> editor;//list of blocks in the editor. Must be fetched when task is fetched
     private String freecode;
     private boolean completed;
+    private boolean block_task;
     private Type type;
     @Load private Key<Task> original_task;//reference to original task
 
@@ -147,5 +148,13 @@ public class Task {
 
     public Key getOriginal_task(){
         return original_task;
+    }
+
+    public boolean isBlock_task() {
+        return block_task;
+    }
+
+    public void setBlock_task(boolean block_task) {
+        this.block_task = block_task;
     }
 }
