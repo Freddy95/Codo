@@ -6,3 +6,8 @@
 #settings-title, nav {
     margin-bottom: 25px;
 }
+
+#img-box {
+    display: flex;
+    align-items: center;
+}
