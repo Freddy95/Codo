@@ -6,24 +6,21 @@ function onSignIn(googleUser) {
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     var token = googleUser.getAuthResponse().id_token;
-    $.ajax({
-        url: baseurl + "/login",
-        method: "POST",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data:{},
-        cache: false,
-        beforeSend: function (xhr) {
-            /* Authorization header */
-            xhr.setRequestHeader("Authorization",  token);
-        },
-        success: function (data) {
-            console.log(data);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST',baseurl + "/login" );
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('Authorization',token);
+    xhr.onload = function() {
+        console.log('Signed in as: ' + xhr.responseText);
+        //store the token in a cookie
+        document.cookie="token="+token;
+        window.location.href = baseurl + "/user";
+    };
+    xhr.onerror = function (e) {
+       console.log(e.getStacktrace()) ;
+    };
+    xhr.send();
 
-        }
-    });
 }
 function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
