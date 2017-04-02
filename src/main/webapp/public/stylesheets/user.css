@@ -7,10 +7,6 @@
     margin-bottom: 25px;
 }
 
-nav, .add-button {
+nav, .add-button, .nav {
     margin-bottom: 25px;
-}
-
-nav {
-    margin-bottom: 50px;
 }
