@@ -28,10 +28,7 @@ public class LoginController{
 
     @RequestMapping(method = RequestMethod.GET)
     public String getLogin(HttpServletRequest req){
-//        UserService us = UserServiceFactory.getUserService();
-//        String url = req.getRequestURL().toString();
-        //return the login controller
-//        Principal usr = req.getUserPrincipal();
+
         return "login";
     }
 
