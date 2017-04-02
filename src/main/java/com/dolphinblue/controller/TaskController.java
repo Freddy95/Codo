@@ -2,14 +2,15 @@ package com.dolphinblue.controller;
 
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
+import com.dolphinblue.service.LessonService;
 import com.dolphinblue.service.OfyService;
 
 import com.googlecode.objectify.Objectify;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 
 /**
  * Created by FreddyEstevez on 3/29/17.
@@ -23,9 +24,12 @@ import org.springframework.web.bind.annotation.*;
  * Restart Task
  * Restart Lesson
  */
-@Controller
 
+@Controller
 public class TaskController {
+    @Autowired
+    LessonService lessonService;
+
     @RequestMapping(value = "/debug-block-task", method = RequestMethod.GET)
     public String get_task(Model model){
         return "block-task";
@@ -121,11 +125,12 @@ public class TaskController {
     @RequestMapping(value = "/updatelesson")
     public String update_lesson(@RequestParam(value = "id")Long id, Model model){
         // TODO: Add call to LessonService to update the percent complete & request entire lesson object
-        // get_percent_complete(lesson) --> returns a double
-        Lesson l = OfyService.ofy().load().type(Lesson.class).id(id).now();
-        l.setTitle("My Title");
-        model.addAttribute("lesson", l);
-        OfyService.ofy().save().entity(l);
+        // lessonService.get_percent_complete(lesson);
+
+        Lesson lesson = OfyService.ofy().load().type(Lesson.class).id(id).now();
+        lesson.setTitle("My Title");
+        model.addAttribute("lesson", lesson);
+        OfyService.ofy().save().entity(lesson);
         return "lessoncard";
     }
 
