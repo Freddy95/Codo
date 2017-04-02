@@ -56,6 +56,7 @@ public class LessonJSONService {
             t.setTitle((String) json_t.get("title"));
             t.setInstructions((String) json_t.get("instructions"));
             t.setEditor(create_blocks_from_json((JSONArray) json_t.get("program_blocks")));
+            t.setToolbox(create_blocks_from_json((JSONArray) json_t.get("toolbox")));
             tasks.add(t);
         }
 
@@ -78,6 +79,18 @@ public class LessonJSONService {
             switch (type){
                 case "LOG":
                     b.setType(Block.Type.LOG);
+                    break;
+                case "ASSIGN":
+                    b.setType(Block.Type.ASSIGN);
+                    break;
+                case "BRACKET":
+                    b.setType(Block.Type.BRACKET);
+                    break;
+                case "FOR":
+                    b.setType(Block.Type.FOR);
+                    break;
+                case "WHILE":
+                    b.setType(Block.Type.WHILE);
                     break;
                 default:
                     b.setType(Block.Type.LOG);

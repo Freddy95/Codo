@@ -13,15 +13,151 @@
 					"can_edit" : false
 				}
 			],
-			"editor_blocks":[
+			"toolbox":[
 				{
 					"value" : "console.log(\"World!\")",
 					"type" : "LOG",
 					"can_edit" : false
 				}
 			]
+		},{
+			"title" : "Variables",
+			"instructions" : "You can set strings to be equal to variable names and then print them just like you would the string. Note illegal variables. Introduce variables for keeping track of things/ describing what things do.",
+			"program_blocks" : [
+				{
+					"value" : "// This is a comment",
+					"type" : "COMMENT",
+					"can_edit" : false
+				},{
+					"value" : "var str = “Hello World!”;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				}
+			],
+			"toolbox" : [
+				{
+					"value" : "console.log(str);",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "console.log(“Hello World!”);",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "// str = Hello World!",
+					"type" : "COMMENT",
+					"can_edit" : false
+				}
+
+			]
+		},{
+			"title" : "Numbers & Operations",
+			"instructions" : "Introduce the number type, then introduce the operations you can do on them",
+			"program_blocks" : [
+				{
+					"value" : "var x;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "var y;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				}
+			],
+			"toolbox" : [
+				{
+					"value" : "x=3;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "y=4;",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "console.log(x + y);",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "console.log(3 + 4);",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "y=6",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "var total = x + y;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "console.log(total);",
+					"type" : "LOG",
+					"can_edit" : false
+				}
+
+			]
+		},{
+			"title" : "Strings & Operations & Numbers",
+			"instructions" : "Go back to strings and show how they can be added together as well. Also show how numbers can be added to strings. Mention ++/-- and +=, -=, etc.",
+			"program_blocks" : [
+				{
+					"value" : "var age = 10;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "var older = 12;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "var bob = “Bob”;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "var str = “ is ”;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				}
+			],
+			"toolbox" : [
+				{
+					"value" : "console.log(bob + str + age);",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "console.log(4 + 6 + bob);",
+					"type" : "LOG",
+					"can_edit" : false
+				}
+
+			]
+		},{
+			"title" : "Null & Undefined",
+			"instructions" : "What happens when a variable is not defined and you try to print it? What happens when you try to do math operations that are not defined?",
+			"program_blocks" : [
+				{
+					"value" : "var x;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "var total = 1/0;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				}
+			],
+			"toolbox" : [
+				{
+					"value" : "console.log(x);",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "console.log(total);",
+					"type" : "LOG",
+					"can_edit" : false
+				}
+
+			]
 		}
-	]
-}
+	]//end of tasks
+}//end of lesson
 
 
