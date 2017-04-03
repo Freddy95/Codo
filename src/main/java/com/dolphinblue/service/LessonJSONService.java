@@ -56,12 +56,13 @@ public class LessonJSONService {
             t.setTitle((String) json_t.get("title"));
             t.setInstructions((String) json_t.get("instructions"));
             t.setEditor(create_blocks_from_json((JSONArray) json_t.get("program_blocks")));
+            t.setToolbox(create_blocks_from_json((JSONArray) json_t.get("toolbox")));
             tasks.add(t);
         }
 
         List<Key<Task>> keys = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++){
-            keys.add(OfyService.ofy().save().entity(tasks.get(0)).now());
+            keys.add(OfyService.ofy().save().entity(tasks.get(i)).now());
         }
         return keys;
     }
@@ -79,6 +80,18 @@ public class LessonJSONService {
                 case "LOG":
                     b.setType(Block.Type.LOG);
                     break;
+                case "ASSIGN":
+                    b.setType(Block.Type.ASSIGN);
+                    break;
+                case "BRACKET":
+                    b.setType(Block.Type.BRACKET);
+                    break;
+                case "FOR":
+                    b.setType(Block.Type.FOR);
+                    break;
+                case "WHILE":
+                    b.setType(Block.Type.WHILE);
+                    break;
                 default:
                     b.setType(Block.Type.LOG);
                     break;
@@ -87,7 +100,7 @@ public class LessonJSONService {
         }
         List<Key<Block>> keys = new ArrayList<>();
         for (int i = 0; i < blocks.size(); i++){
-            keys.add(OfyService.ofy().save().entity(blocks.get(0)).now());
+            keys.add(OfyService.ofy().save().entity(blocks.get(i)).now());
         }
         return keys;
     }
