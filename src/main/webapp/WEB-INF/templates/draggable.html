@@ -23,18 +23,21 @@
 <body>
 
 <div class="container-fluid">
-  <div th:fragment="blockContent" id="blockContent">
+  <div th:fragment="blockContent" id="blockContent" class="h-100">
     <div class="card" id="editor-div">
-      <div class="card-block card-title-block align-items-center">
+      <div class="card-header card-title-block align-items-center">
         <h3 class="card-title">
           Editor
-          <btn class="btn btn-sm btn-primary float-right" onClick="run()">Run</btn>
         </h3>
+        <i class="fa fa-2x fa-question pull-right"></i>
       </div>
       <div class="card-block code-placement" id="editor"></div>
+      <div class="card-footer">
+        <btn class="btn btn-sm btn-primary float-right" onClick="run()">Run</btn>
+      </div>
     </div>
     <div class="card" id="toolbox-div">
-      <div class="card-block card-title-block">
+      <div class="card-header card-title-block">
         <h3 class="card-title">Toolbox</h3>
       </div>
       <div class="card-block code-placement" id="toolbox"></div>

@@ -10,12 +10,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <script src="https://use.fontawesome.com/7e4c107e18.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/main.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/block-task.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/draggable-style.css}"></link>
+  <script type="text/javascript" th:src="@{/public/js/draggable.js}"></script>
 </head>
 <body>
 
-<div class="container">
+<div class="container h-100" id="page">
   <div class="row">
     <div class="col">
       <div th:replace="lesson-navbar :: navbar"></div>
@@ -26,21 +29,21 @@
       <div th:replace="lesson-options-navbar :: navbar"></div>
     </div>
   </div>
-  <div class="row">
-    <div class="w-25 task-col">
-      <div class="card" id="instructions-div">
-        <div class="card-block card-title-block">
+  <div class="row h-75" id="lesson-content">
+    <div class="w-25 h-100 task-col">
+      <div class="card h-100" id="instructions-div">
+        <div class="card-header card-title-block">
           <h3 class="card-title">Instructions</h3>
         </div>
-        <div class="card-block code-placement" id="output"></div>
+        <div class="card-block code-placement" id="instructions"></div>
       </div>
     </div>
-    <div class="w-50 task-col">
+    <div class="w-50 h-100 task-col">
       <div th:replace="draggable:: #blockContent"></div>
     </div>
-    <div class="w-25 task-col">
-      <div class="card" id="output-div">
-        <div class="card-block card-title-block">
+    <div class="w-25 h-100 task-col">
+      <div class="card h-100" id="output-div">
+        <div class="card-header card-title-block">
           <h3 class="card-title">Output</h3>
         </div>
         <div class="card-block code-placement" id="output"></div>

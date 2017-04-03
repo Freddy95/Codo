@@ -1,5 +1,7 @@
 .task-col {
     padding: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-title {
@@ -12,4 +14,8 @@
 
 nav, .nav {
     margin-bottom: 25px;
+}
+
+html, body {
+    height: 100vh;
 }

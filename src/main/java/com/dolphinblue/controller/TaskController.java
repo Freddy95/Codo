@@ -28,6 +28,13 @@ import java.util.List;
 public class TaskController {
     @RequestMapping(value = "/debug-block-task", method = RequestMethod.GET)
     public String get_task(Model model){
+        // Lesson l = new Lesson(new Long(1), "First Lesson", null, null, null, true, true);
+        // Task t = new Task();
+        // t.setTitle("First Block Task");
+        // t.setInstructions("These are the instructions.");
+        // t.setHint("This is the hint.");
+        // model.addAttribute("lesson", l);
+        // model.addAttribute("task", t);
         return "block-task";
     }
 

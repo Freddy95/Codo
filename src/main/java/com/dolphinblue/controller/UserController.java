@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String get_user_page(Model model, @CookieValue("token") String token){
+    public String get_user_page(Model model){
         // Objectify ofy = OfyService.ofy();
 
         // User user = ofy.load().type(User.class).id(id).now();
