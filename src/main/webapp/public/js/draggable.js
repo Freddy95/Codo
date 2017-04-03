@@ -12,7 +12,7 @@ function run() {
   var s = "";
 
   $.each($('#editor').children(), function(index, value) {
-    s += $(value).data('code') + "\n";
+    s += $(value).children().first().text() + "\n";
   });
 
   window.console.log = function(msg) {
@@ -27,37 +27,37 @@ function run() {
 }
  
 function init() {
-  var blocks = ["x += 5;", "x = 2;", "console.log(x);", "for"]
+  // var blocks = [];
 
-  var placeBlock = "<span class='holds-one code-block code-placement'></span>"
+  // var placeBlock = "<span class='holds-one code-placement'></span>";
 
-  for (var i = 0; i < blocks.length; i++) {
-    if (blocks[i] === "for") {
-      $('<span class="for-block code-block">' + 'for ('+ placeBlock +  ';' + placeBlock + ';' + placeBlock + ')' + '</span>').data('code', blocks[i])
-        .attr('id', 'block' + i)
-        .appendTo('#toolbox');
-    }
-    else if (blocks[i] === "if") {
-      $('<span class="if-block code-block">' + 'if ('+ placeBlock + ')' + '</span>').data('code', blocks[i])
-        .attr('id', 'block' + i)
-        .appendTo('#toolbox');
-    }
-    else if (blocks[i] === "else if") {
-      $('<span class="else-if-block code-block">' + 'else if ('+ placeBlock + ')' + '</span>').data('code', blocks[i])
-        .attr('id', 'block' + i)
-        .appendTo('#toolbox');
-    }
-    else if (blocks[i] === "while") {
-      $('<span class="while-block code-block">' + 'while ('+ placeBlock + ')' + '</span>').data('code', blocks[i])
-        .attr('id', 'block' + i)
-        .appendTo('#toolbox');
-    }
-    else {
-      $('<span class="code-block">' + blocks[i] + '</span>').data('code', blocks[i])
-        .attr('id', 'block' + i)
-        .appendTo('#toolbox');
-    }
-  }
+  // for (var i = 0; i < blocks.length; i++) {
+  //   if (blocks[i] === "for") {
+  //     $('<span class="for-block code-block">' + 'for ('+ placeBlock +  ';' + placeBlock + ';' + placeBlock + ')' + '</span>').data('code', blocks[i])
+  //       .attr('id', 'block' + i)
+  //       .appendTo('#toolbox');
+  //   }
+  //   else if (blocks[i] === "if") {
+  //     $('<span class="if-block code-block">' + 'if ('+ placeBlock + ')' + '</span>').data('code', blocks[i])
+  //       .attr('id', 'block' + i)
+  //       .appendTo('#toolbox');
+  //   }
+  //   else if (blocks[i] === "else if") {
+  //     $('<span class="else-if-block code-block">' + 'else if ('+ placeBlock + ')' + '</span>').data('code', blocks[i])
+  //       .attr('id', 'block' + i)
+  //       .appendTo('#toolbox');
+  //   }
+  //   else if (blocks[i] === "while") {
+  //     $('<span class="while-block code-block">' + 'while ('+ placeBlock + ')' + '</span>').data('code', blocks[i])
+  //       .attr('id', 'block' + i)
+  //       .appendTo('#toolbox');
+  //   }
+  //   else {
+  //     $('<span class="code-block">' + blocks[i] + '</span>').data('code', blocks[i])
+  //       .attr('id', 'block' + i)
+  //       .appendTo('#toolbox');
+  //   }
+  // }
 
   $('#editor, #toolbox, .holds-one').sortable({
     connectWith: ".code-placement",
@@ -67,4 +67,4 @@ function init() {
       }
     }
   }).disableSelection();
-} 
+}

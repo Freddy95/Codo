@@ -16,7 +16,7 @@ public class Block {
     private boolean can_edit;
 
 
-    private enum Type{//types of blocks
+    public enum Type {//types of blocks
         FOR,
         WHILE,
         ASSIGN,
@@ -24,6 +24,7 @@ public class Block {
         MINUs,
         MULTIPLY,
         DIVIDE,
+        LOG,
         BRACKET;
     }
 

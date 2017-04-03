@@ -23,21 +23,50 @@
 <body>
 
 <div class="container-fluid">
-  <div id="blockContent">
+  <div th:fragment="blockContent" id="blockContent" class="h-100">
     <div class="card" id="editor-div">
-      <div class="card-header">
-        <h3>Editor</h3>
-        <btn class="btn btn-primary float-right" onClick="run()">Run</btn>
+      <div class="card-header card-title-block align-items-center">
+        <h3 class="card-title">
+          Editor
+        </h3>
+        <a class="fa fa-2x fa-question pull-right" data-toggle="modal" data-target="#hintModal">
+        </a>
+        <div class="modal fade" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="hintModalLabel">Hint</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" th:text="${task.hint}">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="card-block code-placement" id="editor"></div>
+      <div class="card-block code-placement" id="editor">
+        <span class="code-block" th:each="block : ${editor}">
+          <span th:text="${block.value}"></span>
+        </span>
+      </div>
+      <div class="card-footer">
+        <btn class="btn btn-sm btn-primary float-right" onClick="run()">Run</btn>
+      </div>
     </div>
     <div class="card" id="toolbox-div">
-      <h3 class="card-header">Toolbox</h3>
-      <div class="card-block code-placement" id="toolbox"></div>
-    </div>
-    <div class="card" id="output-div">
-      <h3 class="card-header">Output</h3>
-      <div class="card-block code-placement" id="output"></div>
+      <div class="card-header card-title-block">
+        <h3 class="card-title">Toolbox</h3>
+      </div>
+      <div class="card-block code-placement" id="toolbox">
+        <span class="code-block" th:each="block : ${toolbox}">
+          <span th:text="${block.value}"></span>
+        </span>
+      </div>
     </div>
   </div>
 </div>

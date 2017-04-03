@@ -22,14 +22,22 @@
 		<appengine.target.version>1.9.0</appengine.target.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.framework.version>4.0.0.RELEASE</spring.framework.version>
+		<thymeleaf.version>3.0.1.RELEASE</thymeleaf.version>
 	</properties>
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring4 -->
+		<!-- Thymeleaf -->
 		<dependency>
-			<groupId>org.thymeleaf</groupId>
-			<artifactId>thymeleaf-spring4</artifactId>
-			<version>2.1.2.RELEASE</version>
+		    <groupId>org.thymeleaf</groupId>
+		    <artifactId>thymeleaf</artifactId>
+		    <version>${thymeleaf.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.thymeleaf</groupId>
+		    <artifactId>thymeleaf-spring4</artifactId>
+		    <version>${thymeleaf.version}</version>
+		    <scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.http-client</groupId>
@@ -42,7 +50,11 @@
 			<artifactId>google-auth-library-oauth2-http</artifactId>
 			<version>0.6.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>

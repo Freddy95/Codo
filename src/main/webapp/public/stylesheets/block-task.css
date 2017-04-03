@@ -1,0 +1,25 @@
+.task-col {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    margin-bottom: 0px;
+}
+
+.card-title-block {
+    border-bottom: 1px solid #ddd;
+}
+
+nav, .nav {
+    margin-bottom: 25px;
+}
+
+html, body {
+    height: 100vh;
+}
+
+#task-brand {
+    margin: 0px;
+}

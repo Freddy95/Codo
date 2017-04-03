@@ -1,5 +1,6 @@
 package com.dolphinblue.models;
-import com.googlecode.objectify.Ref;
+
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -14,25 +15,24 @@ public class Lesson {
 
     @Id private Long lesson_id;
     private String title;
-    @Index private Ref<User> user_id;//user who is working on the lesson
-    private Ref<User> creator_id;//user who created the lesson
-    private List<Ref<Task>> tasks;//holds lists of tasks ids for this lesson
-    @Index private boolean is_public;
+    @Index private Key<User> user_id; //user who is working on the lesson
+    private Key<User> creator_id; //user who created the lesson
+    private List<Key<Task>> tasks; //holds lists of tasks ids for this lesson
+    private double percent_complete; // Hold the percent of task the user has completed
+    @Index private boolean shared;
     @Index private  boolean site_owned;
-    private Ref<Lesson> original_lesson;
+    private Key<Lesson> original_lesson;
     public Lesson(){
-        tasks = new ArrayList<>();
+        this.tasks = new ArrayList<>();
     }
 
-    public Lesson(Long lesson_id, String title, User user, User creator, List<Task> ta, boolean is_public, boolean site_owned) {
+    public Lesson(Long lesson_id, String title, Key user, Key creator, List<Key<Task>> tasks, boolean shared, boolean site_owned) {
         this.lesson_id = lesson_id;
         this.title = title;
-        this.user_id = Ref.create(user);
-        this.creator_id = Ref.create(creator);
-        this.creator_id = creator_id;
-        tasks = new ArrayList<>();
-        setTasks(ta);
-        this.is_public = is_public;
+        this.user_id = user;
+        this.creator_id = creator;
+        this.tasks = tasks;
+        this.shared = shared;
         this.site_owned = site_owned;
     }
 
@@ -52,51 +52,44 @@ public class Lesson {
         this.title = title;
     }
 
-    public User getUser_id() {
-        return user_id.get();
+    public Key getUser_id() {
+        return user_id;
     }
 
     public void setUser_id(User user) {
-        this.user_id = Ref.create(user);
+        this.user_id = Key.create(user);
     }
 
-    public User getCreator_id() {
-        return creator_id.get();
+    public Key getCreator_id() {
+        return creator_id;
     }
 
     public void setCreator_id(User creator) {
-        this.creator_id = Ref.create(creator);
+        this.creator_id = Key.create(creator);
     }
 
-    /**
-     * get the tasks objects by using the references
-     * @return
-     */
-    public List<Task> getTasks() {
-        List<Task> t = new ArrayList<>();
-        for(int i = 0; i < tasks.size(); i++){
-            t.add(tasks.get(0).get());
-        }
-        return t;
+    public List<Key<Task>> getTasks() {
+        return tasks;
     }
 
-    /**
-     * Turn tasks objects into references and save them
-     * @param ta
-     */
-    public void setTasks(List<Task> ta) {
-        tasks.clear();
-        for (int i = 0; i < ta.size(); i++){
-            tasks.add(Ref.create(ta.get(i)));
-        }
+    public void setTasks(List<Key<Task>> tasks) {
+        this.tasks = tasks;
     }
 
-    public boolean isIs_public() {
-        return is_public;
+    public double getPercent_complete() {
+        return percent_complete;
     }
 
-    public void setIs_public(boolean is_public) {
-        this.is_public = is_public;
+    public void setPercent_complete(double percent_complete) {
+        this.percent_complete = percent_complete;
+    }
+
+    public boolean isShared() {
+        return shared;
+    }
+
+    public void setShared(boolean shared) {
+        this.shared = shared;
     }
 
     public boolean isSite_owned() {
@@ -107,12 +100,12 @@ public class Lesson {
         this.site_owned = site_owned;
     }
 
-    public Lesson getOriginal_lesson() {
-        return original_lesson.get();
+    public Key getOriginal_lesson() {
+        return original_lesson;
     }
 
     public void setOriginal_lesson(Lesson original_lesson) {
-        this.original_lesson = Ref.create(original_lesson);
+        this.original_lesson = Key.create(original_lesson);
     }
 
 

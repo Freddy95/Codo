@@ -21,3 +21,16 @@
 .card-header>h3 {
     display: inline-block;
 }
+
+.sortable.hover {
+    color: #ddd;
+}
+
+#blockContent {
+    display: flex;
+    flex-direction: column;
+}
+
+#editor-div {
+    flex-grow: 1;
+}
