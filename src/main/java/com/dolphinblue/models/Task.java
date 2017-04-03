@@ -1,6 +1,6 @@
 package com.dolphinblue.models;
 
-import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Load;
@@ -21,35 +21,34 @@ public class Task {
     private String hint;
     private String test_case;
     private String expected_output;
-    @Load private List<Ref<Block>> toolbox;//list of block ids in the toolbox. Must be fetched when task is fetched.
-    @Load private List<Ref<Block>> editor;//list of blocks in the editor. Must be fetched when task is fetched
+    @Load private List<Key<Block>> toolbox;//list of block ids in the toolbox. Must be fetched when task is fetched.
+    @Load private List<Key<Block>> editor;//list of blocks in the editor. Must be fetched when task is fetched
     private String freecode;
     private boolean completed;
+    private boolean block_task;
     private Type type;
-    @Load private Ref<Task> original_task;//reference to original task
+    @Load private Key<Task> original_task;//reference to original task
 
     public Task(){
         editor = new ArrayList<>();
         toolbox = new ArrayList<>();
     }
 
-    public Task(Long task_id, String title, String instructions, String hint, String test_case, String expected_output, List<Block> tool, List<Block> edit, String freecode, boolean completed, Type type) {
+    public Task(Long task_id, String title, String instructions, String hint, String test_case, String expected_output, List<Key<Block>> toolbox, List<Key<Block>> editor, String freecode, boolean completed, Type type) {
         this.task_id = task_id;
         this.title = title;
         this.instructions = instructions;
         this.hint = hint;
         this.test_case = test_case;
         this.expected_output = expected_output;
-        editor = new ArrayList<>();
-        toolbox = new ArrayList<>();
-        setEditor(edit);
-        setToolbox(tool);
+        this.editor = editor;
+        this.toolbox = toolbox;
         this.freecode = freecode;
         this.completed = completed;
         this.type = type;
     }
 
-    public enum Type{
+    public enum Type {
         JS,
         HTML,
         CSS;
@@ -103,34 +102,20 @@ public class Task {
         this.expected_output = expected_output;
     }
 
-    public List<Block> getToolbox() {
-        List<Block> ret = new ArrayList<>();
-        for(int i = 0; i < toolbox.size(); i++){
-            ret.add(toolbox.get(i).get());
-        }
-        return ret;
+    public List<Key<Block>> getToolbox() {
+        return toolbox;
     }
 
-    public void setToolbox(List<Block> tool) {
-        toolbox.clear();
-        for(int i = 0; i < tool.size(); i++){
-            toolbox.add(Ref.create(tool.get(i)));
-        }
+    public void setToolbox(List<Key<Block>> toolbox) {
+        this.toolbox = toolbox;
     }
 
-    public List<Block> getEditor() {
-        List<Block> ret = new ArrayList<>();
-        for(int i = 0; i < editor.size(); i++){
-            ret.add(editor.get(i).get());
-        }
-        return ret;
+    public List<Key<Block>> getEditor() {
+        return editor;
     }
 
-    public void setEditor(List<Block> edit) {
-        editor.clear();
-        for(int i = 0; i < edit.size(); i++){
-            editor.add(Ref.create(edit.get(i)));
-        }
+    public void setEditor(List<Key<Block>> editor) {
+        this.editor = editor;
     }
 
     public String getFreecode() {
@@ -158,10 +143,18 @@ public class Task {
     }
 
     public void setOriginal_task(Task t){
-        original_task = Ref.create(t);
+        original_task = Key.create(t);
     }
 
-    public Task getOriginal_task(){
-        return original_task.get();
+    public Key getOriginal_task(){
+        return original_task;
+    }
+
+    public boolean isBlock_task() {
+        return block_task;
+    }
+
+    public void setBlock_task(boolean block_task) {
+        this.block_task = block_task;
     }
 }

@@ -1,5 +1,6 @@
 package com.dolphinblue.models;
-import com.googlecode.objectify.Ref;
+
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Load;
@@ -19,17 +20,17 @@ public class User {
     private String avatar; //Gotten through third party site
     private List<String> admin_msg;//list of moderator messages received
     private boolean is_moderator;
-    @Load private List<Ref<Lesson>> lessons; // list of lessons the user has started or completed
-    @Load private Ref<Lesson> current_lesson;//current lesson user is on
+    @Load private List<Key<Lesson>> lessons; // list of lessons the user has started or completed
+    @Load private Key<Lesson> current_lesson;//current lesson user is on
 
-    public User(Long user_id, String first_name, String last_name, String email, String password,  String avatar) {
+    public User(Long user_id, String first_name, String last_name, String email, String password, String avatar, List<Key<Lesson>> lessons) {
         this.user_id = user_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.password = password;
         this.avatar = avatar;
-        lessons = new ArrayList<>();
+        this.lessons = lessons;
     }
 
     /**
@@ -38,6 +39,7 @@ public class User {
     public User(){
         lessons = new ArrayList<>();
     }
+
     public Long getUser_id() {
         return user_id;
     }
@@ -78,7 +80,6 @@ public class User {
         this.password = password;
     }
 
-
     public String getAvatar() {
         return avatar;
     }
@@ -103,26 +104,20 @@ public class User {
         this.is_moderator = is_moderator;
     }
 
-    public List<Lesson> getLessons() {
-        List<Lesson> ret = new ArrayList<>();
-        for(int i = 0; i < lessons.size(); i++){
-            ret.add(lessons.get(i).get());
-        }
-        return ret;
+    public List<Key<Lesson>> getLessons() {
+        return lessons;
     }
 
-    public void setLessons(List<Lesson> l) {
-        lessons.clear();
-        for(int i = 0; i < l.size(); i++){
-            lessons.add(Ref.create(l.get(i)));
-        }
+    public void setLessons(List<Key<Lesson>> lessons) {
+        this.lessons = lessons;
     }
 
-    public Lesson getCurrent_lesson(){
-        return current_lesson.get();
+    public Key getCurrent_lesson(){
+        return current_lesson;
     }
+
     public void setCurrent_lesson(Lesson l){
-        current_lesson = Ref.create(l);
+        current_lesson = Key.create(l);
     }
 }
 
