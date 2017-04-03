@@ -60,6 +60,35 @@ public class LessonService {
         }
         return blocks;
     }
+
+    // Put checking for block changes here
+    // Need to update for when we utilize editing blocks
+    public String update_blocks(List<Key<Block>> blocks) {
+        Objectify ofy = OfyService.ofy();
+
+        for(int i = 0; i < blocks.size(); i++) {
+            Block block = ofy.load().type(Block.class).id(blocks.get(i).getId()).now();
+            // Check to see if the block can be edited
+            if (!block.isCan_edit() && block.getValue().equals("hello")) {
+                // If it can't be, create a new block
+                Block new_block = new Block();
+                new_block.setValue(block.getValue());
+                new_block.setType(block.getType());
+                new_block.setCan_edit(true);
+
+                OfyService.ofy().save().entity(new_block);
+
+
+            } else {
+                // If it can, update the existing block
+                OfyService.ofy().save().entity(block);
+            }
+        }
+
+        return "this does not work yet";
+    }
+
+    // Maybe deprecated... remove if not used by final project
     public List<Task> get_tasks_by_id(List<Key<Task>> task_keys){
         Objectify ofy = OfyService.ofy();
         List<Task> tasks = new ArrayList<>();

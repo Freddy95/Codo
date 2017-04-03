@@ -1,5 +1,6 @@
 package com.dolphinblue.controller;
 
+import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
 import com.dolphinblue.service.LessonJSONService;
@@ -20,13 +21,15 @@ import java.util.List;
  * Created by FreddyEstevez on 3/29/17.
  * This controller should handle all requests for the task page.
  *
- * Request for Task
- * Request for Editor Blocks
- * Request for Toolbox Blocks
- * Update Block Order
- * Update Block Location for if it moves from Toolbox to Editor and the other way around
+ * Request for a Task
+ * - Request for Editor Blocks
+ * - Request for Toolbox Blocks
+ * Update Task
+ * - Update Block Order
+ * - Update Block Location for if it moves from Toolbox to Editor and the other way around
  * Restart Task
  * Restart Lesson
+ * Update Lesson
  */
 
 @Controller
@@ -34,6 +37,11 @@ public class TaskController {
     @Autowired
     LessonService lessonService;
 
+    /**
+     * For debugging the block task pages
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/debug-block-task", method = RequestMethod.GET)
     public String get_task(Model model){
         return "block-task";
@@ -48,14 +56,21 @@ public class TaskController {
      * @param id - id of lesson to get tasks from
      * @return
      */
-    @RequestMapping(value = "/tasks", method = RequestMethod.GET)
-    public String get_tasks(@RequestParam(value = "lesson") Long id, Model model){
+    @RequestMapping(value = "/task", method = RequestMethod.GET)
+    public String get_task(@RequestParam(value = "id") Long id, Model model){
         Objectify ofy = OfyService.ofy();
-        Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
-        List<Key<Task>> task_keys = lesson.getTasks();
-        List<Task> tasks = lessonService.get_tasks_by_id(task_keys);
-        model.addAttribute("tasks", tasks);
-        return "lesson";
+        Task task = ofy.load().type(Task.class).id(id).now();
+        model.addAttribute("task", task);
+
+        List<Key<Block>> e_block_keys = task.getEditor();
+        List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);
+        model.addAttribute("editor_blocks", editor_blocks);
+
+        List<Key<Block>> t_block_keys = task.getToolbox();
+        List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
+        model.addAttribute("toolbox_blocks", toolbox_blocks);
+
+        return "block-task";
     }
 
     /**
@@ -63,10 +78,13 @@ public class TaskController {
      * @param task
      */
     @RequestMapping(value = "/updatetask", method = RequestMethod.POST)
-    public void update_task(@RequestBody Task task){
+    public void update_task(@RequestBody Task task){ // Figure out later getting blocks
+        List<Key<Block>> editor_blocks = task.getEditor();
+        List<Key<Block>> toolbox_blocks = task.getToolbox();
+
+        lessonService.update_blocks(editor_blocks);
 
         OfyService.ofy().save().entity(task);
-
     }
 
     /**
@@ -124,7 +142,7 @@ public class TaskController {
     }
 
     /**
-     *
+     * Updates a lesson
      * @param model
      * @return
      */
@@ -143,8 +161,8 @@ public class TaskController {
      * @param path - path to json file
      * @return
      */
-    @RequestMapping(value = "/createlesson")
-    public String create_lesson(@RequestParam(value = "path") String path){
+    @RequestMapping(value = "/jsonlesson")
+    public String lessons_from_json(@RequestParam(value = "path") String path){
         Lesson l = LessonJSONService.create_lesson_from_JSON(path);
         OfyService.ofy().save().entity(l).now();
         return "index";
