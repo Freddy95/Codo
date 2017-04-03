@@ -2,3 +2,7 @@ body {
     font-family: 'Questrial', Verdana, Helvetica, sans-serif;
 /*    background-color: #FFFFCC;
 */}
+
+.fa-vc {
+    line-height:inherit!important;
+}

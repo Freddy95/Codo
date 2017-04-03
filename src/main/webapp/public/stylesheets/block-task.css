@@ -23,3 +23,8 @@ html, body {
 #task-brand {
     margin: 0px;
 }
+
+#next-arrow {
+    color: inherit;
+    text-decoration: none;
+}
