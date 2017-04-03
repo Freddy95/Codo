@@ -18,6 +18,9 @@ public class OfyService {
         ObjectifyService.register(Task.class);
     }
 
+    public OfyService(){
+    }
+
     public static Objectify ofy() {
         return ObjectifyService.ofy();//prior to v.4.0 use .begin() ,
         //since v.4.0  use ObjectifyService.ofy();

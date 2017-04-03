@@ -21,6 +21,30 @@ public class AuthenticationService {
 
     }
 
+    public GoogleIdToken getIdToken(String token,JacksonFactory jsonFactory,NetHttpTransport transport){
+        String CLIENT_ID = "441622834163-c890l3f1krej8tfgv0sl78b3tqqo10fo.apps.googleusercontent.com";
+        String idTokenString = token;
+
+        System.out.println("idtoken: "+idTokenString);
+
+
+        GoogleIdTokenVerifier verifier =  new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+                .setAudience(Collections.singletonList(CLIENT_ID))
+                // Or, if multiple clients access the backend:
+                //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
+                .build();
+
+
+        GoogleIdToken idToken = null;
+        try {
+            idToken = verifier.verify(idTokenString);
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return idToken;
+    }
     public boolean isAuthenticated(String token, JacksonFactory jsonFactory, NetHttpTransport transport){
         String CLIENT_ID = "441622834163-c890l3f1krej8tfgv0sl78b3tqqo10fo.apps.googleusercontent.com";
         String idTokenString = token;

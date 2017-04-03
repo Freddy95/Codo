@@ -1,6 +1,7 @@
 package com.dolphinblue.controller;
 
 import com.dolphinblue.service.AuthenticationService;
+import com.dolphinblue.service.CodoUserService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
@@ -25,6 +26,8 @@ import java.util.Collections;
 public class LoginController{
     @Autowired
     AuthenticationService authService;
+    @Autowired
+    CodoUserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getLogin(HttpServletRequest req){
@@ -36,8 +39,16 @@ public class LoginController{
     public ModelAndView postLogin(HttpServletRequest req, HttpServletResponse resp){
         JacksonFactory jsonFactory = new JacksonFactory();
         NetHttpTransport transport = new NetHttpTransport();
-        boolean isAuthenicated = authService.isAuthenticated(req.getHeader("Authorization"),jsonFactory,transport);
-      if(isAuthenicated) {
+        //get the token from the header sent from the browser
+        String token = req.getHeader("Authorization");
+        //check if the user in authenticated
+        boolean isAuthenticated = authService.isAuthenticated(token,jsonFactory,transport);
+        //get the token so we can get the user info
+        GoogleIdToken googleToken = authService.getIdToken(token,jsonFactory,transport);
+        //now we add the user to the database
+        boolean isAdded = userService.addUser(googleToken);
+
+      if(isAuthenticated && isAdded) {
             resp.setStatus(303);
             return new ModelAndView("redirect:user");
 
