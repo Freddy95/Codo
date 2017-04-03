@@ -2,6 +2,7 @@
 	"title": "Types",
 	"shared": false,
 	"site_owned": true,
+	"description" : "DEVON ADD DESCRIPTION OF LESSON HERE",
 	"tasks" :[
 		{
 			"title" : "Printing & Strings",

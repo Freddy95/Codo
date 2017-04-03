@@ -25,17 +25,13 @@ public class LessonJSONService {
         try{
 
             File file = new File(file_path);
-            System.out.println("##########not here");
-            if (file.exists()){
-                System.out.println("it exists");
-            }
             Object obj = parser.parse(new FileReader(file));
             JSONObject json_object = (JSONObject) obj;
             Lesson l = new Lesson();
             l.setTitle((String) json_object.get("title"));
             l.setShared((Boolean) json_object.get("shared"));
             l.setSite_owned((Boolean) json_object.get("site_owned"));
-
+            l.setDescription((String) json_object.get("description"));
             JSONArray json_tasks = (JSONArray) json_object.get("tasks");
             l.setTasks(create_tasks_from_json(json_tasks));
             return l;

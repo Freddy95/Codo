@@ -22,6 +22,7 @@ public class Lesson {
     @Index private boolean shared;
     @Index private  boolean site_owned;
     private Key<Lesson> original_lesson;
+    private String description;
     public Lesson(){
         this.tasks = new ArrayList<>();
     }
@@ -108,5 +109,11 @@ public class Lesson {
         this.original_lesson = Key.create(Lesson.class, original_lesson.getLesson_id());
     }
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

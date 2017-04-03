@@ -62,7 +62,6 @@ public class LessonService {
 
         List<Lesson> user_lessons = ofy.load().type(Lesson.class).filter("user_id", Key.create(User.class, user.getUser_id())).list();
         List<Lesson> main_lessons =  ofy.load().type(Lesson.class).filter("site_owned", true).filter("user_id",null).list();
-        System.out.println("mainlesson size: " + main_lessons.size());
        for(int i = 0; i < user_lessons.size(); i++){
            for(int j = 0; j < main_lessons.size(); j++){
                if(user_lessons.get(i).getOriginal_lesson().getId() == main_lessons.get(j).getLesson_id()){//user already has this lesson
@@ -73,12 +72,11 @@ public class LessonService {
        }
        List<Key<Lesson>> user_lesson_keys = user.getLessons();
         for(int i =0; i < main_lessons.size(); i++){//user doesn't have the lessons in this list
-                System.out.println("WE DONT HAVE THIS LESSON");
-                System.out.println(main_lessons.get(i).toString());
                 Lesson m = main_lessons.get(i);
                 Lesson l = new Lesson();//create new lesson object
                 l.setTitle(m.getTitle());
                 l.setUser_id(user);
+                l.setDescription(m.getDescription());
                 l.setOriginal_lesson(m);
                 l.setSite_owned(true);
                 List<Task> tasks = get_tasks_by_id(m.getTasks());
