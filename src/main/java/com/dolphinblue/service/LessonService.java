@@ -45,7 +45,7 @@ public class LessonService {
 
         for(int i = 0; i < lesson_keys.size(); i++) {
             Key<Lesson> lesson_key = lesson_keys.get(i);
-            Lesson lesson = ofy.load().type(Lesson.class).id(lesson_key.getId()).now();
+            Lesson lesson = ofy.load().key(lesson_key).now();
             if(lesson.isSite_owned()) {
                 main_lessons.add(lesson);
             }
@@ -53,17 +53,35 @@ public class LessonService {
         return main_lessons;
     }
 
+    /**
+     * Creates main lesson objects for a specific user ONLY IF the user doesn't have a certain lesson object
+     * @param user
+     */
     public void create_main_lessons_for_user(User user){
-        List<Key<Lesson>> user_lessons = user.getLessons();
         Objectify ofy = OfyService.ofy();
-        List<Key<Lesson>> main_lessons =  ofy.load().type(Lesson.class).filter("site_owned", true).keys().list();
-        for(int i =0; i < main_lessons.size(); i++){
-            if(!user_lessons.contains(main_lessons.get(i))){//this user doesn't have his own copy of this main lesson
-                Lesson m = ofy.load().key(main_lessons.get(i)).now();
+
+        List<Lesson> user_lessons = ofy.load().type(Lesson.class).filter("user_id", Key.create(User.class, user.getUser_id())).list();
+        List<Lesson> main_lessons =  ofy.load().type(Lesson.class).filter("site_owned", true).filter("user_id",null).list();
+        System.out.println("mainlesson size: " + main_lessons.size());
+       for(int i = 0; i < user_lessons.size(); i++){
+           for(int j = 0; j < main_lessons.size(); j++){
+               if(user_lessons.get(i).getOriginal_lesson().getId() == main_lessons.get(j).getLesson_id()){//user already has this lesson
+                   main_lessons.remove(j);
+                   break;
+               }
+           }
+       }
+       List<Key<Lesson>> user_lesson_keys = user.getLessons();
+        for(int i =0; i < main_lessons.size(); i++){//user doesn't have the lessons in this list
+                System.out.println("WE DONT HAVE THIS LESSON");
+                System.out.println(main_lessons.get(i).toString());
+                Lesson m = main_lessons.get(i);
                 Lesson l = new Lesson();//create new lesson object
                 l.setTitle(m.getTitle());
+                l.setUser_id(user);
+                l.setOriginal_lesson(m);
                 l.setSite_owned(true);
-                List<Task> tasks = get_tasks_by_id(l.getTasks());
+                List<Task> tasks = get_tasks_by_id(m.getTasks());
                 List<Key<Task>> task_keys = new ArrayList<>();
                 for(int j = 0; j < tasks.size(); j++){//create the tasks for the new lesson object
                     Task original_task = tasks.get(j);
@@ -76,9 +94,8 @@ public class LessonService {
                     task_keys.add(ofy.save().entity(t).now());
                 }
                 l.setTasks(task_keys);
-                user_lessons.add(ofy.save().entity(l).now());
+                user_lesson_keys.add(ofy.save().entity(l).now());
             }
-        }
     }
 
     public List<Block> get_blocks_by_id(List<Key<Block>> block_keys){
@@ -125,6 +142,16 @@ public class LessonService {
             tasks.add(ofy.load().key(key).now());
         }
         return tasks;
+    }
+
+    /**
+     * gets the main lesson objects specific to a single user
+     * @param user
+     * @return list of main lessons for a specific user
+     */
+    public List<Lesson> get_main_lessons_by_user(User user){
+        Objectify ofy = OfyService.ofy();
+        return ofy.load().type(Lesson.class).filter("user_id", Key.create(User.class, user.getUser_id())).filter("site_owned", true).list();
     }
 
 

@@ -43,7 +43,7 @@ public class UserController {
         lessonService.create_main_lessons_for_user(user);//create user's own main lesson objects and save them in datastore
         model.addAttribute("user_info", user);
         List<Key<Lesson>> lesson_keys = user.getLessons();
-        List<Lesson> main_lessons = lessonService.get_main_lessons_by_id(lesson_keys);
+        List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
         Lesson l;
         if(user.getCurrent_lesson() == null){
             l = ofy.load().type(Lesson.class).filter("site_owned", true).first().now();

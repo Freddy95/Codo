@@ -57,7 +57,7 @@ public class Lesson {
     }
 
     public void setUser_id(User user) {
-        this.user_id = Key.create(user);
+        this.user_id = Key.create(User.class, user.getUser_id());
     }
 
     public Key getCreator_id() {
@@ -65,7 +65,7 @@ public class Lesson {
     }
 
     public void setCreator_id(User creator) {
-        this.creator_id = Key.create(creator);
+        this.creator_id = Key.create(User.class, creator.getUser_id());
     }
 
     public List<Key<Task>> getTasks() {
@@ -105,7 +105,7 @@ public class Lesson {
     }
 
     public void setOriginal_lesson(Lesson original_lesson) {
-        this.original_lesson = Key.create(original_lesson);
+        this.original_lesson = Key.create(Lesson.class, original_lesson.getLesson_id());
     }
 
 
