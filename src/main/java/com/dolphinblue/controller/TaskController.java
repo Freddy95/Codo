@@ -1,11 +1,13 @@
 package com.dolphinblue.controller;
 
 import com.dolphinblue.models.Block;
+import com.dolphinblue.models.Block.Type;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
 import com.dolphinblue.service.LessonJSONService;
 import com.dolphinblue.service.LessonService;
 import com.dolphinblue.service.OfyService;
+import java.util.ArrayList;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
@@ -44,13 +46,29 @@ public class TaskController {
      */
     @RequestMapping(value = "/debug-block-task", method = RequestMethod.GET)
     public String get_task(Model model){
-        // Lesson l = new Lesson(new Long(1), "First Lesson", null, null, null, true, true);
-        // Task t = new Task();
-        // t.setTitle("First Block Task");
-        // t.setInstructions("These are the instructions.");
-        // t.setHint("This is the hint.");
-        // model.addAttribute("lesson", l);
-        // model.addAttribute("task", t);
+        Lesson l = new Lesson();
+        l.setTitle("First Lesson");
+        Task t = new Task();
+        t.setTitle("First Block Task");
+        t.setInstructions("These are the instructions.");
+        t.setHint("This is the hint.");
+        model.addAttribute("lesson", l);
+        model.addAttribute("task", t);
+
+        ArrayList<Block> toolbox = new ArrayList<Block>();
+        ArrayList<Block> editor = new ArrayList<Block>();
+
+        toolbox.add(new Block(new Long(1), "x = 2;", Type.ASSIGN, true));
+        toolbox.add(new Block(new Long(2), "x += 5;", Type.ASSIGN, true));
+
+        editor.add(new Block(new Long(2), "x += 1;", Type.ASSIGN, true));
+        editor.add(new Block(new Long(2), "console.log(x);", Type.ASSIGN, true));
+
+
+        model.addAttribute("toolbox", toolbox);
+        model.addAttribute("editor", editor);
+        model.addAttribute("task", t);
+
         return "block-task";
     }
 

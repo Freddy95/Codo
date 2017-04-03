@@ -19,3 +19,7 @@ nav, .nav {
 html, body {
     height: 100vh;
 }
+
+#task-brand {
+    margin: 0px;
+}
