@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>  
-  <div th:fragment="lesson" class="col-6 align-items-center">
+  <div th:fragment="myfragment(variable)" class="col-6 align-items-center">
     <div class="row lesson-box">
       <div class="col-4 title-box">
-        <span>Title</span>
+        <span th:text="${variable.title}"></span>
         <br/>
-        <span>Percentage</span>
+        <span th:text="${variable.percent_complete}"></span>
       </div>
-      <div class="col-8 description-box">Description</div>
+      <div class="col-8 description-box" th:text="|Lesson Description : ${variable.title}|"></div>
     </div>
   </div>
 </body>
-  
+
 </html>

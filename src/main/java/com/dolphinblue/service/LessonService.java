@@ -4,6 +4,7 @@ import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
 
+import com.dolphinblue.models.User;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
@@ -50,6 +51,34 @@ public class LessonService {
             }
         }
         return main_lessons;
+    }
+
+    public void create_main_lessons_for_user(User user){
+        List<Key<Lesson>> user_lessons = user.getLessons();
+        Objectify ofy = OfyService.ofy();
+        List<Key<Lesson>> main_lessons =  ofy.load().type(Lesson.class).filter("site_owned", true).keys().list();
+        for(int i =0; i < main_lessons.size(); i++){
+            if(!user_lessons.contains(main_lessons.get(i))){//this user doesn't have his own copy of this main lesson
+                Lesson m = ofy.load().key(main_lessons.get(i)).now();
+                Lesson l = new Lesson();//create new lesson object
+                l.setTitle(m.getTitle());
+                l.setSite_owned(true);
+                List<Task> tasks = get_tasks_by_id(l.getTasks());
+                List<Key<Task>> task_keys = new ArrayList<>();
+                for(int j = 0; j < tasks.size(); j++){//create the tasks for the new lesson object
+                    Task original_task = tasks.get(j);
+                    Task t = new Task();
+                    t.setTitle(original_task.getTitle());
+                    t.setToolbox(original_task.getToolbox());
+                    t.setEditor(original_task.getEditor());
+                    t.setInstructions(original_task.getInstructions());
+                    t.setType(original_task.getType());
+                    task_keys.add(ofy.save().entity(t).now());
+                }
+                l.setTasks(task_keys);
+                user_lessons.add(ofy.save().entity(l).now());
+            }
+        }
     }
 
     public List<Block> get_blocks_by_id(List<Key<Block>> block_keys){

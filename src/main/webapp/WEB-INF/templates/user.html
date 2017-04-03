@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="len">
 <head>
    
   <title>Codo - Home</title>
@@ -23,6 +23,9 @@
   <div class="row justify-content-center user-section" id="badges">
     <div class="col">
       <div class="row justify-content-center user-section-header">
+        <h2 th:text="|Welcome Back, ${user_info.first_name}!|"></h2>
+      </div>
+      <div class="row justify-content-center user-section-header">
         <h2>Badges</h2>
       </div>
       <div class="row justify-content-center">
@@ -31,11 +34,12 @@
   </div>
   <div class="row justify-content-center user-section" id="progress">
     <div class="col">
+
       <div class="row justify-content-center user-section-header">
         <h2>You're learning:</h2>
       </div>
       <div class="row justify-content-center">
-        <div th:replace="lessoncard :: lesson"></div>
+        <div th:replace="lessoncard :: myfragment(${lesson})"></div>
       </div>
     </div>
   </div>
@@ -59,31 +63,23 @@
       </div>
       <div class="tab-content">
         <div class="tab-pane fade show active" id="main" role="tabpanel">
-          <div class="row justify-content-center">
-            <div th:replace="lessoncard :: lesson"></div>
-            <div th:replace="lessoncard :: lesson"></div>
+          <div class="row justify-content-center" th:each="l : ${main_lessons}">
+            <div th:replace="lessoncard :: myfragment(${l})"></div>
           </div>
-          <div class="row justify-content-center">
-            <div th:replace="lessoncard :: lesson"></div>
-            <div th:replace="lessoncard :: lesson"></div>
-          </div>
-          <div class="row justify-content-center">
-            <div th:replace="lessoncard :: lesson"></div>
-            <div th:replace="lessoncard :: lesson"></div>
-          </div>
+
         </div>
         <div class="tab-pane fade" id="shared" role="tabpanel">
           <div class="row justify-content-center">
-            <div th:replace="lessoncard :: lesson"></div>
-            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
+            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
           </div>
           <div class="row justify-content-center">
-            <div th:replace="lessoncard :: lesson"></div>
-            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
+            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
           </div>
           <div class="row justify-content-center">
-            <div th:replace="lessoncard :: lesson"></div>
-            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
+            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
           </div>
         </div>
         <div class="tab-pane fade" id="your" role="tabpanel">
@@ -94,16 +90,16 @@
             </a>
           </div>
           <div class="row justify-content-center">
-            <div th:replace="lessoncard :: lesson"></div>
-            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
+            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
           </div>
           <div class="row justify-content-center">
-            <div th:replace="lessoncard :: lesson"></div>
-            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
+            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
           </div>
           <div class="row justify-content-center">
-            <div th:replace="lessoncard :: lesson"></div>
-            <div th:replace="lessoncard :: lesson"></div>
+            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
+            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
           </div>
         </div>
       </div>

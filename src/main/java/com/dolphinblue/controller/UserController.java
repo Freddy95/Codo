@@ -35,27 +35,45 @@ public class UserController {
      * gets user and adds him to @param model
      * @return
      */
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String get_user_page(@RequestParam(value = "id") Long id, Model model){
         Objectify ofy = OfyService.ofy();
 
         User user = ofy.load().type(User.class).id(id).now();
+        lessonService.create_main_lessons_for_user(user);//create user's own main lesson objects and save them in datastore
         model.addAttribute("user_info", user);
-
         List<Key<Lesson>> lesson_keys = user.getLessons();
         List<Lesson> main_lessons = lessonService.get_main_lessons_by_id(lesson_keys);
-        model.addAttribute("main_lessons", main_lessons);
+        Lesson l;
+        if(user.getCurrent_lesson() == null){
+            l = ofy.load().type(Lesson.class).filter("site_owned", true).first().now();
+        }else {
+            l = (Lesson) ofy.load().key(user.getCurrent_lesson()).now();
+        }
 
+        model.addAttribute("lesson", l);
+
+        model.addAttribute("main_lessons", main_lessons);
         return "user";
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String get_user_page(Model model){
-        // Objectify ofy = OfyService.ofy();
-
-        // User user = ofy.load().type(User.class).id(id).now();
-        // model.addAttribute("user", user);
-        return "user";
+//    @RequestMapping(value = "/user", method = RequestMethod.GET)
+//    public String get_user_page(Model model){
+//        // Objectify ofy = OfyService.ofy();
+//
+//        // User user = ofy.load().type(User.class).id(id).now();
+//        // model.addAttribute("user", user);
+//        return "user";
+//    }
+    @RequestMapping(value = "/makeuser")
+    public String make_user(){
+        Objectify ofy = OfyService.ofy();
+        User u = new User();
+        u.setUser_id(1L);
+        u.setFirst_name("Fred");
+        u.setLast_name("estevez");
+        ofy.save().entity(u).now();
+        return "index";
     }
 
 }
