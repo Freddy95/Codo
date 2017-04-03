@@ -2,9 +2,17 @@ package com.dolphinblue.controller;
 
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.User;
+import com.dolphinblue.service.AuthenticationService;
+import com.dolphinblue.service.CodoUserService;
 import com.dolphinblue.service.LessonService;
 import com.dolphinblue.service.OfyService;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.Json;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.appengine.api.users.UserService;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
@@ -30,14 +38,24 @@ import java.util.List;
 public class UserController {
     @Autowired
     LessonService lessonService;
+    @Autowired
+    AuthenticationService authenticationService;
+    @Autowired
+    CodoUserService userService;
 
     /**
      * gets user and adds him to @param model
      * @return
      */
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String get_user_page(@RequestParam(value = "id") Long id, Model model){
+    public String get_user_page(@CookieValue("token") String token, Model model){
         Objectify ofy = OfyService.ofy();
+
+        //get the google id token from the authentication token from the browser cookie
+        GoogleIdToken googletoken = authenticationService.getIdToken(token, new JacksonFactory(),new NetHttpTransport());
+
+        //now we use google's token to contact google app engines user api and get the User info
+        String id = userService.getUserId(googletoken);
 
         User user = ofy.load().type(User.class).id(id).now();
         lessonService.create_main_lessons_for_user(user);//create user's own main lesson objects and save them in datastore
@@ -65,15 +83,15 @@ public class UserController {
 //        // model.addAttribute("user", user);
 //        return "user";
 //    }
-    @RequestMapping(value = "/makeuser")
-    public String make_user(){
-        Objectify ofy = OfyService.ofy();
-        User u = new User();
-        u.setUser_id(1L);
-        u.setFirst_name("Fred");
-        u.setLast_name("estevez");
-        ofy.save().entity(u).now();
-        return "index";
-    }
+//    @RequestMapping(value = "/makeuser")
+//    public String make_user(){
+//        Objectify ofy = OfyService.ofy();
+//        User u = new User();
+//        u.setUser_id(1L);
+//        u.setFirst_name("Fred");
+//        u.setLast_name("estevez");
+//        ofy.save().entity(u).now();
+//        return "index";
+//    }
 
 }
