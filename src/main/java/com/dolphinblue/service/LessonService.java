@@ -80,18 +80,7 @@ public class LessonService {
             l.setOriginal_lesson(m);
             l.setSite_owned(true);
             List<Task> tasks = get_tasks_by_id(m.getTasks());
-            List<Key<Task>> task_keys = new ArrayList<>();
-            for(int j = 0; j < tasks.size(); j++){//create the tasks for the new lesson object
-                Task original_task = tasks.get(j);
-                Task t = new Task();
-                t.setTitle(original_task.getTitle());
-                t.setToolbox(original_task.getToolbox());
-                t.setEditor(original_task.getEditor());
-                t.setInstructions(original_task.getInstructions());
-                t.setOriginal_task(original_task);
-                t.setType(original_task.getType());
-                task_keys.add(ofy.save().entity(t).now());
-            }
+            List<Key<Task>> task_keys = create_tasks_by_id(tasks);//create task object
             l.setTasks(task_keys);
             user_lesson_keys.add(ofy.save().entity(l).now());
         }
@@ -100,6 +89,23 @@ public class LessonService {
         }
 
 
+    }
+
+    public List<Key<Task>> create_tasks_by_id(List<Task> tasks){
+        Objectify ofy = OfyService.ofy();
+        List<Key<Task>> task_keys = new ArrayList<>();
+        for(int j = 0; j < tasks.size(); j++){//create the tasks for the new lesson object
+            Task original_task = tasks.get(j);
+            Task t = new Task();
+            t.setTitle(original_task.getTitle());
+            t.setToolbox(original_task.getToolbox());
+            t.setEditor(original_task.getEditor());
+            t.setInstructions(original_task.getInstructions());
+            t.setOriginal_task(original_task);
+            t.setType(original_task.getType());
+            task_keys.add(ofy.save().entity(t).now());
+        }
+        return task_keys;
     }
 
     public List<Block> get_blocks_by_id(List<Key<Block>> block_keys){
