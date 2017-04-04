@@ -216,16 +216,8 @@ public class TaskController {
         }
         //restarted the lesson so first task is needed
         Task task = tasks.get(0);
-        model.addAttribute("task", task);
-
-        List<Key<Block>> e_block_keys = task.getEditor();
-        List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);
-        model.addAttribute("editor_blocks", editor_blocks);
-
-        List<Key<Block>> t_block_keys = task.getToolbox();
-        List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
-        model.addAttribute("toolbox_blocks", toolbox_blocks);
-        return "block-task";
+        //redirect
+        return "redirect:" + lessonId + "/restarttask/" + task.getTask_id();
     }
 
     /**
@@ -234,8 +226,8 @@ public class TaskController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/restarttask/{taskId}", method = RequestMethod.GET)
-    public String restart_task(@CookieValue("token") String token, @PathVariable(value = "taskId") Long taskId, Model model){
+    @RequestMapping(value = "/restartlesson/{lessonId}/restarttask/{taskId}", method = RequestMethod.GET)
+    public String restart_task(@CookieValue("token") String token, @PathVariable(value = "lessonId") Long lessonId, @PathVariable(value = "taskId") Long taskId, Model model){
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
             //if the user isn't properly authenticated send them back to the login page
@@ -243,6 +235,7 @@ public class TaskController {
         }
 
         Objectify ofy = OfyService.ofy();
+        Lesson lesson = ofy.load().type(Lesson.class).id(lessonId).now();
         //task to be restarted
         Task task = ofy.load().type(Task.class).id(taskId).now();
         Task original_task = (Task) ofy.load().key(task.getOriginal_task()).now();
@@ -270,13 +263,15 @@ public class TaskController {
         task.setEditor(original_task.getEditor());
         //save changes to this task
         ofy.save().entity(task).now();
+        model.addAttribute("lesson", lesson);
         List<Key<Block>> e_block_keys = task.getEditor();
         List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);
-        model.addAttribute("editor_blocks", editor_blocks);
+
+        model.addAttribute("editor", editor_blocks);
 
         List<Key<Block>> t_block_keys = task.getToolbox();
         List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
-        model.addAttribute("toolbox_blocks", toolbox_blocks);
+        model.addAttribute("toolbox", toolbox_blocks);
         model.addAttribute("task", task);
         return "lesson";
     }
