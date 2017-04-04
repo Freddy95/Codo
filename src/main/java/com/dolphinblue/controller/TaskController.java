@@ -132,17 +132,51 @@ public class TaskController {
     }
 
     /**
-     * Restarts a Lesson to original version
-     * @param id
+     * Restarts lesson to original values.
+     * @param token - user auth token
+     * @param lessonId - lesson to restart
      * @param model
      * @return
      */
-    @RequestMapping(value = "/restartlesson", method = RequestMethod.GET)
-    public String restart_lesson(@RequestParam(value = "id") Long id, Model model){
+    @RequestMapping(value = "/restartlesson/{lessonId}", method = RequestMethod.GET)
+    public String restart_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long lessonId, Model model){
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            //if the user isn't properly authenticated send them back to the login page
+            return "redirect:login";
+        }
+
         Objectify ofy = OfyService.ofy();
-        Lesson l = ofy.load().type(Lesson.class).id(id).now();
-        model.addAttribute("lesson", l);
-        return "lesson";
+        //load lesson to be restarted
+        Lesson l = ofy.load().type(Lesson.class).id(lessonId).now();
+
+        //must set all tasks in lesson to original state
+        List<Task> tasks = lessonService.get_tasks_by_id(l.getTasks());
+
+        for(int i = 0; i < tasks.size(); i++){
+            Task original = (Task) ofy.load().key(tasks.get(i).getOriginal_task()).now();
+            //set to not completed
+            tasks.get(i).setCompleted(false);
+            //need to reset the toolbox for task
+            tasks.get(i).setToolbox(original.getToolbox());
+            //need to reset editor for task
+            tasks.get(i).setEditor(original.getEditor());
+            //save the changes to datastore
+            ofy.save().entity(tasks.get(i)).now();
+
+        }
+        //restarted the lesson so first task is needed
+        Task task = tasks.get(0);
+        model.addAttribute("task", task);
+
+        List<Key<Block>> e_block_keys = task.getEditor();
+        List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);
+        model.addAttribute("editor_blocks", editor_blocks);
+
+        List<Key<Block>> t_block_keys = task.getToolbox();
+        List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
+        model.addAttribute("toolbox_blocks", toolbox_blocks);
+        return "block-task";
     }
 
     /**
@@ -173,17 +207,6 @@ public class TaskController {
         return "index";
     }
 
-    /**
-     * Gets a lesson based on its id
-     * @param id - id of lesson to retrieve
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/getlesson")
-    public String get_lesson(@RequestParam(value = "id") Long id, Model model){
-        model.addAttribute("lesson", OfyService.ofy().load().type(Lesson.class).id(id).now());
-        return "lessoncard";
-    }
 
     /**
      * Updates a lesson
