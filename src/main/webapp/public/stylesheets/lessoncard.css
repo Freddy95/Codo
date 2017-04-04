@@ -17,3 +17,8 @@
 .lesson-box {
     padding: 10px;
 }
+
+.lesson-link {
+    color: inherit;
+    text-decoration: none;
+}
