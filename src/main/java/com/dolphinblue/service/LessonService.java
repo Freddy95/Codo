@@ -88,6 +88,7 @@ public class LessonService {
                 t.setToolbox(original_task.getToolbox());
                 t.setEditor(original_task.getEditor());
                 t.setInstructions(original_task.getInstructions());
+                t.setOriginal_task(original_task);
                 t.setType(original_task.getType());
                 task_keys.add(ofy.save().entity(t).now());
             }
