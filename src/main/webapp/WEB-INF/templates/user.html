@@ -63,9 +63,11 @@
       </div>
       <div class="tab-content">
         <div class="tab-pane fade show active" id="main" role="tabpanel">
-          <div class="row justify-content-center" th:each="index: ${#numbers.sequence(0, #lists.size(main_lessons) - 1, 2)}">
+          <div class="row" th:each="index: ${#numbers.sequence(0, #lists.size(main_lessons) - 1, 2)}">
             <div th:replace="lessoncard :: myfragment(${main_lessons[index]})"></div>
-            <div th:if="${index + 1 < #lists.size(main_lessons)}" th:replace="lessoncard :: myfragment(${main_lessons[index + 1]})"></div>
+            <div th:if="${index + 1 < #lists.size(main_lessons) - 1}" class="col-6 align-items-center">
+              <div th:replace="lessoncard :: subfragment(${main_lessons[index + 1]})" th:remove="tag"></div>
+            </div>
           </div>
         </div>
 <!--         <div class="tab-pane fade" id="shared" role="tabpanel">
