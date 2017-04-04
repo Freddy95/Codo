@@ -25,12 +25,13 @@
 <div class="container-fluid">
   <div th:fragment="blockContent" id="blockContent" class="h-100">
     <div class="card" id="editor-div">
-      <div class="card-header card-title-block align-items-center">
+      <div class="card-header card-title-block">
         <h3 class="card-title">
           Editor
         </h3>
-        <a class="fa fa-2x fa-question pull-right" data-toggle="modal" data-target="#hintModal">
-        </a>
+        <span class="align-middle">
+          <a class="fa fa-lg fa-vc fa-question pull-right" data-toggle="modal" data-target="#hintModal"></a>
+        </span>
         <div class="modal fade" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">

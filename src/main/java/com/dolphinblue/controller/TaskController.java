@@ -59,8 +59,8 @@ public class TaskController {
         t.setTitle("First Block Task");
         t.setInstructions("These are the instructions.");
         t.setHint("This is the hint.");
-        model.addAttribute("lesson", l);
-        model.addAttribute("task", t);
+        t.setTest_case("x = 1;");
+        t.setExpected_output("3");
 
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();
@@ -71,7 +71,7 @@ public class TaskController {
         editor.add(new Block(new Long(2), "x += 1;", Type.ASSIGN, true));
         editor.add(new Block(new Long(2), "console.log(x);", Type.ASSIGN, true));
 
-
+        model.addAttribute("lesson", l);
         model.addAttribute("toolbox", toolbox);
         model.addAttribute("editor", editor);
         model.addAttribute("task", t);
