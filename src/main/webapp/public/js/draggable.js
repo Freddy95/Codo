@@ -28,7 +28,8 @@ function run() {
 
   eval(s);
 
-  if ($('#output-div>.card-title-block').children().length === 1 && $('#output').text() === expected_output) {
+  if ($('#output-div>.card-title-block').children().length === 1 &&
+      $('#output').text() === expected_output) {
     $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/debug-block-task"></a>'));
   }
 }

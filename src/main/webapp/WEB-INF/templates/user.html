@@ -23,13 +23,13 @@
   <div class="row justify-content-center user-section" id="badges">
     <div class="col">
       <div class="row justify-content-center user-section-header">
-        <h2 th:text="|Welcome Back, ${user_info.first_name}!|"></h2>
+        <h2 th:text="|Welcome, ${user_info.first_name}!|"></h2>
       </div>
-      <div class="row justify-content-center user-section-header">
+<!--       <div class="row justify-content-center user-section-header">
         <h2>Badges</h2>
       </div>
       <div class="row justify-content-center">
-      </div>
+      </div> -->
     </div>
   </div>
   <div class="row justify-content-center user-section" id="progress">
@@ -53,22 +53,22 @@
           <li class="nav-item">
             <a class="nav-link active" data-toggle="pill" href="#main">Main Lessons</a>
           </li>
-          <li class="nav-item">
+<!--           <li class="nav-item">
             <a class="nav-link" data-toggle="pill" href="#shared">Shared Lessons</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="pill" href="#your">Your Lessons</a>
-          </li>
+          </li> -->
         </ul>
       </div>
       <div class="tab-content">
         <div class="tab-pane fade show active" id="main" role="tabpanel">
-          <div class="row justify-content-center" th:each="l : ${main_lessons}">
-            <div th:replace="lessoncard :: myfragment(${l})"></div>
+          <div class="row justify-content-center" th:each="index: ${#numbers.sequence(0, #lists.size(main_lessons) - 1, 2)}">
+            <div th:replace="lessoncard :: myfragment(${main_lessons[index]})"></div>
+            <div th:if="${index + 1 < #lists.size(main_lessons)}" th:replace="lessoncard :: myfragment(${main_lessons[index + 1]})"></div>
           </div>
-
         </div>
-        <div class="tab-pane fade" id="shared" role="tabpanel">
+<!--         <div class="tab-pane fade" id="shared" role="tabpanel">
           <div class="row justify-content-center">
             <div th:replace="lessoncard :: myfragment(${lesson})"></div>
             <div th:replace="lessoncard :: myfragment(${lesson})"></div>
@@ -100,7 +100,7 @@
           <div class="row justify-content-center">
             <div th:replace="lessoncard :: myfragment(${lesson})"></div>
             <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
