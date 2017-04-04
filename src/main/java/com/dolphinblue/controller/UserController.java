@@ -9,10 +9,7 @@ import com.dolphinblue.service.OfyService;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.Json;
-import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.appengine.api.users.UserService;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
@@ -22,7 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -58,7 +54,7 @@ public class UserController {
         String id = userService.getUserId(googletoken);
 
         User user = ofy.load().type(User.class).id(id).now();
-        lessonService.create_main_lessons_for_user(user);//create user's own main lesson objects and save them in datastore
+        lessonService.create_main_lessons_for_user(user); //create user's own main lesson objects and save them in datastore
         model.addAttribute("user_info", user);
         List<Key<Lesson>> lesson_keys = user.getLessons();
         List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
