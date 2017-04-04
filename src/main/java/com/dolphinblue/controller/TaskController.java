@@ -273,7 +273,7 @@ public class TaskController {
         List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
         model.addAttribute("toolbox", toolbox_blocks);
         model.addAttribute("task", task);
-        return "lesson";
+        return "block-task";
     }
 
     /**
