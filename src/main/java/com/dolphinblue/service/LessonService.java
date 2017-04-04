@@ -42,7 +42,7 @@ public class LessonService {
     public List<Lesson> get_main_lessons_by_id(List<Key<Lesson>> lesson_keys) {
         Objectify ofy = OfyService.ofy();
         List<Lesson> main_lessons = new ArrayList<>();
-
+        System.out.println("lesson size: " + lesson_keys.size());
         for(int i = 0; i < lesson_keys.size(); i++) {
             Key<Lesson> lesson_key = lesson_keys.get(i);
             Lesson lesson = ofy.load().key(lesson_key).now();
@@ -60,40 +60,52 @@ public class LessonService {
     public void create_main_lessons_for_user(User user){
         Objectify ofy = OfyService.ofy();
 
-        List<Lesson> user_lessons = ofy.load().type(Lesson.class).filter("user_id", Key.create(User.class, user.getUser_id())).list();
+        List<Lesson> user_lessons = ofy.load().type(Lesson.class).filter("user_id", user.getUser_id()).list();
         List<Lesson> main_lessons =  ofy.load().type(Lesson.class).filter("site_owned", true).filter("user_id",null).list();
-       for(int i = 0; i < user_lessons.size(); i++){
-           for(int j = 0; j < main_lessons.size(); j++){
-               if(user_lessons.get(i).getOriginal_lesson().getId() == main_lessons.get(j).getLesson_id()){//user already has this lesson
-                   main_lessons.remove(j);
-                   break;
-               }
-           }
-       }
-       List<Key<Lesson>> user_lesson_keys = user.getLessons();
-        for(int i =0; i < main_lessons.size(); i++){//user doesn't have the lessons in this list
-                Lesson m = main_lessons.get(i);
-                Lesson l = new Lesson();//create new lesson object
-                l.setTitle(m.getTitle());
-                l.setUser_id(user);
-                l.setDescription(m.getDescription());
-                l.setOriginal_lesson(m);
-                l.setSite_owned(true);
-                List<Task> tasks = get_tasks_by_id(m.getTasks());
-                List<Key<Task>> task_keys = new ArrayList<>();
-                for(int j = 0; j < tasks.size(); j++){//create the tasks for the new lesson object
-                    Task original_task = tasks.get(j);
-                    Task t = new Task();
-                    t.setTitle(original_task.getTitle());
-                    t.setToolbox(original_task.getToolbox());
-                    t.setEditor(original_task.getEditor());
-                    t.setInstructions(original_task.getInstructions());
-                    t.setType(original_task.getType());
-                    task_keys.add(ofy.save().entity(t).now());
+        for(int i = 0; i < user_lessons.size(); i++){
+            for(int j = 0; j < main_lessons.size(); j++){
+                if(user_lessons.get(i).getOriginal_lesson().getId() == main_lessons.get(j).getLesson_id()){//user already has this lesson
+                    main_lessons.remove(j);
+                    break;
                 }
-                l.setTasks(task_keys);
-                user_lesson_keys.add(ofy.save().entity(l).now());
             }
+        }
+        List<Key<Lesson>> user_lesson_keys = user.getLessons();
+        for(int i =0; i < main_lessons.size(); i++){//user doesn't have the lessons in this list
+            Lesson m = main_lessons.get(i);
+            Lesson l = new Lesson();//create new lesson object
+            l.setTitle(m.getTitle());
+            l.setUser_id(user);
+            l.setDescription(m.getDescription());
+            l.setOriginal_lesson(m);
+            l.setSite_owned(true);
+            List<Task> tasks = get_tasks_by_id(m.getTasks());
+            List<Key<Task>> task_keys = create_tasks_by_id(tasks);//create task object
+            l.setTasks(task_keys);
+            user_lesson_keys.add(ofy.save().entity(l).now());
+        }
+        if(main_lessons.size() > 0){//if there where new lessons added, save changes to datastore
+            ofy.save().entity(user).now();
+        }
+
+
+    }
+
+    public List<Key<Task>> create_tasks_by_id(List<Task> tasks){
+        Objectify ofy = OfyService.ofy();
+        List<Key<Task>> task_keys = new ArrayList<>();
+        for(int j = 0; j < tasks.size(); j++){//create the tasks for the new lesson object
+            Task original_task = tasks.get(j);
+            Task t = new Task();
+            t.setTitle(original_task.getTitle());
+            t.setToolbox(original_task.getToolbox());
+            t.setEditor(original_task.getEditor());
+            t.setInstructions(original_task.getInstructions());
+            t.setOriginal_task(original_task);
+            t.setType(original_task.getType());
+            task_keys.add(ofy.save().entity(t).now());
+        }
+        return task_keys;
     }
 
     public List<Block> get_blocks_by_id(List<Key<Block>> block_keys){
@@ -149,7 +161,7 @@ public class LessonService {
      */
     public List<Lesson> get_main_lessons_by_user(User user){
         Objectify ofy = OfyService.ofy();
-        return ofy.load().type(Lesson.class).filter("user_id", Key.create(User.class, user.getUser_id())).filter("site_owned", true).list();
+        return ofy.load().type(Lesson.class).filter("user_id", user.getUser_id()).filter("site_owned", true).list();
     }
 
 

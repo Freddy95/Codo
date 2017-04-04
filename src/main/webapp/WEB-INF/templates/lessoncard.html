@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>  
   <div th:fragment="myfragment(variable)" class="col-6 align-items-center">
+    <a th:fragment="subfragment(variable)" class="lesson-link" th:href="'/lesson/' + ${variable.lesson_id}">
     <div class="row lesson-box">
       <div class="col-4 title-box">
         <span th:text="${variable.title}"></span>
@@ -10,6 +11,7 @@
       </div>
       <div class="col-8 description-box" th:text="${variable.description}"></div>
     </div>
+    </a>
   </div>
 </body>
 
