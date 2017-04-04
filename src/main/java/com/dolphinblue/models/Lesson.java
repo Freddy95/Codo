@@ -15,7 +15,7 @@ public class Lesson {
 
     @Id private Long lesson_id;
     private String title;
-    @Index private Key<User> user_id; //user who is working on the lesson
+    @Index private String user_id; //user who is working on the lesson
     private Key<User> creator_id; //user who created the lesson
     private List<Key<Task>> tasks; //holds lists of tasks ids for this lesson
     private double percent_complete; // Hold the percent of task the user has completed
@@ -27,7 +27,7 @@ public class Lesson {
         this.tasks = new ArrayList<>();
     }
 
-    public Lesson(Long lesson_id, String title, Key user, Key creator, List<Key<Task>> tasks, boolean shared, boolean site_owned) {
+    public Lesson(Long lesson_id, String title, String user, Key creator, List<Key<Task>> tasks, boolean shared, boolean site_owned) {
         this.lesson_id = lesson_id;
         this.title = title;
         this.user_id = user;
@@ -53,12 +53,12 @@ public class Lesson {
         this.title = title;
     }
 
-    public Key getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
     public void setUser_id(User user) {
-        this.user_id = Key.create(User.class, user.getUser_id());
+        this.user_id = user.getUser_id();
     }
 
     public Key getCreator_id() {
