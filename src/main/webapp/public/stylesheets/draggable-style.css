@@ -34,3 +34,32 @@
 #editor-div {
     flex-grow: 1;
 }
+
+.flash {
+  -moz-animation: flash 1s ease-out;
+  -moz-animation-iteration-count: 1;
+
+  -webkit-animation: flash 1s ease-out;
+  -webkit-animation-iteration-count: 1;
+
+  -ms-animation: flash 1s ease-out;
+  -ms-animation-iteration-count: 1;
+}
+
+@-webkit-keyframes flash {
+    0% {}
+    50% { background-color: red; color: white;}
+    100% {}
+}
+
+@-moz-keyframes flash {
+    0% {}
+    50% { background-color: red; color: white; }
+    100% {}
+}
+
+@-ms-keyframes flash {
+    0% {}
+    50% { background-color: red; color: white; }
+    100% {}
+}
