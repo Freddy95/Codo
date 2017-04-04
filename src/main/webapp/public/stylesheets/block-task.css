@@ -28,3 +28,26 @@ html, body {
     color: inherit;
     text-decoration: none;
 }
+
+#instructions {
+    overflow-y: auto;
+}
+
+.instr-block {
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    color: darkslategrey;
+}
+
+.example-output {
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
