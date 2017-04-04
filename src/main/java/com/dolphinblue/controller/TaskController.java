@@ -4,11 +4,14 @@ import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Block.Type;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
-import com.dolphinblue.service.LessonJSONService;
-import com.dolphinblue.service.LessonService;
-import com.dolphinblue.service.OfyService;
+import com.dolphinblue.models.User;
+import com.dolphinblue.service.*;
+
 import java.util.ArrayList;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
@@ -38,6 +41,10 @@ import java.util.List;
 public class TaskController {
     @Autowired
     LessonService lessonService;
+    @Autowired
+    AuthenticationService authenticationService;
+    @Autowired
+    CodoUserService userService;
 
     /**
      * For debugging the block task pages
@@ -78,13 +85,25 @@ public class TaskController {
      * 
      * TODO: Add a way to differentiate between which type of task to get.
      *
-     * @param id - id of lesson to get tasks from
+     * @param token - token of user to authenticate
      * @return
      */
-    @RequestMapping(value = "/task", method = RequestMethod.GET)
-    public String get_task(@RequestParam(value = "id") Long id, Model model){
+    @RequestMapping(value = "/lesson/{lessonId}/task/{taskId}", method = RequestMethod.GET)
+    public String get_task(@CookieValue("token") String token, @PathVariable(value = "lessonId") long lessonId,@PathVariable(value = "taskId")long taskId,Model model){
+        //grab the cookie and make sure the user is authenticated
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            //if the user isn't properly authenticated send them back to the login page
+            return "redirect:login";
+        }
+
+        //if the user is authenticated get their id
+        GoogleIdToken googleIdToken = authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport());
+        String userId = userService.getUserId(googleIdToken);
+        //TODO: we might need user and lesson id for stuff so I'm adding them in now
+
         Objectify ofy = OfyService.ofy();
-        Task task = ofy.load().type(Task.class).id(id).now();
+        Task task = ofy.load().type(Task.class).id(taskId).now();
         model.addAttribute("task", task);
 
         List<Key<Block>> e_block_keys = task.getEditor();
