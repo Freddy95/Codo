@@ -5,6 +5,8 @@ var test_case = "";
 var expected_output = "";
 
 function run() {
+  $('#output').empty();
+
   window.console.log = function(msg) {
     $('#output').append(document.createTextNode(msg)).append($('<br />'));
   }
