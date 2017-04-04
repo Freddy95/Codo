@@ -21,13 +21,13 @@ public class IndexController {
     AuthenticationService authenticationService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String index(@CookieValue("token") String token){
-        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
-        if(isAuthenticated) {
+    public String index(@CookieValue(value="token",defaultValue = "") String token) {
+            boolean isAuthenticated = authenticationService.isAuthenticated(token, new JacksonFactory(), new NetHttpTransport());
+            if (isAuthenticated) {
 //            GoogleIdToken googleIdToken = authenticationService.getIdToken(token, new JacksonFactory(), new NetHttpTransport());
-            return "redirect:user";
-        }else {
-            return "redirect:login";
+                return "redirect:user";
+            } else {
+                return "redirect:login";
+            }
         }
-    }
 }
