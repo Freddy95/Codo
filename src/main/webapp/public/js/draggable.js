@@ -1,23 +1,10 @@
 $( init );
 
+// Strings for grabbing values from Thymeleaf Template.
 var test_case = "";
 var expected_output = "";
 
-function handleBlockDrop(event, ui) {
-  $(ui.draggable).detach().css({top: 0,left: 0}).appendTo($(this));
-}
-
-function handleBlockReturn(event, ui) {
-  $(ui.draggable).detach().css({top: 0,left: 0}).appendTo($(this));
-}
-
 function run() {
-  var s = "";
-
-  $.each($('#editor').children(), function(index, value) {
-    s += $(value).children().first().text() + "\n";
-  });
-
   window.console.log = function(msg) {
     $('#output').text(msg);
   }
@@ -26,7 +13,18 @@ function run() {
     $('#output').text(messageOrEvent);
   }
 
-  eval(s);
+  $.each($('#editor').children(), function(index, value) {
+    try {
+      eval($(value).children().first().text());
+    }
+    catch(e) {
+      $(value).addClass('flash');
+      setTimeout( function(){
+        $(value).removeClass('flash');
+      }, 1000);
+      throw(e);
+    }
+  });
 
   if ($('#output-div>.card-title-block').children().length === 1 &&
       $('#output').text() === expected_output) {
