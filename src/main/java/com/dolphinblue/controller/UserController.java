@@ -57,14 +57,14 @@ public class UserController {
 
             User user = ofy.load().type(User.class).id(id).now();
             lessonService.create_main_lessons_for_user(user); //create user's own main lesson objects and save them in datastore
-            System.out.println(user.getLessons().toString());
             model.addAttribute("user_info", user);
             List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
             Lesson l;
             if (user.getCurrent_lesson() == null) {
-                l = ofy.load().type(Lesson.class).filter("site_owned", true).first().now();
+                l = main_lessons.get(0);
                 user.setCurrent_lesson(l);
-                ofy.save().entity(user).now();//made change to user object must save to datastore
+                //made change to user object must save to datastore
+                ofy.save().entity(user).now();
             } else {
                 l = (Lesson) ofy.load().key(user.getCurrent_lesson()).now();
             }
