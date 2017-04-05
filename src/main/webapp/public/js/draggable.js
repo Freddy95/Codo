@@ -54,7 +54,6 @@ function init() {
   next_task = $page.data('next-task');
   task_id = $page.data('task-id');
   lesson_id = $page.data('lesson-id');
-  debugger;
 
   $('#test-case').remove();
   $('#ex-output').remove();
