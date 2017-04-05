@@ -28,36 +28,9 @@
         </ul>
     </div>
     <div class="navbar-collapse collapse">
-        <ul class="navbar-nav mx-auto">
+        <ul class="navbar-nav mx-auto" th:each="index: ${#numbers.sequence(1, #lists.size(lesson.tasks))}">
             <li class="nav-item">
-                <a class="nav-link" href="/debug-block-task">1</a>    
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/debug-block-task">2</a>    
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/debug-block-task">3</a>    
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/debug-block-task">4</a>    
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/debug-block-task">5</a>    
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/debug-block-task">6</a>    
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/debug-block-task">7</a>    
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/debug-block-task">8</a>    
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/debug-block-task">9</a>    
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/debug-block-task">10</a>    
+                <a class="nav-link" th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${lesson.tasks[index-1].getId()}" th:text="${index}"></a>    
             </li>
         </ul>
     </div>
