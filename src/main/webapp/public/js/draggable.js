@@ -3,6 +3,9 @@ $( init );
 // Strings for grabbing values from Thymeleaf Template.
 var test_case = "";
 var expected_output = "";
+var next-task = "";
+var task-id = "";
+var lesson-id = "";
 
 function run() {
   $('#output').empty();
@@ -30,7 +33,12 @@ function run() {
 
   if ($('#output-div>.card-title-block').children().length === 1 &&
       $('#output').text() === expected_output) {
-    $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/debug-block-task"></a>'));
+    if (next-task > 0) {
+      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/' + lesson-id + '/task/' + task_id + '"></a>'));
+    }
+    else {
+      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user'));
+    }
   }
 
   // console.log($('#output').html() === "Hello<br>World!<br>");
@@ -39,6 +47,9 @@ function run() {
 function init() {
   test_case = $('#test-case').text();
   expected_output = $('#ex-output').text();
+  next-task = $('#next-task').text();
+  task-id = $('#task-id').text();
+  lesson-id = $('#lesson-id').text();
 
   $('#test-case').remove();
   $('#ex-output').remove();
