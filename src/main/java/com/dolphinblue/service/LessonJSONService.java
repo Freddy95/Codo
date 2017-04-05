@@ -54,6 +54,7 @@ public class LessonJSONService {
             t.setEditor(create_blocks_from_json((JSONArray) json_t.get("program_blocks")));
             t.setToolbox(create_blocks_from_json((JSONArray) json_t.get("toolbox")));
             t.setExpected_output((String) json_t.get("expected_output"));
+            t.setTest_case((String) json_t.get("test_case"));
             tasks.add(t);
         }
 

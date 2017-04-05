@@ -137,6 +137,7 @@ public class TaskController {
 
         Task task = ofy.load().type(Task.class).id(taskId).now();
         model.addAttribute("task", task);
+        System.out.println("OUTPUT: " + task.getExpected_output());
 
         List<Key<Block>> e_block_keys = task.getEditor();
         List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);

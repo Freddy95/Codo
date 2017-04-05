@@ -80,7 +80,8 @@ public class LessonService {
             l.setOriginal_lesson(m);
             l.setSite_owned(true);
             List<Task> tasks = get_tasks_by_id(m.getTasks());
-            List<Key<Task>> task_keys = create_tasks_by_id(tasks);//create task object
+            //create task object
+            List<Key<Task>> task_keys = create_tasks_by_id(tasks);
             l.setTasks(task_keys);
             user_lesson_keys.add(ofy.save().entity(l).now());
         }
@@ -101,6 +102,8 @@ public class LessonService {
             t.setToolbox(original_task.getToolbox());
             t.setEditor(original_task.getEditor());
             t.setInstructions(original_task.getInstructions());
+            t.setExpected_output(original_task.getExpected_output());
+            t.setTest_case(original_task.getTest_case());
             t.setOriginal_task(original_task);
             t.setType(original_task.getType());
             task_keys.add(ofy.save().entity(t).now());
