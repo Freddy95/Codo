@@ -6,8 +6,8 @@
 	"tasks" :[
 		{
 			"title" : "Printing & Strings",
-			"instructions" : "JavaScript has an important concept called <b>Data Typing</b>, which means giving different kinds of data a specific type. These types are used for determining the kinds of things a computer can do with the data based on its type.\n\nFor example, a <b>String</b> in JavaScript is a text based type. Strings can be anything from \"Bob and Alice\" to '1234' and are indicated by the single or double quotes that surround them. If a data type in JavaScript is surrounded by quotes (\"\" or '') then the type is a String.\n\nBefore learning more about types we will introduce a few useful tools in this task and the next. First is the ability to print information to <b>Output</b>. To do this we use the statement console.log(). You’ll see that the Editor to the right contains the block <span class = \"instr-block\">console.log(\"Hello\");</span>. Inside the parenthesis is the String \"Hello\". If you click the run button, the Output box will display:\n<span class = \"example-output\">Hello</span>\nAnything inside the parenthesis of console.log() will print to Output in the same order in which the statements appear from top to bottom in the Editor.\n\nTo test this, try putting the block <span class = \"instr-block\">console.log(\"World!\");</span> above <span class = \"instr-block\">console.log(\"Hello\");</span>. Now when you click run, the Output will display:\n<span class = \"example-output\">World!\nHello</span>\nThis doesn't make much sense, so move the <span class = \"instr-block\">console.log(\"World!\");</span> block so it is below <span class = \"instr-block\">console.log(\"Hello\");</span>. When you click run again the order will be reversed and the Output will display:\n<span class = \"example-output\">Hello\nWorld!</span>\n\nBefore moving on in each task, it's good to note small details in the blocks to prepare for the <b>Free Code</b> task at the end of this lesson. For example, each block statement, such as console.log(), must end with a semicolon. This lets the computer know when the end of a line has been reached, an essential part of running a program.",
-			"expected_output" : "expected output here",
+			"instructions" : "JavaScript has an important concept called <b>Data Typing</b>, which means giving different kinds of data a specific type. These types are used for determining the kinds of things a computer can do with the data based on its type.<br/><br/>For example, a <b>String</b> in JavaScript is a text based type. Strings can be anything from \"Bob and Alice\" to '1234' and are indicated by the single or double quotes that surround them. If a data type in JavaScript is surrounded by quotes (\"\" or '') then the type is a String.<br/><br/>Before learning more about types we will introduce a few useful tools in this task and the next. First is the ability to print information to <b>Output</b>. To do this we use the statement console.log(). You’ll see that the Editor to the right contains the block <span class = \"instr-block\">console.log(\"Hello\");</span>. Inside the parenthesis is the String \"Hello\". If you click the run button, the Output box will display:<br/><br/><span class = \"example-output\">Hello</span><br/>Anything inside the parenthesis of console.log() will print to Output in the same order in which the statements appear from top to bottom in the Editor.<br/><br/>To test this, try putting the block <span class = \"instr-block\">console.log(\"World!\");</span> above <span class = \"instr-block\">console.log(\"Hello\");</span>. Now when you click run, the Output will display:<br/><span class = \"example-output\">World!<br/>Hello</span><br/>This doesn't make much sense, so move the <span class = \"instr-block\">console.log(\"World!\");</span> block so it is below <span class = \"instr-block\">console.log(\"Hello\");</span>. When you click run again the order will be reversed and the Output will display:<br/><span class = \"example-output\">Hello<br/>World!</span><br/><br/>Before moving on in each task, it's good to note small details in the blocks to prepare for the <b>Free Code</b> task at the end of this lesson. For example, each block statement, such as console.log(), must end with a semicolon. This lets the computer know when the end of a line has been reached, an essential part of running a program.",
+			"expected_output" : "Hello\nWorld!",
 			"program_blocks":[
 				{
 					"value" : "console.log(\"Hello\");",
@@ -24,8 +24,8 @@
 			]
 		},{
 			"title" : "Variables",
-			"instructions" : "Often times in a program you want to use the same data multiple times. For example, say you have a long sentence like \"The quick brown fox jumps over the lazy dog.\" You don’t want to type out the entire sentence each time you want to use it. This is where <b>variables</b> become useful.\n\n<b>Variables</b>, similar to those used in algebra, are used to represent values in a program. Take a look at the block in the Editor, <span class = \"instr-block\">var str;</span>. When a variable is created it is said to be <b>declared</b>. This block <span class = \"instr-block\">var str;</span> declares a variable, var, with the name <b>str</b>. The next block, <span class = \"instr-block\">str = \"The quick brown fox jumps over the lazy dog.\";</span> assigns the String value to the variable name <b>str</b> and as such is called an <b>assignment</b>.\n\nNow drag the <span class = \"instr-block\">console.log(str);</span> block from the Toolbox into the Editor. Be careful to put the block after the others already placed there. When you run the code you'll notice that even though the console.log() statement only has the variable name <b>str</b>, it still prints out the sentence assigned to it.\n\nVariable names such as <b>str</b> can consist of any combination of numbers and letters with the following exceptions:<ul><li>The first character in the name can only be a letter or underscore ( _ )</li><li>The rest of the variable name can only contain letters, numbers, or underscores (no spaces, symbols, or special characters)</li></ul>\nThere is no limit to the length of variable names and it is important to note that variable names are case sensitive so str is a different name than Str or STR.\n\nOne last thing before moving to the next task. Note the block in the toolbox that looks like this <span class = \"instr-block\">// This is a comment</span>. The double slash (//) indicates a comment in the program. Comments are lines that will be ignored by the computer when running the program and can contain any characters.",
-			"expected_output" : "expected output here",
+			"instructions" : "Often times in a program you want to use the same data multiple times. For example, say you have a long sentence like \"The quick brown fox jumps over the lazy dog.\" You don’t want to type out the entire sentence each time you want to use it. This is where <b>variables</b> become useful.<br/><br/><b>Variables</b>, similar to those used in algebra, are used to represent values in a program. Take a look at the block in the Editor, <span class = \"instr-block\">var str;</span>. When a variable is created it is said to be <b>declared</b>. This block <span class = \"instr-block\">var str;</span> declares a variable, var, with the name <b>str</b>. The next block, <span class = \"instr-block\">str = \"The quick brown fox jumps over the lazy dog.\";</span> assigns the String value to the variable name <b>str</b> and as such is called an <b>assignment</b>.<br/><br/>Now drag the <span class = \"instr-block\">console.log(str);</span> block from the Toolbox into the Editor. Be careful to put the block after the others already placed there. When you run the code you'll notice that even though the console.log() statement only has the variable name <b>str</b>, it still prints out the sentence assigned to it.<br/><br/>Variable names such as <b>str</b> can consist of any combination of numbers and letters with the following exceptions:<ul><li>The first character in the name can only be a letter or underscore ( _ )</li><li>The rest of the variable name can only contain letters, numbers, or underscores (no spaces, symbols, or special characters)</li></ul><br/>There is no limit to the length of variable names and it is important to note that variable names are case sensitive so str is a different name than Str or STR.<br/><br/>One last thing before moving to the next task. Note the block in the toolbox that looks like this <span class = \"instr-block\">// This is a comment</span>. The double slash (//) indicates a comment in the program. Comments are lines that will be ignored by the computer when running the program and can contain any characters.",
+			"expected_output" : "The quick brown fox jumps over the lazy dog.",
 			"program_blocks" : [
 				{
 					"value" : "var str;",
@@ -51,8 +51,8 @@
 			]
 		},{
 			"title" : "Numbers & Operations",
-			"instructions" : "Introduce the number type, then introduce the operations you can do on them",
-			"expected_output" : "expected output here",
+			"instructions" : "In addition to the <b>String</b> type, JavaScript has a <b>Number</b> type. Numbers can include decimal digits as well as negatives. Here are some examples of the <b>Number</b> type: 10, 3.14, -2.5. Numbers can also be assigned to variables.<br/><br/>Take a look at the Editor to the right. There are two variables declared, <span class = \"instr-block\">var x;</span> and <span class = \"instr-block\">var y;</span>. Drag the <span class = \"instr-block\">x = 3;</span> block and <span class = \"instr-block\">y = 6;</span> block from the Toolbox so they sit on the lines below their declarations. Then drag the <span class = \"instr-block\">console.log(x);</span> block so it is below the assignment of x = 3. Run the program and the following should be displayed in the Output box:<span class = \"example-output\">3</span>The same basic operations that can be used on numbers in math can also be done in JavaScript. Addition, subtraction, multiplication, and division are all represented by the following symbols respectively: + - * /. The results of these operations can then be stored in variables.<br/><br/>For example, take a look at the blocks in the Toolbox. You’ll notice that there is a block <span class = \"instr-block\">var total = 3 + 6;</span>. If you drag that block into the Editor, and then put the block <span class = \"instr-block\">console.log(total);</span> after it and run the program again you’ll get the following Output:<span class = \"example-output\">9</span>This means that 9, the result of 3 + 6, was placed into the variable <b>total</b> which was then printed to the Output box. These operations can also be done using the variables that have been assigned the numbers. If you remove the block <span class = \"instr-block\">var total = 3 + 6;</span> and replace it with <span class = \"instr-block\">var total = x + y;</span> when you run the program again the same value, 9, will be printed to Output.<br/><br/>These concepts can also be applied to the other operations mentioned earlier and we have provided additional blocks in the Toolbox for you to play around with. Try and get the total to equal -16.5 and print it to the Output box to move on to the next task.",
+			"expected_output" : "-16.5",
 			"program_blocks" : [
 				{
 					"value" : "var x;",
@@ -66,24 +66,20 @@
 			],
 			"toolbox" : [
 				{
-					"value" : "x=3;",
+					"value" : "x = 3;",
 					"type" : "ASSIGN",
 					"can_edit" : false
 				},{
-					"value" : "y=4;",
-					"type" : "LOG",
+					"value" : "y = 6;",
+					"type" : "ASSIGN",
 					"can_edit" : false
 				},{
 					"value" : "console.log(x + y);",
 					"type" : "LOG",
 					"can_edit" : false
 				},{
-					"value" : "console.log(3 + 4);",
+					"value" : "console.log(3 + 6);",
 					"type" : "LOG",
-					"can_edit" : false
-				},{
-					"value" : "y=6",
-					"type" : "ASSIGN",
 					"can_edit" : false
 				},{
 					"value" : "var total = x + y;",
@@ -92,6 +88,34 @@
 				},{
 					"value" : "console.log(total);",
 					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "var total = 3 + 6;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "var total = x - y;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "var total = x * y;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "var total = x / y;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "x = -3;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "x = 3.5;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "y = 5.5;",
+					"type" : "ASSIGN",
 					"can_edit" : false
 				}
 
