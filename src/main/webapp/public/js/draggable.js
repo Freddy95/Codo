@@ -3,9 +3,9 @@ $( init );
 // Strings for grabbing values from Thymeleaf Template.
 var test_case = "";
 var expected_output = "";
-var next-task = "";
-var task-id = "";
-var lesson-id = "";
+var next_task = "";
+var task_id = "";
+var lesson_id = "";
 
 function run() {
   $('#output').empty();
@@ -37,7 +37,7 @@ function run() {
       $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/' + lesson-id + '/task/' + task_id + '"></a>'));
     }
     else {
-      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user'));
+      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user"></a>'));
     }
   }
 
@@ -45,11 +45,16 @@ function run() {
 }
  
 function init() {
-  test_case = $('#test-case').text();
-  expected_output = $('#ex-output').text();
-  next-task = $('#next-task').text();
-  task-id = $('#task-id').text();
-  lesson-id = $('#lesson-id').text();
+  //get the div for the page, we'll use it to get the data attribute
+    //use the dollar sign to signify that page is a jquery dom element
+  var $page = $("#page");
+  //get the data attributes for the id's well need for the backend
+  test_case = $page.data("test-case");
+  expected_output = $page.data("ex-output");
+  next_task = $page.data('next-task');
+  task_id = $page.data('task-id');
+  lesson_id = $page.data('lesson-id');
+  debugger;
 
   $('#test-case').remove();
   $('#ex-output').remove();

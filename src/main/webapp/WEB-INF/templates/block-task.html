@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<div class="container h-100" id="page">
+<div class="container h-100" id="page" th:attr="data-test-case=${task.test_case},data-ex-output=${task.expected_output},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id}">
   <div class="row">
     <div class="col">
       <div th:replace="lesson-navbar :: navbar"></div>
@@ -57,6 +57,5 @@
 <div id="task-id" th:text="${task.task_id}"></div>
 <div id="lesson-id" th:text="${lesson.lesson_id}"></div>
 
- 
 </body>
 </html>
