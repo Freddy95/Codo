@@ -145,6 +145,21 @@ public class TaskController {
         List<Key<Block>> t_block_keys = task.getToolbox();
         List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
         model.addAttribute("toolbox", toolbox_blocks);
+        int index = l.getTasks().indexOf(Key.create(Task.class, task.getTask_id()));
+        if(index != 0){
+            //task is not the first one so there is a prev task
+            model.addAttribute("prev_task", l.getTasks().get(index-1).getId());
+        }else{
+            //task is first task
+            model.addAttribute("prev_task", -1);
+        }
+        if (index < l.getTasks().size()-1){
+            //not last task so we have a next task
+            model.addAttribute("next_task", l.getTasks().get(index+1).getId());
+        }else{
+            //task is last task, no next task
+            model.addAttribute("next_task", -1);
+        }
 
         return "block-task";
     }
@@ -273,6 +288,22 @@ public class TaskController {
         List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
         model.addAttribute("toolbox", toolbox_blocks);
         model.addAttribute("task", task);
+
+        int index = lesson.getTasks().indexOf(Key.create(Task.class, task.getTask_id()));
+        if(index != 0){
+            //task is not the first one so there is a prev task
+            model.addAttribute("prev_task", lesson.getTasks().get(index-1));
+        }else{
+            //task is first task
+            model.addAttribute("prev_task", -1);
+        }
+        if (index < lesson.getTasks().size()-1){
+            //not last task so we have a next task
+            model.addAttribute("next_task", lesson.getTasks().get(index+1));
+        }else{
+            //task is last task, no next task
+            model.addAttribute("next_task", -1);
+        }
         return "block-task";
     }
 
