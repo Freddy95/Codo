@@ -54,6 +54,10 @@ function init() {
   $('#test-case').remove();
   $('#ex-output').remove();
 
+  //expected output has newlines, we'll turn them in to <br> so it works
+    //  with html
+   expected_output = expected_output.replace("\n","<br\/>");
+
   console.log(test_case);
   console.log(expected_output);
   
