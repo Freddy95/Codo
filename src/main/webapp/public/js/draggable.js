@@ -5,8 +5,10 @@ var test_case = "";
 var expected_output = "";
 
 function run() {
+  $('#output').empty();
+
   window.console.log = function(msg) {
-    $('#output').text(msg);
+    $('#output').append(document.createTextNode(msg)).append($('<br />'));
   }
 
   window.onerror = function(messageOrEvent, source, lineno, colno, error) {
@@ -30,6 +32,8 @@ function run() {
       $('#output').text() === expected_output) {
     $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/debug-block-task"></a>'));
   }
+
+  // console.log($('#output').html() === "Hello<br>World!<br>");
 }
  
 function init() {
