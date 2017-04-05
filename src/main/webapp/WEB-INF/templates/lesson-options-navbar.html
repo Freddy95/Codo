@@ -7,8 +7,8 @@
     </button>
     <div class="navbar-collapse collapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/user"
+            <li class="nav-item" th:if="${prev_task} > 0">
+                <a class="nav-link" th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${prev_task}"
                     data-toggle="tooltip" data-placement="bottom" title="Back">
                   <i class="fa fa-lg fa-arrow-left" aria-hidden="true"></i>
                 </a>    
