@@ -118,7 +118,7 @@ public class TaskController {
      * @return
      */
     @RequestMapping(value = "/lesson/{lessonId}/task/{taskId}", method = RequestMethod.GET)
-    public String get_task(@CookieValue("token") String token, @PathVariable(value = "lessonId") long lessonId,@PathVariable(value = "taskId")long taskId,Model model){
+    public String get_task(@CookieValue(value = "token",defaultValue = "") String token, @PathVariable(value = "lessonId") long lessonId,@PathVariable(value = "taskId")long taskId,Model model){
         //grab the cookie and make sure the user is authenticated
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){

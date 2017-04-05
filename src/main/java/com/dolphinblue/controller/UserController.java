@@ -44,33 +44,38 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String get_user_page(@CookieValue("token") String token, Model model){
-        Objectify ofy = OfyService.ofy();
+    public String get_user_page(@CookieValue(value="token",defaultValue = "") String token, Model model){
+        boolean isAuthenticate = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(isAuthenticate) {
+            Objectify ofy = OfyService.ofy();
 
-        //get the google id token from the authentication token from the browser cookie
-        GoogleIdToken googletoken = authenticationService.getIdToken(token, new JacksonFactory(),new NetHttpTransport());
+            //get the google id token from the authentication token from the browser cookie
+            GoogleIdToken googletoken = authenticationService.getIdToken(token, new JacksonFactory(), new NetHttpTransport());
 
-        //now we use google's token to contact google app engines user api and get the User info
-        String id = userService.getUserId(googletoken);
+            //now we use google's token to contact google app engines user api and get the User info
+            String id = userService.getUserId(googletoken);
 
-        User user = ofy.load().type(User.class).id(id).now();
-        lessonService.create_main_lessons_for_user(user); //create user's own main lesson objects and save them in datastore
-        System.out.println(user.getLessons().toString());
-        model.addAttribute("user_info", user);
-        List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
-        Lesson l;
-        if(user.getCurrent_lesson() == null){
-            l = ofy.load().type(Lesson.class).filter("site_owned", true).first().now();
-            user.setCurrent_lesson(l);
-            ofy.save().entity(user).now();//made change to user object must save to datastore
-        }else {
-            l = (Lesson) ofy.load().key(user.getCurrent_lesson()).now();
+            User user = ofy.load().type(User.class).id(id).now();
+            lessonService.create_main_lessons_for_user(user); //create user's own main lesson objects and save them in datastore
+            System.out.println(user.getLessons().toString());
+            model.addAttribute("user_info", user);
+            List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
+            Lesson l;
+            if (user.getCurrent_lesson() == null) {
+                l = ofy.load().type(Lesson.class).filter("site_owned", true).first().now();
+                user.setCurrent_lesson(l);
+                ofy.save().entity(user).now();//made change to user object must save to datastore
+            } else {
+                l = (Lesson) ofy.load().key(user.getCurrent_lesson()).now();
+            }
+
+            model.addAttribute("lesson", l);
+
+            model.addAttribute("main_lessons", main_lessons);
+            return "user";
+        }else{
+            return "redirect:login";
         }
-
-        model.addAttribute("lesson", l);
-
-        model.addAttribute("main_lessons", main_lessons);
-        return "user";
     }
 
 //    @RequestMapping(value = "/user", method = RequestMethod.GET)

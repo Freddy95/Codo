@@ -121,35 +121,51 @@
 
 			]
 		},{
-			"title" : "Strings & Operations & Numbers",
-			"instructions" : "Go back to strings and show how they can be added together as well. Also show how numbers can be added to strings. Mention ++/-- and +=, -=, etc.",
-			"expected_output" : "expected output here",
+			"title" : "More Operations on Strings & Numbers",
+			"instructions" : "For Data Types in JavaScript, each type comes with its own set of rules and operations. For example, Strings can be added together just like numbers. Adding two Strings together using the plus sign results in a larger String that is a concatenation of the two. Take a look at the block in the Editor that reads <span class = \"instr-block\">console.log(\"Alice\" + \"Bob\");</span>. If you run the code, the result in the Output box will be:<span class = \"example-output\">AliceBob</span>However the only operation that is the same between Numbers and Strings is the plus operator. You cannot subtract, multiply, or divide Strings without breaking the program.<br/><br/>Since Numbers and Strings can both be added separately, they can be added together as well. Remove the <span class = \"instr-block\">console.log(\"Alice\" + \"Bob\");</span> block from the Editor and replace it with <span class = \"instr-block\">console.log(alice + age);</span>. When you run the program, it will produce the following Output:<span class = \"example-output\">Alice is 20</span>This is because the program takes the number and converts it into a String so it will look like this: \"Alice is \" + \"20\". Then the program adds the Strings together and prints out the result. This can be done in any order so if you want to print out \"20 Cats\" you would use the block <span class = \"instr-block\">console.log(20 + \" Cats\");</span>.Finally, Numbers have a few shorthand operations that are unique to their type. First are the increment and decrement operators. Take the block <span class = \"instr-block\">age++;</span> from the Toolbox and put it in the Editor before the <span class = \"instr-block\">console.log(alice + age);</span> block. When you run the program again the result will be slightly different:<span class = \"example-output\">Alice is 21</span>This is because the ++ operator adds 1 to any number it follows, so age++ equals 21. This same idea is applied to subtraction as well, so if you want to subtract 1 from Alice’s age you would replace <span class = \"instr-block\">age++;</span> with <span class = \"instr-block\">age--;</span>.<br/><br/>The second group of operators are used as a shorthand for adding, subtracting, multiplying and dividing two numbers. Remove all console.log() blocks from the Editor and drag the block <span class = \"instr-block\">var cats = 5;</span> into the bottom of the program. Then put the block <span class = \"instr-block\">cats += 3;</span> followed by <span class = \"instr-block\">console.log(cats);</span>. When you run the program the result will be 8, this is because the += operator adds the amount on the right to the value stored by the variable on the left. In this case that is 5 + 3 = 8. This works the same way for all of the other basic math operators, -=, *=, and /=. All of them take the value on the right and subtract, multiply, or divide it with the value on the left.<br/><br/>Before moving on to the next task, note that these shorthand math operations only work on variables. You cannot do 20++ to get 21 or 5 += 3 to get 8. Both require that the number on the left is a variable.",
+			"expected_output" : "8",
 			"program_blocks" : [
 				{
-					"value" : "var age = 10;",
+					"value" : "var age = 20;",
 					"type" : "ASSIGN",
 					"can_edit" : false
 				},{
-					"value" : "var older = 12;",
+					"value" : "var alice = \"Alice is \";",
 					"type" : "ASSIGN",
 					"can_edit" : false
 				},{
-					"value" : "var bob = “Bob”;",
-					"type" : "ASSIGN",
-					"can_edit" : false
-				},{
-					"value" : "var str = “ is ”;",
-					"type" : "ASSIGN",
+					"value" : "console.log(\"Alice\" + \"Bob\");",
+					"type" : "LOG",
 					"can_edit" : false
 				}
 			],
 			"toolbox" : [
 				{
-					"value" : "console.log(bob + str + age);",
+					"value" : "console.log(alice + age);",
 					"type" : "LOG",
 					"can_edit" : false
 				},{
-					"value" : "console.log(4 + 6 + bob);",
+					"value" : "console.log(20 + \" Cats\");",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "age++;",
+					"type" : "PLUS",
+					"can_edit" : false
+				},{
+					"value" : "age--;",
+					"type" : "MINUS",
+					"can_edit" : false
+				},{
+					"value" : "var cats = 5;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "cats += 3;",
+					"type" : "PLUS",
+					"can_edit" : false
+				},{
+					"value" : "console.log(cats);",
 					"type" : "LOG",
 					"can_edit" : false
 				}

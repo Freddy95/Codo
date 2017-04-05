@@ -22,6 +22,7 @@ public class SettingsController {
      */
     @RequestMapping(value = "/user/{id}/settings", method = RequestMethod.GET)
     public String get_settings_page(@RequestParam(value = "id") Long id, Model model){
+        //TODO: make this work with authentication serviee
         Objectify ofy = OfyService.ofy();
 
         User user = ofy.load().type(User.class).id(id).now();
