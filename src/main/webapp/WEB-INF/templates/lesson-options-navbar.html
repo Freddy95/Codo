@@ -14,13 +14,13 @@
                 </a>    
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user"
+                <a class="nav-link" th:href="'/restartlesson/' + ${lesson.lesson_id} + '/restarttask/' + ${task.task_id}"
                     data-toggle="tooltip" data-placement="bottom" title="Reset Task">
                   <i class="fa fa-lg fa-undo" aria-hidden="true"></i>
                 </a>    
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user"
+                <a class="nav-link" th:href="'/restartlesson/' + ${lesson.lesson_id}"
                     data-toggle="tooltip" data-placement="bottom" title="Restart Lesson">
                   <i class="fa fa-lg fa-repeat" aria-hidden="true"></i>
                 </a>    
