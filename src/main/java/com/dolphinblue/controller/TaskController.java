@@ -190,7 +190,7 @@ public class TaskController {
      * @return
      */
     @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
-    public String update_task(@CookieValue("token") String token, @RequestParam long taskId, @RequestBody BlockList blocks) {
+    public String update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") long taskId, @RequestBody BlockList blocks) {
         // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
