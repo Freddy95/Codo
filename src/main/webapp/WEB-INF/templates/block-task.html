@@ -29,8 +29,8 @@
       <div th:replace="lesson-options-navbar :: navbar"></div>
     </div>
   </div>
-  <div class="row h-75" id="lesson-content">
-    <div class="w-25 h-100 task-col">
+  <div class="row " id="lesson-content">
+    <div class="col-3 task-col">
       <div class="card h-100" id="instructions-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Instructions</h3>
@@ -38,10 +38,10 @@
         <div class="card-block code-placement" id="instructions" th:utext="${task.instructions}"></div>
       </div>
     </div>
-    <div class="w-50 h-100 task-col">
+    <div class="col-6 task-col">
       <div th:replace="draggable:: #blockContent"></div>
     </div>
-    <div class="w-25 h-100 task-col">
+    <div class="col-3 task-col">
       <div class="card h-100" id="output-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Output</h3>
