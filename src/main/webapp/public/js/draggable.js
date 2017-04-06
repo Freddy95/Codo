@@ -109,14 +109,18 @@ function save() {
   $.each($('#editor').children(), function(index, value) {
     var block = {};
     block.value = $(value).text();
-    block.id = $(value).attr('id');
+    block.block_id = parseInt($(value).attr('id'));
+    //TODO: change these values later when we need to
+    block.can_edit = false;
     editor.push(block);
   });
 
   $.each($('#toolbox').children(), function(index, value) {
     var block = {};
     block.value = $(value).text();
-    block.id = $(value).attr('id');
+    block.block_id = parseInt($(value).attr('id'));
+    //TODO: change these values later when we need to
+    block.can_edit = false;
     toolbox.push(block);
   });
 
@@ -124,6 +128,7 @@ function save() {
   data.editor = editor;
   data.toolbox = toolbox;
   data.completed = completed;
+
 
   $.ajax({
     headers: { 

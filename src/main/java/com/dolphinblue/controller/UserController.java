@@ -62,7 +62,6 @@ public class UserController {
             if(user == null){
                 return "redirect:login";
             }
-
             // Create user's own main lesson objects and save them in the datastore
             lessonService.create_main_lessons_for_user(user);
 
@@ -79,9 +78,9 @@ public class UserController {
                 try {
                     l = main_lessons.get(0);
                 } catch (Exception e) {
-                    l = new Lesson();
+                    return "redirect:user";
                 }
-                user.setCurrent_lesson(l);
+
                 // Made change to user object must save to datastore
                 ofy.save().entity(user).now();
             } else {
