@@ -1,11 +1,5 @@
 package com.dolphinblue.models;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-
-import java.util.List;
-
 /**
  * Created by Devon on 4/5/17.
  * This class is used for retrieving updated blocks from the front end
