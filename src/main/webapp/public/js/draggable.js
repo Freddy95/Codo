@@ -23,7 +23,7 @@ function run() {
   // Evaluating code.
   $.each($('#editor').children(), function(index, value) {
     try {
-      eval($(value).children().first().text());
+      eval($(value).text());
     }
     // Flash on a block that errors.
     catch(e) {
