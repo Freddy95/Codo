@@ -32,8 +32,8 @@ function run() {
   });
 
   if ($('#output-div>.card-title-block').children().length === 1 &&
-      $('#output').text() === expected_output) {
-    if (next-task > 0) {
+      $('#output').html() === expected_output) {
+    if (next_task < 0) {
       $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/' + lesson-id + '/task/' + task_id + '"></a>'));
     }
     else {
@@ -54,14 +54,13 @@ function init() {
   next_task = $page.data('next-task');
   task_id = $page.data('task-id');
   lesson_id = $page.data('lesson-id');
-  debugger;
 
   $('#test-case').remove();
   $('#ex-output').remove();
 
   //expected output has newlines, we'll turn them in to <br> so it works
     //  with html
-   expected_output = expected_output.replace("\n","<br\/>");
+   expected_output = expected_output.replace("\n","<br>") + "<br>";
 
   console.log(test_case);
   console.log(expected_output);
