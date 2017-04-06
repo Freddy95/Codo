@@ -93,21 +93,31 @@ function save() {
   $.each($('#editor').children(), function(index, value) {
     var block = {};
     block.value = $(value).text();
-    block.id = $(value).attr('id');
+    block.block_id = parseInt($(value).attr('id'));
+    //TODO: change these values later when we need to
+    block.type = "LOG";
+    block.can_edit = false;
     editor.push(block);
   });
 
   $.each($('#toolbox').children(), function(index, value) {
     var block = {};
     block.value = $(value).text();
-    block.id = $(value).attr('id');
+    block.block_id = parseInt($(value).attr('id'));
+    //TODO: change these values later when we need to
+    block.type = "LOG";
+    block.can_edit = false;
     toolbox.push(block);
   });
 
   // data.task_id = task_id;
-  data.editor = editor;
-  data.toolbox = toolbox;
-  data.completed = completed;
+  data.editor = {"blocks":editor};
+  data.toolbox = {"blocks":toolbox};
+  data.isCompleted = completed;
+  var ret = JSON.stringify(data);
+  console.log(ret) ;
+  debugger;
+
 
   $.ajax({
     headers: { 
@@ -115,7 +125,7 @@ function save() {
         'Content-Type': 'application/json' 
     },
     'type': 'POST',
-    'url': '/savelesson/' + lesson_id + '/task/' + task_id,
+    'url': '/savelesson/' + lesson_id + '/task/' + task_id+'?format=json',
     'data': JSON.stringify(data),
     'dataType': 'json'
   }).done(function() {

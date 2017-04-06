@@ -1,5 +1,9 @@
 package com.dolphinblue.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import java.util.List;
 
 /**
@@ -7,15 +11,19 @@ import java.util.List;
  * This class is used for retrieving updated blocks from the front end
  */
 public class BlockList {
+    @JsonProperty(value = "completed")
     private boolean completed;
-    private List<Block> toolbox;
-    private List<Block> editor;
+    @JsonProperty(value = "toolbox")
+    private BlockWrapper toolbox;
+    @JsonProperty(value = "editor")
+    private BlockWrapper editor;
 
     public BlockList() {
 
     }
 
-    public BlockList(List<Block> toolbox, List<Block> editor, boolean completed) {
+    @JsonCreator
+    public BlockList(BlockWrapper toolbox, BlockWrapper editor, boolean completed) {
         this.toolbox = toolbox;
         this.editor = editor;
         this.completed = completed;
@@ -29,19 +37,19 @@ public class BlockList {
         this.completed = completed;
     }
 
-    public List<Block> getEditor() {
-        return editor;
-    }
-
-    public void setEditor(List<Block> editor) {
-        this.editor = editor;
-    }
-
-    public List<Block> getToolbox() {
+    public BlockWrapper getToolbox() {
         return toolbox;
     }
 
-    public void setToolbox(List<Block> toolbox) {
+    public void setToolbox(BlockWrapper toolbox) {
         this.toolbox = toolbox;
+    }
+
+    public BlockWrapper getEditor() {
+        return editor;
+    }
+
+    public void setEditor(BlockWrapper editor) {
+        this.editor = editor;
     }
 }

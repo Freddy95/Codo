@@ -7,6 +7,8 @@ import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
 import com.dolphinblue.service.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -211,8 +214,8 @@ public class TaskController {
         task.setCompleted(blocks.getCompleted());
 
         // Update the blocks for this task
-        List<Key<Block>> editor = lessonService.update_blocks(task.getTask_id(), blocks.getEditor());
-        List<Key<Block>> toolbox = lessonService.update_blocks(task.getTask_id(), blocks.getToolbox());
+        List<Key<Block>> editor = lessonService.update_blocks(task.getTask_id(), blocks.getEditor().getBlocks());
+        List<Key<Block>> toolbox = lessonService.update_blocks(task.getTask_id(), blocks.getToolbox().getBlocks());
 
         // Set the new block keys to the task
         task.setEditor(editor);
@@ -339,5 +342,15 @@ public class TaskController {
 
         // Return the HTML page to be loaded
         return "index";
+    }
+
+
+
+    @RequestMapping(value = "/test" ,produces={"application/xml", "application/json"}, method = RequestMethod.POST)
+    public @ResponseBody Block testBlock(Block block){
+        String json = "{value: \"console.log(\"Hello\");\", block_id: 5629499534213120, type: \"LOG\", can_edit: false}";
+        System.out.println(block.toString());
+
+        return block;
     }
 }
