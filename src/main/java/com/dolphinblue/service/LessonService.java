@@ -116,6 +116,7 @@ public class LessonService {
             t.setTest_case(original_task.getTest_case());
             t.setOriginal_task(original_task);
             t.setType(original_task.getType());
+            t.setHint(original_task.getHint());
             task_keys.add(ofy.save().entity(t).now());
         }
         return task_keys;
@@ -162,6 +163,7 @@ public class LessonService {
                 } else {
                     // Create a new block
                     Block block = new Block();
+                    // Set the new block's values
                     block.setValue(new_block.getValue());
                     block.setType(new_block.getType());
                     block.setCan_edit(true);
