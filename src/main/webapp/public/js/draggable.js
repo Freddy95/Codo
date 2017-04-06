@@ -129,8 +129,6 @@ function save() {
   data.editor = editor;
   data.toolbox = toolbox;
   data.completed = completed;
-  var ret = JSON.stringify(data);
-  console.log(ret) ;
 
 
   $.ajax({
