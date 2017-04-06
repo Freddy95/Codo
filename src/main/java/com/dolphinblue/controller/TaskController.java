@@ -21,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
  * This controller handles all requests for the task page.
  */
 @Controller
+@EnableWebMvc
 public class TaskController {
     // Use Autowired to get an instance of the different Services
     @Autowired
@@ -60,11 +62,11 @@ public class TaskController {
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();
 
-        toolbox.add(new Block(new Long(1), "x = 2;", Type.ASSIGN, true));
-        toolbox.add(new Block(new Long(2), "x += 5;", Type.ASSIGN, true));
+        toolbox.add(new Block(1, "x = 2;", Type.ASSIGN, true));
+        toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, true));
 
-        editor.add(new Block(new Long(2), "x += 1;", Type.ASSIGN, true));
-        editor.add(new Block(new Long(2), "console.log(x);", Type.ASSIGN, true));
+        editor.add(new Block(2, "x += 1;", Type.ASSIGN, true));
+        editor.add(new Block(2, "console.log(x);", Type.ASSIGN, true));
 
         model.addAttribute("lesson", l);
         model.addAttribute("toolbox", toolbox);
@@ -345,12 +347,4 @@ public class TaskController {
     }
 
 
-
-    @RequestMapping(value = "/test" ,produces={"application/xml", "application/json"}, method = RequestMethod.POST)
-    public @ResponseBody Block testBlock(Block block){
-        String json = "{value: \"console.log(\"Hello\");\", block_id: 5629499534213120, type: \"LOG\", can_edit: false}";
-        System.out.println(block.toString());
-
-        return block;
-    }
 }
