@@ -205,7 +205,7 @@ public class TaskController {
         // Get the original task
         Task task = ofy.load().type(Task.class).id(taskId).now();
         // Update the boolean value for this task
-        task.setCompleted(blocks.isCompleted());
+        task.setCompleted(blocks.getCompleted());
 
         // Update the blocks for this task
         List<Key<Block>> editor = lessonService.update_blocks(task.getTask_id(), blocks.getEditor());
