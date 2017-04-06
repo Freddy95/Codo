@@ -14,6 +14,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -189,7 +190,7 @@ public class TaskController {
      * @param blocks -- the blocks within the task that need updating
      * @return
      */
-    @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public String update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") long taskId, @RequestBody BlockList blocks) {
         // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
