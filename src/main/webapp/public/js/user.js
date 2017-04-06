@@ -11,7 +11,7 @@ function onLoad() {
   });
 }
 function signOut() {
-    var baseurl = "http://localhost:8080"; //TODO: change this!
+    var baseurl = "http://codo-161419.appspot.com/"; //TODO: change this!
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
         console.log('User signed out.');

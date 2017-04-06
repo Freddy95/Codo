@@ -1,4 +1,4 @@
-var baseurl = "http://localhost:8080"; //TODO: change this!
+var baseurl = "http://codo-161419.appspot.com/"; //TODO: change this!
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.

@@ -61,8 +61,7 @@ function run() {
     codeArray.push($(value).text());
   });
 
-  fullCode = codeArray.join('');
-  debugger;
+  fullCode = codeArray.join('\n');
 
   try {
     // Try running the full program.
@@ -129,7 +128,6 @@ function save() {
   data.editor = editor;
   data.toolbox = toolbox;
   data.completed = completed;
-  var ret = JSON.stringify(data);
 
   $.ajax({
     headers: { 
