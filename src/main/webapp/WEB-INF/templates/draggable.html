@@ -29,10 +29,10 @@
         <h3 class="card-title">
           Editor
         </h3>
-        <span th:if="${task.hint != null}" class="align-middle">
+        <span th:if="${#strings.isEmpty(task.hint)}" class="align-middle">
           <a class="fa fa-lg fa-vc fa-question pull-right" data-toggle="modal" data-target="#hintModal"></a>
         </span>
-        <div th:if="${task.hint != null}" class="modal" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintModalLabel" aria-hidden="true">
+        <div th:if="${#strings.isEmpty(task.hint)}" class="modal" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">

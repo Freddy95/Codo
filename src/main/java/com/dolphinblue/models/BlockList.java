@@ -7,7 +7,7 @@ import java.util.List;
  * This class is used for retrieving updated blocks from the front end
  */
 public class BlockList {
-    private boolean isCompleted;
+    private boolean completed;
     private List<Block> toolbox;
     private List<Block> editor;
 
@@ -15,17 +15,18 @@ public class BlockList {
 
     }
 
-    public BlockList(List<Block> toolbox, List<Block> editor) {
+    public BlockList(List<Block> toolbox, List<Block> editor, boolean completed) {
         this.toolbox = toolbox;
         this.editor = editor;
+        this.completed = completed;
     }
 
-    public boolean isCompleted() {
-        return isCompleted;
+    public boolean getCompleted() {
+        return completed;
     }
 
     public void setCompleted(boolean completed) {
-        isCompleted = completed;
+        this.completed = completed;
     }
 
     public List<Block> getEditor() {
