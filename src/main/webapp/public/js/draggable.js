@@ -6,6 +6,7 @@ var expected_output = "";
 var next_task = "";
 var task_id = "";
 var lesson_id = "";
+var completed = "";
 
 function init() {
   // Get the div for the page, we'll use it to get the data attribute
@@ -18,7 +19,7 @@ function init() {
   next_task = $page.data('next-task');
   task_id = $page.data('task-id');
   lesson_id = $page.data('lesson-id');
-
+  completed = $page.data('completed');
 
   /* Expected output has newlines, we'll turn them in to <br> so it works
    * with html
@@ -37,50 +38,77 @@ function init() {
       }
     }
   }).disableSelection();
+}
 
-  function run() {
-    // Empty the output when running.
-    $('#output').empty();
+function run() {
+  // Empty the output when running.
+  $('#output').empty();
 
-    // Redirect console.log and window.one-error to output.
-    window.console.log = function(msg) {
-      $('#output').append(document.createTextNode(msg)).append($('<br />'));
-    }
-
-    window.onerror = function(messageOrEvent, source, lineno, colno, error) {
-      $('#output').text(messageOrEvent);
-    }
-
-    // Evaluating code.
-    $.each($('#editor').children(), function(index, value) {
-      try {
-        eval($(value).text());
-      }
-      // Flash on a block that errors.
-      catch(e) {
-        $(value).addClass('flash');
-        setTimeout( function(){
-          $(value).removeClass('flash');
-        }, 1000);
-        throw(e);
-      }
-    });
-
-    /* Adds a next arrow if it doesn't exist already and if the solution is correct.
-     */
-    if ($('#output-div>.card-title-block').children().length === 1 &&
-        $('#output').html() === expected_output) {
-      // Adding next arrow to next task.
-      if (next_task > 0) {
-        $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/' + lesson_id + '/task/' + next_task + '"></a>'));
-      }
-      // If last lesson, just redirect to user page.
-      else {
-        $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user"></a>'));
-      }
-    }
+  // Redirect console.log and window.one-error to output.
+  window.console.log = function(msg) {
+    $('#output').append(document.createTextNode(msg)).append($('<br />'));
   }
 
-  function save() {
+  window.onerror = function(messageOrEvent, source, lineno, colno, error) {
+    $('#output').text(messageOrEvent);
   }
+
+  // Evaluating code.
+  $.each($('#editor').children(), function(index, value) {
+    try {
+      eval($(value).text());
+    }
+    // Flash on a block that errors.
+    catch(e) {
+      $(value).addClass('flash');
+      setTimeout( function(){
+        $(value).removeClass('flash');
+      }, 1000);
+      throw(e);
+    }
+  });
+
+  /* Adds a next arrow if it doesn't exist already and if the solution is correct.
+   */
+  if ($('#output-div>.card-title-block').children().length === 1 &&
+      $('#output').html() === expected_output) {
+    completed = true;
+    // Adding next arrow to next task.
+    if (next_task > 0) {
+      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/' + lesson_id + '/task/' + next_task + '" onClick="save()"></a>'));
+    }
+    // If last lesson, just redirect to user page.
+    else {
+      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user" onClick="save()"></a>'));
+    }
+  }
+}
+
+function save() {
+  var data = {};
+
+  var editor = [];
+  var toolbox = [];
+
+  $.each($('#editor').children(), function(index, value) {
+    var block = {};
+    block.value = $(value).text();
+    block.id = $(value).attr('id');
+    editor.push(block);
+  });
+
+  $.each($('#toolbox').children(), function(index, value) {
+    var block = {};
+    block.value = $(value).text();
+    block.id = $(value).attr('id');
+    toolbox.push(block);
+  });
+
+  data.task_id = task_id;
+  data.editor = editor;
+  data.toolbox = toolbox;
+  data.completed = completed;
+
+  console.log(data);
+  return true;
 }
