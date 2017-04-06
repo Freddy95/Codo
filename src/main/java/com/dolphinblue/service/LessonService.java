@@ -8,6 +8,7 @@ import com.dolphinblue.models.User;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
+import com.googlecode.objectify.cmd.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -59,9 +60,21 @@ public class LessonService {
      */
     public void create_main_lessons_for_user(User user){
         Objectify ofy = OfyService.ofy();
-
-        List<Lesson> user_lessons = ofy.load().type(Lesson.class).filter("user_id", user.getUser_id()).list();
-        List<Lesson> main_lessons =  ofy.load().type(Lesson.class).filter("site_owned", true).filter("user_id",null).list();
+        List<Lesson> user_lessons;
+        List<Lesson> main_lessons;
+        Query<Lesson> q = ofy.load().type(Lesson.class).filter("user_id", user.getUser_id());
+        if (q.list().size() == 0){
+            user_lessons = new ArrayList<>();
+        }else{
+            user_lessons = q.list();
+        }
+        q =  ofy.load().type(Lesson.class).filter("site_owned", true).filter("user_id",null);
+        if(q.list().size() == 0){
+            LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson1.json");
+            main_lessons = ofy.load().type(Lesson.class).filter("site_owned", true).list();
+        }else{
+            main_lessons = q.list();
+        }
         for(int i = 0; i < user_lessons.size(); i++){
             for(int j = 0; j < main_lessons.size(); j++){
                 if(user_lessons.get(i).getOriginal_lesson().getId() == main_lessons.get(j).getLesson_id()){//user already has this lesson
