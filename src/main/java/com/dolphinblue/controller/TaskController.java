@@ -7,6 +7,8 @@ import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
 import com.dolphinblue.service.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -19,7 +21,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -29,6 +33,7 @@ import java.util.ArrayList;
  * This controller handles all requests for the task page.
  */
 @Controller
+@EnableWebMvc
 public class TaskController {
     // Use Autowired to get an instance of the different Services
     @Autowired
@@ -57,11 +62,11 @@ public class TaskController {
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();
 
-        toolbox.add(new Block(new Long(1), "x = 2;", Type.ASSIGN, true));
-        toolbox.add(new Block(new Long(2), "x += 5;", Type.ASSIGN, true));
+        toolbox.add(new Block(1, "x = 2;", Type.ASSIGN, true));
+        toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, true));
 
-        editor.add(new Block(new Long(2), "x += 1;", Type.ASSIGN, true));
-        editor.add(new Block(new Long(2), "console.log(x);", Type.ASSIGN, true));
+        editor.add(new Block(2, "x += 1;", Type.ASSIGN, true));
+        editor.add(new Block(2, "console.log(x);", Type.ASSIGN, true));
 
         model.addAttribute("lesson", l);
         model.addAttribute("toolbox", toolbox);
@@ -191,10 +196,10 @@ public class TaskController {
      * @param blocks -- the blocks within the task that need updating
      * @return
      */
-    @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}", produces={"application/xml", "application/json"}, method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody BlockList update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") long taskId,  BlockList blocks) {
+    @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}",  method = RequestMethod.POST)
+    public @ResponseBody BlockList update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") Long taskId,  @RequestBody BlockList blocks) {
         // Check if the user is still authenticated by google
+        System.out.println("MATT");
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
             // If the user isn't properly authenticated send them back to the login page
@@ -211,8 +216,8 @@ public class TaskController {
         task.setCompleted(blocks.getCompleted());
 
         // Update the blocks for this task
-        List<Key<Block>> editor = lessonService.update_blocks(task.getTask_id(), blocks.getEditor());
-        List<Key<Block>> toolbox = lessonService.update_blocks(task.getTask_id(), blocks.getToolbox());
+        List<Key<Block>> editor = lessonService.update_blocks(task.getTask_id(), blocks.getEditor().getBlocks());
+        List<Key<Block>> toolbox = lessonService.update_blocks(task.getTask_id(), blocks.getToolbox().getBlocks());
 
         // Set the new block keys to the task
         task.setEditor(editor);
@@ -340,4 +345,13 @@ public class TaskController {
         // Return the HTML page to be loaded
         return "index";
     }
+
+
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public @ResponseBody BlockList test(@RequestBody BlockList list){
+        System.out.println(list.toString());
+        return list;
+
+    }
+
 }

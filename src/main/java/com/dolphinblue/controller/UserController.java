@@ -62,7 +62,6 @@ public class UserController {
             if(user == null){
                 return "redirect:login";
             }
-
             // Create user's own main lesson objects and save them in the datastore
             lessonService.create_main_lessons_for_user(user);
 
@@ -72,18 +71,16 @@ public class UserController {
             // Get the main site lessons for the user and add them to the thymeleaf model
             List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
             model.addAttribute("main_lessons", main_lessons);
+
             // Fixes a bug with user login
             Lesson l;
             if (user.getCurrent_lesson() == null) {
                 try {
                     l = main_lessons.get(0);
-                }catch (Exception e){
-                    System.out.println("Error");
+                } catch (Exception e) {
                     return "redirect:user";
                 }
 
-
-                user.setCurrent_lesson(l);
                 // Made change to user object must save to datastore
                 ofy.save().entity(user).now();
             } else {
