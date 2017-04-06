@@ -95,7 +95,6 @@ function save() {
     block.value = $(value).text();
     block.block_id = parseInt($(value).attr('id'));
     //TODO: change these values later when we need to
-    block.type = "LOG";
     block.can_edit = false;
     editor.push(block);
   });
@@ -105,7 +104,6 @@ function save() {
     block.value = $(value).text();
     block.block_id = parseInt($(value).attr('id'));
     //TODO: change these values later when we need to
-    block.type = "LOG";
     block.can_edit = false;
     toolbox.push(block);
   });
@@ -116,7 +114,6 @@ function save() {
   data.isCompleted = completed;
   var ret = JSON.stringify(data);
   console.log(ret) ;
-  debugger;
 
 
   $.ajax({
