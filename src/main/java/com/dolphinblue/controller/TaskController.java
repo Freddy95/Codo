@@ -190,7 +190,7 @@ public class TaskController {
      * @return
      */
     @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
-    public String update_task(@CookieValue("token") String token, @RequestParam long task_id, @RequestBody BlockList blocks) {
+    public String update_task(@CookieValue("token") String token, @RequestParam long taskId, @RequestBody BlockList blocks) {
         // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
@@ -202,7 +202,7 @@ public class TaskController {
         Objectify ofy = OfyService.ofy();
 
         // Get the original task
-        Task task = ofy.load().type(Task.class).id(task_id).now();
+        Task task = ofy.load().type(Task.class).id(taskId).now();
         // Update the boolean value for this task
         task.setCompleted(blocks.isCompleted());
 
