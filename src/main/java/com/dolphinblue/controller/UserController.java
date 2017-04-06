@@ -61,7 +61,11 @@ public class UserController {
             List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
             Lesson l;
             if (user.getCurrent_lesson() == null) {
-                l = main_lessons.get(0);
+                try {
+                    l = main_lessons.get(0);
+                }catch(Exception e){
+                    l = new Lesson();
+                }
                 user.setCurrent_lesson(l);
                 //made change to user object must save to datastore
                 ofy.save().entity(user).now();
