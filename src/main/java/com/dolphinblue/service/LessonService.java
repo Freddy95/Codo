@@ -160,7 +160,7 @@ public class LessonService {
         return "this does not work yet";
     }
 
-    // Maybe deprecated... remove if not used by final project
+
     public List<Task> get_tasks_by_id(List<Key<Task>> task_keys){
         Objectify ofy = OfyService.ofy();
         List<Task> tasks = new ArrayList<>();
