@@ -116,6 +116,7 @@ public class LessonService {
             t.setTest_case(original_task.getTest_case());
             t.setOriginal_task(original_task);
             t.setType(original_task.getType());
+            t.setHint(original_task.getHint());
             task_keys.add(ofy.save().entity(t).now());
         }
         return task_keys;
