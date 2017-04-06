@@ -72,15 +72,11 @@ public class UserController {
             // Get the main site lessons for the user and add them to the thymeleaf model
             List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
             model.addAttribute("main_lessons", main_lessons);
-
             // Fixes a bug with user login
             Lesson l;
             if (user.getCurrent_lesson() == null) {
-                try {
-                    l = main_lessons.get(0);
-                } catch (Exception e) {
-                    l = new Lesson();
-                }
+                l = main_lessons.get(0);
+
                 user.setCurrent_lesson(l);
                 // Made change to user object must save to datastore
                 ofy.save().entity(user).now();

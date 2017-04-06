@@ -308,14 +308,14 @@ public class TaskController {
         int index = lesson.getTasks().indexOf(Key.create(Task.class, new_task.getTask_id()));
         if (index != 0) {
             // If the task is not the first one there is a prev task
-            model.addAttribute("prev_task", lesson.getTasks().get(index - 1));
+            model.addAttribute("prev_task", lesson.getTasks().get(index - 1).getId());
         } else {
             // If the task is the first task, there is not prev task
             model.addAttribute("prev_task", -1);
         }
         if (index < lesson.getTasks().size() - 1) {
             // If the task is not the last task, we have a next task
-            model.addAttribute("next_task", lesson.getTasks().get(index + 1));
+            model.addAttribute("next_task", lesson.getTasks().get(index + 1).getId());
         } else {
             // If the task is the last task, there is no next task
             model.addAttribute("next_task", -1);
