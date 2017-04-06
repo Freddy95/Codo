@@ -162,6 +162,7 @@ public class LessonService {
                 } else {
                     // Create a new block
                     Block block = new Block();
+                    // Set the new block's values
                     block.setValue(new_block.getValue());
                     block.setType(new_block.getType());
                     block.setCan_edit(true);

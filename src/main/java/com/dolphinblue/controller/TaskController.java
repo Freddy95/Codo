@@ -185,7 +185,7 @@ public class TaskController {
     /**
      * Updates the task for a lesson
      * @param token -- the login token of the user
-     * @param task_id -- the id of the task to be updates
+     * @param taskId -- the id of the task to be updates
      * @param blocks -- the blocks within the task that need updating
      * @return
      */
