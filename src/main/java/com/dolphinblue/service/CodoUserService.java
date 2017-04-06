@@ -4,6 +4,7 @@ import com.dolphinblue.models.User;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 
+import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,7 +70,8 @@ public class CodoUserService {
                 User usr = new User(id, first, last, email, "", pictureUrl, new ArrayList());
 
                 //now add the user
-                ObjectifyService.ofy().save().entity(usr).now();
+                Objectify ofy = OfyService.ofy();
+                ofy.save().entity(usr).now();
                 return true;
             }
 
