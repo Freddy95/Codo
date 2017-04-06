@@ -17,7 +17,7 @@ import java.util.Map;
 @Entity
 public class Block {
 
-    @Id public long block_id;
+    @Id public Long block_id;
     public String value;
     @JsonIgnore
     public Type type;

@@ -109,9 +109,9 @@ function save() {
   });
 
   // data.task_id = task_id;
-  data.editor = {"blocks":editor};
-  data.toolbox = {"blocks":toolbox};
-  data.isCompleted = completed;
+  data.editor = editor;
+  data.toolbox = toolbox;
+  data.completed = completed;
   var ret = JSON.stringify(data);
   console.log(ret) ;
 
@@ -122,7 +122,7 @@ function save() {
         'Content-Type': 'application/json' 
     },
     'type': 'POST',
-    'url': '/savelesson/' + lesson_id + '/task/' + task_id+'?format=json',
+    'url': '/savelesson/' + lesson_id + '/task/' + task_id,
     'data': JSON.stringify(data),
     'dataType': 'json'
   }).done(function() {

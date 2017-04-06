@@ -196,10 +196,10 @@ public class TaskController {
      * @param blocks -- the blocks within the task that need updating
      * @return
      */
-    @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}", produces={"application/xml", "application/json"}, method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody BlockList update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") long taskId,  BlockList blocks) {
+    @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}",  method = RequestMethod.POST)
+    public @ResponseBody BlockList update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") Long taskId,  @RequestBody BlockList blocks) {
         // Check if the user is still authenticated by google
+        System.out.println("MATT");
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
             // If the user isn't properly authenticated send them back to the login page
@@ -346,5 +346,12 @@ public class TaskController {
         return "index";
     }
 
+
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public @ResponseBody BlockList test(@RequestBody BlockList list){
+        System.out.println(list.toString());
+        return list;
+
+    }
 
 }

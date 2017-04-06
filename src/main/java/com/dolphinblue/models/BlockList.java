@@ -11,18 +11,14 @@ import java.util.List;
  * This class is used for retrieving updated blocks from the front end
  */
 public class BlockList {
-    @JsonProperty(value = "completed")
     private boolean completed;
-    @JsonProperty(value = "toolbox")
     private BlockWrapper toolbox;
-    @JsonProperty(value = "editor")
     private BlockWrapper editor;
 
     public BlockList() {
 
     }
 
-    @JsonCreator
     public BlockList(BlockWrapper toolbox, BlockWrapper editor, boolean completed) {
         this.toolbox = toolbox;
         this.editor = editor;
