@@ -59,6 +59,9 @@ public class UserController {
 
             // Load the user's information from the datastore and store it in a user object
             User user = ofy.load().type(User.class).id(id).now();
+            if(user == null){
+                return "redirect:login";
+            }
 
             // Create user's own main lesson objects and save them in the datastore
             lessonService.create_main_lessons_for_user(user);
