@@ -29,6 +29,7 @@ import java.util.List;
  * User Request
  * Main Lessons Request
  * Current Lesson Request
+ * This class does user stuff
  */
 @Controller
 public class UserController {
