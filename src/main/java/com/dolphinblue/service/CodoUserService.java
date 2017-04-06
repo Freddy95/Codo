@@ -60,7 +60,8 @@ public class CodoUserService {
             String last = name.split(" ")[1];
             String pictureUrl = (String) payload.get("picture");
             String locale = (String) payload.get("locale");
-            User fetched = ObjectifyService.ofy().load().type(User.class).id(id).now();
+            Objectify ofy = OfyService.ofy();
+            User fetched = ofy.load().type(User.class).id(id).now();
 
             if(fetched!=null){
                 return true;
@@ -70,7 +71,7 @@ public class CodoUserService {
                 User usr = new User(id, first, last, email, "", pictureUrl, new ArrayList());
 
                 //now add the user
-                Objectify ofy = OfyService.ofy();
+
                 ofy.save().entity(usr).now();
                 return true;
             }

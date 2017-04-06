@@ -51,7 +51,7 @@
         </div>
       </div>
       <div class="card-block code-placement" id="editor">
-        <span class="code-block" th:each="block : ${editor}" th:text="${block.value}"></span>
+        <span class="code-block" th:each="block : ${editor}" th:id="${block.block_id}" th:text="${block.value}"></span>
       </div>
       <div class="card-footer">
         <btn class="btn btn-sm btn-primary float-right" onClick="run()">Run</btn>
@@ -62,7 +62,7 @@
         <h3 class="card-title">Toolbox</h3>
       </div>
       <div class="card-block code-placement" id="toolbox">
-        <span class="code-block" th:each="block : ${toolbox}" th:text="${block.value}"></span>
+        <span class="code-block" th:each="block : ${toolbox}" th:id="${block.block_id}" th:text="${block.value}"></span>
       </div>
     </div>
   </div>
