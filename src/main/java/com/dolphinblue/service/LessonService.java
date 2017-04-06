@@ -180,6 +180,7 @@ public class LessonService {
      * @return -- the list of updated block keys
      */
     public List<Key<Block>> update_blocks(long task_id, List<Block> blocks) {
+        System.out.println("In update blocks function");
         // Get the objectify object to access the datastore
         Objectify ofy = OfyService.ofy();
         // Create a list of block ids
@@ -187,13 +188,15 @@ public class LessonService {
 
         // For each block in the block list
         for(int i = 0; i < blocks.size(); i++) {
+            //System.out.println("Getting new block from blocks list");
             // Get the new block from the list
             Block new_block = blocks.get(i);
             // Get the original block from the datastore
             Block old_block = ofy.load().type(Block.class).id(blocks.get(i).getBlock_id()).now();
 
             // Check to see if the new block has been changed
-            if (new_block.getValue().equals(old_block.getValue())) {
+            if (!new_block.getValue().equals(old_block.getValue())) {
+                //System.out.println("I should not be here");
                 // Check to see if the new block can be edited
                 if (new_block.isCan_edit()) {
                     // Change the block value by updating the block
@@ -219,12 +222,14 @@ public class LessonService {
                     block_keys.add(block_key);
                 }
             } else {
+                //System.out.println("I should be here : )");
                 // If it has not been changed just add the key to the list
                 Key block_key = Key.create(Block.class,new_block.getBlock_id());
                 block_keys.add(block_key);
             }
         }
         // Return the block keys
+        System.out.println("Returning from update_task function, I should print twice");
         return block_keys;
     }
 

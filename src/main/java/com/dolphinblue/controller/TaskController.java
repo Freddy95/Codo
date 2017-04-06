@@ -14,6 +14,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -190,15 +191,17 @@ public class TaskController {
      * @param blocks -- the blocks within the task that need updating
      * @return
      */
-    @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public String update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") long taskId, @RequestBody BlockList blocks) {
+    @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}", produces={"application/xml", "application/json"}, method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody BlockList update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") long taskId,  BlockList blocks) {
         // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
             // If the user isn't properly authenticated send them back to the login page
-            return "redirect:login";
+            return null;
         }
-
+        System.out.println("Blocks:");
+        System.out.println(blocks);
         // Create the objectify object to get stuff from the datastore
         Objectify ofy = OfyService.ofy();
 
@@ -217,8 +220,8 @@ public class TaskController {
 
         // Save the changes to the datastore
         ofy.save().entity(task);
+        return blocks;
 
-        return "block-task";
     }
 
     /**
