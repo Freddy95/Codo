@@ -10,7 +10,6 @@ import com.dolphinblue.service.OfyService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +32,7 @@ import java.util.List;
  */
 @Controller
 public class UserController {
+    // Use Autowired to get an instance of the different Services
     @Autowired
     LessonService lessonService;
     @Autowired
@@ -41,34 +41,49 @@ public class UserController {
     CodoUserService userService;
 
     /**
-     * gets user and adds him to @param model
-     * @return
+     * This method is for loading the user page, or home page of the site where the user can view
+     *  lessons, badges, and percentages that they've completed.
+     * @param token -- the login token for the user
+     * @param model -- the thymeleaf model that we use to pass data to the front end
+     * @return -- the HTML page to be rendered
      */
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String get_user_page(@CookieValue(value="token",defaultValue = "") String token, Model model){
-        boolean isAuthenticate = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
-        if(isAuthenticate) {
+    public String get_user_page(@CookieValue(value="token",defaultValue = "") String token, Model model) {
+        // Check to see if the user is authenticated by google
+        boolean isAuthenticate = authenticationService.isAuthenticated(token, new JacksonFactory(), new NetHttpTransport());
+        if (isAuthenticate) {
+            // Create an instance of the objectify object for requests to the datastore
             Objectify ofy = OfyService.ofy();
 
-            //get the google id token from the authentication token from the browser cookie
+            // Get the google id token from the authentication token from the browser cookie
             GoogleIdToken googletoken = authenticationService.getIdToken(token, new JacksonFactory(), new NetHttpTransport());
 
-            //now we use google's token to contact google app engines user api and get the User info
+            // Use google's token to contact google app engine's user api and get the user info
             String id = userService.getUserId(googletoken);
 
+            // Load the user's information from the datastore and store it in a user object
             User user = ofy.load().type(User.class).id(id).now();
-            lessonService.create_main_lessons_for_user(user); //create user's own main lesson objects and save them in datastore
+
+            // Create user's own main lesson objects and save them in the datastore
+            lessonService.create_main_lessons_for_user(user);
+
+            // Add the user information to the thymeleaf model
             model.addAttribute("user_info", user);
+
+            // Get the main site lessons for the user and add them to the thymeleaf model
             List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
+            model.addAttribute("main_lessons", main_lessons);
+
+            // Fixes a bug with user login
             Lesson l;
             if (user.getCurrent_lesson() == null) {
                 try {
                     l = main_lessons.get(0);
-                }catch(Exception e){
+                } catch (Exception e) {
                     l = new Lesson();
                 }
                 user.setCurrent_lesson(l);
-                //made change to user object must save to datastore
+                // Made change to user object must save to datastore
                 ofy.save().entity(user).now();
             } else {
                 l = (Lesson) ofy.load().key(user.getCurrent_lesson()).now();
@@ -76,30 +91,12 @@ public class UserController {
 
             model.addAttribute("lesson", l);
 
-            model.addAttribute("main_lessons", main_lessons);
+            // Return the string representing the HTML user page
             return "user";
-        }else{
+
+        } else {
             return "redirect:login";
         }
     }
-
-//    @RequestMapping(value = "/user", method = RequestMethod.GET)
-//    public String get_user_page(Model model){
-//        // Objectify ofy = OfyService.ofy();
-//
-//        // User user = ofy.load().type(User.class).id(id).now();
-//        // model.addAttribute("user", user);
-//        return "user";
-//    }
-//    @RequestMapping(value = "/makeuser")
-//    public String make_user(){
-//        Objectify ofy = OfyService.ofy();
-//        User u = new User();
-//        u.setUser_id(1L);
-//        u.setFirst_name("Fred");
-//        u.setLast_name("estevez");
-//        ofy.save().entity(u).now();
-//        return "index";
-//    }
 
 }
