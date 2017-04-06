@@ -29,10 +29,10 @@
         <h3 class="card-title">
           Editor
         </h3>
-        <span class="align-middle">
+        <span th:if="${task.hint != null}" class="align-middle">
           <a class="fa fa-lg fa-vc fa-question pull-right" data-toggle="modal" data-target="#hintModal"></a>
         </span>
-        <div class="modal fade" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintModalLabel" aria-hidden="true">
+        <div th:if="${task.hint != null}" class="modal" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -51,9 +51,7 @@
         </div>
       </div>
       <div class="card-block code-placement" id="editor">
-        <span class="code-block" th:each="block : ${editor}">
-          <span th:text="${block.value}"></span>
-        </span>
+        <span class="code-block" th:each="block : ${editor}" th:text="${block.value}"></span>
       </div>
       <div class="card-footer">
         <btn class="btn btn-sm btn-primary float-right" onClick="run()">Run</btn>
@@ -64,9 +62,7 @@
         <h3 class="card-title">Toolbox</h3>
       </div>
       <div class="card-block code-placement" id="toolbox">
-        <span class="code-block" th:each="block : ${toolbox}">
-          <span th:text="${block.value}"></span>
-        </span>
+        <span class="code-block" th:each="block : ${toolbox}" th:text="${block.value}"></span>
       </div>
     </div>
   </div>
