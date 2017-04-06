@@ -35,6 +35,8 @@ public class LessonJSONService {
             l.setDescription((String) json_object.get("description"));
             JSONArray json_tasks = (JSONArray) json_object.get("tasks");
             l.setTasks(create_tasks_from_json(json_tasks));
+            OfyService.ofy().save().entity(l).now();
+            System.out.println("SAVED LESSON");
             return l;
         }catch (Exception e){
             System.out.println("ERROR HERE");

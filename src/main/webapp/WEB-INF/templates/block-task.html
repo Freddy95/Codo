@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<div class="container h-100" id="page" th:attr="data-test-case=${task.test_case},data-ex-output=${task.expected_output},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id}">
+<div class="container h-100" id="page" th:attr="data-test-case=${task.test_case},data-next-task=${next_task},data-ex-output=${task.expected_output},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id}">
   <div class="row">
     <div class="col">
       <div th:replace="lesson-navbar :: navbar"></div>
@@ -45,17 +45,13 @@
       <div class="card h-100" id="output-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Output</h3>
+          <a id="next-arrow" th:if="${next_task > 0 && task.completed}" class="fa fa-lg fa-vc fa-arrow-right pull-right" th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${next_task}"></a>
+          <a id="next-arrow" th:if="${next_task < 0 && task.completed}" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user"></a>
         </div>
         <div class="card-block code-placement" id="output"></div>
       </div>
     </div>
   </div>
 </div>
-<div id="test-case" th:text="${task.test_case}"></div>
-<div id="ex-output" th:text="${task.expected_output}"></div>
-<div id="next-task" th:text="${next_task}"></div>
-<div id="task-id" th:text="${task.task_id}"></div>
-<div id="lesson-id" th:text="${lesson.lesson_id}"></div>
-
 </body>
 </html>

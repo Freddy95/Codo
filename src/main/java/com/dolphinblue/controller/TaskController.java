@@ -346,7 +346,13 @@ public class TaskController {
     @RequestMapping(value = "/jsonlesson")
     public String lessons_from_json(@RequestParam(value = "path") String path){
         Lesson l = LessonJSONService.create_lesson_from_JSON(path);
-        OfyService.ofy().save().entity(l).now();
+
         return "index";
+    }
+
+
+    @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}")
+    public String save_task(@CookieValue("token") String token, @PathVariable(value = "lessonId") Long lessonId, @PathVariable(value = "taskId") Long taskId, Model model){
+        return "";
     }
 }
