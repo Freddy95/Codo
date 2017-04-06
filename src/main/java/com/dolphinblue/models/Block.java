@@ -1,10 +1,10 @@
 package com.dolphinblue.models;
 
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import org.apache.commons.lang3.StringUtils;
 import java.util.HashMap;
 import java.util.Map;
 
