@@ -104,11 +104,18 @@ function save() {
     toolbox.push(block);
   });
 
-  data.task_id = task_id;
+  // data.task_id = task_id;
   data.editor = editor;
   data.toolbox = toolbox;
   data.completed = completed;
 
-  console.log(data);
-  return true;
+  $.ajax({
+    type: "POST",
+    url: "/savelesson/" + lesson_id + "/task/" + task_id,
+    data: data,
+  }).done(function() {
+    return true;
+  }).fail(function() {
+    return false;
+  });
 }
