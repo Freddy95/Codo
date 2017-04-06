@@ -45,7 +45,9 @@ function run() {
   $('#output').empty();
 
   // Redirect console.log and window.one-error to output.
+  var former = window.console.log;
   window.console.log = function(msg) {
+    former(msg);
     $('#output').append(document.createTextNode(msg)).append($('<br />'));
   }
 
@@ -53,20 +55,35 @@ function run() {
     $('#output').text(messageOrEvent);
   }
 
-  // Evaluating code.
+  var codeArray = [];
+
+  // Add code to the. stored array.
   $.each($('#editor').children(), function(index, value) {
-    try {
-      eval($(value).text());
-    }
-    // Flash on a block that errors.
-    catch(e) {
-      $(value).addClass('flash');
-      setTimeout( function(){
-        $(value).removeClass('flash');
-      }, 1000);
-      throw(e);
-    }
+    codeArray.push($(value).text());
   });
+
+  var fullCode = codeArray.join('');
+  debugger;
+
+  try {
+    // Try running the full program.
+    eval(fullCode);
+  } catch (e) {
+    // If it doesn't work, evaluate line by line.
+    for (i = 0; i < codeArray.length; i++) {
+      try {
+        eval(codeArray[i]);
+      }
+      // Flash on a block that errors.
+      catch(e) {
+        $(value).addClass('flash');
+        setTimeout( function(){
+          $(value).removeClass('flash');
+        }, 1000);
+        throw(e);
+      }
+    }
+  }
 
   /* Adds a next arrow if it doesn't exist already and if the solution is correct.
    */
