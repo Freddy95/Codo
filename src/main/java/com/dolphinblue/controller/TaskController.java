@@ -183,8 +183,11 @@ public class TaskController {
     }
 
     /**
-     * This method is used to update a task
-     * @param task -- the task to be updated
+     * Updates the task for a lesson
+     * @param token -- the login token of the user
+     * @param task_id -- the id of the task to be updates
+     * @param blocks -- the blocks within the task that need updating
+     * @return
      */
     @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
     public String update_task(@CookieValue("token") String token, @RequestParam long task_id, @RequestBody BlockList blocks) {
@@ -200,6 +203,8 @@ public class TaskController {
 
         // Get the original task
         Task task = ofy.load().type(Task.class).id(task_id).now();
+        // Update the boolean value for this task
+        task.setCompleted(blocks.isCompleted());
 
         // Update the blocks for this task
         List<Key<Block>> editor = lessonService.update_blocks(task.getTask_id(), blocks.getEditor());
