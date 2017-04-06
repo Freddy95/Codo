@@ -1,8 +1,7 @@
 package com.dolphinblue.service;
+
 import java.io.File;
 import java.io.FileReader;
-import java.io.InputStream;
-import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,9 +9,11 @@ import java.util.List;
 import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
 import com.googlecode.objectify.Key;
 
 /**
@@ -55,6 +56,7 @@ public class LessonJSONService {
             t.setToolbox(create_blocks_from_json((JSONArray) json_t.get("toolbox")));
             t.setExpected_output((String) json_t.get("expected_output"));
             t.setTest_case((String) json_t.get("test_case"));
+            t.setHint((String) json_t.get("hint"));
             tasks.add(t);
         }
 
