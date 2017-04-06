@@ -61,8 +61,7 @@ function run() {
     codeArray.push($(value).text());
   });
 
-  fullCode = codeArray.join('');
-  debugger;
+  fullCode = codeArray.join('\n');
 
   try {
     // Try running the full program.
