@@ -45,9 +45,8 @@ function run() {
   $('#output').empty();
 
   // Redirect console.log and window.one-error to output.
-  var former = window.console.log;
+  // var former = window.console.log;
   window.console.log = function(msg) {
-    former(msg);
     $('#output').append(document.createTextNode(msg)).append($('<br />'));
   }
 
@@ -55,14 +54,14 @@ function run() {
     $('#output').text(messageOrEvent);
   }
 
-  var codeArray = [];
+  codeArray = [];
 
   // Add code to the. stored array.
   $.each($('#editor').children(), function(index, value) {
     codeArray.push($(value).text());
   });
 
-  var fullCode = codeArray.join('');
+  fullCode = codeArray.join('');
   debugger;
 
   try {
@@ -76,6 +75,7 @@ function run() {
       }
       // Flash on a block that errors.
       catch(e) {
+        value = $('#editor').children().eq(i);
         $(value).addClass('flash');
         setTimeout( function(){
           $(value).removeClass('flash');
