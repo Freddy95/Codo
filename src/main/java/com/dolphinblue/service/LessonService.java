@@ -180,5 +180,51 @@ public class LessonService {
         return ofy.load().type(Lesson.class).filter("user_id", user.getUser_id()).filter("site_owned", true).list();
     }
 
+    /**
+     * Reset a task in a lesson
+     * @param task -- the task object that is to be reset
+     * @return -- return the task that has been reset
+     */
+    public Task reset_task(Task task) {
+        // Get the objectify object to get the original task from the datastore
+        Objectify ofy = OfyService.ofy();
 
+        // Load the original task for the lesson
+        Task original = (Task) ofy.load().key(task.getOriginal_task()).now();
+
+        // Set the completed boolean to false
+        task.setCompleted(false);
+
+        // Delete the edited blocks associated with the task in the editor
+        for (int j = 0; j < task.getEditor().size(); j++) {
+            // Load the block
+            Block b = ofy.load().key(task.getEditor().get(j)).now();
+            // Check if the block can be edited
+            if (b.isCan_edit()){
+                // If it is not an original block, delete it from the datastore
+                ofy.delete().entity(b).now();
+            }
+        }
+
+        // Delete the edited blocks associated with the task in the toolbox
+        for (int j = 0; j < task.getToolbox().size(); j++) {
+            // Load the block
+            Block b = ofy.load().key(task.getToolbox().get(j)).now();
+            // Check if the block can be edited
+            if (b.isCan_edit()) {
+                // If it is not an original block, delete it from the datastore
+                ofy.delete().entity(b).now();
+            }
+        }
+
+        // Reset the toolbox for task
+        task.setToolbox(original.getToolbox());
+        // Reset the editor for task
+        task.setEditor(original.getEditor());
+        // Save the changes to the datastore
+        ofy.save().entity(task).now();
+
+        // Return the updated task
+        return task;
+    }
 }

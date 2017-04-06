@@ -4,10 +4,7 @@ import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Block.Type;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
-import com.dolphinblue.models.User;
 import com.dolphinblue.service.*;
-
-import java.util.ArrayList;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -20,26 +17,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by FreddyEstevez on 3/29/17.
- * This controller should handle all requests for the task page.
  *
- * Request for a Task
- * - Request for Editor Blocks
- * - Request for Toolbox Blocks
- * Update Task
- * - Update Block Order
- * - Update Block Location for if it moves from Toolbox to Editor and the other way around
- * Restart Task
- * Restart Lesson
- * Update Lesson
+ * This controller handles all requests for the task page.
  */
-
 @Controller
 public class TaskController {
+    // Use Autowired to get an instance of the different Services
     @Autowired
     LessonService lessonService;
     @Autowired
@@ -48,9 +36,9 @@ public class TaskController {
     CodoUserService userService;
 
     /**
-     * For debugging the block task pages
-     * @param model
-     * @return
+     *  This is for debugging a block task
+     * @param model -- the thymeleaf model used to send data to the front end
+     * @return -- the HTML page to be loaded
      */
     @RequestMapping(value = "/debug-block-task", method = RequestMethod.GET)
     public String get_task(Model model){
@@ -81,259 +69,239 @@ public class TaskController {
     }
 
     /**
-     *
+     * This method gets all of the information for a lesson to populate a lesson page
+     * @param token -- the login token of the user
+     * @param lessonId -- the lesson id to load
+     * @param model -- the thymeleaf model used to send data to the front end
+     * @return -- the HTML page to be loaded
      */
     @RequestMapping(value = "/lesson/{lessonId}", method = RequestMethod.GET)
-    public String get_task(@CookieValue("token") String token, @PathVariable(value = "lessonId") long lessonId, Model model){
+    public String get_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long lessonId, Model model){
+        // Check to see if the user is authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
-            //if the user isn't properly authenticated send them back to the login page
+            // If the user isn't properly authenticated send them back to the login page
             return "redirect:login";
         }
 
+        // Create an objectify object to make requests to the datastore
         Objectify ofy = OfyService.ofy();
+
+        // Pull the lesson information from the datastore
         Lesson l = ofy.load().type(Lesson.class).id(lessonId).now();
+
+        // Get all of the tasks for the lesson
         List<Task> tasks = lessonService.get_tasks_by_id(l.getTasks());
-        Task task = null;//need to get last task not completed
-        for(int i = 0; i < tasks.size(); i++){
-            if (!tasks.get(i).isCompleted()){
-                task = tasks.get(i);//this task isnt completed
+        // Find the last task that isn't completed
+        Task task = null;
+        for(int i = 0; i < tasks.size(); i++) {
+            if (!tasks.get(i).isCompleted()) {
+                // This task isn't completed
+                task = tasks.get(i);
                 break;
             }
-
         }
-        if(task == null){
+        // Check to see if any task was found
+        if(task == null) {
+            // If no task was found, populate the last completed task
             task = tasks.get(tasks.size() - 1);
         }
+
+        // Populate the HTML lesson page with the correct task
         return "redirect:" + lessonId + "/task/" + task.getTask_id();
     }
 
     /**
-     * gets tasks for a lesson
-     * also gets the blocks for each task
-     * 
-     * TODO: Add a way to differentiate between which type of task to get.
+     * This method gets all of the information for a task to populate a task page
+     * @param token -- the login token of the user
+     * @param lessonId -- the lesson id from which the task belongs
+     * @param taskId -- the task id to load
+     * @param model -- the thymeleaf model used to send data to the front end
+     * @return -- the HTML page to be loaded
      *
-     * @param token - token of user to authenticate
-     * @return
+     * TODO: Add a way to differentiate between which type of task to get.
      */
     @RequestMapping(value = "/lesson/{lessonId}/task/{taskId}", method = RequestMethod.GET)
     public String get_task(@CookieValue(value = "token",defaultValue = "") String token, @PathVariable(value = "lessonId") long lessonId,@PathVariable(value = "taskId")long taskId,Model model){
-        //grab the cookie and make sure the user is authenticated
+        // Grab the cookie and make sure the user is authenticated
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
-            //if the user isn't properly authenticated send them back to the login page
+            // If the user isn't properly authenticated send them back to the login page
             return "redirect:login";
         }
 
-        //if the user is authenticated get their id
+        // If the user is authenticated get their id
         GoogleIdToken googleIdToken = authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport());
         String userId = userService.getUserId(googleIdToken);
-        //TODO: we might need user and lesson id for stuff so I'm adding them in now
+        // TODO: we might need user and lesson id for stuff so I'm adding them in now
 
+        // Create the objectify object to get stuff from the datastore
         Objectify ofy = OfyService.ofy();
+
+        // Load the lesson from the datastore and add it to the thymeleaf model
         Lesson l = ofy.load().type(Lesson.class).id(lessonId).now();
         model.addAttribute("lesson", l);
 
+        // Load the task from the datastore and add it to the thymeleaf model
         Task task = ofy.load().type(Task.class).id(taskId).now();
         model.addAttribute("task", task);
         System.out.println("OUTPUT: " + task.getExpected_output());
 
+        // Load the editor blocks for the task and add them to the thymeleaf model
         List<Key<Block>> e_block_keys = task.getEditor();
         List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);
         model.addAttribute("editor", editor_blocks);
 
+        // Load the toolbox blocks for the task and add them to the thymeleaf model
         List<Key<Block>> t_block_keys = task.getToolbox();
         List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
         model.addAttribute("toolbox", toolbox_blocks);
+
+        // Get the index for the navigation bar in the lesson
         int index = l.getTasks().indexOf(Key.create(Task.class, task.getTask_id()));
-        if(index != 0){
-            //task is not the first one so there is a prev task
+        // Set the previous tasks for the lesson
+        if(index != 0) {
+            // This task is not the first one so there is a prev task
             model.addAttribute("prev_task", l.getTasks().get(index-1).getId());
-        }else{
-            //task is first task
+        } else {
+            // This task is the first task
             model.addAttribute("prev_task", -1);
         }
+
+        // Set the next tasks for the lesson
         if (index < l.getTasks().size()-1){
-            //not last task so we have a next task
+            // Not last task so we have a next task
             model.addAttribute("next_task", l.getTasks().get(index+1).getId());
         }else{
-            //task is last task, no next task
+            // The task is the last task, no next task
             model.addAttribute("next_task", -1);
         }
 
+        // Populate the HTML lesson page with the correct task
         return "block-task";
     }
 
     /**
-     * Updates a task
-     * @param task
+     * This method is used to update a task
+     * @param task -- the task to be updated
      */
     @RequestMapping(value = "/updatetask", method = RequestMethod.POST)
-    public void update_task(@RequestBody Task task){ // Figure out later getting blocks
+    public void update_task(@RequestBody Task task) {
+        // Create the objectify object to get stuff from the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // TODO: Figure out later getting blocks
+        // Get the original blocks for the task
         List<Key<Block>> editor_blocks = task.getEditor();
         List<Key<Block>> toolbox_blocks = task.getToolbox();
 
+        // Update the blocks for this task
         lessonService.update_blocks(editor_blocks);
+        //lessonService.update_blocks(toolbox_blocks);
 
+        // Save the changes to the datastore
         OfyService.ofy().save().entity(task);
     }
 
     /**
-     * Restarts lesson to original values.
-     * @param token - user auth token
-     * @param lessonId - lesson to restart
-     * @param model
-     * @return
+     * Method for restarting a lesson
+     * @param token -- the login token of the user
+     * @param lessonId -- the lesson id of the lesson that is being reset
+     * @param model -- the thymeleaf model used to send data to the front end
+     * @return -- the HTML page to be loaded
      */
     @RequestMapping(value = "/restartlesson/{lessonId}", method = RequestMethod.GET)
     public String restart_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long lessonId, Model model){
+        // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
-            //if the user isn't properly authenticated send them back to the login page
+            // If the user isn't properly authenticated send them back to the login page
             return "redirect:login";
         }
 
+        // Create an objectify object to load things from the datastore
         Objectify ofy = OfyService.ofy();
-        //load lesson to be restarted
+        // Load the lesson to be restarted
         Lesson l = ofy.load().type(Lesson.class).id(lessonId).now();
 
-        //must set all tasks in lesson to original state
+        // Set all of the tasks in the lesson to their original state
         List<Task> tasks = lessonService.get_tasks_by_id(l.getTasks());
 
-        for(int i = 0; i < tasks.size(); i++){
-            Task original = (Task) ofy.load().key(tasks.get(i).getOriginal_task()).now();
-            //set to not completed
+        // Reset all of the tasks for the lesson
+        for(int i = 0; i < tasks.size(); i++) {
+            // Get the task and call the reset task method from the lesson service
             Task task = tasks.get(i);
-            task.setCompleted(false);
-            //delete blocks
-            for (int j = 0; j < task.getEditor().size(); j++){
-                Block b = ofy.load().key(task.getEditor().get(j)).now();
-                if (b.isCan_edit()){
-                    //is not an original block so delete from datastore
-                    ofy.delete().entity(b).now();
-                }
-            }
-            for (int j = 0; j < task.getToolbox().size(); j++){
-                Block b = ofy.load().key(task.getToolbox().get(j)).now();
-                if (b.isCan_edit()){
-                    //is not an original block so delete from datastore
-                    ofy.delete().entity(b).now();
-                }
-            }
-
-            //need to reset the toolbox for task
-            task.setToolbox(original.getToolbox());
-            //need to reset editor for task
-            task.setEditor(original.getEditor());
-            //save the changes to datastore
-            ofy.save().entity(task).now();
-
+            lessonService.reset_task(task);
         }
-        //restarted the lesson so first task is needed
+
+        // Get the first task to populate for the reset lesson
         Task task = tasks.get(0);
-        //redirect
+
+        // Redirect back to the first task in the reset lesson
         return "redirect:" + lessonId + "/restarttask/" + task.getTask_id();
     }
 
     /**
-     * restart a task
-     * @param taskId the Id of the original task to retrieve from datastore
-     * @param model
-     * @return
+     * Restart a single task within a lesson
+     * @param token -- the login token of the user
+     * @param lessonId -- the lesson id from which the task belongs
+     * @param taskId -- the task id of the task that should be reset
+     * @param model -- the thymeleaf model used to send data to the front end
+     * @return -- the HTML page to be loaded
      */
     @RequestMapping(value = "/restartlesson/{lessonId}/restarttask/{taskId}", method = RequestMethod.GET)
-    public String restart_task(@CookieValue("token") String token, @PathVariable(value = "lessonId") Long lessonId, @PathVariable(value = "taskId") Long taskId, Model model){
-        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
-        if(!isAuthenticated){
-            //if the user isn't properly authenticated send them back to the login page
+    public String restart_task(@CookieValue("token") String token, @PathVariable(value = "lessonId") Long lessonId, @PathVariable(value = "taskId") Long taskId, Model model) {
+        // Check to see if the user is authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token, new JacksonFactory(), new NetHttpTransport());
+        if (!isAuthenticated) {
+            // If the user isn't properly authenticated send them back to the login page
             return "redirect:login";
         }
 
+        // Create the objectify object to load things from the datastore
         Objectify ofy = OfyService.ofy();
+        // Load the lesson of the task, and the task itself, from the datastore
         Lesson lesson = ofy.load().type(Lesson.class).id(lessonId).now();
-        //task to be restarted
-        Task task = ofy.load().type(Task.class).id(taskId).now();
-        Task original_task = (Task) ofy.load().key(task.getOriginal_task()).now();
-        task.setCompleted(false);
-        //delete blocks
-        for (int i = 0; i < task.getEditor().size(); i++){
-            Block b = ofy.load().key(task.getEditor().get(i)).now();
-            if (b.isCan_edit()){
-                //is not an original block
-                ofy.delete().entity(b).now();
-            }
-        }
-        for (int i = 0; i < task.getToolbox().size(); i++){
-            Block b = ofy.load().key(task.getToolbox().get(i)).now();
-            if (b.isCan_edit()){
-                //is not an original block so delete from datastore
-                ofy.delete().entity(b).now();
-            }
-        }
+        Task old_task = ofy.load().type(Task.class).id(taskId).now();
 
+        // Reset the task using the lesson service
+        Task new_task = lessonService.reset_task(old_task);
 
-        //reset toolbox
-        task.setToolbox(original_task.getToolbox());
-        //reset editor
-        task.setEditor(original_task.getEditor());
-        //save changes to this task
-        ofy.save().entity(task).now();
+        // Put the lesson in the thymeleaf model
         model.addAttribute("lesson", lesson);
-        List<Key<Block>> e_block_keys = task.getEditor();
-        List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);
 
+        // Get the editor blocks and put them in the thymeleaf model
+        List<Key<Block>> e_block_keys = new_task.getEditor();
+        List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);
         model.addAttribute("editor", editor_blocks);
 
-        List<Key<Block>> t_block_keys = task.getToolbox();
+        // Get the toolbox blocks and put them in the thymeleaf model
+        List<Key<Block>> t_block_keys = new_task.getToolbox();
         List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
         model.addAttribute("toolbox", toolbox_blocks);
-        model.addAttribute("task", task);
 
-        int index = lesson.getTasks().indexOf(Key.create(Task.class, task.getTask_id()));
-        if(index != 0){
-            //task is not the first one so there is a prev task
-            model.addAttribute("prev_task", lesson.getTasks().get(index-1));
-        }else{
-            //task is first task
+        // Put the task in the thymeleaf model
+        model.addAttribute("task", new_task);
+
+        // Get the index for the lesson navigation bar
+        int index = lesson.getTasks().indexOf(Key.create(Task.class, new_task.getTask_id()));
+        if (index != 0) {
+            // If the task is not the first one there is a prev task
+            model.addAttribute("prev_task", lesson.getTasks().get(index - 1));
+        } else {
+            // If the task is the first task, there is not prev task
             model.addAttribute("prev_task", -1);
         }
-        if (index < lesson.getTasks().size()-1){
-            //not last task so we have a next task
-            model.addAttribute("next_task", lesson.getTasks().get(index+1));
-        }else{
-            //task is last task, no next task
+        if (index < lesson.getTasks().size() - 1) {
+            // If the task is not the last task, we have a next task
+            model.addAttribute("next_task", lesson.getTasks().get(index + 1));
+        } else {
+            // If the task is the last task, there is no next task
             model.addAttribute("next_task", -1);
         }
+
+        // Return the HTML page to be loaded
         return "block-task";
-    }
-
-    /**
-     * Makes a new lesson and saves it in the datastore
-     * Currently all values of that lesson are the null.
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/makelesson")
-    public String make_lesson(Model model){
-        Lesson l = new Lesson();
-        model.addAttribute("lesson", l);
-        OfyService.ofy().save().entity(l);
-        return "index";
-    }
-
-
-    /**
-     * Updates a lesson
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/updatelesson", method = RequestMethod.POST)
-    public String update_lesson(@RequestBody Lesson lesson, Model model){
-
-        lesson.setPercent_complete(lessonService.get_percent_complete(lesson));
-        OfyService.ofy().save().entity(lesson);
-        return "lessoncard";
     }
 
     /**
@@ -341,18 +309,20 @@ public class TaskController {
      * NOTE: when supplying the path in url it should be WEB-INF/FILENAME.json
      * dont put quotes ex - "WEB-INF-/FILENAME.json"
      * @param path - path to json file
-     * @return
+     * @return -- the HTML page to be loaded
      */
     @RequestMapping(value = "/jsonlesson")
-    public String lessons_from_json(@RequestParam(value = "path") String path){
-        Lesson l = LessonJSONService.create_lesson_from_JSON(path);
+    public String lessons_from_json(@RequestParam(value = "path") String path) {
+        // Create a lesson from JSON
+        LessonJSONService.create_lesson_from_JSON(path);
 
+        // Return the HTML page to be loaded
         return "index";
     }
 
-
+    // TODO: Solidify if we are using save_task or update_task
     @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}")
-    public String save_task(@CookieValue("token") String token, @PathVariable(value = "lessonId") Long lessonId, @PathVariable(value = "taskId") Long taskId, Model model){
+    public String save_task(@CookieValue("token") String token, @PathVariable(value = "lessonId") Long lessonId, @PathVariable(value = "taskId") Long taskId, Model model) {
         return "";
     }
 }

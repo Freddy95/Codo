@@ -23,12 +23,8 @@ import java.util.List;
 
 /**
  * Created by FreddyEstevez on 3/29/17.
- * This controller should handle all requests for the user page.
  *
- * User Request
- * Main Lessons Request
- * Current Lesson Request
- * This class does user stuff
+ * This controller handles all requests for the user page.
  */
 @Controller
 public class UserController {
