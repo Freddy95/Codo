@@ -75,7 +75,13 @@ public class UserController {
             // Fixes a bug with user login
             Lesson l;
             if (user.getCurrent_lesson() == null) {
-                l = main_lessons.get(0);
+                try {
+                    l = main_lessons.get(0);
+                }catch (Exception e){
+                    System.out.println("Error");
+                    return "redirect:user";
+                }
+
 
                 user.setCurrent_lesson(l);
                 // Made change to user object must save to datastore
