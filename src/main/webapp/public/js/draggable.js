@@ -61,7 +61,6 @@ function init() {
   next_task = $page.data('next-task');
   task_id = $page.data('task-id');
   lesson_id = $page.data('lesson-id');
-  debugger;
 
 
   /* Expected output has newlines, we'll turn them in to <br> so it works
