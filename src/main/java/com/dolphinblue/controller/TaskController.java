@@ -2,6 +2,7 @@ package com.dolphinblue.controller;
 
 import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Block.Type;
+import com.dolphinblue.models.BlockList;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
 import com.dolphinblue.service.*;
@@ -185,22 +186,33 @@ public class TaskController {
      * This method is used to update a task
      * @param task -- the task to be updated
      */
-    @RequestMapping(value = "/updatetask", method = RequestMethod.POST)
-    public void update_task(@RequestBody Task task) {
+    @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
+    public String update_task(@CookieValue("token") String token, @RequestParam long task_id, @RequestBody BlockList blocks) {
+        // Check if the user is still authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            return "redirect:login";
+        }
+
         // Create the objectify object to get stuff from the datastore
         Objectify ofy = OfyService.ofy();
 
-        // TODO: Figure out later getting blocks
-        // Get the original blocks for the task
-        List<Key<Block>> editor_blocks = task.getEditor();
-        List<Key<Block>> toolbox_blocks = task.getToolbox();
+        // Get the original task
+        Task task = ofy.load().type(Task.class).id(task_id).now();
 
         // Update the blocks for this task
-        lessonService.update_blocks(editor_blocks);
-        //lessonService.update_blocks(toolbox_blocks);
+        List<Key<Block>> editor = lessonService.update_blocks(task.getTask_id(), blocks.getEditor());
+        List<Key<Block>> toolbox = lessonService.update_blocks(task.getTask_id(), blocks.getToolbox());
+
+        // Set the new block keys to the task
+        task.setEditor(editor);
+        task.setToolbox(toolbox);
 
         // Save the changes to the datastore
-        OfyService.ofy().save().entity(task);
+        ofy.save().entity(task);
+
+        return "block-task";
     }
 
     /**
@@ -318,11 +330,5 @@ public class TaskController {
 
         // Return the HTML page to be loaded
         return "index";
-    }
-
-    // TODO: Solidify if we are using save_task or update_task
-    @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}")
-    public String save_task(@CookieValue("token") String token, @PathVariable(value = "lessonId") Long lessonId, @PathVariable(value = "taskId") Long taskId, Model model) {
-        return "";
     }
 }

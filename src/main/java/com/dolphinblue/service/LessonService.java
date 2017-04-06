@@ -1,10 +1,7 @@
 package com.dolphinblue.service;
 
-import com.dolphinblue.models.Block;
-import com.dolphinblue.models.Lesson;
-import com.dolphinblue.models.Task;
+import com.dolphinblue.models.*;
 
-import com.dolphinblue.models.User;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
@@ -133,31 +130,58 @@ public class LessonService {
         return blocks;
     }
 
-    // Put checking for block changes here
-    // Need to update for when we utilize editing blocks
-    public String update_blocks(List<Key<Block>> blocks) {
+    /**
+     * Updates a list of blocks
+     * @param task_id -- the id of the task the blocks belong to
+     * @param blocks -- the list of blocks to be updated
+     * @return -- the list of updated block keys
+     */
+    public List<Key<Block>> update_blocks(long task_id, List<Block> blocks) {
+        // Get the objectify object to access the datastore
         Objectify ofy = OfyService.ofy();
+        // Create a list of block ids
+        List<Key<Block>> block_keys = new ArrayList<>();
 
+        // For each block in the block list
         for(int i = 0; i < blocks.size(); i++) {
-            Block block = ofy.load().type(Block.class).id(blocks.get(i).getId()).now();
-            // Check to see if the block can be edited
-            if (!block.isCan_edit() && block.getValue().equals("hello")) {
-                // If it can't be, create a new block
-                Block new_block = new Block();
-                new_block.setValue(block.getValue());
-                new_block.setType(block.getType());
-                new_block.setCan_edit(true);
+            // Get the new block from the list
+            Block new_block = blocks.get(i);
+            // Get the original block from the datastore
+            Block old_block = ofy.load().type(Block.class).id(blocks.get(i).getBlock_id()).now();
 
-                OfyService.ofy().save().entity(new_block);
+            // Check to see if the new block has been changed
+            if (new_block.getValue().equals(old_block.getValue())) {
+                // Check to see if the new block can be edited
+                if (new_block.isCan_edit()) {
+                    // Change the block value by updating the block
+                    OfyService.ofy().save().entity(new_block);
+                    // Get the key value from the id
+                    Key block_key = Key.create(Block.class,new_block.getBlock_id());
+                    // Add the key to the list
+                    block_keys.add(block_key);
+                } else {
+                    // Create a new block
+                    Block block = new Block();
+                    block.setValue(new_block.getValue());
+                    block.setType(new_block.getType());
+                    block.setCan_edit(true);
 
+                    // Save the new block to the datastore
+                    OfyService.ofy().save().entity(block);
 
+                    // Get the key value from the id
+                    Key block_key = Key.create(Block.class,block.getBlock_id());
+                    // Add the id to the list
+                    block_keys.add(block_key);
+                }
             } else {
-                // If it can, update the existing block
-                OfyService.ofy().save().entity(block);
+                // If it has not been changed just add the key to the list
+                Key block_key = Key.create(Block.class,new_block.getBlock_id());
+                block_keys.add(block_key);
             }
         }
-
-        return "this does not work yet";
+        // Return the block keys
+        return block_keys;
     }
 
 
