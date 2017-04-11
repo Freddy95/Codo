@@ -44,7 +44,7 @@ public class SettingsController {
             model.addAttribute("user", user);
             return "settings";
         }else{
-            return "redirect:login";
+            return "redirect:/login";
         }
     }
 

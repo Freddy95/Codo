@@ -1,4 +1,4 @@
-var baseurl = "http://codo-161419.appspot.com/"; //TODO: change this!
+var baseurl = "http://localhost:8080/"; //TODO: change this!
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -7,7 +7,7 @@ function onSignIn(googleUser) {
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     var token = googleUser.getAuthResponse().id_token;
     $.ajax({
-        url:  baseurl+"/login",
+        url:  baseurl+"login",
         type:'post',
         headers:{
             'Content-Type':'application/x-www-form-urlencoded',
