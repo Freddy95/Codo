@@ -60,7 +60,7 @@ public class UserController {
             // Load the user's information from the datastore and store it in a user object
             User user = ofy.load().type(User.class).id(id).now();
             if(user == null){
-                return "redirect:login";
+                return "redirect:/login";
             }
             // Create user's own main lesson objects and save them in the datastore
             lessonService.create_main_lessons_for_user(user);
@@ -78,7 +78,7 @@ public class UserController {
                 try {
                     l = main_lessons.get(0);
                 } catch (Exception e) {
-                    return "redirect:user";
+                    return "redirect:/user";
                 }
 
                 // Made change to user object must save to datastore
@@ -93,7 +93,7 @@ public class UserController {
             return "user";
 
         } else {
-            return "redirect:login";
+            return "redirect:/login";
         }
     }
 

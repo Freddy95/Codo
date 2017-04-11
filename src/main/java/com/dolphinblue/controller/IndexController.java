@@ -25,9 +25,9 @@ public class IndexController {
             boolean isAuthenticated = authenticationService.isAuthenticated(token, new JacksonFactory(), new NetHttpTransport());
             if (isAuthenticated) {
 //            GoogleIdToken googleIdToken = authenticationService.getIdToken(token, new JacksonFactory(), new NetHttpTransport());
-                return "redirect:user";
+                return "redirect:/user";
             } else {
-                return "redirect:login";
+                return "redirect:/login";
             }
         }
 }

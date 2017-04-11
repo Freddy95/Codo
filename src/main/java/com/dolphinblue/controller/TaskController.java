@@ -89,7 +89,7 @@ public class TaskController {
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
             // If the user isn't properly authenticated send them back to the login page
-            return "redirect:login";
+            return "redirect:/login";
         }
 
         // Create an objectify object to make requests to the datastore
@@ -116,7 +116,8 @@ public class TaskController {
         }
 
         // Populate the HTML lesson page with the correct task
-        return "redirect:" + lessonId + "/task/" + task.getTask_id();
+        String requestUrl = "/lesson/" + lessonId + "/task/" + task.getTask_id();
+        return "redirect:" + requestUrl;
     }
 
     /**
@@ -135,7 +136,7 @@ public class TaskController {
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
             // If the user isn't properly authenticated send them back to the login page
-            return "redirect:login";
+            return "redirect:/login";
         }
 
         // If the user is authenticated get their id
@@ -242,7 +243,7 @@ public class TaskController {
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
             // If the user isn't properly authenticated send them back to the login page
-            return "redirect:login";
+            return "redirect:/login";
         }
 
         // Create an objectify object to load things from the datastore
@@ -264,7 +265,8 @@ public class TaskController {
         Task task = tasks.get(0);
 
         // Redirect back to the first task in the reset lesson
-        return "redirect:" + lessonId + "/restarttask/" + task.getTask_id();
+        String requestUrl = "/lesson/" + lessonId + "/task/" + task.getTask_id();
+        return "redirect:" + requestUrl;
     }
 
     /**
@@ -281,7 +283,7 @@ public class TaskController {
         boolean isAuthenticated = authenticationService.isAuthenticated(token, new JacksonFactory(), new NetHttpTransport());
         if (!isAuthenticated) {
             // If the user isn't properly authenticated send them back to the login page
-            return "redirect:login";
+            return "redirect:/login";
         }
 
         // Create the objectify object to load things from the datastore
@@ -293,41 +295,42 @@ public class TaskController {
         // Reset the task using the lesson service
         Task new_task = lessonService.reset_task(old_task);
 
-        // Put the lesson in the thymeleaf model
-        model.addAttribute("lesson", lesson);
+        // // Put the lesson in the thymeleaf model
+        // model.addAttribute("lesson", lesson);
 
-        // Get the editor blocks and put them in the thymeleaf model
-        List<Key<Block>> e_block_keys = new_task.getEditor();
-        List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);
-        model.addAttribute("editor", editor_blocks);
+        // // Get the editor blocks and put them in the thymeleaf model
+        // List<Key<Block>> e_block_keys = new_task.getEditor();
+        // List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);
+        // model.addAttribute("editor", editor_blocks);
 
-        // Get the toolbox blocks and put them in the thymeleaf model
-        List<Key<Block>> t_block_keys = new_task.getToolbox();
-        List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
-        model.addAttribute("toolbox", toolbox_blocks);
+        // // Get the toolbox blocks and put them in the thymeleaf model
+        // List<Key<Block>> t_block_keys = new_task.getToolbox();
+        // List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
+        // model.addAttribute("toolbox", toolbox_blocks);
 
-        // Put the task in the thymeleaf model
-        model.addAttribute("task", new_task);
+        // // Put the task in the thymeleaf model
+        // model.addAttribute("task", new_task);
 
-        // Get the index for the lesson navigation bar
-        int index = lesson.getTasks().indexOf(Key.create(Task.class, new_task.getTask_id()));
-        if (index != 0) {
-            // If the task is not the first one there is a prev task
-            model.addAttribute("prev_task", lesson.getTasks().get(index - 1).getId());
-        } else {
-            // If the task is the first task, there is not prev task
-            model.addAttribute("prev_task", -1);
-        }
-        if (index < lesson.getTasks().size() - 1) {
-            // If the task is not the last task, we have a next task
-            model.addAttribute("next_task", lesson.getTasks().get(index + 1).getId());
-        } else {
-            // If the task is the last task, there is no next task
-            model.addAttribute("next_task", -1);
-        }
+        // // Get the index for the lesson navigation bar
+        // int index = lesson.getTasks().indexOf(Key.create(Task.class, new_task.getTask_id()));
+        // if (index != 0) {
+        //     // If the task is not the first one there is a prev task
+        //     model.addAttribute("prev_task", lesson.getTasks().get(index - 1).getId());
+        // } else {
+        //     // If the task is the first task, there is not prev task
+        //     model.addAttribute("prev_task", -1);
+        // }
+        // if (index < lesson.getTasks().size() - 1) {
+        //     // If the task is not the last task, we have a next task
+        //     model.addAttribute("next_task", lesson.getTasks().get(index + 1).getId());
+        // } else {
+        //     // If the task is the last task, there is no next task
+        //     model.addAttribute("next_task", -1);
+        // }
 
         // Return the HTML page to be loaded
-        return "block-task";
+        String requestUrl = "/lesson/" + lessonId + "/task/" + taskId;
+        return "redirect:" + requestUrl;
     }
 
     /**
