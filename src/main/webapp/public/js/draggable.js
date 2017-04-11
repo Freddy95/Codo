@@ -129,7 +129,6 @@ function save() {
   data.toolbox = toolbox;
   data.completed = completed;
 
-
   $.ajax({
     headers: { 
         'Accept': 'application/json',

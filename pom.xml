@@ -6,8 +6,8 @@
 	<packaging>war</packaging>
 	<version>0.1-SNAPSHOT</version>
 
-	<groupId>com.guestbook</groupId>
-	<artifactId>guestbook-webapp</artifactId>
+	<groupId>com.codo</groupId>
+	<artifactId>codo-161419</artifactId>
 
 	<pluginRepositories>
 		<pluginRepository>
