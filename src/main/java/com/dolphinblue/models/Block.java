@@ -14,13 +14,15 @@ import java.util.List;
  */
 @Entity
 public class Block {
-
+    @JsonIgnore
     @Id public Long block_id;
     public String value;
     @JsonIgnore
     public Type type;
+    @JsonIgnore
     public boolean can_edit;
-    List<Block> childrenBlocks;
+    @JsonIgnore
+    List<Block> children;
 
     public enum Type {//types of blocks
         IF,
@@ -37,7 +39,7 @@ public class Block {
     }
 
    public  Block() {
-        childrenBlocks = new ArrayList<>();
+        children = new ArrayList<>();
     }
 
 
@@ -86,12 +88,12 @@ public class Block {
     }
 
 
-    public List<Block> getChildrenBlocks() {
-        return childrenBlocks;
+    public List<Block> getChildren() {
+        return children;
     }
 
-    public void setChildrenBlocks(List<Block> childrenBlocks) {
-        this.childrenBlocks = childrenBlocks;
+    public void setChildren(List<Block> children) {
+        this.children = children;
     }
 
     @Override
@@ -101,7 +103,7 @@ public class Block {
                 ", value='" + this.value + '\'' +
                 ", type=" + this.type +
                 ", can_edit=" + this.can_edit +
-                ", childrenBlocks" + this.childrenBlocks+
+                ", children" + this.children+
                 '}';
     }
 }

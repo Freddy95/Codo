@@ -5,6 +5,7 @@ package com.dolphinblue.models;
  * This class is used for retrieving updated blocks from the front end
  */
 public class SaveTaskModel {
+
     private boolean completed;
     private BlockList toolbox;
     private BlockList editor;

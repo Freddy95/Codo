@@ -11,9 +11,7 @@ import com.googlecode.objectify.Objectify;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
@@ -31,11 +29,18 @@ public class CreateLessonController {
     CodoUserService userService;
 
     @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
-    public void saveCreatedLesson(@RequestBody SaveTaskModel blocks){
+    public @ResponseBody SaveTaskModel saveCreatedLesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel blocks){
         System.out.println("toolbox");
         System.out.println(blocks.getToolbox());
         System.out.println("editor");
         System.out.println(blocks.getEditor());
+        for(int i = 0; i < blocks.getEditor().getBlocks().size(); i++){
+            System.out.println(blocks.getEditor().getBlocks().get(i));
+        }
+        for(int i = 0; i < blocks.getToolbox().getBlocks().size(); i++){
+            System.out.println(blocks.getToolbox().getBlocks().get(i));
+        }
+        return blocks;
     }
     @RequestMapping(value = "/createlesson", method = RequestMethod.GET)
     public String getCreateLessonPage(Model model){
