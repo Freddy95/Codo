@@ -21,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by FreddyEstevez on 3/29/17.
@@ -145,6 +146,24 @@ public class TaskController {
         // Load the lesson from the datastore and add it to the thymeleaf model
         Lesson l = ofy.load().type(Lesson.class).id(lessonId).now();
         model.addAttribute("lesson", l);
+
+        //load all tasks to check which are completed
+        Map<Key<Task>, Task> mapOfTasks = ofy.load().keys(l.getTasks());
+        //list of tasks in lesson
+        List<Task> t = new ArrayList<>(mapOfTasks.values());
+        //list of booleans checking if task is completed
+        List<Boolean> taskCompleteList = new ArrayList<>();
+        //list of task title
+        List<String> taskTitleList = new ArrayList<>();
+
+        //iterate through tasks
+        for (int i = 0; i < t.size(); i++){
+            taskCompleteList.add(t.get(i).isCompleted());
+            taskTitleList.add(t.get(i).getTitle());
+        }
+        //load booleans and titles into thymeleaf model
+        model.addAttribute("task_completed", taskCompleteList);
+        model.addAttribute("task_titles", taskTitleList);
 
         // Load the task from the datastore and add it to the thymeleaf model
         Task task = ofy.load().type(Task.class).id(taskId).now();
