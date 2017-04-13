@@ -100,6 +100,7 @@ public class Block {
                 ", value='" + this.value + '\'' +
                 ", type=" + this.type +
                 ", can_edit=" + this.can_edit +
+                ", childrenBlocks" + this.childrenBlocks+
                 '}';
     }
 }
