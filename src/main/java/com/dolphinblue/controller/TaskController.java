@@ -382,14 +382,32 @@ public class TaskController {
             // If the user isn't properly authenticated send them back to the login page
             return "redirect:/login";
         }
-
-        //Make a dummy task
+  Lesson l = new Lesson();
+        l.setTitle("First Lesson");
         Task t = new Task();
-        Lesson l = new Lesson();
-        model.addAttribute("task",t);
-        model.addAttribute("lesson",l);
-        model.addAttribute("prev_task",-1);
-        model.addAttribute("next_task",-1);
+        t.setTitle("First Block Task");
+        t.setInstructions("These are the instructions.");
+        t.setHint("This is the hint.");
+        t.setTest_case("x = 1;");
+        t.setExpected_output("3");
+
+        ArrayList<Block> toolbox = new ArrayList<Block>();
+        ArrayList<Block> editor = new ArrayList<Block>();
+
+        toolbox.add(new Block(1, "x = 2;", Type.ASSIGN, true));
+        toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, true));
+
+        editor.add(new Block(2, "x += 1;", Type.ASSIGN, true));
+        editor.add(new Block(2, "console.log(x);", Type.ASSIGN, true));
+
+        model.addAttribute("lesson", l);
+        model.addAttribute("toolbox", toolbox);
+        model.addAttribute("editor", editor);
+        model.addAttribute("task", t);
+
+        model.addAttribute("prev_task", -1);
+        model.addAttribute("next_task", -1);
+
         return "freecode";
     }
 
