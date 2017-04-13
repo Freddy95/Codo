@@ -30,7 +30,7 @@ public class CreateLessonController {
     @Autowired
     CodoUserService userService;
 
-    @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
     public void saveCreatedLesson(@RequestBody SaveTaskModel blocks){
         System.out.println("toolbox");
         System.out.println(blocks.getToolbox());
