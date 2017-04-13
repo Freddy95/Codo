@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+   
+  <title>Codo - Home</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"></meta>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"></link>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script src="https://use.fontawesome.com/7e4c107e18.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/main.css}"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/block-task.css}"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/draggable-style.css}"></link>
+  <script type="text/javascript" th:src="@{/public/js/debug-draggable.js}"></script>
+</head>
+<body>
+
+<div class="row " id="lesson-content">
+    <div class="col-3 task-col">
+      <div class="card h-100" id="instructions-div">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">Instructions</h3>
+        </div>
+        <div class="card-block code-placement" id="instructions" th:utext="${task.instructions}"></div>
+      </div>
+    </div>
+    <div class="col-6 task-col">
+      <div th:replace="draggable:: #block-content"></div>
+    </div>
+    <div class="col-3 task-col">
+      <div class="card h-100" id="output-div">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">
+            Output
+            <a class="nav-link" onClick="save()"
+                data-toggle="tooltip" data-placement="bottom" title="Save">
+              <i class="fa fa-lg fa-floppy-o" aria-hidden="true"></i>
+            </a>
+          </h3>
+          <!-- <a id="next-arrow" onClick="save()" th:if="${next_task > 0 && task.completed}" class="fa fa-lg fa-vc fa-arrow-right pull-right" th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${next_task}"></a> -->
+          <a id="next-arrow" onClick="save()" th:if="${next_task < 0 && task.completed}" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user"></a>
+        </div>
+        <div class="card-block code-placement" id="output"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="page-info" th:attr="data-test-case=${task.test_case},data-completed=${task.completed},data-next-task=${next_task},data-ex-output=${task.expected_output},data-task-id=${task.task_id}">
+</div>
+</body>
+</html>
