@@ -2,7 +2,7 @@ package com.dolphinblue.controller;
 
 import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Block.Type;
-import com.dolphinblue.models.BlockList;
+import com.dolphinblue.models.SaveTaskModel;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
 import com.dolphinblue.service.*;
@@ -21,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by FreddyEstevez on 3/29/17.
@@ -146,6 +147,24 @@ public class TaskController {
         Lesson l = ofy.load().type(Lesson.class).id(lessonId).now();
         model.addAttribute("lesson", l);
 
+        //load all tasks to check which are completed
+        Map<Key<Task>, Task> mapOfTasks = ofy.load().keys(l.getTasks());
+        //list of tasks in lesson
+        List<Task> t = new ArrayList<>(mapOfTasks.values());
+        //list of booleans checking if task is completed
+        List<Boolean> taskStatusList = new ArrayList<>();
+        //list of task title
+        List<String> taskTitleList = new ArrayList<>();
+
+        //iterate through tasks
+        for (int i = 0; i < t.size(); i++){
+            taskStatusList.add(t.get(i).isCompleted());
+            taskTitleList.add(t.get(i).getTitle());
+        }
+        //load booleans and titles into thymeleaf model
+        model.addAttribute("tasks_status", taskStatusList);
+        model.addAttribute("tasks_titles", taskTitleList);
+
         // Load the task from the datastore and add it to the thymeleaf model
         Task task = ofy.load().type(Task.class).id(taskId).now();
         model.addAttribute("task", task);
@@ -193,7 +212,8 @@ public class TaskController {
      * @return
      */
     @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}",  method = RequestMethod.POST)
-    public @ResponseBody BlockList update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") Long taskId,  @RequestBody BlockList blocks) {
+    public @ResponseBody
+    SaveTaskModel update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") Long taskId, @RequestBody SaveTaskModel blocks) {
         // Check if the user is still authenticated by google
         System.out.println("MATT");
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
@@ -346,7 +366,8 @@ public class TaskController {
 
 
     @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public @ResponseBody BlockList test(@RequestBody BlockList list){
+    public @ResponseBody
+    SaveTaskModel test(@RequestBody SaveTaskModel list){
         System.out.println(list.toString());
         return list;
 
