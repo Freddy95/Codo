@@ -99,18 +99,17 @@ function getCodeBlock(node) {
 }
 
 function getCodeBlockAttr(value) {
-  block = {};
+  var block = {};
   block.block_id = parseInt($(value).attr('id'));
   if (!($(value).attr('data-children'))) {
     block.value = $(value).text();
   }
   else {
-    children = [];
+    block.children = [];
     $.each(getCodeBlock($(value)), function(index, v) {
       child_block = getCodeBlockAttr(v);
-      children.push(child_block);
+      block.children.push(child_block);
     });
-    block.children = children;
   }
   return block;
 }
