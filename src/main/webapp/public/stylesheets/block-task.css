@@ -51,3 +51,7 @@ html, body {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+#freecodeeditor {
+   min-height: 500px;
+}
