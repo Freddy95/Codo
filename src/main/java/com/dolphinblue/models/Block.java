@@ -14,14 +14,11 @@ import java.util.List;
  */
 @Entity
 public class Block {
-    @JsonIgnore
     @Id public Long block_id;
     public String value;
-    @JsonIgnore
     public Type type;
-    @JsonIgnore
+
     public boolean can_edit;
-    @JsonIgnore
     List<Block> children;
 
     public enum Type {//types of blocks
