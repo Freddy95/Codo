@@ -58,11 +58,11 @@ public class TaskController {
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();
 
-        toolbox.add(new Block(1, "x = 2;", Type.ASSIGN, true));
-        toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, true));
+        toolbox.add(new Block(1, "x = 2;", Type.ASSIGN, false));
+        toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, false));
 
-        editor.add(new Block(2, "x += 1;", Type.ASSIGN, true));
-        editor.add(new Block(2, "console.log(x);", Type.ASSIGN, true));
+        editor.add(new Block(2, "x += 1;", Type.ASSIGN, false));
+        editor.add(new Block(2, "console.log(x);", Type.ASSIGN, false));
 
         model.addAttribute("lesson", l);
         model.addAttribute("toolbox", toolbox);
