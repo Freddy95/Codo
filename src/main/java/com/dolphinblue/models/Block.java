@@ -1,8 +1,12 @@
 package com.dolphinblue.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by FreddyEstevez on 3/21/17.
@@ -16,7 +20,7 @@ public class Block {
     @JsonIgnore
     public Type type;
     public boolean can_edit;
-
+    List<Block> childrenBlocks;
 
     public enum Type {//types of blocks
         FOR,
@@ -32,7 +36,7 @@ public class Block {
     }
 
    public  Block() {
-
+        childrenBlocks = new ArrayList<>();
     }
 
 
@@ -78,6 +82,15 @@ public class Block {
 
     public void setCan_edit(boolean can_edit) {
         this.can_edit = can_edit;
+    }
+
+
+    public List<Block> getChildrenBlocks() {
+        return childrenBlocks;
+    }
+
+    public void setChildrenBlocks(List<Block> childrenBlocks) {
+        this.childrenBlocks = childrenBlocks;
     }
 
     @Override

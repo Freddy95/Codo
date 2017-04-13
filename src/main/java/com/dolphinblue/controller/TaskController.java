@@ -2,7 +2,7 @@ package com.dolphinblue.controller;
 
 import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Block.Type;
-import com.dolphinblue.models.BlockList;
+import com.dolphinblue.models.SaveTaskModel;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
 import com.dolphinblue.service.*;
@@ -152,18 +152,18 @@ public class TaskController {
         //list of tasks in lesson
         List<Task> t = new ArrayList<>(mapOfTasks.values());
         //list of booleans checking if task is completed
-        List<Boolean> taskCompleteList = new ArrayList<>();
+        List<Boolean> taskStatusList = new ArrayList<>();
         //list of task title
         List<String> taskTitleList = new ArrayList<>();
 
         //iterate through tasks
         for (int i = 0; i < t.size(); i++){
-            taskCompleteList.add(t.get(i).isCompleted());
+            taskStatusList.add(t.get(i).isCompleted());
             taskTitleList.add(t.get(i).getTitle());
         }
         //load booleans and titles into thymeleaf model
-        model.addAttribute("task_completed", taskCompleteList);
-        model.addAttribute("task_titles", taskTitleList);
+        model.addAttribute("tasks_status", taskStatusList);
+        model.addAttribute("tasks_titles", taskTitleList);
 
         // Load the task from the datastore and add it to the thymeleaf model
         Task task = ofy.load().type(Task.class).id(taskId).now();
@@ -212,7 +212,8 @@ public class TaskController {
      * @return
      */
     @RequestMapping(value = "/savelesson/{lessonId}/task/{taskId}",  method = RequestMethod.POST)
-    public @ResponseBody BlockList update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") Long taskId,  @RequestBody BlockList blocks) {
+    public @ResponseBody
+    SaveTaskModel update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") Long taskId, @RequestBody SaveTaskModel blocks) {
         // Check if the user is still authenticated by google
         System.out.println("MATT");
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
@@ -365,10 +366,31 @@ public class TaskController {
 
 
     @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public @ResponseBody BlockList test(@RequestBody BlockList list){
+    public @ResponseBody
+    SaveTaskModel test(@RequestBody SaveTaskModel list){
         System.out.println(list.toString());
         return list;
 
+    }
+
+    @RequestMapping(value="/freecode" , method=RequestMethod.GET)
+    public String getFreeCode(@CookieValue("token")String token,Model model){
+        //TODO: change the route this takes
+        // Check to see if the user is authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token, new JacksonFactory(), new NetHttpTransport());
+        if (!isAuthenticated) {
+            // If the user isn't properly authenticated send them back to the login page
+            return "redirect:/login";
+        }
+
+        //Make a dummy task
+        Task t = new Task();
+        Lesson l = new Lesson();
+        model.addAttribute("task",t);
+        model.addAttribute("lesson",l);
+        model.addAttribute("prev_task",-1);
+        model.addAttribute("next_task",-1);
+        return "freecode";
     }
 
 }

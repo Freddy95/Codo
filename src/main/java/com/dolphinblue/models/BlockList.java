@@ -1,45 +1,31 @@
 package com.dolphinblue.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
+
 /**
- * Created by Devon on 4/5/17.
- * This class is used for retrieving updated blocks from the front end
+ * Created by Matt on 4/6/17.
+ * Object class used for JSON conversion
  */
 public class BlockList {
-    private boolean completed;
-    private BlockWrapper toolbox;
-    private BlockWrapper editor;
 
-    public BlockList() {
 
+    @JsonProperty(value="blocks")
+    public List<Block> blocks;
+
+    @JsonCreator
+    public BlockList(List<Block> blocks){
+       this.blocks = blocks;
     }
 
-    public BlockList(BlockWrapper toolbox, BlockWrapper editor, boolean completed) {
-        this.toolbox = toolbox;
-        this.editor = editor;
-        this.completed = completed;
+    public List<Block> getBlocks(){
+        return blocks;
     }
 
-    public boolean getCompleted() {
-        return completed;
+    public void setBlocks(List<Block> blocks) {
+        this.blocks = blocks;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
-    public BlockWrapper getToolbox() {
-        return toolbox;
-    }
-
-    public void setToolbox(BlockWrapper toolbox) {
-        this.toolbox = toolbox;
-    }
-
-    public BlockWrapper getEditor() {
-        return editor;
-    }
-
-    public void setEditor(BlockWrapper editor) {
-        this.editor = editor;
-    }
 }
