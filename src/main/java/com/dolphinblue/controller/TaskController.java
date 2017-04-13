@@ -352,4 +352,24 @@ public class TaskController {
 
     }
 
+    @RequestMapping(value="/freecode" , method=RequestMethod.GET)
+    public String getFreeCode(@CookieValue("token")String token,Model model){
+        //TODO: change the route this takes
+        // Check to see if the user is authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token, new JacksonFactory(), new NetHttpTransport());
+        if (!isAuthenticated) {
+            // If the user isn't properly authenticated send them back to the login page
+            return "redirect:/login";
+        }
+
+        //Make a dummy task
+        Task t = new Task();
+        Lesson l = new Lesson();
+        model.addAttribute("task",t);
+        model.addAttribute("lesson",l);
+        model.addAttribute("prev_task",-1);
+        model.addAttribute("next_task",-1);
+        return "freecode";
+    }
+
 }
