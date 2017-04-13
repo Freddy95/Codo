@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<div class="container h-100" id="page" th:attr="data-test-case=${task.test_case},data-completed=${task.completed},data-next-task=${next_task},data-ex-output=${task.expected_output},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id}">
+<div class="container h-100">
   <div class="row">
     <div class="col">
       <div th:replace="lesson-navbar :: navbar"></div>
@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="col-6 task-col">
-      <div th:replace="draggable:: #blockContent"></div>
+      <div th:replace="draggable:: #block-content"></div>
     </div>
     <div class="col-3 task-col">
       <div class="card h-100" id="output-div">
@@ -52,6 +52,8 @@
       </div>
     </div>
   </div>
+</div>
+<div id="page-info" th:attr="data-test-case=${task.test_case},data-completed=${task.completed},data-next-task=${next_task},data-ex-output=${task.expected_output},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id}">
 </div>
 </body>
 </html>
