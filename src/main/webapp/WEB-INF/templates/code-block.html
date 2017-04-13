@@ -1,9 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>  
-  <span th:fragment="block(block)">
-    <div class="code-block" th:id="${block.block_id}" th:text="${block.value}"></div>
-</span>
+  <div th:fragment="block(block)" th:switch="${block.can_edit}">
+    <div th:case="${true}">
+        <div class="code-block" th:if="${block.type == T(com.dolphinblue.models.Block$Type).FOR}" th:attr="data-children='true'">
+            for (
+                <div class="holds-one code-placement"></div>;
+                <div class="holds-one code-placement"></div>;
+                <div class="holds-one code-placement"></div>;
+            )
+        </div>
+        <div class="code-block" th:if="${block.type == T(com.dolphinblue.models.Block$Type).IF}" th:attr="data-children='true'">
+            if (
+                <div class="holds-one code-placement"></div>
+            )
+        </div>
+    </div>
+    <div th:case="*">
+        <div class="code-block" th:id="${block.block_id}" th:text="${block.value}" th:attr="data-children='false'"></div>
+    </div>
+</div>
 </body>
   
 </html>

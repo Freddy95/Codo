@@ -154,27 +154,40 @@ function run() {
   }
 }
 
+function getCodeBlock(node) {
+  return $(node).children().children().children();
+}
+
+function getCodeBlockAttr(value) {
+  block = {};
+  block.block_id = parseInt($(value).attr('id'));
+  if (!($(value).attr('data-children'))) {
+    block.value = $(value).text();
+  }
+  else {
+    children = [];
+    $.each(getCodeBlock($(value)), function(index, v) {
+      child_block = getCodeBlockAttr(v);
+      children.push(child_block);
+    });
+    block.children = children;
+  }
+  return block;
+}
+
 function save() {
   var data = {};
 
   var editor = [];
   var toolbox = [];
 
-  $.each($('#editor').children(), function(index, value) {
-    var block = {};
-    block.value = $(value).text();
-    block.block_id = parseInt($(value).attr('id'));
-    //TODO: change these values later when we need to
-    block.can_edit = false;
+  $.each(getCodeBlock($('#editor')), function(index, value) {
+    var block = getCodeBlockAttr(value);
     editor.push(block);
   });
 
-  $.each($('#toolbox').children(), function(index, value) {
-    var block = {};
-    block.value = $(value).text();
-    block.block_id = parseInt($(value).attr('id'));
-    //TODO: change these values later when we need to
-    block.can_edit = false;
+  $.each(getCodeBlock($('#toolbox')), function(index, value) {
+    var block = getCodeBlockAttr(value);
     toolbox.push(block);
   });
 

@@ -19,9 +19,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
+
 
 /**
  * Created by FreddyEstevez on 3/29/17.
@@ -46,8 +45,6 @@ public class TaskController {
      */
     @RequestMapping(value = "/debug-block-task", method = RequestMethod.GET)
     public String get_task(Model model){
-        Lesson l = new Lesson();
-        l.setTitle("First Lesson");
         Task t = new Task();
         t.setTitle("First Block Task");
         t.setInstructions("These are the instructions.");
@@ -60,16 +57,19 @@ public class TaskController {
 
         toolbox.add(new Block(1, "x = 2;", Type.ASSIGN, false));
         toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, false));
+        toolbox.add(new Block(3, "blah;", Type.IF, true));
+        toolbox.add(new Block(4, "butts;", Type.FOR, true));
+
 
         editor.add(new Block(2, "x += 1;", Type.ASSIGN, false));
         editor.add(new Block(2, "console.log(x);", Type.ASSIGN, false));
 
-        model.addAttribute("lesson", l);
+        // model.addAttribute("lesson", l);
         model.addAttribute("toolbox", toolbox);
         model.addAttribute("editor", editor);
         model.addAttribute("task", t);
 
-        return "block-task";
+        return "debug-block-task";
     }
 
     /**

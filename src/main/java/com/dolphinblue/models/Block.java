@@ -23,6 +23,7 @@ public class Block {
     List<Block> childrenBlocks;
 
     public enum Type {//types of blocks
+        IF,
         FOR,
         WHILE,
         ASSIGN,

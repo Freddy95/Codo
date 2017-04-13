@@ -36,6 +36,13 @@
     flex-grow: 1;
 }
 
+.holds-one {
+    padding: 5px;
+    min-height: 1.5em;
+    border: 1px solid #ddd;
+    display: inline-block;
+}
+
 .flash {
   -moz-animation: flash 1s ease-out;
   -moz-animation-iteration-count: 1;
