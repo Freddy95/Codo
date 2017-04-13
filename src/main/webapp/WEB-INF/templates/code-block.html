@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>  
+  <span th:fragment="block(block)">
+    <div class="code-block" th:id="${block.block_id}" th:text="${block.value}"></div>
+</span>
+</body>
+  
+</html>
