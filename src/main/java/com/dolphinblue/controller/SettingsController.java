@@ -5,6 +5,7 @@ import com.dolphinblue.models.Task;
 import com.dolphinblue.models.User;
 import com.dolphinblue.service.AuthenticationService;
 import com.dolphinblue.service.CodoUserService;
+import com.dolphinblue.service.LessonService;
 import com.dolphinblue.service.OfyService;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -31,6 +32,8 @@ public class SettingsController {
     AuthenticationService authenticationService;
     @Autowired
     CodoUserService userService;
+    @Autowired
+    LessonService lessonService;
 
     /**
      * gets user and adds him to @param model
@@ -145,6 +148,25 @@ public class SettingsController {
 
         // Create the objectify object to store stuff from the datastore
         Objectify ofy = OfyService.ofy();
+
+        // Get the user's lessons from the datastore
+        User user = ofy.load().type(User.class).id(userId).now();
+        List<Key<Lesson>> lesson_keys = user.getLessons();
+
+        // Reset all of the tasks for each lesson the user has started
+        for(Key lesson_key : lesson_keys) {
+            // Get the lesson to be reset
+            Lesson lesson = ofy.load().type(Lesson.class).id(lesson_key.getId()).now();
+
+            // Get all of the tasks for the lesson and reset them
+            List<Key<Task>> task_keys = lesson.getTasks();
+            for(Key task_key : task_keys) {
+                // Get the task to be reset
+                Task task = ofy.load().type(Task.class).id(task_key.getId()).now();
+                // Reset the task
+                lessonService.reset_task(task);
+            }
+        }
 
         // Return the string representing the HTML settings page
         return "settings";
