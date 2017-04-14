@@ -10,6 +10,43 @@ var task_id = "";
 var lesson_id = "";
 var completed = "";
 
+// Convenience methood to get value from a placeholder.
+function getCodeBlock(node) {
+  return $(node).children().children();
+}
+
+// Extracts block values from a node.
+function getCodeBlockAttr(value) {
+  var block = {};
+  block.block_id = parseInt($(value).attr('id'));
+  if (($(value).attr('data-children')) === "false") {
+    block.value = $(value).text();
+  }
+  else {
+    block.children = [];
+    $.each(getCodeBlock($(value)), function(index, v) {
+      child_block = getCodeBlockAttr(getCodeBlock($(v)));
+      block.children.push(child_block);
+    });
+  }
+  return block;
+}
+
+function getCodeBlockValue(value) {
+  var s;
+  if (($(value).attr('data-children')) === "false") {
+    s = $(value).text();
+  }
+  else {
+    // block.children = [];
+    // $.each(getCodeBlock($(value)), function(index, v) {
+    //   child_block = getCodeBlockAttr($(v).children());
+    //   block.children.push(child_block);
+    // });
+  }
+  return s;
+}
+
 function resize_content() {
   padding = 10;
   border = 1;
@@ -94,6 +131,15 @@ function run() {
   // Empty the output when running.
   $('#output').empty();
 
+  codeArray = [];
+
+  // Add code to the. stored array.
+  $.each($('#editor').children(), function(index, value) {
+    codeArray.push(getCodeBlockValue(getCodeBlock(value)));
+  });
+
+  fullCode = codeArray.join('\n');
+
   // Redirect console.log and window.one-error to output.
   // var former = window.console.log;
   window.console.log = function(msg) {
@@ -103,15 +149,6 @@ function run() {
   window.onerror = function(messageOrEvent, source, lineno, colno, error) {
     $('#output').text(messageOrEvent);
   }
-
-  codeArray = [];
-
-  // Add code to the. stored array.
-  $.each($('#editor').children(), function(index, value) {
-    codeArray.push($(value).text());
-  });
-
-  fullCode = codeArray.join('\n');
 
   try {
     // Try running the full program.
@@ -150,28 +187,6 @@ function run() {
   }
 }
 
-// Convenience methood to get value from a placeholder.
-function getCodeBlock(node) {
-  return $(node).children().children().children();
-}
-
-// Extracts block values from a node.
-function getCodeBlockAttr(value) {
-  var block = {};
-  block.block_id = parseInt($(value).attr('id'));
-  if (($(value).attr('data-children')) === "false") {
-    block.value = $(value).text();
-  }
-  else {
-    block.children = [];
-    $.each(getCodeBlock($(value)), function(index, v) {
-      child_block = getCodeBlockAttr($(v).children());
-      block.children.push(child_block);
-    });
-  }
-  return block;
-}
-
 // Save data.
 function save() {
   var data = {};
@@ -179,12 +194,12 @@ function save() {
   var editor = [];
   var toolbox = [];
 
-  $.each(getCodeBlock($('#editor')), function(index, value) {
+  $.each(getCodeBlock($('#editor').children()), function(index, value) {
     var block = getCodeBlockAttr(value);
     editor.push(block);
   });
 
-  $.each(getCodeBlock($('#toolbox')), function(index, value) {
+  $.each(getCodeBlock($('#toolbox').children()), function(index, value) {
     var block = getCodeBlockAttr(value);
     toolbox.push(block);
   });

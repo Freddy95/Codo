@@ -10,6 +10,43 @@ var task_id = "";
 var lesson_id = "";
 var completed = "";
 
+// Convenience methood to get value from a placeholder.
+function getCodeBlock(node) {
+  return $(node).children().children();
+}
+
+// Extracts block values from a node.
+function getCodeBlockAttr(value) {
+  var block = {};
+  block.block_id = parseInt($(value).attr('id'));
+  if (($(value).attr('data-children')) === "false") {
+    block.value = $(value).text();
+  }
+  else {
+    block.children = [];
+    $.each(getCodeBlock($(value)), function(index, v) {
+      child_block = getCodeBlockAttr(getCodeBlock($(v)));
+      block.children.push(child_block);
+    });
+  }
+  return block;
+}
+
+function getCodeBlockValue(value) {
+  var s;
+  if (($(value).attr('data-children')) === "false") {
+    s = $(value).text();
+  }
+  else {
+    // block.children = [];
+    // $.each(getCodeBlock($(value)), function(index, v) {
+    //   child_block = getCodeBlockAttr($(v).children());
+    //   block.children.push(child_block);
+    // });
+  }
+  return s;
+}
+
 function resize_content() {
   padding = 10;
   border = 1;
@@ -31,7 +68,6 @@ function resize_content() {
 
   // Get the padding for the row.
   block_outer = $('#block-content').parent().outerHeight(true) - $('#block-content').parent().height();
-  console.log(block_outer);
   content_height += block_outer;
 
   // Calculate the height left-over in the window.
@@ -77,7 +113,7 @@ function init() {
    */  
   $('#editor, #toolbox, .holds-one').sortable({
     connectWith: ".code-placement",
-    over: function(e, ui){ 
+    over: function(e, ui){
         resize_content();
     },
     receive: function(event, ui) {
@@ -91,38 +127,19 @@ function init() {
   }).disableSelection();
 }
 
-function getCodeBlock(node) {
-  return $(node).children().children().children();
-}
-
-function getCodeBlockAttr(value) {
-  var block = {};
-  block.block_id = parseInt($(value).attr('id'));
-  if (($(value).attr('data-children')) === "false") {
-    block.value = $(value).text();
-  }
-  else {
-    block.children = [];
-    $.each(getCodeBlock($(value)), function(index, v) {
-      child_block = getCodeBlockAttr($(v).children());
-      block.children.push(child_block);
-    });
-  }
-  return block;
-}
-
+// Save data.
 function save() {
   var data = {};
 
   var editor = [];
   var toolbox = [];
 
-  $.each(getCodeBlock($('#editor')), function(index, value) {
+  $.each(getCodeBlock($('#editor').children()), function(index, value) {
     var block = getCodeBlockAttr(value);
     editor.push(block);
   });
 
-  $.each(getCodeBlock($('#toolbox')), function(index, value) {
+  $.each(getCodeBlock($('#toolbox').children()), function(index, value) {
     var block = getCodeBlockAttr(value);
     toolbox.push(block);
   });
