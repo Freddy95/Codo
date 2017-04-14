@@ -11,7 +11,6 @@ var lesson_id = "";
 var completed = "";
 
 function resize_content() {
-  console.log('Resizing');
   padding = 10;
   border = 1;
 
@@ -32,7 +31,6 @@ function resize_content() {
 
   // Get the padding for the row.
   block_outer = $('#block-content').parent().outerHeight(true) - $('#block-content').parent().height();
-  console.log(block_outer);
   content_height += block_outer;
 
   // Calculate the height left-over in the window.
@@ -47,9 +45,7 @@ function resize_content() {
   $('#lesson-content').css("height", Math.max(window_height, content_height) + "px");
 
   // Resize block content.
-  console.log($('#block-content').height());
   $('#block-content').css("height", (Math.max(window_height, content_height) - block_outer) + "px");
-  console.log($('#block-content').height());
 }
 
 function init() {
