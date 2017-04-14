@@ -11,7 +11,6 @@ var lesson_id = "";
 var completed = "";
 
 function resize_content() {
-  console.log('Resizing');
   padding = 10;
   border = 1;
 
@@ -47,9 +46,7 @@ function resize_content() {
   $('#lesson-content').css("height", Math.max(window_height, content_height) + "px");
 
   // Resize block content.
-  console.log($('#block-content').height());
   $('#block-content').css("height", (Math.max(window_height, content_height) - block_outer) + "px");
-  console.log($('#block-content').height());
 }
 
 function init() {
@@ -101,13 +98,13 @@ function getCodeBlock(node) {
 function getCodeBlockAttr(value) {
   var block = {};
   block.block_id = parseInt($(value).attr('id'));
-  if (!($(value).attr('data-children'))) {
+  if (($(value).attr('data-children')) === "false") {
     block.value = $(value).text();
   }
   else {
     block.children = [];
     $.each(getCodeBlock($(value)), function(index, v) {
-      child_block = getCodeBlockAttr(v);
+      child_block = getCodeBlockAttr($(v).children());
       block.children.push(child_block);
     });
   }

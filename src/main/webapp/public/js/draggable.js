@@ -154,27 +154,29 @@ function run() {
   }
 }
 
+// Convenience methood to get value from a placeholder.
 function getCodeBlock(node) {
   return $(node).children().children().children();
 }
 
+// Extracts block values from a node.
 function getCodeBlockAttr(value) {
-  block = {};
+  var block = {};
   block.block_id = parseInt($(value).attr('id'));
-  if (!($(value).attr('data-children'))) {
+  if (($(value).attr('data-children')) === "false") {
     block.value = $(value).text();
   }
   else {
-    children = [];
+    block.children = [];
     $.each(getCodeBlock($(value)), function(index, v) {
-      child_block = getCodeBlockAttr(v);
-      children.push(child_block);
+      child_block = getCodeBlockAttr($(v).children());
+      block.children.push(child_block);
     });
-    block.children = children;
   }
   return block;
 }
 
+// Save data.
 function save() {
   var data = {};
 
