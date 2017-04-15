@@ -14,25 +14,35 @@ $(function () {
     //attach event handlers to some of the buttons
     var $runbtn = $("#runbutton");
     $runbtn.click( function () {
+        // get the expected output,test case input, and next task/completed status
+        var $page=$("#page"),
+            test_case=$page.data("test-case"),
+            expected_output=$page.data("ex-output"),
+            completed=$page.data("completed"),
+            next_task=$page.data("next-task");
 
-    // Empty the output when running.
-    $('#output').empty();
+        // Empty the output when running.
+        $('#output').empty();
 
-    // Redirect console.log and window.one-error to output.
-    // var former = window.console.log;
-    window.console.log = function (msg) {
-        $('#output').append(document.createTextNode(msg)).append($('<br />'));
-    };
+        // Redirect console.log and window.one-error to output.
+        // var former = window.console.log;
+        window.console.log = function (msg) {
+            $('#output').append(document.createTextNode(msg)).append($('<br />'));
+        };
 
-    window.onerror = function (messageOrEvent, source, lineno, colno, error) {
-        $('#output').text(messageOrEvent);
-    };
+        window.onerror = function (messageOrEvent, source, lineno, colno, error) {
+            $('#output').text(messageOrEvent);
+        };
         //pull out any xhr requests
+        //TODO: how do we add test-case variables to input?
+        //TODO: maybe append them as var declarations in the beginning of the cleaned code string?
         var code = editor.getValue();
         code = clean(code);
         // run the cleaned code
-        eval(code);
-    });
+        //check if it's the right values
+        var results=eval(code),
+            expected=(results==expected_output);
+        });
 });
 
 //cleans up the the code using regex
