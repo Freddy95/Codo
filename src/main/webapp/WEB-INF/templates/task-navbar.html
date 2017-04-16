@@ -17,14 +17,6 @@
           <i class="fa fa-lg fa-arrow-left" aria-hidden="true"></i>
         </a>  
       </li>
-      <!-- Undo changes to current task. -->
-      <li class="nav-item">
-        <a class="nav-link"
-          th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${task.getTask_id()}"
-          data-toggle="tooltip" data-placement="bottom" title="Undo Task Changes">
-          <i class="fa fa-lg fa-undo" aria-hidden="true"></i>
-        </a>  
-      </li>
       <!-- Restart current task. -->
       <li class="nav-item">
         <a class="nav-link"
@@ -64,10 +56,18 @@
   <!-- A save button on the right. -->
   <div class="navbar-collapse collapse">
     <ul class="navbar-nav ml-auto">
+      <!-- Undo changes to current task. -->
+      <li class="nav-item">
+        <a class="nav-link"
+          th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${task.getTask_id()}"
+          data-toggle="tooltip" data-placement="bottom" title="Undo Unsaved Changes">
+          <i class="fa fa-lg fa-undo" aria-hidden="true"></i>
+        </a>  
+      </li>
       <li class="nav-item">
         <a class="nav-link"
           onClick="save()"
-          data-toggle="tooltip" data-placement="bottom" title="Save">
+          data-toggle="tooltip" data-placement="bottom" title="Save Changes">
           <i class="fa fa-lg fa-floppy-o" aria-hidden="true"></i>
         </a>  
       </li>

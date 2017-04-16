@@ -26,7 +26,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <div th:replace="task-navbar :: navbar"></div>
+      <div th:replace="edit-task-navbar :: navbar"></div>
     </div>
   </div>
   <div class="row " id="lesson-content">
@@ -45,8 +45,13 @@
       <div class="card h-100" id="output-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Output</h3>
-          <a id="next-arrow" onClick="save()" th:if="${next_task > 0 && task.completed}" class="fa fa-lg fa-vc fa-arrow-right pull-right" th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${next_task}"></a>
-          <a id="next-arrow" onClick="save()" th:if="${next_task < 0 && task.completed}" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user"></a>
+          
+          <a id="next-arrow" th:if="${next_task > 0 && task.completed}"
+            class="fa fa-lg fa-vc fa-arrow-right pull-right"
+            onClick="save()" th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${next_task}"></a>
+          <a id="next-arrow" th:if="${next_task < 0 && task.completed}"
+            class="fa fa-lg fa-vc fa-arrow-right pull-right"
+            onClick="save()" href="/user"></a>
         </div>
         <div class="card-block code-placement" id="output"></div>
       </div>
