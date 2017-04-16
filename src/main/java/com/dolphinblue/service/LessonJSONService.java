@@ -71,13 +71,21 @@ public class LessonJSONService {
             //set task attributes.
             t.setTitle((String) json_t.get("title"));
             t.setInstructions((String) json_t.get("instructions"));
-            //get program blocks.
-            t.setEditor(create_blocks_from_json((JSONArray) json_t.get("program_blocks")));
-            //get toolbox blocks.
-            t.setToolbox(create_blocks_from_json((JSONArray) json_t.get("toolbox")));
             t.setExpected_output((String) json_t.get("expected_output"));
             t.setTest_case((String) json_t.get("test_case"));
             t.setHint((String) json_t.get("hint"));
+
+            //check if type of task is block task
+            if(json_t.get("type").equals("BLOCK-TASK")){
+                //get program blocks.
+                t.setEditor(create_blocks_from_json((JSONArray) json_t.get("program_blocks")));
+                //get toolbox blocks.
+                t.setToolbox(create_blocks_from_json((JSONArray) json_t.get("toolbox")));
+            }else{
+                t.setFreecode((String) json_t.get("freecode"));
+            }
+
+
             //add task to list of tasks
             tasks.add(t);
         }
