@@ -162,8 +162,8 @@ public class TaskController {
             taskTitleList.add(t.get(i).getTitle());
         }
         //load booleans and titles into thymeleaf model
-        model.addAttribute("tasks_status", taskStatusList);
-        model.addAttribute("tasks_titles", taskTitleList);
+        model.addAttribute("task_statuses", taskStatusList);
+        model.addAttribute("task_titles", taskTitleList);
 
         // Load the task from the datastore and add it to the thymeleaf model
         Task task = ofy.load().type(Task.class).id(taskId).now();
