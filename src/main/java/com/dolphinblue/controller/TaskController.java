@@ -43,6 +43,43 @@ public class TaskController {
      * @param model -- the thymeleaf model used to send data to the front end
      * @return -- the HTML page to be loaded
      */
+    @RequestMapping(value = "/debug-edit-task", method = RequestMethod.GET)
+    public String debug_edit_task(Model model){
+        Lesson l = new Lesson();
+        l.setTitle("First Lesson");
+
+        Task t = new Task();
+        t.setTitle("First Block Task");
+        t.setInstructions("These are the instructions.");
+        t.setHint("This is the hint.");
+        t.setTest_case("x = 1;");
+        t.setExpected_output("3");
+
+        ArrayList<Block> toolbox = new ArrayList<Block>();
+        ArrayList<Block> editor = new ArrayList<Block>();
+
+        toolbox.add(new Block(1, "x = 2;", Type.ASSIGN, false));
+        toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, false));
+        toolbox.add(new Block(3, "blah;", Type.IF, true));
+        toolbox.add(new Block(4, "butts;", Type.FOR, true));
+
+
+        editor.add(new Block(2, "x += 1;", Type.ASSIGN, false));
+        editor.add(new Block(2, "console.log(x);", Type.ASSIGN, false));
+
+        model.addAttribute("lesson", l);
+        model.addAttribute("toolbox", toolbox);
+        model.addAttribute("editor", editor);
+        model.addAttribute("task", t);
+
+        return "edit-block-task";
+    }
+
+    /**
+     *  This is for debugging a block task
+     * @param model -- the thymeleaf model used to send data to the front end
+     * @return -- the HTML page to be loaded
+     */
     @RequestMapping(value = "/debug-block-task", method = RequestMethod.GET)
     public String get_task(Model model){
         Task t = new Task();
@@ -158,15 +195,21 @@ public class TaskController {
 
         //iterate through tasks
         for (int i = 0; i < t.size(); i++){
-            taskStatusList.add(t.get(i).isCompleted());
+            taskStatusList.add(t.get(i).isIn_progress());
             taskTitleList.add(t.get(i).getTitle());
         }
         //load booleans and titles into thymeleaf model
-        model.addAttribute("tasks_status", taskStatusList);
-        model.addAttribute("tasks_titles", taskTitleList);
+        model.addAttribute("task_statuses", taskStatusList);
+        model.addAttribute("task_titles", taskTitleList);
 
         // Load the task from the datastore and add it to the thymeleaf model
         Task task = ofy.load().type(Task.class).id(taskId).now();
+        //task is being worked on so it is in progress
+        task.setIn_progress(true);
+        //save change
+        ofy.save().entity(task).now();
+
+
         model.addAttribute("task", task);
         System.out.println("OUTPUT: " + task.getExpected_output());
 
@@ -211,10 +254,6 @@ public class TaskController {
             //TODO: Add more attributes to model?
             return "freecode-task";
         }
-
-
-
-
     }
 
     /**

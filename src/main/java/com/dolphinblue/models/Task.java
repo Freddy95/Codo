@@ -25,6 +25,7 @@ public class Task {
     @Load private List<Key<Block>> editor;//list of blocks in the editor. Must be fetched when task is fetched
     private String freecode;
     private boolean completed;
+    private boolean in_progress;
     private boolean block_task;
     private Type type;
     @Load private Key<Task> original_task;//reference to original task
@@ -156,5 +157,13 @@ public class Task {
 
     public void setBlock_task(boolean block_task) {
         this.block_task = block_task;
+    }
+
+    public boolean isIn_progress() {
+        return in_progress;
+    }
+
+    public void setIn_progress(boolean in_progress) {
+        this.in_progress = in_progress;
     }
 }

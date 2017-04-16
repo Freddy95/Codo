@@ -2,16 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>  
   <div th:fragment="block(block)" th:switch="${block.can_edit}">
+    <!-- Code for nested blocks. -->
     <div th:case="${true}">
-        <div class="code-block" th:if="${block.type} == T(com.dolphinblue.models.Block$Type).FOR}" th:attr="data-children='true',data-type=${block.type}">
+        <div class="code-block"
+          th:if="${block.type == T(com.dolphinblue.models.Block$Type).FOR}"
+          th:attr="data-children='true',data-type=${block.type}">
             for (
                 <div class="holds-one code-placement"></div>;
                 <div class="holds-one code-placement"></div>;
                 <div class="holds-one code-placement"></div>;
             )
         </div>
-        <div class="code-block" th:if="${block.type == T(com.dolphinblue.models.Block$Type).IF}" th:attr="data-children='true',data-type=${block.type}">
+        <div class="code-block"
+          th:if="${block.type == T(com.dolphinblue.models.Block$Type).IF}"
+          th:attr="data-children='true',data-type=${block.type}">
             if (
+                <div class="holds-one code-placement"></div>
+            )
+        </div>
+        <div class="code-block"
+          th:if="${block.type == T(com.dolphinblue.models.Block$Type).WHILE}"
+          th:attr="data-children='true',data-type=${block.type}">
+            while (
+                <div class="holds-one code-placement"></div>
+            )
+        </div>
+        <div class="code-block"
+          th:if="${block.type == T(com.dolphinblue.models.Block$Type).LOG}"
+          th:attr="data-children='true',data-type=${block.type}">
+            console.log(
                 <div class="holds-one code-placement"></div>
             )
         </div>
