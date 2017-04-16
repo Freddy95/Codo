@@ -39,7 +39,15 @@
           <textarea type="text" id="instructions" th:text="${task.instructions}"></textarea>
         </div>
       </div>
-      <div class="card h-50" id="input-div">
+      <div class="card h-25" id="hint-div">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">Hint</h3>
+        </div>
+        <div class="card-block textarea-parent">
+          <textarea type="text" id="hint" th:text="${task.hint}"></textarea>
+        </div>
+      </div>
+      <div class="card h-25" id="input-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Test Input</h3>
         </div>
@@ -49,19 +57,50 @@
       </div>
     </div>
     <div class="col-6 task-col">
-      <div th:replace="draggable:: #block-content"></div>
+      <div th:fragment="block-content" id="block-content">
+        <div class="card" id="editor-div">
+          <div class="card-header card-title-block">
+            <h3 class="card-title">
+              Editor
+            </h3>
+          </div>
+          <div class="card-block code-placement" id="editor">
+            <div th:each="block : ${editor}" th:insert="code-block :: block(${block})"  th:remove="tag"></div>
+          </div>
+          <div class="card-footer">
+            <btn class="btn btn-sm btn-primary float-right" onClick="run()">Run</btn>
+          </div>
+        </div>
+        <div class="card" id="toolbox-div">
+          <div class="card-header card-title-block">
+            <h3 class="card-title">Toolbox</h3>
+          </div>
+          <div class="card-block code-placement" id="toolbox">
+            <div th:each="block : ${toolbox}" th:insert="code-block :: block(${block})" th:remove="tag"></div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-3 task-col">
-      <div class="card h-100" id="output-div">
+      <div class="card" id="catalog-div">
         <div class="card-header card-title-block">
-          <h3 class="card-title">Output</h3>
-          
-          <a id="next-arrow" th:if="${next_task > 0 && task.completed}"
-            class="fa fa-lg fa-vc fa-arrow-right pull-right"
-            onClick="save()" th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${next_task}"></a>
-          <a id="next-arrow" th:if="${next_task < 0 && task.completed}"
-            class="fa fa-lg fa-vc fa-arrow-right pull-right"
-            onClick="save()" href="/user"></a>
+          <h3 class="card-title">Block Catalog</h3>
+        </div>
+        <div class="card-block code-placement" id="catalog">
+          <div th:each="block : ${catalog}" th:insert="code-block :: block(${block})" th:remove="tag"></div>
+        </div>
+      </div>
+      <div class="card h-25" id="ex-output-div">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">Expected Output</h3>
+        </div>
+        <div class="card-block textarea-parent">
+          <textarea type="text" id="ex-output" th:text="${task.expected_output}"></textarea>
+        </div>
+      </div>
+      <div class="card h-25" id="output-div">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">Actual Output</h3>
         </div>
         <div class="card-block code-placement" id="output"></div>
       </div>

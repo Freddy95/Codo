@@ -57,6 +57,7 @@ public class TaskController {
 
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();
+        ArrayList<Block> catalog = new ArrayList<Block>();
 
         toolbox.add(new Block(1, "x = 2;", Type.ASSIGN, false));
         toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, false));
@@ -67,9 +68,17 @@ public class TaskController {
         editor.add(new Block(2, "x += 1;", Type.ASSIGN, false));
         editor.add(new Block(2, "console.log(x);", Type.ASSIGN, false));
 
+        catalog.add(new Block(1, "x = 2;", Type.ASSIGN, false));
+        catalog.add(new Block(2, "console.log(x);", Type.LOG, false));
+        catalog.add(new Block(4, "butts;", Type.LOG, true));
+        catalog.add(new Block(3, "blah;", Type.IF, true));
+        catalog.add(new Block(4, "butts;", Type.FOR, true));
+        catalog.add(new Block(4, "butts;", Type.WHILE, true));
+
         model.addAttribute("lesson", l);
         model.addAttribute("toolbox", toolbox);
         model.addAttribute("editor", editor);
+        model.addAttribute("catalog", catalog);
         model.addAttribute("task", t);
 
         return "edit-block-task";

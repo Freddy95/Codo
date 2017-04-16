@@ -78,11 +78,15 @@ function resize_content() {
     window_height -= $(this).outerHeight(true);
   });
 
-  // Take the maximum of window and content height.
-  $('#lesson-content').css("height", Math.max(window_height, content_height) + "px");
+  resize_height = Math.max(window_height, content_height);
 
-  // Resize block content.
-  $('#block-content').css("height", (Math.max(window_height, content_height) - block_outer) + "px");
+  if (resize_height > $('#lesson-content').height()) {
+    // Take the maximum of window and content height.
+    $('#lesson-content').css("height", Math.max(window_height, content_height) + "px");
+
+    // Resize block content.
+    $('#block-content').css("height", (Math.max(window_height, content_height) - block_outer) + "px");
+  }
 }
 
 function init() {
