@@ -53,7 +53,7 @@
           data-toggle="tooltip"
           th:attr="title=${task_titles[index-1]}"></a>
         <a th:unless="${lesson.tasks[index-1].getId() == task.getTask_id()}" th:class="${task_statuses[index-1]}? 'nav-link' : 'nav-link disabled'"
-          th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${lesson.tasks[index-1].getId()}"
+          th:href="${task_statuses[index-1]}? '/lesson/' + ${lesson.getLesson_id()} + '/task/' + ${lesson.tasks[index-1].getId()} : '#'"
           th:text="${index}"
           data-toggle="tooltip"
           th:attr="title=${task_titles[index-1]}"></a>  
