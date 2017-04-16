@@ -75,8 +75,9 @@ public class UserController {
             if (user.getCurrent_lesson() == null) {
                 try {
                     l = main_lessons.get(0);
+                    user.setCurrent_lesson(l);
                 } catch (Exception e) {
-                    return "redirect:/user";
+                    return "redirect:user";
                 }
 
                 // Made change to user object must save to datastore
@@ -91,7 +92,7 @@ public class UserController {
             return "user";
 
         } else {
-            return "redirect:/login";
+            return "redirect:login";
         }
     }
 

@@ -1,0 +1,18 @@
+{
+  "title": "Data Types",
+  "shared": false,
+  "site_owned": true,
+  "description": "This lesson will teach you the basic Data Types that are supported in JavaScript. Learning these types is essential to using JavaScript successfully and understanding the fundamentals of the programming language.",
+  "tasks": [
+    {
+      "title": "Printing & Strings",
+      "instructions": "JavaScript has an important concept called <b>Data Typing</b>, which means giving different kinds of data a specific type. These types are used for determining the kinds of things a computer can do with the data based on its type.<br/><br/>For example, a <b>String</b> in JavaScript is a text based type. Strings can be anything from \"Bob and Alice\" to '1234' and are indicated by the single or double quotes that surround them. If a data type in JavaScript is surrounded by quotes (\" \" or ' ') then the type is a String.<br/><br/>Before learning more about types we will introduce a few useful tools in this task and the next. First is the ability to print information to <b>Output</b>. To do this we use the statement console.log(). You'll see that the Editor to the right contains the block <span class = \"instr-block\">console.log(\"Hello\");</span>. Inside the parenthesis is the String \"Hello\". If you click the run button, the Output box will display:<span class = \"example-output\">Hello</span>Anything inside the parenthesis of console.log() will print to Output in the same order in which the statements appear from top to bottom in the Editor.<br/><br/>To test this, try putting the block <span class = \"instr-block\">console.log(\"World!\");</span> above <span class = \"instr-block\">console.log(\"Hello\");</span>. Now when you click run, the Output will display:<span class = \"example-output\">World!<br/>Hello</span>This doesn't make much sense, so move the <span class = \"instr-block\">console.log(\"World!\");</span> block so it is below <span class = \"instr-block\">console.log(\"Hello\");</span>. When you click run again the order will be reversed and the Output will display:<span class = \"example-output\">Hello<br/>World!</span>Before moving on in each task, it's good to note small details in the blocks to prepare for the <b>Free Code</b> task at the end of this lesson. For example, each block statement, such as console.log(), must end with a semicolon. This lets the computer know when the end of a line has been reached, an essential part of running a program.",
+      "expected_output": "Hello\nWorld!",
+      "test_case": "",
+      "type": "FREECODE-TASK",
+      "hint": "Make sure that the \"Hello\" block is above the \"World!\" one.",
+      "freecode": "console.log(\"Hello World!\");"
+
+    }
+  ]
+}

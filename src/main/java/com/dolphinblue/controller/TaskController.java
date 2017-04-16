@@ -158,27 +158,23 @@ public class TaskController {
 
         //iterate through tasks
         for (int i = 0; i < t.size(); i++){
-            taskStatusList.add(t.get(i).isCompleted());
+            taskStatusList.add(t.get(i).isIn_progress());
             taskTitleList.add(t.get(i).getTitle());
         }
         //load booleans and titles into thymeleaf model
-        model.addAttribute("tasks_status", taskStatusList);
-        model.addAttribute("tasks_titles", taskTitleList);
+        model.addAttribute("task_statuses", taskStatusList);
+        model.addAttribute("task_titles", taskTitleList);
 
         // Load the task from the datastore and add it to the thymeleaf model
         Task task = ofy.load().type(Task.class).id(taskId).now();
+        //task is being worked on so it is in progress
+        task.setIn_progress(true);
+        //save change
+        ofy.save().entity(task).now();
+
+
         model.addAttribute("task", task);
         System.out.println("OUTPUT: " + task.getExpected_output());
-
-        // Load the editor blocks for the task and add them to the thymeleaf model
-        List<Key<Block>> e_block_keys = task.getEditor();
-        List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);
-        model.addAttribute("editor", editor_blocks);
-
-        // Load the toolbox blocks for the task and add them to the thymeleaf model
-        List<Key<Block>> t_block_keys = task.getToolbox();
-        List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
-        model.addAttribute("toolbox", toolbox_blocks);
 
         // Get the index for the navigation bar in the lesson
         int index = l.getTasks().indexOf(Key.create(Task.class, task.getTask_id()));
@@ -200,8 +196,31 @@ public class TaskController {
             model.addAttribute("next_task", -1);
         }
 
-        // Populate the HTML lesson page with the correct task
-        return "block-task";
+        //check type of task
+        if(task.getFreecode() == null){
+            //this is a block task
+            // Load the editor blocks for the task and add them to the thymeleaf model
+            List<Key<Block>> e_block_keys = task.getEditor();
+            List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);
+            model.addAttribute("editor", editor_blocks);
+
+            // Load the toolbox blocks for the task and add them to the thymeleaf model
+            List<Key<Block>> t_block_keys = task.getToolbox();
+            List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
+            model.addAttribute("toolbox", toolbox_blocks);
+            // Populate the HTML lesson page with the correct task
+            return "block-task";
+        }
+        else{
+            //its a freecode task
+            model.addAttribute("editor", task.getFreecode());
+            //TODO: Add more attributes to model?
+            return "freecode-task";
+        }
+
+
+
+
     }
 
     /**
