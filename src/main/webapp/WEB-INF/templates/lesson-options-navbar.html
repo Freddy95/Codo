@@ -5,36 +5,54 @@
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target=".dual-collapse">
     <span class="navbar-toggler-icon"></span>
   </button>
-  
+
   <!-- A left menu for task options. -->
   <div class="navbar-collapse collapse">
     <ul class="navbar-nav mr-auto">
+      <!-- Navigate to previous task. -->
       <li class="nav-item" th:if="${prev_task} > 0">
-        <a class="nav-link" th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${prev_task}"
-          data-toggle="tooltip" data-placement="bottom" title="Back">
+        <a class="nav-link"
+          th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${prev_task}"
+          data-toggle="tooltip" data-placement="bottom" title="Previous Task">
           <i class="fa fa-lg fa-arrow-left" aria-hidden="true"></i>
         </a>  
       </li>
+      <!-- Undo changes to current task. -->
       <li class="nav-item">
-        <a class="nav-link" th:href="'/restartlesson/' + ${lesson.lesson_id} + '/restarttask/' + ${task.task_id}"
-          data-toggle="tooltip" data-placement="bottom" title="Reset Task">
+        <a class="nav-link"
+          th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${task.getTask_id()}"
+          data-toggle="tooltip" data-placement="bottom" title="Undo Task Changes">
           <i class="fa fa-lg fa-undo" aria-hidden="true"></i>
         </a>  
       </li>
+      <!-- Restart current task. -->
+      <li class="nav-item">
+        <a class="nav-link"
+          th:href="'/restartlesson/' + ${lesson.lesson_id} + '/restarttask/' + ${task.task_id}"
+          data-toggle="tooltip" data-placement="bottom" title="Reset Task">
+          <i class="fa fa-lg fa-backward" aria-hidden="true"></i>
+        </a>  
+      </li>
+      <!-- Restart current lesson. -->
       <li class="nav-item">
         <a class="nav-link" th:href="'/restartlesson/' + ${lesson.lesson_id}"
           data-toggle="tooltip" data-placement="bottom" title="Restart Lesson">
-          <i class="fa fa-lg fa-repeat" aria-hidden="true"></i>
+          <i class="fa fa-lg fa-fast-backward" aria-hidden="true"></i>
         </a>  
       </li>
     </ul>
   </div>
 
-  <!-- A centered list of navigation links to tasks. -->
+  <!-- A centered list of navigation links to tasks in the lesson.. -->
   <div class="navbar-collapse collapse">
     <ul class="navbar-nav mx-auto" th:each="index: ${#numbers.sequence(1, #lists.size(lesson.tasks))}">
       <li class="nav-item">
-        <a th:class="${task_statuses[index-1]}? 'nav-link' : 'nav-link disabled'"
+        <a th:if="${lesson.tasks[index-1].getId() == task.getTask_id()}" class="active nav-link"
+          href="#"
+          th:text="${index}"
+          data-toggle="tooltip"
+          th:attr="title=${task_titles[index-1]}"></a>
+        <a th:unless="${lesson.tasks[index-1].getId() == task.getTask_id()}" th:class="${task_statuses[index-1]}? 'nav-link' : 'nav-link disabled'"
           th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${lesson.tasks[index-1].getId()}"
           th:text="${index}"
           data-toggle="tooltip"
@@ -47,7 +65,8 @@
   <div class="navbar-collapse collapse">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" onClick="save()"
+        <a class="nav-link"
+          onClick="save()"
           data-toggle="tooltip" data-placement="bottom" title="Save">
           <i class="fa fa-lg fa-floppy-o" aria-hidden="true"></i>
         </a>  
