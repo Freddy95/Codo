@@ -17,16 +17,17 @@
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/main.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/lessoncard.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/user.css}"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/js/lib/intro.js/introjs.css}"></link>
+  <script th:src="@{/public/js/lib/intro.js/intro.js}"></script>
   <script th:src="@{/public/js/user.js}"></script>
 </head>
 <body onload="onLoad()">
-
 <div class="container">
   <div th:replace="user-navbar :: navbar"></div>
   <div class="row justify-content-center user-section" id="badges">
     <div class="col">
       <div class="row justify-content-center user-section-header">
-        <h2 th:text="|Welcome, ${user_info.first_name}!|"></h2>
+        <h2 class="step-1" th:text="|Welcome, ${user_info.first_name}!|"></h2>
       </div>
 <!--       <div class="row justify-content-center user-section-header">
         <h2>Badges</h2>
@@ -36,7 +37,7 @@
     </div>
   </div>
   <div class="row justify-content-center user-section" id="progress">
-    <div class="col">
+    <div class="col step-7">
 
       <div class="row justify-content-center user-section-header">
         <h2>You're learning:</h2>
@@ -54,7 +55,7 @@
       <div class="row justify-content-center lesson-nav">
         <ul class="nav nav-pills nav-fill">
           <li class="nav-item">
-            <a class="nav-link active" data-toggle="pill" href="#main">Main Lessons</a>
+            <a class="nav-link active step-5" data-toggle="pill" href="#main">Main Lessons</a>
           </li>
 <!--           <li class="nav-item">
             <a class="nav-link" data-toggle="pill" href="#shared">Shared Lessons</a>
@@ -64,7 +65,7 @@
           </li> -->
         </ul>
       </div>
-      <div class="tab-content">
+      <div class="tab-content step-6">
         <div class="tab-pane fade show active" id="main" role="tabpanel">
           <div class="row" th:each="index: ${#numbers.sequence(0, #lists.size(main_lessons) - 1, 2)}">
             <div th:replace="lessoncard :: myfragment(${main_lessons[index]})"></div>
@@ -111,6 +112,7 @@
     </div>
   </div>
 </div>
- 
+<div id="page-info" th:attr="data-lesson-id=${lesson.lesson_id}">
+</div>
 </body>
 </html>
