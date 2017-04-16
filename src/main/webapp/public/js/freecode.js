@@ -8,6 +8,11 @@ $(function () {
     //set up the ace editor
     var editor = ace.edit("freecodeeditor");
     editor.setTheme("ace/theme/chrome");
+    //change the font to match the rest of the app
+    editor.setOptions({
+        fontFamily: "Source Code Pro",
+        fontSize: "12pt"
+    });
     editor.getSession().setMode("ace/mode/javascript");
 
 

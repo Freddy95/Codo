@@ -14,8 +14,13 @@
                   <i class="fa fa-lg fa-search" aria-hidden="true"></i>
                 </a>
             </li>
+<<<<<<< HEAD
             <li class="nav-item">
                 <a class="nav-link" href="/user/settings"
+=======
+            <li class="nav-item step-3">
+                <a class="nav-link" href="/settings"
+>>>>>>> 28cae138a56741992b21563a898dfd0a4720ff83
                     data-toggle="tooltip" data-placement="bottom" title="Settings">
                   <i class="fa fa-lg fa-cog" aria-hidden="true"></i>
                 </a>

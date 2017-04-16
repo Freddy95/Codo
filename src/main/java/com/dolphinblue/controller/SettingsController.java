@@ -15,10 +15,12 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -54,15 +56,15 @@ public class SettingsController {
             return "redirect:/login";
         }
     }
-
-    @RequestMapping(value = "/settings", method = RequestMethod.GET)
-    public String get_settings_page(Model model){
-        // Objectify ofy = OfyService.ofy();
-
-        // User user = ofy.load().type(User.class).id(id).now();
-        // model.addAttribute("user", user);
-        return "settings";
-    }
+//
+//    @RequestMapping(value = "/settings", method = RequestMethod.GET)
+//    public String get_settings_page(Model model){
+//         Objectify ofy = OfyService.ofy();
+//
+//         User user = ofy.load().type(User.class).id(id).now();
+//         model.addAttribute("user", user);
+//        return "settings";
+//    }
 
     /**
      * Change the username for a particular user
@@ -71,23 +73,28 @@ public class SettingsController {
      * @param user -- the user object containing the new username
      * @return -- the HTML page to be loaded
      */
-    @RequestMapping(value = "/settings/updateusername/{userId}", method = RequestMethod.POST)
-    public String update_username(@CookieValue("token") String token, @PathVariable(value = "taskId") Long userId, @RequestBody User user) {
+    @RequestMapping(value = "/settings/updateusername", method = RequestMethod.POST)
+    public void update_username(@CookieValue("token") String token, @RequestParam("username") String username, HttpServletResponse resp) {
         // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
             // If the user isn't properly authenticated send them back to the login page
-            return null;
+            resp.setStatus(500);
         }
+        //get the user
+        String userKey = userService.getUserId(authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport()));
 
         // Create the objectify object to store stuff from the datastore
         Objectify ofy = OfyService.ofy();
 
         // Save the changed user to the datastore
-        ofy.save().entity(user);
-
-        // Return the string representing the HTML settings page
-        return "settings";
+        //get the user
+        User u = ofy.load().type(User.class).id(userKey).now();
+        u.setUsername(username);
+        //now save the new username
+        ofy.save().entity(u);
+        //return ok
+        resp.setStatus(200);
     }
 
     /**
@@ -96,14 +103,15 @@ public class SettingsController {
      * @param userId -- the id of the user to be deleted
      * @return -- the HTML page to be loaded
      */
-    @RequestMapping(value = "/settings/deleteuser/{userId}", method = RequestMethod.DELETE)
-    public String delete_user(@CookieValue("token") String token, @PathVariable(value = "taskId") Long userId) {
+    @RequestMapping(value = "/settings/deleteuser", method = RequestMethod.DELETE)
+    public void delete_user(@CookieValue("token") String token, HttpServletResponse resp){
         // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
             // If the user isn't properly authenticated send them back to the login page
-            return null;
+            resp.setStatus(500);
         }
+        String userId = userService.getUserId(authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport()));
 
         // Create the objectify object to get stuff from the datastore
         Objectify ofy = OfyService.ofy();
@@ -133,19 +141,20 @@ public class SettingsController {
         // Once the lesson and tasks have been deleted, delete the user from the datastore
         ofy.delete().entity(user).now();
 
-        // Return the string representing the HTML login page
-        return null;
+        //give an ok response
+        resp.setStatus(200);
     }
 
-    @RequestMapping(value = "/settings/resetall/{userId}", method = RequestMethod.POST)
-    public String reset_all(@CookieValue("token") String token, @PathVariable(value = "taskId") Long userId) {
+    @RequestMapping(value = "/settings/resetall", method = RequestMethod.POST)
+    public void reset_all(@CookieValue("token") String token,HttpServletResponse resp){
         // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
             // If the user isn't properly authenticated send them back to the login page
-            return null;
+           resp.setStatus(500);
         }
 
+        String userId = userService.getUserId(authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport()));
         // Create the objectify object to store stuff from the datastore
         Objectify ofy = OfyService.ofy();
 
@@ -168,8 +177,8 @@ public class SettingsController {
             }
         }
 
-        // Return the string representing the HTML settings page
-        return "settings";
+        //give the ok response
+        resp.setStatus(200);
     }
 
 }
