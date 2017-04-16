@@ -161,7 +161,7 @@ function run() {
       }
       // Flash on a block that errors.
       catch(e) {
-        value = $('#editor').children().eq(i);
+        value = $('#editor').children().eq(i).find('.code-block');
         $(value).addClass('flash');
         setTimeout( function(){
           $(value).removeClass('flash');

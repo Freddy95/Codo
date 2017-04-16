@@ -1,0 +1,61 @@
+.task-col {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    margin-bottom: 0px;
+}
+
+.card-title-block {
+    border-bottom: 1px solid #ddd;
+}
+
+.textarea-parent {
+    display: flex;
+}
+
+nav, .nav {
+    margin-bottom: 25px;
+}
+
+html, body {
+    height: 100vh;
+}
+
+#task-brand {
+    margin: 0px;
+}
+
+#next-arrow {
+    color: inherit;
+    text-decoration: none;
+}
+
+#instructions {
+    overflow-y: auto;
+}
+
+.instr-block {
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    color: darkslategrey;
+}
+
+.example-output {
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#freecodeeditor {
+   min-height: 500px;
+}

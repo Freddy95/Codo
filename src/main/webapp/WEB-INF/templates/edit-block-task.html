@@ -12,7 +12,7 @@
   <script src="https://use.fontawesome.com/7e4c107e18.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/main.css}"></link>
-  <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/block-task.css}"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/edit-block-task.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/draggable-style.css}"></link>
   <script type="text/javascript" th:src="@{/public/js/draggable.js}"></script>
 </head>
@@ -31,11 +31,21 @@
   </div>
   <div class="row " id="lesson-content">
     <div class="col-3 task-col">
-      <div class="card h-100" id="instructions-div">
+      <div class="card h-50" id="instructions-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Instructions</h3>
         </div>
-        <div class="card-block code-placement" id="instructions" th:utext="${task.instructions}"></div>
+        <div class="card-block textarea-parent">
+          <textarea type="text" id="instructions" th:text="${task.instructions}"></textarea>
+        </div>
+      </div>
+      <div class="card h-50" id="input-div">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">Test Input</h3>
+        </div>
+        <div class="card-block textarea-parent">
+          <textarea type="text" id="test-case" th:text="${task.test_case}"></textarea>
+        </div>
       </div>
     </div>
     <div class="col-6 task-col">
