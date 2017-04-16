@@ -158,7 +158,7 @@ public class TaskController {
 
         //iterate through tasks
         for (int i = 0; i < t.size(); i++){
-            taskStatusList.add(t.get(i).isCompleted());
+            taskStatusList.add(t.get(i).isIn_progress());
             taskTitleList.add(t.get(i).getTitle());
         }
         //load booleans and titles into thymeleaf model
@@ -167,6 +167,12 @@ public class TaskController {
 
         // Load the task from the datastore and add it to the thymeleaf model
         Task task = ofy.load().type(Task.class).id(taskId).now();
+        //task is being worked on so it is in progress
+        task.setIn_progress(true);
+        //save change
+        ofy.save().entity(task).now();
+
+
         model.addAttribute("task", task);
         System.out.println("OUTPUT: " + task.getExpected_output());
 
