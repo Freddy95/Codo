@@ -68,7 +68,7 @@ public class CodoUserService {
             }else {
 
                 //TODO: get rid of password field, add default lessons
-                User usr = new User(id, first, last, email, "", pictureUrl, new ArrayList());
+                User usr = new User(id, "", first, last, email, "", pictureUrl, new ArrayList());
 
                 //now add the user
 
