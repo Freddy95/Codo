@@ -129,6 +129,14 @@ function init() {
       }
     }
   }).disableSelection();
+
+  $("#trash").droppable({
+    accept: ".code-placement div",
+    hoverClass: "ui-state-hover",
+    drop: function(ev, ui) {
+        ui.draggable.remove();
+    }
+  });
 }
 
 function run() {
@@ -137,7 +145,7 @@ function run() {
 
   codeArray = [];
 
-  // Add code to the. stored array.
+  // Add code to the stored array.
   $.each($('#editor').children(), function(index, value) {
     codeArray.push(getCodeBlockValue(getCodeBlock(value)));
   });
@@ -174,57 +182,8 @@ function run() {
       }
     }
   }
-
-  /* Adds a next arrow if it doesn't exist already and if the solution is correct.
-   */
-  if ($('#output-div>.card-title-block').children().length === 1 &&
-      $('#output').html() === expected_output) {
-    completed = true;
-    // Adding next arrow to next task.
-    if (next_task > 0) {
-      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/' + lesson_id + '/task/' + next_task + '" onClick="save()"></a>'));
-    }
-    // If last lesson, just redirect to user page.
-    else {
-      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user" onClick="save()"></a>'));
-    }
-  }
 }
 
 // Save data.
 function save() {
-  var data = {};
-
-  var editor = [];
-  var toolbox = [];
-
-  $.each(getCodeBlock($('#editor').children()), function(index, value) {
-    var block = getCodeBlockAttr(value);
-    editor.push(block);
-  });
-
-  $.each(getCodeBlock($('#toolbox').children()), function(index, value) {
-    var block = getCodeBlockAttr(value);
-    toolbox.push(block);
-  });
-
-  // data.task_id = task_id;
-  data.editor = editor;
-  data.toolbox = toolbox;
-  data.completed = completed;
-
-  $.ajax({
-    headers: { 
-        'Accept': 'application/json',
-        'Content-Type': 'application/json' 
-    },
-    'type': 'POST',
-    'url': '/savelesson/' + lesson_id + '/task/' + task_id,
-    'data': JSON.stringify(data),
-    'dataType': 'json'
-  }).done(function() {
-    return true;
-  }).fail(function() {
-    return false;
-  });
 }

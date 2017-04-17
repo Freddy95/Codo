@@ -14,7 +14,7 @@
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/main.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/edit-block-task.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/draggable-style.css}"></link>
-  <script type="text/javascript" th:src="@{/public/js/draggable.js}"></script>
+  <script type="text/javascript" th:src="@{/public/js/edit-block-task.js}"></script>
 </head>
 <body>
 
@@ -31,7 +31,7 @@
   </div>
   <div class="row " id="lesson-content">
     <div class="col-3 task-col">
-      <div class="card h-50" id="instructions-div">
+      <div class="card med-card" id="instructions-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Instructions</h3>
         </div>
@@ -39,7 +39,7 @@
           <textarea type="text" id="instructions" th:text="${task.instructions}"></textarea>
         </div>
       </div>
-      <div class="card h-25" id="hint-div">
+      <div class="card small-card" id="hint-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Hint</h3>
         </div>
@@ -47,7 +47,7 @@
           <textarea type="text" id="hint" th:text="${task.hint}"></textarea>
         </div>
       </div>
-      <div class="card h-25" id="input-div">
+      <div class="card small-card" id="input-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Test Input</h3>
         </div>
@@ -82,15 +82,18 @@
       </div>
     </div>
     <div class="col-3 task-col">
-      <div class="card" id="catalog-div">
+      <div class="card med-card" id="catalog-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Block Catalog</h3>
         </div>
         <div class="card-block code-placement" id="catalog">
           <div th:each="block : ${catalog}" th:insert="code-block :: block(${block})" th:remove="tag"></div>
         </div>
+        <div id="trash" class="card-footer card-danger card-inverse text-center">
+          <i class="fa fa-lg fa-trash"></i>
+        </div>
       </div>
-      <div class="card h-25" id="ex-output-div">
+      <div class="card small-card" id="ex-output-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Expected Output</h3>
         </div>
@@ -98,7 +101,7 @@
           <textarea type="text" id="ex-output" th:text="${task.expected_output}"></textarea>
         </div>
       </div>
-      <div class="card h-25" id="output-div">
+      <div class="card small-card" id="output-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Actual Output</h3>
         </div>
