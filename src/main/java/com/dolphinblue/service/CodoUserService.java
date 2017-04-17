@@ -49,21 +49,24 @@ public class CodoUserService {
             Payload payload = userId.getPayload();
 
             // Print user identifier
-            //TODO: can the Google id be cast to a long?
             String id = payload.getSubject();
 
             // Get profile information from payload
             String email = payload.getEmail();
-            boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
             String name = (String) payload.get("name");
             String first = name.split(" ")[0];
             String last = name.split(" ")[1];
             String pictureUrl = (String) payload.get("picture");
-            String locale = (String) payload.get("locale");
             Objectify ofy = OfyService.ofy();
             User fetched = ofy.load().type(User.class).id(id).now();
 
             if(fetched!=null){
+                //update the fields from google's service
+                fetched.setAvatar(pictureUrl);
+                fetched.setEmail(email);
+                fetched.setFirst_name(first);
+                fetched.setLast_name(last);
+                ofy.save().entity(fetched).now();
                 return true;
             }else {
 
