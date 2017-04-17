@@ -121,9 +121,11 @@ function init() {
     helper: "clone",
     connectToSortable: '.code-placement',
     stop: function(e, ui) {
-      ui.helper.dblclick(function() {
-        onDblClick($(this));
-      });
+      if (getCodeBlock(ui.helper).attr('data-children') === "false") {
+        ui.helper.dblclick(function() {
+          onDblClick($(this));
+        });
+      }
     }
   });
 
