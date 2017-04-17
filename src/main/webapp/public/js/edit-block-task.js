@@ -89,6 +89,10 @@ function resize_content() {
   }
 }
 
+function onDblClick(node) {
+  console.log($(node));
+}
+
 function init() {
   resize_content();
 
@@ -112,9 +116,15 @@ function init() {
    */
   expected_output = String(expected_output).replace("\n","<br>") + "<br>";
 
+  // Items in the catalog should be clonable.
   $( "#catalog>*" ).draggable({
     helper: "clone",
-    connectToSortable: '.code-placement'
+    connectToSortable: '.code-placement',
+    stop: function(e, ui) {
+      ui.helper.dblclick(function() {
+        onDblClick($(this));
+      });
+    }
   });
 
   /* Makes child elements of editor, toolbox, and holds-one draggable
@@ -135,12 +145,17 @@ function init() {
     }
   }).disableSelection();
 
+  // Items that get dumped in trash should be removed from the page.
   $("#trash").droppable({
     accept: ".code-placement div",
     hoverClass: "ui-state-hover",
     drop: function(ev, ui) {
         ui.draggable.remove();
     }
+  });
+
+  $('#editor .code-block, #toolbox .code-block').dblclick(function () {
+    onDblClick($(this));
   });
 }
 
