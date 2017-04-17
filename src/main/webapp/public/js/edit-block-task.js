@@ -112,6 +112,11 @@ function init() {
    */
   expected_output = String(expected_output).replace("\n","<br>") + "<br>";
 
+  $( "#catalog>*" ).draggable({
+    helper: "clone",
+    connectToSortable: '.code-placement'
+  });
+
   /* Makes child elements of editor, toolbox, and holds-one draggable
    * between all elements of those types.
    */  
