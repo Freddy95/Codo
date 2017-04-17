@@ -59,3 +59,11 @@ html, body {
 #freecodeeditor {
    min-height: 500px;
 }
+
+.small-card {
+    flex-grow: .5;
+}
+
+.med-card {
+    flex-grow: 1;
+}
