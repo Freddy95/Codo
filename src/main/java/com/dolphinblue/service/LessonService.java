@@ -145,8 +145,13 @@ public class LessonService {
             Task t = new Task();
             //set attributes of new task object to original task
             t.setTitle(original_task.getTitle());
-            t.setToolbox(original_task.getToolbox());
-            t.setEditor(original_task.getEditor());
+            if(original_task.getFreecode() != null){
+                t.setFreecode(original_task.getFreecode());
+            }else{
+                t.setToolbox(original_task.getToolbox());
+                t.setEditor(original_task.getEditor());
+            }
+
             t.setInstructions(original_task.getInstructions());
             t.setExpected_output(original_task.getExpected_output());
             t.setTest_case(original_task.getTest_case());

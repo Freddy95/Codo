@@ -229,7 +229,7 @@ public class TaskController {
         }
         else{
             //its a freecode task
-            model.addAttribute("editor", task.getFreecode());
+            model.addAttribute("freecode", task.getFreecode());
             //TODO: Add more attributes to model?
             return "freecode";
         }
