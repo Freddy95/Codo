@@ -34,6 +34,8 @@ public class TaskController {
     AuthenticationService authenticationService;
     @Autowired
     CodoUserService userService;
+    @Autowired
+    TaskService taskService;
 
     /**
      *  This is for debugging a block task
@@ -190,26 +192,16 @@ public class TaskController {
         Lesson l = ofy.load().type(Lesson.class).id(lessonId).now();
         model.addAttribute("lesson", l);
 
-        //load all tasks to check which are completed
-        Map<Key<Task>, Task> mapOfTasks = ofy.load().keys(l.getTasks());
-        //list of tasks in lesson
-        List<Task> t = new ArrayList<>(mapOfTasks.values());
-        //list of booleans checking if task is completed
-        List<Boolean> taskStatusList = new ArrayList<>();
-        //list of task title
-        List<String> taskTitleList = new ArrayList<>();
-
-        //iterate through tasks
-        for (int i = 0; i < t.size(); i++){
-            taskStatusList.add(t.get(i).isIn_progress());
-            taskTitleList.add(t.get(i).getTitle());
-        }
-        //load booleans and titles into thymeleaf model
-        model.addAttribute("task_statuses", taskStatusList);
-        model.addAttribute("task_titles", taskTitleList);
+        //get task titles and check to see which tasks have already been started
+        taskService.get_task_navigation(l, model);
 
         // Load the task from the datastore and add it to the thymeleaf model
         Task task = ofy.load().type(Task.class).id(taskId).now();
+
+        //get next and previous task
+        taskService.get_next_task(task, l, model);
+        taskService.get_previous_task(task, l, model);
+
         //task is being worked on so it is in progress
         task.setIn_progress(true);
         //save change
@@ -217,27 +209,8 @@ public class TaskController {
 
 
         model.addAttribute("task", task);
-        System.out.println("OUTPUT: " + task.getExpected_output());
 
-        // Get the index for the navigation bar in the lesson
-        int index = l.getTasks().indexOf(Key.create(Task.class, task.getTask_id()));
-        // Set the previous tasks for the lesson
-        if(index != 0) {
-            // This task is not the first one so there is a prev task
-            model.addAttribute("prev_task", l.getTasks().get(index-1).getId());
-        } else {
-            // This task is the first task
-            model.addAttribute("prev_task", -1);
-        }
 
-        // Set the next tasks for the lesson
-        if (index < l.getTasks().size()-1){
-            // Not last task so we have a next task
-            model.addAttribute("next_task", l.getTasks().get(index+1).getId());
-        }else{
-            // The task is the last task, no next task
-            model.addAttribute("next_task", -1);
-        }
 
         //check type of task
         if(task.getFreecode() == null){
