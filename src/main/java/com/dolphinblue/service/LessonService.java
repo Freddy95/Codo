@@ -113,6 +113,7 @@ public class LessonService {
             l.setDescription(m.getDescription());
             l.setOriginal_lesson(m);
             l.setSite_owned(true);
+            l.setIndex(m.getIndex());
             //Get original lesson tasks.
             List<Task> tasks = get_tasks_by_id(m.getTasks());
             //create task objects
