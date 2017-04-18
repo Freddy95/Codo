@@ -14,6 +14,8 @@
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/main.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/block-task.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/draggable-style.css}"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/js/lib/intro.js/introjs.css}"></link>
+  <script th:src="@{/public/js/lib/intro.js/intro.js}"></script>
   <script type="text/javascript" th:src="@{/public/js/draggable.js}"></script>
 </head>
 <body>
@@ -31,7 +33,7 @@
   </div>
   <div class="row " id="lesson-content">
     <div class="col-3 task-col">
-      <div class="card h-100" id="instructions-div">
+      <div class="card h-100 step-1" id="instructions-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Instructions</h3>
         </div>
@@ -42,7 +44,7 @@
       <div th:replace="draggable:: #block-content"></div>
     </div>
     <div class="col-3 task-col">
-      <div class="card h-100" id="output-div">
+      <div class="card h-100 step-5" id="output-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Output</h3>
           <a id="next-arrow" onClick="save()" th:if="${next_task > 0 && task.completed}" class="fa fa-lg fa-vc fa-arrow-right pull-right" th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${next_task}"></a>

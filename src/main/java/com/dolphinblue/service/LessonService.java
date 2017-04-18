@@ -113,6 +113,7 @@ public class LessonService {
             l.setDescription(m.getDescription());
             l.setOriginal_lesson(m);
             l.setSite_owned(true);
+            l.setIndex(m.getIndex());
             //Get original lesson tasks.
             List<Task> tasks = get_tasks_by_id(m.getTasks());
             //create task objects
@@ -144,8 +145,13 @@ public class LessonService {
             Task t = new Task();
             //set attributes of new task object to original task
             t.setTitle(original_task.getTitle());
-            t.setToolbox(original_task.getToolbox());
-            t.setEditor(original_task.getEditor());
+            if(original_task.getFreecode() != null){
+                t.setFreecode(original_task.getFreecode());
+            }else{
+                t.setToolbox(original_task.getToolbox());
+                t.setEditor(original_task.getEditor());
+            }
+
             t.setInstructions(original_task.getInstructions());
             t.setExpected_output(original_task.getExpected_output());
             t.setTest_case(original_task.getTest_case());

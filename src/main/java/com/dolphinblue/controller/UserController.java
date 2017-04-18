@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -68,6 +69,7 @@ public class UserController {
 
             // Get the main site lessons for the user and add them to the thymeleaf model
             List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
+            Collections.sort(main_lessons);
             model.addAttribute("main_lessons", main_lessons);
 
             // Fixes a bug with user login

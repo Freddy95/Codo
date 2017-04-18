@@ -11,9 +11,10 @@ import java.util.*;
  * Represent model for lessons
  */
 @Entity
-public class Lesson {
+public class Lesson implements Comparable<Lesson>{
 
     @Id private Long lesson_id;
+    private Long index;
     private String title;
     @Index private String user_id; //user who is working on the lesson
     private Key<User> creator_id; //user who created the lesson
@@ -115,5 +116,19 @@ public class Lesson {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setIndex(Long index){
+        this.index = index;
+    }
+    public Long getIndex(){
+        return  index;
+    }
+
+    public int compareTo(Lesson lesson){
+        if(this.getIndex() < lesson.getIndex()){
+            return -1;
+        }
+        return 1;
     }
 }

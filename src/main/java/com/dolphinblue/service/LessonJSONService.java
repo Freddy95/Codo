@@ -39,6 +39,7 @@ public class LessonJSONService {
             l.setShared((Boolean) json_object.get("shared"));
             l.setSite_owned((Boolean) json_object.get("site_owned"));
             l.setDescription((String) json_object.get("description"));
+            l.setIndex((Long) json_object.get("index"));
             JSONArray json_tasks = (JSONArray) json_object.get("tasks");
             //create and save task objects for lesson.
             l.setTasks(create_tasks_from_json(json_tasks));

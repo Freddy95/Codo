@@ -17,7 +17,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"></link>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/js/lib/intro.js/introjs.css}"></link>
 <script type="text/javascript" th:src="@{/public/js/draggable.js}"></script>
+  <script th:src="@{/public/js/lib/intro.js/intro.js}"></script>
  
 </head>
 <body>
@@ -30,7 +32,7 @@
           Editor
         </h3>
         <span th:if="${!(#strings.isEmpty(task.hint))}" class="align-middle">
-          <a class="fa fa-lg fa-vc fa-question pull-right" data-toggle="modal" data-target="#hintModal"></a>
+          <a class="fa fa-lg fa-vc fa-question pull-right step-6" data-toggle="modal" data-target="#hintModal"></a>
         </span>
         <div th:if="${!(#strings.isEmpty(task.hint))}" class="modal" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -50,14 +52,14 @@
           </div>
         </div>
       </div>
-      <div class="card-block code-placement" id="editor">
+      <div class="card-block code-placement step-2" id="editor">
         <div th:each="block : ${editor}" th:insert="code-block :: block(${block})"  th:remove="tag"></div>
       </div>
       <div class="card-footer">
-        <btn class="btn btn-sm btn-primary float-right" onClick="run()">Run</btn>
+        <btn class="btn btn-sm btn-primary float-right step-4" onClick="run()">Run</btn>
       </div>
     </div>
-    <div class="card" id="toolbox-div">
+    <div class="card step-3" id="toolbox-div">
       <div class="card-header card-title-block">
         <h3 class="card-title">Toolbox</h3>
       </div>

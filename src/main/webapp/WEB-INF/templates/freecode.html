@@ -50,7 +50,9 @@
         <div class="card-header card-title-block">
           <h3 class="card-title">Editor</h3>
         </div>
-        <div class="card-block code-placement" id="freecodeeditor"></div>
+        <div class="card-block code-placement" id="freecodeeditor" th:text="${task.freecode}">
+          <!-- the text editor for the free code lesson code -->
+        </div>
 
         <div class="card-footer">
           <button class="btn btn-sm btn-primary float-right" id="runbutton">Run</button>
