@@ -21,21 +21,26 @@ public class Block {
     public boolean can_edit;
     List<Block> children;
 
-    public enum Type {//types of blocks
+    // Types of blocks available.
+    public enum Type {
+        STATIC,
         IF,
         FOR,
         WHILE,
-        ASSIGN,
-        DECLARE,
-        PLUS,
-        MINUS,
-        MULTIPLY,
-        DIVIDE,
+        ASSIGN, // TODO: eliminate
+        DECLARE, // TODO: eliminate
+        PLUS, // TODO: eliminate
+        MINUS, // TODO: eliminate
+        MULTIPLY, // TODO: eliminate
+        DIVIDE, // TODO: eliminate
         LOG,
-        BRACKET;
+        BRACKET, // TODO: eliminate
+        CURL,
+        SQUARE
+        ;
     }
 
-   public  Block() {
+    public Block() {
         children = new ArrayList<>();
     }
 
