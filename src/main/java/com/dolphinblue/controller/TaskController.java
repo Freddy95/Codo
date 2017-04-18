@@ -58,6 +58,7 @@ public class TaskController {
 
         toolbox.add(new Block(1, "x = 2;", Type.ASSIGN, false));
         toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, false));
+        toolbox.add(new Block(2, "x > 5;", Type.ASSIGN, false));
         toolbox.add(new Block(3, "blah;", Type.IF, true));
         toolbox.add(new Block(4, "butts;", Type.FOR, true));
 
@@ -71,6 +72,7 @@ public class TaskController {
         catalog.add(new Block(3, "blah;", Type.IF, true));
         catalog.add(new Block(4, "butts;", Type.FOR, true));
         catalog.add(new Block(4, "butts;", Type.WHILE, true));
+
 
         model.addAttribute("lesson", l);
         model.addAttribute("toolbox", toolbox);
@@ -102,6 +104,8 @@ public class TaskController {
         toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, false));
         toolbox.add(new Block(3, "blah;", Type.IF, true));
         toolbox.add(new Block(4, "butts;", Type.FOR, true));
+        toolbox.add(new Block(4, "{", Type.BRACKET, false));
+        toolbox.add(new Block(4, "}", Type.BRACKET, false));
 
 
         editor.add(new Block(2, "x += 1;", Type.ASSIGN, false));
