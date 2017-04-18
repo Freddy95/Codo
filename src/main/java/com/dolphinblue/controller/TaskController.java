@@ -1,10 +1,7 @@
 package com.dolphinblue.controller;
 
-import com.dolphinblue.models.Block;
+import com.dolphinblue.models.*;
 import com.dolphinblue.models.Block.Type;
-import com.dolphinblue.models.SaveTaskModel;
-import com.dolphinblue.models.Lesson;
-import com.dolphinblue.models.Task;
 import com.dolphinblue.service.*;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -37,6 +34,52 @@ public class TaskController {
     AuthenticationService authenticationService;
     @Autowired
     CodoUserService userService;
+
+    /**
+     *  This is for debugging a block task
+     * @param model -- the thymeleaf model used to send data to the front end
+     * @return -- the HTML page to be loaded
+     */
+    @RequestMapping(value = "/debug-edit-task", method = RequestMethod.GET)
+    public String debug_edit_task(Model model){
+        Lesson l = new Lesson();
+        l.setTitle("First Lesson");
+
+        Task t = new Task();
+        t.setTitle("First Block Task");
+        t.setInstructions("These are the instructions.");
+        t.setHint("This is the hint.");
+        t.setTest_case("x = 1;");
+        t.setExpected_output("3");
+
+        ArrayList<Block> toolbox = new ArrayList<Block>();
+        ArrayList<Block> editor = new ArrayList<Block>();
+        ArrayList<Block> catalog = new ArrayList<Block>();
+
+        toolbox.add(new Block(1, "x = 2;", Type.ASSIGN, false));
+        toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, false));
+        toolbox.add(new Block(3, "blah;", Type.IF, true));
+        toolbox.add(new Block(4, "butts;", Type.FOR, true));
+
+
+        editor.add(new Block(2, "x += 1;", Type.ASSIGN, false));
+        editor.add(new Block(2, "console.log(x);", Type.ASSIGN, false));
+
+        catalog.add(new Block(1, "x = 2;", Type.ASSIGN, false));
+        catalog.add(new Block(2, "console.log(x);", Type.LOG, false));
+        catalog.add(new Block(4, "butts;", Type.LOG, true));
+        catalog.add(new Block(3, "blah;", Type.IF, true));
+        catalog.add(new Block(4, "butts;", Type.FOR, true));
+        catalog.add(new Block(4, "butts;", Type.WHILE, true));
+
+        model.addAttribute("lesson", l);
+        model.addAttribute("toolbox", toolbox);
+        model.addAttribute("editor", editor);
+        model.addAttribute("catalog", catalog);
+        model.addAttribute("task", t);
+
+        return "edit-block-task";
+    }
 
     /**
      *  This is for debugging a block task
@@ -217,10 +260,6 @@ public class TaskController {
             //TODO: Add more attributes to model?
             return "freecode-task";
         }
-
-
-
-
     }
 
     /**
@@ -261,6 +300,32 @@ public class TaskController {
 
     }
 
+
+
+    @RequestMapping(value = "/savelesson/{lessonId}/freecodetask/{taskId}",  method = RequestMethod.POST)
+    public @ResponseBody
+    SaveFreecodeTaskModel update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") Long taskId, @RequestBody SaveFreecodeTaskModel taskModel) {
+        // Check if the user is still authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            return null;
+        }
+        // Create the objectify object to get stuff from the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // Get the original task
+        Task task = ofy.load().type(Task.class).id(taskId).now();
+        // Update the boolean value for this task
+        task.setCompleted(taskModel.getCompleted());
+        //update freecode
+        task.setFreecode(taskModel.getFreecode());
+
+        // Save the changes to the datastore
+        ofy.save().entity(task);
+        return taskModel;
+
+    }
     /**
      * Method for restarting a lesson
      * @param token -- the login token of the user

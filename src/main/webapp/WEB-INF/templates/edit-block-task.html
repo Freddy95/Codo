@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+   
+  <title>Codo - Home</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"></meta>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"></link>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script src="https://use.fontawesome.com/7e4c107e18.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/main.css}"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/edit-block-task.css}"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/draggable-style.css}"></link>
+  <script type="text/javascript" th:src="@{/public/js/edit-block-task.js}"></script>
+</head>
+<body>
+
+<div class="container h-100">
+  <div class="row">
+    <div class="col">
+      <div th:replace="lesson-navbar :: navbar"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div th:replace="edit-task-navbar :: navbar"></div>
+    </div>
+  </div>
+  <div class="row " id="lesson-content">
+    <div class="col-3 task-col">
+      <div class="card med-card" id="instructions-div">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">Instructions</h3>
+        </div>
+        <div class="card-block textarea-parent">
+          <textarea type="text" id="instructions" th:text="${task.instructions}"></textarea>
+        </div>
+      </div>
+      <div class="card small-card" id="hint-div">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">Hint</h3>
+        </div>
+        <div class="card-block textarea-parent">
+          <textarea type="text" id="hint" th:text="${task.hint}"></textarea>
+        </div>
+      </div>
+      <div class="card small-card" id="input-div">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">Test Input</h3>
+        </div>
+        <div class="card-block textarea-parent">
+          <textarea type="text" id="test-case" th:text="${task.test_case}"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 task-col">
+      <div th:fragment="block-content" id="block-content">
+        <div class="card" id="editor-div">
+          <div class="card-header card-title-block">
+            <h3 class="card-title">
+              Editor
+            </h3>
+          </div>
+          <div class="card-block code-placement" id="editor">
+            <div th:each="block : ${editor}" th:insert="code-block :: block(${block})"  th:remove="tag"></div>
+          </div>
+          <div class="card-footer">
+            <btn class="btn btn-sm btn-primary float-right" onClick="run()">Run</btn>
+          </div>
+        </div>
+        <div class="card" id="toolbox-div">
+          <div class="card-header card-title-block">
+            <h3 class="card-title">Toolbox</h3>
+          </div>
+          <div class="card-block code-placement" id="toolbox">
+            <div th:each="block : ${toolbox}" th:insert="code-block :: block(${block})" th:remove="tag"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 task-col">
+      <div class="card med-card" id="catalog-div">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">Block Catalog</h3>
+        </div>
+        <div class="card-block code-placement" id="catalog">
+          <div th:each="block : ${catalog}" th:insert="code-block :: block(${block})" th:remove="tag"></div>
+        </div>
+        <div id="trash" class="card-footer card-danger card-inverse text-center">
+          <i class="fa fa-lg fa-trash"></i>
+        </div>
+      </div>
+      <div class="card small-card" id="ex-output-div">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">Expected Output</h3>
+        </div>
+        <div class="card-block textarea-parent">
+          <textarea type="text" id="ex-output" th:text="${task.expected_output}"></textarea>
+        </div>
+      </div>
+      <div class="card small-card" id="output-div">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">Actual Output</h3>
+        </div>
+        <div class="card-block code-placement" id="output"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="page-info" th:attr="data-test-case=${task.test_case},data-completed=${task.completed},data-next-task=${next_task},data-ex-output=${task.expected_output},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id}">
+</div>
+</body>
+</html>

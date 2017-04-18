@@ -3,11 +3,17 @@
  * This handles the frontend code for checking and sending freecode task information
  */
 
+var editor;
 //shorthand for document.ready
 $(function () {
     //set up the ace editor
-    var editor = ace.edit("freecodeeditor");
+    editor = ace.edit("freecodeeditor");
     editor.setTheme("ace/theme/chrome");
+    //change the font to match the rest of the app
+    editor.setOptions({
+        fontFamily: "Source Code Pro",
+        fontSize: "12pt"
+    });
     editor.getSession().setMode("ace/mode/javascript");
 
 
@@ -20,6 +26,8 @@ $(function () {
             expected_output=$page.data("ex-output"),
             completed=$page.data("completed"),
             next_task=$page.data("next-task");
+
+        expected_output = String(expected_output).replace("\n","<br>") + "<br>";
 
         // Empty the output when running.
         $('#output').empty();
@@ -42,8 +50,46 @@ $(function () {
         //check if it's the right values
         var results=eval(code),
             expected=(results==expected_output);
+        //check that it matches the expected output
+        if(expected){
+            completed = true;
+            // Adding next arrow to next task.
+            if (next_task > 0) {
+              $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/' + lesson_id + '/task/' + next_task + '" onClick="save()"></a>'));
+            }
+            // If last lesson, just redirect to user page.
+            else {
+              $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user" onClick="save()"></a>'));
+            }
+            $page.data("completed",true);
+            $
+            //save the result
+            save(editor.getValue(),true);
+        }
         });
+
 });
+
+function save(){
+    var $pg=$("#page"),
+        task_id=$pg.data("task-id"),
+        lesson_id=$pg.data("lesson-id");
+
+    var data = {
+        freecode: editor.getValue(),
+        completed:$pg.data("completed")
+    };
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method:'POST',
+        url:'/savelesson/'+lesson_id+'/freecodetask/'+task_id,
+        data:JSON.stringify(data),
+        dataType:"json"
+    });
+}
 
 //cleans up the the code using regex
 function clean(code) {

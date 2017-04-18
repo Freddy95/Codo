@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>  
+  <nav id="lesson-options-navbar" th:fragment="navbar" class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target=".dual-collapse">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- A left menu for task options. -->
+  <div class="navbar-collapse collapse">
+    <ul class="navbar-nav mr-auto">
+      <!-- Pop a modal to edit the lesson and task details. -->
+      <li class="nav-item">
+        <a class="nav-link"
+          data-toggle="tooltip" data-placement="bottom" title="Edit Details">
+          <i class="fa fa-lg fa-pencil" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- A centered list of navigation links to tasks in the lesson.. -->
+  <!-- <div class="navbar-collapse collapse">
+    <ul class="navbar-nav mx-auto" th:each="index: ${#numbers.sequence(1, #lists.size(lesson.tasks))}">
+      <li class="nav-item">
+        <a th:if="${lesson.tasks[index-1].getId() == task.getTask_id()}" class="active nav-link"
+          href="#"
+          th:text="${index}"
+          data-toggle="tooltip"
+          th:attr="title=${task_titles[index-1]}"></a>
+        <a th:unless="${lesson.tasks[index-1].getId() == task.getTask_id()}" class="nav-link"
+          th:href="'/lesson/' + ${lesson.getLesson_id()} + '/task/' + ${lesson.tasks[index-1].getId()}"
+          th:text="${index}"
+          data-toggle="tooltip"
+          th:attr="title=${task_titles[index-1]}"></a>  
+      </li>
+    </ul>
+  </div> -->
+
+  <!-- A save button on the right. -->
+  <div class="navbar-collapse collapse">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link"
+          onClick="save()"
+          data-toggle="tooltip" data-placement="bottom" title="Save">
+          <i class="fa fa-lg fa-floppy-o" aria-hidden="true"></i>
+        </a>  
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"
+          data-toggle="tooltip" data-placement="bottom" title="Delete Task">
+          <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+        </a>  
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"
+          data-toggle="tooltip" data-placement="bottom" title="Create New Task">
+          <i class="fa fa-lg fa-plus" aria-hidden="true"></i>
+        </a>  
+      </li>
+    </ul>
+  </div>
+  </nav>
+</body>
+  
+</html>

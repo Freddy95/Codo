@@ -13,6 +13,7 @@ import java.util.*;
 @Entity
 public class User {
     @Id private String user_id;
+    private String username;
     private String first_name;
     private String last_name;
     private String email;
@@ -23,8 +24,9 @@ public class User {
     @Load private List<Key<Lesson>> lessons; // list of lessons the user has started or completed
     @Load private Key<Lesson> current_lesson;//current lesson user is on
 
-    public User(String user_id, String first_name, String last_name, String email, String password, String avatar, List<Key<Lesson>> lessons) {
+    public User(String user_id,String username, String first_name, String last_name, String email, String password, String avatar, List<Key<Lesson>> lessons) {
         this.user_id = user_id;
+        this.username=username;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -38,6 +40,14 @@ public class User {
      */
     public User(){
         lessons = new ArrayList<>();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getUser_id() {
