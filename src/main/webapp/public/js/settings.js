@@ -47,6 +47,7 @@ $(function(){
             url:'/settings/updateusername',
             data:data,
             success:function(){
+                console.log(newUsername);
                 $("#username-text").text(newUsername);
                 $showUserNameEditBtn.show();
                 $userNameEditForm.hide();
