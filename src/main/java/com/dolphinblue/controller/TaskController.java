@@ -231,7 +231,7 @@ public class TaskController {
             //its a freecode task
             model.addAttribute("editor", task.getFreecode());
             //TODO: Add more attributes to model?
-            return "freecode-task";
+            return "freecode";
         }
     }
 
