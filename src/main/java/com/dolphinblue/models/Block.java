@@ -27,16 +27,13 @@ public class Block {
         IF,
         FOR,
         WHILE,
-        ASSIGN, // TODO: eliminate
-        DECLARE, // TODO: eliminate
-        PLUS, // TODO: eliminate
-        MINUS, // TODO: eliminate
-        MULTIPLY, // TODO: eliminate
-        DIVIDE, // TODO: eliminate
         LOG,
-        BRACKET, // TODO: eliminate
         CURL,
-        SQUARE
+        SQUARE,
+        ELSE,
+        ELSE_IF,
+        SWITCH,
+        CASE
         ;
     }
 
