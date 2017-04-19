@@ -17,6 +17,12 @@
     color: darkslategrey;
 }
 
+.code-block:focus {
+    background-color: darkslategrey;
+    color: white;
+    border: darkslategrey;
+}
+
 .code-block>.holds-one {
     vertical-align: middle;
 }

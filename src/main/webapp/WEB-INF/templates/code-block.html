@@ -45,7 +45,9 @@
 
     <!-- If it's a normal type of block,  -->
     <div th:case="*">
-        <div class="code-block" th:id="${block.block_id}" th:text="${block.value}" th:attr="data-children='false',data-type=${block.type}"></div>
+        <div class="code-block" th:id="${block.block_id}" th:attr="data-children='false',data-type=${block.type}">
+          <span class="code-text" th:text="${block.value}"></span>
+        </div>
     </div>
 </div>
 </body>

@@ -121,10 +121,15 @@ function init() {
     helper: "clone",
     connectToSortable: '.code-placement',
     stop: function(e, ui) {
-      if (getCodeBlock(ui.helper).attr('data-children') === "false") {
-        ui.helper.dblclick(function() {
-          onDblClick($(this));
-        });
+      if (getCodeBlock(ui.helper).attr('data-children') === "false" &&
+            getCodeBlock(ui.helper).attr('data-type') === "STATIC") {
+        ui.helper.attr('contenteditable', 'true')
+          .keydown(function(e) {
+            // trap the return key being pressed
+            if (e.keyCode === 13) {
+              return false;
+            }
+          });
       }
     }
   });
@@ -137,6 +142,7 @@ function init() {
     over: function(e, ui){ 
         resize_content();
     },
+    cancel: '.code-text',
     receive: function(event, ui) {
       // Restrict .holds-one to hold one element at a time.
       if ($(this).hasClass('holds-one')) {
@@ -145,7 +151,7 @@ function init() {
         }
       }
     }
-  }).disableSelection();
+  });
 
   // Items that get dumped in trash should be removed from the page.
   $("#trash").droppable({
@@ -156,9 +162,14 @@ function init() {
     }
   });
 
-  $('#editor .code-block, #toolbox .code-block').dblclick(function () {
-    onDblClick($(this));
-  });
+  $('#editor .code-block[data-type="STATIC"], #toolbox .code-block[data-type="STATIC"]')
+    .attr('contenteditable', 'true')
+    .keydown(function(e) {
+        // trap the return key being pressed
+        if (e.keyCode === 13) {
+          return false;
+        }
+      });
 }
 
 function run() {
@@ -208,4 +219,24 @@ function run() {
 
 // Save data.
 function save() {
+  var data = {};
+
+  var editor = [];
+  var toolbox = [];
+
+  $.each(getCodeBlock($('#editor').children()), function(index, value) {
+    var block = getCodeBlockAttr(value);
+    editor.push(block);
+  });
+
+  $.each(getCodeBlock($('#toolbox').children()), function(index, value) {
+    var block = getCodeBlockAttr(value);
+    toolbox.push(block);
+  });
+
+  // data.task_id = task_id;
+  data.editor = editor;
+  data.toolbox = toolbox;
+  data.completed = completed;
+  console.log(data);
 }

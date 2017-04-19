@@ -58,18 +58,18 @@ public class TaskController {
         ArrayList<Block> editor = new ArrayList<Block>();
         ArrayList<Block> catalog = new ArrayList<Block>();
 
-        toolbox.add(new Block(1, "x = 2;", Type.ASSIGN, false));
-        toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, false));
-        toolbox.add(new Block(2, "x > 5;", Type.ASSIGN, false));
+        toolbox.add(new Block(1, "x = 2;", Type.STATIC, false));
+        toolbox.add(new Block(2, "x += 5;", Type.STATIC, false));
+        toolbox.add(new Block(2, "x > 5;", Type.STATIC, false));
         toolbox.add(new Block(3, "blah;", Type.IF, true));
         toolbox.add(new Block(4, "butts;", Type.FOR, true));
 
 
-        editor.add(new Block(2, "x += 1;", Type.ASSIGN, false));
-        editor.add(new Block(2, "console.log(x);", Type.ASSIGN, false));
+        editor.add(new Block(2, "x += 1;", Type.STATIC, false));
+        editor.add(new Block(2, "console.log(x);", Type.STATIC, false));
 
-        catalog.add(new Block(1, "x = 2;", Type.ASSIGN, false));
-        catalog.add(new Block(2, "console.log(x);", Type.LOG, false));
+        catalog.add(new Block(1, "x = 2;", Type.STATIC, false));
+        catalog.add(new Block(2, "console.log(x);", Type.STATIC, false));
         catalog.add(new Block(4, "butts;", Type.LOG, true));
         catalog.add(new Block(3, "blah;", Type.IF, true));
         catalog.add(new Block(4, "butts;", Type.FOR, true));
@@ -102,16 +102,16 @@ public class TaskController {
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();
 
-        toolbox.add(new Block(1, "x = 2;", Type.ASSIGN, false));
-        toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, false));
+        toolbox.add(new Block(1, "x = 2;", Type.STATIC, false));
+        toolbox.add(new Block(2, "x += 5;", Type.STATIC, false));
         toolbox.add(new Block(3, "blah;", Type.IF, true));
         toolbox.add(new Block(4, "butts;", Type.FOR, true));
-        toolbox.add(new Block(4, "{", Type.BRACKET, false));
-        toolbox.add(new Block(4, "}", Type.BRACKET, false));
+        toolbox.add(new Block(4, "{", Type.STATIC, false));
+        toolbox.add(new Block(4, "}", Type.STATIC, false));
 
 
-        editor.add(new Block(2, "x += 1;", Type.ASSIGN, false));
-        editor.add(new Block(2, "console.log(x);", Type.ASSIGN, false));
+        editor.add(new Block(2, "x += 1;", Type.STATIC, false));
+        editor.add(new Block(2, "console.log(x);", Type.STATIC, false));
 
         // model.addAttribute("lesson", l);
         model.addAttribute("toolbox", toolbox);
