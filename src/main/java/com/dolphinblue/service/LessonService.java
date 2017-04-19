@@ -218,8 +218,7 @@ public class LessonService {
                     // Set the new block's values
                     block.setValue(new_block.getValue());
                     block.setType(old_block.getType());
-                    block.setCan_edit(true);
-
+                    block.setCan_edit(old_block.isCan_edit());
 
 
                     // Save the new block to the datastore
