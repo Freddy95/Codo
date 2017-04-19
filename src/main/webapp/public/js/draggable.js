@@ -70,13 +70,11 @@ function resize_content() {
 
   resize_height = Math.max(window_height, content_height);
 
-  if (resize_height > $('#lesson-content').height()) {
-    // Take the maximum of window and content height.
-    $('#lesson-content').css("height", Math.max(window_height, content_height) + "px");
+  // Take the maximum of window and content height.
+  $('#lesson-content').css("height", Math.max(window_height, content_height) + "px");
 
-    // Resize block content.
-    $('#block-content').css("height", (Math.max(window_height, content_height) - block_outer) + "px");
-  }
+  // Resize block content.
+  $('#block-content').css("height", (Math.max(window_height, content_height) - block_outer) + "px");
 }
 
 function init() {
