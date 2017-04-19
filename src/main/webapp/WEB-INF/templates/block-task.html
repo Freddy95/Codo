@@ -1,3 +1,5 @@
+<!-- Page to display a block task. -->
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,17 +23,23 @@
 <body>
 
 <div class="container h-100">
+  <!-- Lesson navbar. -->
   <div class="row">
     <div class="col">
       <div th:replace="lesson-navbar :: navbar"></div>
     </div>
   </div>
+
+  <!-- Task navbar -->
   <div class="row">
     <div class="col">
       <div th:replace="task-navbar :: navbar"></div>
     </div>
   </div>
+
+  <!-- Lesson content -->
   <div class="row " id="lesson-content">
+    <!-- Column containing instructions. -->
     <div class="col-3 task-col">
       <div class="card h-100 step-1" id="instructions-div">
         <div class="card-header card-title-block">
@@ -40,21 +48,31 @@
         <div class="card-block code-placement" id="instructions" th:utext="${task.instructions}"></div>
       </div>
     </div>
+
+    <!-- Column containing editor and toolbox. -->
     <div class="col-6 task-col">
       <div th:replace="draggable:: #block-content"></div>
     </div>
+
+    <!-- Column containing expected output. -->
     <div class="col-3 task-col">
       <div class="card h-100 step-5" id="output-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Output</h3>
-          <a id="next-arrow" onClick="save()" th:if="${next_task > 0 && task.completed}" class="fa fa-lg fa-vc fa-arrow-right pull-right" th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${next_task}"></a>
-          <a id="next-arrow" onClick="save()" th:if="${next_task < 0 && task.completed}" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user"></a>
+
+          <!-- If the task was already completed, let the user go to the next task. -->
+          <a id="next-arrow" onClick="save()" th:if="${next_task > 0 && task.completed}"
+            class="fa fa-lg fa-vc fa-arrow-right pull-right" th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${next_task}"></a>
+          <a id="next-arrow" onClick="save()" th:if="${next_task < 0 && task.completed}"
+            class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user"></a>
         </div>
         <div class="card-block code-placement" id="output"></div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Passing thymeleaf attributes to javascript. -->
 <div id="page-info" th:attr="data-test-case=${task.test_case},data-completed=${task.completed},data-next-task=${next_task},data-ex-output=${task.expected_output},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id}">
 </div>
 </body>

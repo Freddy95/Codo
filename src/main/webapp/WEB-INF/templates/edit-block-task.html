@@ -19,16 +19,22 @@
 <body>
 
 <div class="container h-100">
+
+  <!-- The lesson navbar. -->
   <div class="row">
     <div class="col">
       <div th:replace="lesson-navbar :: navbar"></div>
     </div>
   </div>
+
+  <!-- The task navbar. -->
   <div class="row">
     <div class="col">
       <div th:replace="edit-task-navbar :: navbar"></div>
     </div>
   </div>
+
+  <!-- The content of the lesson to be created. -->
   <div class="row " id="lesson-content">
     <div class="col-3 task-col">
       <div class="card med-card" id="instructions-div">
@@ -39,6 +45,8 @@
           <textarea type="text" id="instructions" th:text="${task.instructions}"></textarea>
         </div>
       </div>
+
+      <!-- An input box in which to write the hint. -->
       <div class="card small-card" id="hint-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Hint</h3>
@@ -47,6 +55,8 @@
           <textarea type="text" id="hint" th:text="${task.hint}"></textarea>
         </div>
       </div>
+
+      <!-- An div of input boxes to specify test cases. Should be in the form of a JSON string. -->
       <div class="card small-card" id="input-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Test Input</h3>
@@ -56,43 +66,33 @@
         </div>
       </div>
     </div>
+
+    <!-- Column containing editor and toolbox. -->
     <div class="col-6 task-col">
-      <div th:fragment="block-content" id="block-content">
-        <div class="card" id="editor-div">
-          <div class="card-header card-title-block">
-            <h3 class="card-title">
-              Editor
-            </h3>
-          </div>
-          <div class="card-block code-placement" id="editor">
-            <div th:each="block : ${editor}" th:insert="code-block :: block(${block})"  th:remove="tag"></div>
-          </div>
-          <div class="card-footer">
-            <btn class="btn btn-sm btn-primary float-right" onClick="run()">Run</btn>
-          </div>
-        </div>
-        <div class="card" id="toolbox-div">
-          <div class="card-header card-title-block">
-            <h3 class="card-title">Toolbox</h3>
-          </div>
-          <div class="card-block code-placement" id="toolbox">
-            <div th:each="block : ${toolbox}" th:insert="code-block :: block(${block})" th:remove="tag"></div>
-          </div>
-        </div>
-      </div>
+      <div th:replace="draggable:: #block-content"></div>
     </div>
+
+    <!-- Column containing catalog, expected output, and actual output. -->
     <div class="col-3 task-col">
+
+      <!-- Div containing the block catalog. -->
       <div class="card med-card" id="catalog-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Block Catalog</h3>
         </div>
+
+        <!-- The actual div containing catalog blocks. -->
         <div class="card-block code-placement" id="catalog">
           <div th:each="block : ${catalog}" th:insert="code-block :: block(${block})" th:remove="tag"></div>
         </div>
+
+        <!-- Blocks from the editor or toolbar dragged here will be deleted. -->
         <div id="trash" class="card-footer card-danger card-inverse text-center">
           <i class="fa fa-lg fa-trash"></i>
         </div>
       </div>
+
+      <!-- A div of input boxes to specify expected output. -->
       <div class="card small-card" id="ex-output-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Expected Output</h3>
@@ -101,6 +101,8 @@
           <textarea type="text" id="ex-output" th:text="${task.expected_output}"></textarea>
         </div>
       </div>
+
+      <!-- Editor program output is placed here. -->
       <div class="card small-card" id="output-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Actual Output</h3>

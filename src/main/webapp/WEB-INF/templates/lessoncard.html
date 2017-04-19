@@ -1,14 +1,21 @@
+<!-- A template for lesson cards. -->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body>  
+<body> 
   <div th:fragment="myfragment(variable)" class="col-6 align-items-center">
+    <!-- All of the lesson card is a link to the relevant lesson. -->
     <a th:fragment="subfragment(variable)" class="lesson-link" th:href="'/lesson/' + ${variable.lesson_id}">
     <div class="row lesson-box">
+
+      <!-- The left portion contains the title and progress. -->
       <div class="col-4 title-box">
         <span th:text="${variable.title}"></span>
         <br/>
         <span th:text="${variable.percent_complete}"></span>
       </div>
+
+      <!-- The right portion contains the description. -->
       <div class="col-8 description-box" th:text="${variable.description}"></div>
     </div>
     </a>

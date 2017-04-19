@@ -26,9 +26,13 @@
   <div th:replace="user-navbar :: navbar"></div>
   <div class="row justify-content-center user-section" id="badges">
     <div class="col">
+
+      <!-- A welcome header. -->
       <div class="row justify-content-center user-section-header">
         <h2 class="step-1" th:text="|Welcome, ${user_info.first_name}!|"></h2>
       </div>
+
+      <!-- A container that will eventually contain badges. -->
 <!--       <div class="row justify-content-center user-section-header">
         <h2>Badges</h2>
       </div>
@@ -39,6 +43,7 @@
   <div class="row justify-content-center user-section" id="progress">
     <div class="col step-7">
 
+      <!-- Displays the lesson in progress. -->
       <div class="row justify-content-center user-section-header">
         <h2>You're learning:</h2>
       </div>
@@ -47,20 +52,30 @@
       </div>
     </div>
   </div>
+
+  <!-- Tabs showing the various lessons available. -->
   <div class="row justify-content-center user-section" id="lessons-tab">
     <div class="col">
       <div class="row justify-content-center user-section-header">
         <h2>Lessons</h2>
       </div>
+
+      <!-- The pills to link to the different sections. -->
       <div class="row justify-content-center lesson-nav">
         <ul class="nav nav-pills nav-fill">
+
+          <!-- The tab for main lessons. -->
           <li class="nav-item">
             <a class="nav-link active step-5" data-toggle="pill" href="#main">Main Lessons</a>
           </li>
-<!--           <li class="nav-item">
+
+          <!-- The tab for shared lessons. -->
+          <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="pill" href="#shared">Shared Lessons</a>
-          </li>
-          <li class="nav-item">
+          </li> -->
+
+          <!-- The tab for a user's lessons. -->
+          <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="pill" href="#your">Your Lessons</a>
           </li> -->
         </ul>
@@ -74,7 +89,9 @@
             </div>
           </div>
         </div>
-<!--         <div class="tab-pane fade" id="shared" role="tabpanel">
+
+        <!-- The tab for the shared lessons. -->
+        <!-- <div class="tab-pane fade" id="shared" role="tabpanel">
           <div class="row justify-content-center">
             <div th:replace="lessoncard :: myfragment(${lesson})"></div>
             <div th:replace="lessoncard :: myfragment(${lesson})"></div>
@@ -87,8 +104,10 @@
             <div th:replace="lessoncard :: myfragment(${lesson})"></div>
             <div th:replace="lessoncard :: myfragment(${lesson})"></div>
           </div>
-        </div>
-        <div class="tab-pane fade" id="your" role="tabpanel">
+        </div> -->
+
+        <!-- The tab for a user's lessons. -->
+        <!-- <div class="tab-pane fade" id="your" role="tabpanel">
           <div class="row justify-content-center add-button">
             <a class="btn btn-primary" href="#"
                 data-toggle="tooltip" data-placement="left" title="Add Lesson">
@@ -106,8 +125,8 @@
           <div class="row justify-content-center">
             <div th:replace="lessoncard :: myfragment(${lesson})"></div>
             <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-          </div> -->
-        </div>
+          </div>
+        </div> -->
       </div>
     </div>
   </div>
