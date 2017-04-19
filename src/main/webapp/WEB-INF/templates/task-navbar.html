@@ -17,14 +17,6 @@
           <i class="fa fa-lg fa-arrow-left" aria-hidden="true"></i>
         </a>  
       </li>
-      <!-- Undo changes to current task. -->
-      <li class="nav-item">
-        <a class="nav-link"
-          th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${task.getTask_id()}"
-          data-toggle="tooltip" data-placement="bottom" title="Undo Task Changes">
-          <i class="fa fa-lg fa-undo" aria-hidden="true"></i>
-        </a>  
-      </li>
       <!-- Restart current task. -->
       <li class="nav-item step-9">
         <a class="nav-link"
@@ -72,6 +64,7 @@
           <i class="fa fa-lg fa-undo" aria-hidden="true"></i>
         </a>  
       </li>
+      <!-- Save state of current task. -->
       <li class="nav-item step-7">
         <a class="nav-link"
           onClick="save()"
