@@ -290,39 +290,33 @@ function startTutorial() {
                 intro: 'You can click this button at any time to save the progress you\'ve made.',
                 position: 'left'
             },
-            //{
-                // Focus: previous task
-                //element: '.step-8',
-                //intro: 'To navigate back to the previous task in this lesson click this button.',
-                //position: 'bottom'
-            //},
             {
                 // Focus: undo changes
-                element: '.step-9',
+                element: '.step-8',
                 intro: 'Pressing this button will undo all of the changes made since your last save.',
                 position: 'bottom'
             },
             {
                 // Focus: restart task
-                element: '.step-10',
+                element: '.step-9',
                 intro: 'To restart the task you are on from the beginning click this button.',
                 position: 'bottom'
             },
             {
                 // Focus: restart lesson
-                element: '.step-11',
+                element: '.step-10',
                 intro: 'To restart all of the tasks in the lesson click this button.',
                 position: 'bottom'
             },
             {
                 // Focus: task navigation
-                element: '.step-12',
+                element: '.step-11',
                 intro: 'Once you have completed a task you can navigate to it directly at anytime using this task navigation bar. Hover over the numbers in the bar to get the title of that particular task.',
                 position: 'bottom'
             },
             {
                 // Focus: home button
-                element: '.step-13',
+                element: '.step-12',
                 intro: 'To go back to the home page where you were before, click this button. You\'re now ready to complete your first task!',
                 position: 'bottom'
             }

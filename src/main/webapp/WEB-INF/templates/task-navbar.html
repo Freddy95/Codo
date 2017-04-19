@@ -18,7 +18,7 @@
         </a>  
       </li>
       <!-- Restart current task. -->
-      <li class="nav-item step-10">
+      <li class="nav-item step-9">
         <a class="nav-link"
           th:href="'/restartlesson/' + ${lesson.lesson_id} + '/restarttask/' + ${task.task_id}"
           data-toggle="tooltip" data-placement="bottom" title="Reset Task">
@@ -26,7 +26,7 @@
         </a>  
       </li>
       <!-- Restart current lesson. -->
-      <li class="nav-item step-11">
+      <li class="nav-item step-10">
         <a class="nav-link" th:href="'/restartlesson/' + ${lesson.lesson_id}"
           data-toggle="tooltip" data-placement="bottom" title="Restart Lesson">
           <i class="fa fa-lg fa-fast-backward" aria-hidden="true"></i>
@@ -36,7 +36,7 @@
   </div>
 
   <!-- A centered list of navigation links to tasks in the lesson.. -->
-  <div class="navbar-collapse collapse step-12">
+  <div class="navbar-collapse collapse step-11">
     <ul class="navbar-nav mx-auto" th:each="index: ${#numbers.sequence(1, #lists.size(lesson.tasks))}">
       <li class="nav-item">
         <a th:if="${lesson.tasks[index-1].getId() == task.getTask_id()}" class="active nav-link"
@@ -57,7 +57,7 @@
   <div class="navbar-collapse collapse">
     <ul class="navbar-nav ml-auto">
       <!-- Undo changes to current task. -->
-      <li class="nav-item step-7">
+      <li class="nav-item step-8">
         <a class="nav-link"
           th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${task.getTask_id()}"
           data-toggle="tooltip" data-placement="bottom" title="Undo Unsaved Changes">
@@ -65,7 +65,7 @@
         </a>  
       </li>
       <!-- Save state of current task. -->
-      <li class="nav-item">
+      <li class="nav-item step-7">
         <a class="nav-link"
           onClick="save()"
           data-toggle="tooltip" data-placement="bottom" title="Save Changes">
