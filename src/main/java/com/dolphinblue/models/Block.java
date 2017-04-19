@@ -61,7 +61,7 @@ public class Block {
         return block_id;
     }
 
-    public void setBlock_id(long block_id) {
+    public void setBlock_id(Long block_id) {
         this.block_id = block_id;
     }
 
