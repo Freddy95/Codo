@@ -30,7 +30,7 @@
   <div th:fragment="block-content" id="block-content">
 
     <!-- The editor.-->
-    <div class="card" id="editor-div">
+    <div class="card step-2" id="editor-div">
 
       <!-- The header for the editor block. -->
       <div class="card-header card-title-block">
@@ -64,7 +64,7 @@
       </div>
 
       <!-- The div containing the blocks for the editor. -->
-      <div class="card-block code-placement step-2" id="editor">
+      <div class="card-block code-placement" id="editor">
         <div th:each="block : ${editor}" th:insert="code-block :: block(${block})"  th:remove="tag"></div>
       </div>
 
