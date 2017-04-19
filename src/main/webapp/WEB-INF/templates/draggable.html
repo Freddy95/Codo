@@ -38,29 +38,8 @@
           Editor
         </h3>
 
-        <!-- Shows the hint button if a hint exists. -->
-        <span th:if="${!(#strings.isEmpty(task.hint))}" class="align-middle">
-          <a class="fa fa-lg fa-vc fa-question pull-right step-6" data-toggle="modal" data-target="#hintModal"></a>
-        </span>
-
         <!-- A model for the hint button. -->
-        <div th:if="${!(#strings.isEmpty(task.hint))}" class="modal" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="hintModalLabel">Hint</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body" th:text="${task.hint}">
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div th:include="hint-modal :: hint" th:remove="tag"></div>
       </div>
 
       <!-- The div containing the blocks for the editor. -->

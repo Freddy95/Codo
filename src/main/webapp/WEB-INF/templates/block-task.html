@@ -51,7 +51,7 @@
 
     <!-- Column containing editor and toolbox. -->
     <div class="col-6 task-col">
-      <div th:replace="draggable:: #block-content"></div>
+      <div th:insert="draggable:: #block-content" th:with="hint=${task.hint}" th:remove="tag"></div>
     </div>
 
     <!-- Column containing expected output. -->
