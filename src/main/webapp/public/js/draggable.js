@@ -243,8 +243,6 @@ function save() {
   data.editor = editor;
   data.toolbox = toolbox;
   data.completed = completed;
-  console.log(data);
-
 
   $.ajax({
     headers: { 
