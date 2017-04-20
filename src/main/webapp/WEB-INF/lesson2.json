@@ -8,7 +8,7 @@
 		{
 			"title" : "Comparison Operators",
 			"instructions" : "Boolean values are another datatype in Javascript. They can be true or false.<br/> Boolean values occur when we test <b>equality</b>. To test equality you can use the <b>==</b> operator. <br/> Store the value of the == operator in <b>x</b> and print it out to see how it works.",
-			"expected_output" : "True",
+			"expected_output" : "true",
 			"test_case" : "",
 			"type" : "BLOCK-TASK",
 			"hint" : "Make sure you're printing out the value AFTER assigning it.",
@@ -34,7 +34,7 @@
 		},{
 			"title" : "Other Comparison Operators",
 			"instructions" : "There are other ways to compare values. You can also check if values are greater than (>) or less than (<). <br/> In this lesson we'll check if a number is less than another number and print out the value. <br/> This program should return <b>False</b>.",
-			"expected_output" : "False",
+			"expected_output" : "false",
 			"test_case" : "",
 			"type" : "BLOCK-TASK",
 			"hint" : "Make sure you're putting the blocks in the right order!",
@@ -60,11 +60,11 @@
 					"type" : "ASSIGN",
 					"can_edit" : false
 				},
-                                {
-                                    "value" : "y=4;",
-                                    "type" : "ASSIGN",
-                                    "can_edit" : false
-                                },
+                {
+                    "value" : "y=4;",
+                    "type" : "ASSIGN",
+                    "can_edit" : false
+                },
 				{
 					"value" : "console.log(x<y);",
 					"type" : "LOG",
@@ -78,8 +78,8 @@
 			]
 		},{
 			"title" : "This or That?",
-			"instructions" : "Just like with numbers, we can do operators on boolean values. One of those operations is <b> OR (||)</b>. When you <b> OR </b> two values you get True if one of the values is True. <br/> Here’s an example:<ul><li> True || True = True</li><li> True || False = True</li><li> False || False = False</li>f</ul><span class=”intr-block”> x||y</span> <br/> Should be True so the program should print out: <br/><span class=”example-output”>True</span>",
-			"expected_output" : "True",
+			"instructions" : "Just like with numbers, we can do operators on boolean values. One of those operations is <b> OR (||)</b>. When you <b> OR </b> two values you get True if one of the values is True. <br/> Here's an example:<ul><li> True || True = True</li><li> True || False = True</li><li> False || False = False</li></ul><span class=”intr-block”> x||y</span> <br/> Should be True so the program should print out: <br/><span class=”example-output”>True</span>",
+			"expected_output" : "true",
 			"test_case" : "",
 			"type" : "BLOCK-TASK",
 			"hint" : "Try changing the values of x and y so they will equal -16.5 when multiplied together.",
@@ -87,12 +87,12 @@
 				{
 					"value" : "console.log(x||y);",
 					"type" : "LOG",
-					"can_edit" : true
+					"can_edit" : false
 			    }
                         ],
 			"toolbox" : [
 				,{
-					"value" : " var x ;",
+					"value" : " var x;",
 					"type" : "DECLARE",
 					"can_edit" : false
 				},{
@@ -100,17 +100,17 @@
 					"type" : "DECLARE",
 					"can_edit" : false
 				},{
-					"value" : "x = True;",
+					"value" : "x = true;",
 					"type" : "ASSIGN",
 					"can_edit" : false
 				},{
 
-					"value" : "x = False;",
+					"value" : "x = false;",
 					"type" : "ASSIGN",
 					"can_edit" : false
 				},{
 
-					"value" : "y = False;",
+					"value" : "y = false;",
 					"type" : "ASSIGN",
 					"can_edit" : false
 				}
@@ -118,7 +118,7 @@
 		},{
 			"title" : "This and That?",
 			"instructions" : "In addition to OR there is also the <b>AND(&&)</b> operator. <b>AND(&&)</b> will be True only if both sides of the operator are True. <br/> For example: <br/><ul><li>True && True = True</li><li>True && False = False</li><li>False && False = False</li></ul><span class=”intr-block”> x&&y</span> <br/> Should be True so the program should print out: <br/><span class=”example-output”>True</span>",
-			"expected_output" : "True",
+			"expected_output" : "true",
 			"test_case" : "",
 			"type" : "BLOCK-TASK",
 			"hint" : "Try changing the value of x",
@@ -139,15 +139,15 @@
 			],
 			"toolbox" : [
 				{
-					"value" : "x = True;",
+					"value" : "x = true;",
 					"type" : "ASSIGN",
 					"can_edit" : false
 				},{
-					"value" : "y = False;",
+					"value" : "y = true;",
 					"type" : "ASSIGN",
 					"can_edit" : false
 				},{
-					"value" : "x = False;",
+					"value" : "x = false;",
 					"type" : "ASSIGN",
 					"can_edit" : false
 				}
@@ -155,7 +155,7 @@
 		},{
 			"title" : "Not in My House!",
 			"instructions" : "So we’ve seen how to combine True and False values using AND and OR. There’s one final logical operator, <b>NOT(!)</b>.<br/> NOT takes a boolean value and negates it. This means it turns True to False and vice versa.<br/> For example, <span class=”instr-block”>!False</span> would return <span class=”example-output”>True</span>. <br/>The following program should return <b>True</b>.",
-			"expected_output" : "True",
+			"expected_output" : "true",
 			"test_case" : "",
 			"type" : "BLOCK-TASK",
 			"hint" : "Make sure you have the right value of x.",
@@ -172,11 +172,11 @@
 			],
 			"toolbox" : [
 				{
-					"value" : "x = True;",
+					"value" : "x = true;",
 					"type" : "ASSIGN",
 					"can_edit" : false
 				},{
-					"value" : "x = False;",
+					"value" : "x = false;",
 					"type" : "ASSIGN",
 					"can_edit" : false
 				}

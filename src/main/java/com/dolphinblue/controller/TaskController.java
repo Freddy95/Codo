@@ -228,7 +228,7 @@ public class TaskController {
         if (user.isFirst_lesson()) {
             user.setFirst_lesson(false);
             ofy.save().entity(user).now();
-            user.setFirst_lesson(true);
+            System.out.println("making false");
         }
 
         //check type of task

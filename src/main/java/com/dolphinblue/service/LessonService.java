@@ -52,7 +52,6 @@ public class LessonService {
     public List<Lesson> get_main_lessons_by_id(List<Key<Lesson>> lesson_keys) {
         Objectify ofy = OfyService.ofy();
         List<Lesson> main_lessons = new ArrayList<>();
-        System.out.println("lesson size: " + lesson_keys.size());
         for(int i = 0; i < lesson_keys.size(); i++) {
             Key<Lesson> lesson_key = lesson_keys.get(i);
             Lesson lesson = ofy.load().key(lesson_key).now();
@@ -188,7 +187,6 @@ public class LessonService {
      * @return -- the list of updated block keys
      */
     public List<Key<Block>> update_blocks(long task_id, List<Block> blocks) {
-        System.out.println("In update blocks function");
         // Get the objectify object to access the datastore
         Objectify ofy = OfyService.ofy();
         // Create a list of block ids
@@ -199,7 +197,6 @@ public class LessonService {
             //System.out.println("Getting new block from blocks list");
             // Get the new block from the list
             Block new_block = blocks.get(i);
-            System.out.println(new_block.toString());
             // Get the original block from the datastore
             Block old_block = ofy.load().type(Block.class).id(blocks.get(i).getBlock_id()).now();
 
