@@ -72,12 +72,13 @@ public class TaskController {
         editor.add(new Block(2, "console.log(x);", Type.STATIC, false));
         editor.add(testChild);
 
-        catalog.add(new Block(1, "x = 2;", Type.STATIC, false));
-        catalog.add(new Block(2, "console.log(x);", Type.STATIC, false));
+        catalog.add(new Block(2, "// Click to edit", Type.STATIC, false));
         catalog.add(new Block(4, "butts;", Type.LOG, true));
         catalog.add(new Block(3, "blah;", Type.IF, true));
         catalog.add(new Block(4, "butts;", Type.WHILE, true));
         catalog.add(new Block(4, "butts;", Type.FOR, true));
+
+
 
 
         model.addAttribute("lesson", l);

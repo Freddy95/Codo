@@ -88,7 +88,7 @@
 
         <!-- The actual div containing catalog blocks. -->
         <div class="card-block code-placement" id="catalog">
-          <div th:each="block : ${catalog}" th:insert="code-block :: block(${block})" th:remove="tag"></div>
+          <div th:each="block : ${catalog}" th:insert="code-block :: block(${block})"  th:remove="tag"></div>
         </div>
 
         <!-- Blocks from the editor or toolbar dragged here will be deleted. -->

@@ -12,7 +12,7 @@ var completed = "";
 var new_lesson = "";
 
 // Convenience methood to get value from a placeholder.
-function getCodeBlock(node) {
+function getCodeBlocks(node) {
   return $(node).children().children();
 }
 
@@ -25,8 +25,8 @@ function getCodeBlockAttr(value) {
   }
   else {
     block.children = [];
-    $.each(getCodeBlock($(value)), function(index, v) {
-      child_block = getCodeBlockAttr(getCodeBlock($(v)));
+    $.each($(value).children(), function(index, v) {
+      child_block = getCodeBlockAttr(getCodeBlocks($(v)));
       block.children.push(child_block);
     });
   }
@@ -34,7 +34,18 @@ function getCodeBlockAttr(value) {
 }
 
 function getCodeBlockValue(value) {
-  return $(value).text().replace(/\s+/g, " ").trim();
+  var s;
+  if (($(value).attr('data-children')) === "false") {
+    s = $(value).text();
+  }
+  else {
+    block.children = [];
+    $.each($(value).children(), function(index, v) {
+      child_block = getCodeBlockValue(getCodeBlocks($(v)));
+      block.children.push(child_block);
+    });
+  }
+  return s;
 }
 
 
@@ -133,8 +144,8 @@ function run() {
   codeArray = [];
 
   // Add code to the. stored array.
-  $.each($('#editor').children(), function(index, value) {
-    codeArray.push(getCodeBlockValue(getCodeBlock(value)));
+  $.each(getCodeBlocks($('#editor')), function(index, value) {
+    codeArray.push(getCodeBlockValue(value));
   });
 
   fullCode = codeArray.join('\n');
@@ -212,17 +223,18 @@ function run() {
 
 // Save data.
 function save() {
+
   var data = {};
 
   var editor = [];
   var toolbox = [];
 
-  $.each(getCodeBlock($('#editor').children()), function(index, value) {
+  $.each(getCodeBlocks($('#editor')), function(index, value) {
     var block = getCodeBlockAttr(value);
     editor.push(block);
   });
 
-  $.each(getCodeBlock($('#toolbox').children()), function(index, value) {
+  $.each(getCodeBlocks($('#toolbox')), function(index, value) {
     var block = getCodeBlockAttr(value);
     toolbox.push(block);
   });
@@ -231,6 +243,8 @@ function save() {
   data.editor = editor;
   data.toolbox = toolbox;
   data.completed = completed;
+  console.log(data);
+
 
   $.ajax({
     headers: { 

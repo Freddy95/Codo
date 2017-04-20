@@ -3,7 +3,7 @@
 <body>  
   <div th:fragment="block(block)" th:switch="${block.can_edit}">
     <!-- Code for blocks that can have blocks dropped into them. -->
-    <div th:case="${true}">
+    <th:block th:case="${true}">
         <!-- For blocks. -->
         <div class="code-block"
           th:if="${block.type == T(com.dolphinblue.models.Block$Type).FOR}"
@@ -47,14 +47,14 @@
                 <div class="holds-one code-placement"></div>
             );
         </div>
-    </div>
+    </th:block>
 
     <!-- If it's a normal type of block,  -->
-    <div th:case="*">
+    <th:block th:case="*">
         <div class="code-block" th:id="${block.block_id}" th:attr="data-children='false',data-type=${block.type}">
           <span class="code-text" th:text="${block.value}"></span>
         </div>
-    </div>
+    </th:block>
 </div>
 </body>
   

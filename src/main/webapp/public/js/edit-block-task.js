@@ -11,7 +11,7 @@ var lesson_id = "";
 var completed = "";
 
 // Convenience methood to get value from a placeholder.
-function getCodeBlock(node) {
+function getCodeBlocks(node) {
   return $(node).children().children();
 }
 
@@ -24,8 +24,8 @@ function getCodeBlockAttr(value) {
   }
   else {
     block.children = [];
-    $.each(getCodeBlock($(value)), function(index, v) {
-      child_block = getCodeBlockAttr(getCodeBlock($(v)));
+    $.each($(value).children(), function(index, v) {
+      child_block = getCodeBlockAttr(getCodeBlocks($(v)));
       block.children.push(child_block);
     });
   }
@@ -38,19 +38,14 @@ function getCodeBlockValue(value) {
     s = $(value).text();
   }
   else {
-    // block.children = [];
-    // $.each(getCodeBlock($(value)), function(index, v) {
-    //   child_block = getCodeBlockAttr($(v).children());
-    //   block.children.push(child_block);
-    // });
+    block.children = [];
+    $.each($(value).children(), function(index, v) {
+      child_block = getCodeBlockValue(getCodeBlocks($(v)));
+      block.children.push(child_block);
+    });
   }
   return s;
 }
-
-function onDblClick(node) {
-  console.log($(node));
-}
-
 function init() {
   $('#block-content').addClass('h-100');
 
@@ -79,9 +74,10 @@ function init() {
     helper: "clone",
     connectToSortable: '.code-placement',
     stop: function(e, ui) {
-      if (getCodeBlock(ui.helper).attr('data-children') === "false" &&
-            getCodeBlock(ui.helper).attr('data-type') === "STATIC") {
-        ui.helper.attr('contenteditable', 'true')
+      var code_block = ui.helper.children()
+      if (code_block.attr('data-children') === "false" &&
+            code_block.attr('data-type') === "STATIC") {
+        code_block.attr('contenteditable', 'true')
           .keydown(function(e) {
             // trap the return key being pressed
             if (e.keyCode === 13) {
@@ -127,51 +123,6 @@ function init() {
       });
 }
 
-function run() {
-  // Empty the output when running.
-  $('#output').empty();
-
-  codeArray = [];
-
-  // Add code to the stored array.
-  $.each($('#editor').children(), function(index, value) {
-    codeArray.push(getCodeBlockValue(getCodeBlock(value)));
-  });
-
-  fullCode = codeArray.join('\n');
-
-  // Redirect console.log and window.one-error to output.
-  // var former = window.console.log;
-  window.console.log = function(msg) {
-    $('#output').append(document.createTextNode(msg)).append($('<br />'));
-  }
-
-  window.onerror = function(messageOrEvent, source, lineno, colno, error) {
-    $('#output').text(messageOrEvent);
-  }
-
-  try {
-    // Try running the full program.
-    eval(fullCode);
-  } catch (e) {
-    // If it doesn't work, evaluate line by line.
-    for (i = 0; i < codeArray.length; i++) {
-      try {
-        eval(codeArray[i]);
-      }
-      // Flash on a block that errors.
-      catch(e) {
-        value = $('#editor').children().eq(i).find('.code-block');
-        $(value).addClass('flash');
-        setTimeout( function(){
-          $(value).removeClass('flash');
-        }, 1000);
-        throw(e);
-      }
-    }
-  }
-}
-
 // Save data.
 function save() {
   var data = {};
@@ -179,12 +130,12 @@ function save() {
   var editor = [];
   var toolbox = [];
 
-  $.each(getCodeBlock($('#editor').children()), function(index, value) {
+  $.each(getCodeBlocks($('#editor')), function(index, value) {
     var block = getCodeBlockAttr(value);
     editor.push(block);
   });
 
-  $.each(getCodeBlock($('#toolbox').children()), function(index, value) {
+  $.each(getCodeBlocks($('#toolbox')), function(index, value) {
     var block = getCodeBlockAttr(value);
     toolbox.push(block);
   });
