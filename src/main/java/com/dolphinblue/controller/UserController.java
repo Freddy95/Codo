@@ -59,7 +59,7 @@ public class UserController {
             // Load the user's information from the datastore and store it in a user object
             User user = ofy.load().type(User.class).id(id).now();
             if(user == null){
-                return "redirect:/login";
+                return "redirect:login";
             }
             // Create user's own main lesson objects and save them in the datastore
             lessonService.create_main_lessons_for_user(user);
@@ -67,12 +67,7 @@ public class UserController {
             // Add the user information to the thymeleaf model
             model.addAttribute("user_info", user);
 
-            // Check to see if the user is a new user
-            if (user.isNew_user()) {
-                user.setNew_user(false);
-                ofy.save().entity(user);
-                user.setNew_user(true);
-            }
+
 
             // Get the main site lessons for the user and add them to the thymeleaf model
             List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
@@ -81,6 +76,7 @@ public class UserController {
 
             // Fixes a bug with user login
             Lesson l;
+            //should only be null if user is a new user
             if (user.getCurrent_lesson() == null) {
                 try {
                     l = main_lessons.get(0);
@@ -88,9 +84,13 @@ public class UserController {
                 } catch (Exception e) {
                     return "redirect:user";
                 }
-
+                // Check to see if the user is a new user
+                if (user.isNew_user()) {
+                    user.setNew_user(false);
+                }
                 // Made change to user object must save to datastore
                 ofy.save().entity(user).now();
+                user.setNew_user(true);
             } else {
                 l = (Lesson) ofy.load().key(user.getCurrent_lesson()).now();
             }
