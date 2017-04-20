@@ -86,6 +86,8 @@ public class LessonService {
         if(q.list().size() == 0){
             //no lessons created in datastore.
             LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson1.json");
+            LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson2.json");
+            LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson3.json");
             main_lessons = ofy.load().type(Lesson.class).filter("site_owned", true).list();
         }else{
             main_lessons = q.list();

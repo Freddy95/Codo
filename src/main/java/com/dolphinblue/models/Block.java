@@ -25,6 +25,7 @@ public class Block {
     public enum Type {
         STATIC,
         IF,
+        ASSIGN,
         FOR,
         WHILE,
         LOG,

@@ -3,19 +3,24 @@
   "shared": false,
   "site_owned": true,
   "index" : 3,
-  "description" : "This lesson will teach you the basic Data Types that are supported in JavaScript. Learning these types is essential to using JavaScript successfully and understanding the fundamentals of the programming language.",
+  "description" : "In JavaScript there are conditional statements: if, else, else if, and switch statements, which specify which block of code should be executed. This lesson will teach you the basics of these conditional statements and their uses.",
   "tasks" :[
     {
       "title" : "If",
-      "instructions" : "The first conditional statement we are going to learn is the <b>if</b> statement. They typical syntax of an if statement looks as follows:<br><br/>if(condition){<br><br/>//code to be executed<br><br/>}<br><br/>During program execution, if the condition between the parentheses is true, the code between the brackets will execute, otherwise it will skip over the code between the brackets and continue execution.<br><br/>Conditional statements are a very powerful tool that allow your program to behave in different ways depending on the condition. Now look at the program in the editor and press the run button. It won’t print out anything to the output as the condition in <span class = \"instr-block\">if(5>6){</span> is false. Now swap that if statement with the one in the toolbox : <span class = \"instr-block\">if(5>4){</span>.  Since 5 is greater than 4, the code between the brackets will be executed.",
+      "instructions" : "The first conditional statement we are going to learn is the <b>if</b> statement. They typical syntax of an if statement looks as follows:<br></br>if (condition){<br></br>//code to be executed<br></br>}<br></br>During program execution, if the condition between the parentheses is true, the code between the brackets will execute, otherwise it will skip over the code between the brackets and continue execution.<br></br>Conditional statements are a very powerful tool that allow your program to behave in different ways depending on the condition. Now look at the program in the editor and press the run button. It won’t print out anything to the output as the condition in <span class = \"instr-block\">if (5>6){</span> is false. Now swap that if statement with the one in the toolbox : <span class = \"instr-block\">if (5>4){</span>.  Since 5 is greater than 4, the code between the brackets will be executed.",
       "expected_output" : "The condition is true.",
       "test_case" : "",
       "type" : "BLOCK-TASK",
       "hint" : "5 is not greater than 6.",
       "program_blocks":[
         {
-          "value" : "if(5>6){",
+          "value" : "if (5>6)",
           "type" : "IF",
+          "can_edit" : false
+        },
+        {
+          "value" : "{",
+          "type" : "CURL",
           "can_edit" : false
         },
         {
@@ -31,22 +36,27 @@
       ],
       "toolbox":[
         {
-          "value" : "if(5>4){",
+          "value" : "if (5>4)",
           "type" : "IF",
           "can_edit" : false
         }
       ]
     },{
       "title" : "Conditions",
-      "instructions" : "Typically a condition in an <b>if</b> statement is either true or false using comparators such as:<br/><br/><ul><li> <b>><b/> Greater Than </li><li> <b><<b/> Less Than </li><li> <b>>=<b/> Greater Than or Equal To </li><li> <b>=<<b/> Less Than or Equal To </li><li> <b>===<b/>Equal To</li><li> <b>!==<b/>Not Equal To</li></ul><br></br>Using these comparators you can compare strings, numbers, etc. However, in JavaScript conditions can also be numbers or objects. For example, the statement: <span class = \"instr-block\">if(-1){</span>, will evaluate to true since the number between the parentheses is a nonzero number. Also any object that is not null in an parentheses evaluates as true.<br></br>Look at <b>if</b> statement in the editor. Does it execute the code between the brackets? If not, try to make it output: “This evaluates to true.”",
+      "instructions" : "Typically a condition in an <b>if</b> statement is either true or false using comparators such as:<br></br><ul><li> <b>></b> Greater Than </li><li> <b></b> Less Than </li><li> <b>>=</b> Greater Than or Equal To </li><li> <b>=</b> Less Than or Equal To </li><li> <b>===</b>Equal To</li><li> <b>!==</b>Not Equal To</li></ul><br></br>Using these comparators you can compare strings, numbers, etc. However, in JavaScript conditions can also be numbers or objects. For example, the statement: <span class = \"instr-block\">if (-1){</span>, will evaluate to true since the number between the parentheses is a nonzero number. Also any object that is not null in an parentheses evaluates as true.<br></br>Look at <b>if</b> statement in the editor. Does it execute the code between the brackets? If not, try to make it output: “This evaluates to true.”",
       "expected_output" : "This evaluates to true.",
       "test_case" : "",
       "type" : "BLOCK-TASK",
       "hint" : "Swap the if statements.",
       "program_blocks" : [
          {
-          "value" : "if(0){",
+          "value" : "if (0)",
           "type" : "IF",
+          "can_edit" : false
+        },
+        {
+          "value" : "{",
+          "type" : "CURL",
           "can_edit" : false
         },
         {
@@ -62,18 +72,18 @@
       ],
       "toolbox" : [
        {
-          "value" : "if(5){",
+          "value" : "if (5)",
           "type" : "IF",
           "can_edit" : false
         },{
-          "value" : "if(\"hello\"){",
+          "value" : "if (\"hello\")",
           "type" : "IF",
           "can_edit" : false
         }
       ]
     },{
       "title" : "If Else",
-      "instructions" :"Now that you know the basics of the first conditional statement, <b>if</b>, time to learn its counterpart <b>else<b/>. If, there is an if statement and the condition evaluates to false, and there is an <b>else<b/>statement immediately following the if statement, the code between the brackets in the else statement will execute.<br></br>For example let’s say we had:<br></br>if(false){<br></br> Code not executed<br></br>}<br></br>else{<br></br> Code will execute<br></br>}<br></br>The code between the else statement’s brackets will execute since the if condition is false. <b>NOTE:</b> an else statement must immediately follow an if statement otherwise there will be a syntax error. <br></br>Now try it yourself. Make the condition in the if statement false, so that the code in the else statement is executed.",
+      "instructions" :"Now that you know the basics of the first conditional statement, <b>if</b>, time to learn its counterpart <b>else</b>. If, there is an if statement and the condition evaluates to false, and there is an <b>else</b>statement immediately following the if statement, the code between the brackets in the else statement will execute.<br></br>For example let’s say we had:<br></br>if (false){<br></br> Code not executed<br></br>}<br></br>else{<br></br> Code will execute<br></br>}<br></br>The code between the else statement’s brackets will execute since the if condition is false. <b>NOTE:</b> an else statement must immediately follow an if statement otherwise there will be a syntax error. <br></br>Now try it yourself. Make the condition in the if statement false, so that the code in the else statement is executed.",
       "expected_output" : "If is false.",
       "test_case" : "",
       "type" : "BLOCK-TASK",
@@ -84,8 +94,13 @@
           "type" : "ASSIGN",
           "can_edit" : false
         },{
-          "value" : "if(x > 4){",
+          "value" : "if (x > 4)",
           "type" : "IF",
+          "can_edit" : false
+        },
+        {
+          "value" : "{",
+          "type" : "CURL",
           "can_edit" : false
         },
         {
@@ -98,8 +113,13 @@
           "type" : "CURL",
           "can_edit" : false
         },{
-          "value" : "else{",
+          "value" : "else",
           "type" : "ELSE",
+          "can_edit" : false
+        },
+        {
+          "value" : "{",
+          "type" : "CURL",
           "can_edit" : false
         },
         {
@@ -129,8 +149,13 @@
       "hint" : "",
       "program_blocks" : [
         {
-          "value" : "if(2 > 1 && 3 > 4){",
+          "value" : "if (2 > 1 && 3 > 4)",
           "type" : "IF",
+          "can_edit" : false
+        },
+        {
+          "value" : "{",
+          "type" : "CURL",
           "can_edit" : false
         },
         {
@@ -144,8 +169,13 @@
           "can_edit" : false
         },
         {
-          "value" : "else if(5 > 4){",
+          "value" : "else if (5 > 4)",
           "type" : "ELSE IF",
+          "can_edit" : false
+        },
+        {
+          "value" : "{",
+          "type" : "CURL",
           "can_edit" : false
         },
         {
@@ -159,8 +189,13 @@
           "can_edit" : false
         },
         {
-          "value" : "else{",
+          "value" : "else",
           "type" : "ELSE",
+          "can_edit" : false
+        },
+        {
+          "value" : "{",
+          "type" : "CURL",
           "can_edit" : false
         },
         {
@@ -176,12 +211,17 @@
       ],
       "toolbox" : [
         {
-          "value" : "else if(5 > 4){",
+          "value" : "else if (true)",
           "type" : "ELSE IF",
           "can_edit" : false
         },
         {
-          "value" : "console.log(\"else if is true.\");",
+          "value" : "{",
+          "type" : "CURL",
+          "can_edit" : false
+        },
+        {
+          "value" : "console.log(\"Print this out.\");",
           "type" : "LOG",
           "can_edit" : false
         },
@@ -194,7 +234,7 @@
     },{
       "title" : "Switch",
       "instructions" : "The last conditional statement we will look at are switch statements. The syntax of a switch statement looks like:<br></br>switch(expression){<br></br>     case n:<br></br>          //code<br></br>          break;<br></br>    case m:<br></br>          //code<br></br>          break;<br></br>     default:<br></br>          //code<br></br>          break;<br></br>}<br></br>The switch expression is evaluated once. The program checks each case in order from top to bottom and compares it to the expression. If the expression is equivalent to the case, then the code inside the block is executed.<br></br>The <b>break</b> keyword is used so when a case is determined to be equivalent to the expression to “break” out the switch statement and continue execution. <b>NOTE: </b> the break statement is not required but is highly recommended in using switch statements. Without the break statement, the switch statement would continue checking the other cases including the default case. The <b>default</b> case is used when none of the cases matches the expression. You don’t need a default case in a switch statement.<br></br>Now look at the switch statement in the editor. Can you figure a way to get the right output",
-      "expected_output" : "x=10",
+      "expected_output" : "x = 10",
       "test_case" : "",
       "type" : "BLOCK-TASK",
       "hint" : "There should be a break statement at the end of every code block.",
@@ -210,8 +250,13 @@
           "can_edit" : false
         },
         {
-          "value" : "switch{",
+          "value" : "switch (x)",
           "type" : "SWITCH",
+          "can_edit" : false
+        },
+        {
+          "value" : "{",
+          "type" : "CURL",
           "can_edit" : false
         },
         {
@@ -274,14 +319,13 @@
       ]
     },
     {
-      "title": "Now you have a basic understanding of the conditional statements in JavaScript, so time to do some code. Your task is to check the range in which the input variable, <b>age</b> falls into.<br></br>If age is less than 18, print out “Minor”.<br></br>If age is greater than 18 but less than 65 print out “Adult”.<br></br>Otherwise print out “Senior”.",
+      "title": "Free Code Task",
       "instructions": "Freecode instruction",
-      //need to add expected output and testcases
       "expected_output": "minor",
       "test_case": "",
       "type": "FREECODE-TASK",
       "hint": "Do we need to add another conditional statement?",
-      "freecode": "if()"
+      "freecode": "if ()"
     }
 
   ]
