@@ -9,6 +9,7 @@ var next_task = "";
 var task_id = "";
 var lesson_id = "";
 var completed = "";
+var new_lesson = "";
 
 // Convenience methood to get value from a placeholder.
 function getCodeBlock(node) {
@@ -91,6 +92,7 @@ function init() {
   task_id = $page_info.data('task-id');
   lesson_id = $page_info.data('lesson-id');
   completed = $page_info.data('completed');
+  new_lesson = $page_info.data('new-lesson');
 
   // Remove the element once done loading from the page.
   $page_info.remove();
@@ -118,7 +120,10 @@ function init() {
     }
   }).disableSelection();
 
-    startTutorial();
+  console.log(new_lesson);
+  if(new_lesson) {
+      startTutorial();
+  }
 }
 
 function run() {
@@ -244,6 +249,7 @@ function save() {
 }
 
 function startTutorial() {
+    new_lesson = false;
     // Setup the tutorial intro for the user page
     var tutorial = introJs();
     tutorial.setOptions({
@@ -328,5 +334,5 @@ function startTutorial() {
     //    window.location.href = "/lesson/" + lesson_id;
     //});
 
-    //tutorial.start();
+    tutorial.start();
 }

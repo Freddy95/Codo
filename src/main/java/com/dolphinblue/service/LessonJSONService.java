@@ -121,17 +121,32 @@ public class LessonJSONService {
                 case "LOG":
                     b.setType(Block.Type.LOG);
                     break;
-                case "ASSIGN":
-                    b.setType(Block.Type.ASSIGN);
+                case "SQUARE":
+                    b.setType(Block.Type.SQUARE);
                     break;
-                case "BRACKET":
-                    b.setType(Block.Type.BRACKET);
+                case "CURL":
+                    b.setType(Block.Type.CURL);
                     break;
                 case "FOR":
                     b.setType(Block.Type.FOR);
                     break;
                 case "WHILE":
                     b.setType(Block.Type.WHILE);
+                    break;
+                case "ELSE":
+                    b.setType(Block.Type.ELSE);
+                    break;
+                case "ELSE IF":
+                    b.setType(Block.Type.ELSE_IF);
+                    break;
+                case "SWITCH":
+                    b.setType(Block.Type.SWITCH);
+                    break;
+                case "CASE":
+                    b.setType(Block.Type.CASE);
+                    break;
+                case "IF":
+                    b.setType(Block.Type.IF);
                     break;
                 default:
                     b.setType(Block.Type.LOG);

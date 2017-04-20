@@ -4,6 +4,7 @@ $(document).ready(function() {
 
 // Adds tooltips to buttons in user page.
 var lesson_id = "";
+var new_user = "";
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
@@ -16,13 +17,17 @@ function init() {
 
     // Get the data attributes for the data needed in this javascript file.
     lesson_id = $page_info.data("lesson-id");
-    console.log(lesson_id);
+    new_user = $page_info.data("new-user");
 
     // Remove the element once done loading from the page.
     $page_info.remove();
 
-    // Start the tutorial
-    startTutorial();
+    console.log("The new user is: " + new_user);
+
+    if (new_user) {
+        // Start the tutorial
+        startTutorial();
+    }
 }
 
 function onLoad() {
@@ -41,6 +46,7 @@ function signOut() {
 }
 
 function startTutorial() {
+    new_user = false;
     // Setup the tutorial intro for the user page
     var tutorial = introJs();
     tutorial.setOptions({
@@ -91,9 +97,9 @@ function startTutorial() {
     });
 
     // Setup the page transition for the tutorial
-    //tutorial.setOption('doneLabel', 'Start Lesson').start().oncomplete(function() {
-    //    window.location.href = "/lesson/" + lesson_id;
-    //});
+    tutorial.setOption('doneLabel', 'Start Lesson').start().oncomplete(function() {
+        window.location.href = "/lesson/" + lesson_id;
+    });
 
     //tutorial.start();
 }

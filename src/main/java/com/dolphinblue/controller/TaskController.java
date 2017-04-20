@@ -215,10 +215,20 @@ public class TaskController {
         //save change
         ofy.save().entity(task).now();
 
-
         model.addAttribute("task", task);
 
+        // Load the user's information from the datastore and store it in a user object
+        User user = ofy.load().type(User.class).id(userId).now();
 
+        // Add the user information to the thymeleaf model
+        model.addAttribute("new_lesson", user.isFirst_lesson());
+
+        // Check to see if the user is a new user
+        if (user.isFirst_lesson()) {
+            user.setFirst_lesson(false);
+            ofy.save().entity(user).now();
+            user.setFirst_lesson(true);
+        }
 
         //check type of task
         if(task.getFreecode() == null){

@@ -10,6 +10,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,7 +37,7 @@ public class LoginController{
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView postLogin(HttpServletRequest req, HttpServletResponse resp){
+    public ModelAndView postLogin(HttpServletRequest req, HttpServletResponse resp, Model model){
         JacksonFactory jsonFactory = new JacksonFactory();
         NetHttpTransport transport = new NetHttpTransport();
         //get the token from the header sent from the browser
@@ -45,10 +46,11 @@ public class LoginController{
         boolean isAuthenticated = authService.isAuthenticated(token,jsonFactory,transport);
         //get the token so we can get the user info
         GoogleIdToken googleToken = authService.getIdToken(token,jsonFactory,transport);
+
         //now we add the user to the database
         boolean isAdded = userService.addUser(googleToken);
 
-      if(isAuthenticated && isAdded) {
+        if(isAuthenticated && isAdded) {
             resp.setStatus(303);
             return new ModelAndView("redirect:/user");
 

@@ -25,18 +25,16 @@ public class Block {
     public enum Type {
         STATIC,
         IF,
+        ASSIGN,
         FOR,
         WHILE,
-        ASSIGN, // TODO: eliminate
-        DECLARE, // TODO: eliminate
-        PLUS, // TODO: eliminate
-        MINUS, // TODO: eliminate
-        MULTIPLY, // TODO: eliminate
-        DIVIDE, // TODO: eliminate
         LOG,
-        BRACKET, // TODO: eliminate
         CURL,
-        SQUARE
+        SQUARE,
+        ELSE,
+        ELSE_IF,
+        SWITCH,
+        CASE
         ;
     }
 
@@ -63,7 +61,7 @@ public class Block {
         return block_id;
     }
 
-    public void setBlock_id(long block_id) {
+    public void setBlock_id(Long block_id) {
         this.block_id = block_id;
     }
 
