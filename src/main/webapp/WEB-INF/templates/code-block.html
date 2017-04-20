@@ -4,9 +4,10 @@
   <div th:fragment="block(block)" th:switch="${block.can_edit}">
     <!-- Code for blocks that can have blocks dropped into them. -->
     <th:block th:case="${true}">
+      <th:block th:switch="${block.type}">
         <!-- For blocks. -->
         <div class="code-block"
-          th:if="${block.type == T(com.dolphinblue.models.Block$Type).FOR}"
+          th:case="${T(com.dolphinblue.models.Block$Type).FOR}"
           th:attr="data-children='true',data-type=${block.type}">
             for (
                 <th:block th:each="i: ${#numbers.sequence(0, 2)}">
@@ -23,7 +24,7 @@
 
         <!-- If blocks. -->
         <div class="code-block"
-          th:if="${block.type == T(com.dolphinblue.models.Block$Type).IF}"
+          th:case="${T(com.dolphinblue.models.Block$Type).IF}"
           th:attr="data-children='true',data-type=${block.type}">
             if (
                 <div class="holds-one code-placement"></div>
@@ -32,7 +33,7 @@
 
         <!-- While blocks. -->
         <div class="code-block"
-          th:if="${block.type == T(com.dolphinblue.models.Block$Type).WHILE}"
+          th:case="${T(com.dolphinblue.models.Block$Type).WHILE}"
           th:attr="data-children='true',data-type=${block.type}">
             while (
                 <div class="holds-one code-placement"></div>
@@ -41,12 +42,13 @@
 
         <!-- Console.log blocks. -->
         <div class="code-block"
-          th:if="${block.type == T(com.dolphinblue.models.Block$Type).LOG}"
+          th:case="${T(com.dolphinblue.models.Block$Type).LOG}"
           th:attr="data-children='true',data-type=${block.type}">
             console.log(
                 <div class="holds-one code-placement"></div>
             );
         </div>
+      </th:block>
     </th:block>
 
     <!-- If it's a normal type of block,  -->

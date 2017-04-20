@@ -91,7 +91,7 @@ function init() {
   /* Makes child elements of editor, toolbox, and holds-one draggable
    * between all elements of those types.
    */  
-  $('#editor, #toolbox, .holds-one, .holds-list').sortable({
+  $('#editor, #toolbox, .holds-one, .holds-list').not('#catalog *').sortable({
     connectWith: ".code-placement",
     cancel: '.code-text',
     receive: function(event, ui) {
