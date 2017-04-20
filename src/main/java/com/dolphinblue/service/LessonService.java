@@ -101,7 +101,7 @@ public class LessonService {
             }
         }
         List<Key<Lesson>> user_lesson_keys = user.getLessons();
-
+        System.out.println("Main lessons size: " + main_lessons.size());
         //user doesn't have the lessons in this list.
         for(int i =0; i < main_lessons.size(); i++){
             //Original lesson object.
