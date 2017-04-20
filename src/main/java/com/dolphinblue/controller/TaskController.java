@@ -62,18 +62,22 @@ public class TaskController {
         toolbox.add(new Block(2, "x += 5;", Type.STATIC, false));
         toolbox.add(new Block(2, "x > 5;", Type.STATIC, false));
         toolbox.add(new Block(3, "blah;", Type.IF, true));
-        toolbox.add(new Block(4, "butts;", Type.FOR, true));
+
+        Block testChild = new Block(4, "butts;", Type.FOR, true);
+        testChild.addChild(new Block(1, "x = 2;", Type.STATIC, false));
+        testChild.addChild(new Block(4, "butts;", Type.LOG, true));
 
 
         editor.add(new Block(2, "x += 1;", Type.STATIC, false));
         editor.add(new Block(2, "console.log(x);", Type.STATIC, false));
+        editor.add(testChild);
 
         catalog.add(new Block(1, "x = 2;", Type.STATIC, false));
         catalog.add(new Block(2, "console.log(x);", Type.STATIC, false));
         catalog.add(new Block(4, "butts;", Type.LOG, true));
         catalog.add(new Block(3, "blah;", Type.IF, true));
-        catalog.add(new Block(4, "butts;", Type.FOR, true));
         catalog.add(new Block(4, "butts;", Type.WHILE, true));
+        catalog.add(new Block(4, "butts;", Type.FOR, true));
 
 
         model.addAttribute("lesson", l);

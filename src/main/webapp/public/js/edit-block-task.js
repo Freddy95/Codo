@@ -47,54 +47,12 @@ function getCodeBlockValue(value) {
   return s;
 }
 
-function resize_content() {
-  padding = 10;
-  border = 1;
-
-  // Calculate the height to resize the row to.
-  content_height = 0;
-
-  // Calculate the size of the editor.
-  $('#editor-div').children().each(function() {
-    content_height += $(this).outerHeight();
-  })
-  content_height += $('#editor-div').outerHeight(true) - $('#editor-div').height();
-
-  // Calculate the size of the toolbox.
-  $('#toolbox-div').children().each(function() {
-    content_height += $(this).outerHeight();
-  })
-  content_height += $('#toolbox-div').outerHeight(true) - $('#toolbox-div').height();
-
-  // Get the padding for the row.
-  block_outer = $('#block-content').parent().outerHeight(true) - $('#block-content').parent().height();
-  content_height += block_outer;
-
-  // Calculate the height left-over in the window.
-  window_height = $(window).height();
-
-  // Subtract the height of the navbars.
-  $('#lesson-content').siblings().each(function() {
-    window_height -= $(this).outerHeight(true);
-  });
-
-  resize_height = Math.max(window_height, content_height);
-
-  if (resize_height > $('#lesson-content').height()) {
-    // Take the maximum of window and content height.
-    $('#lesson-content').css("height", Math.max(window_height, content_height) + "px");
-
-    // Resize block content.
-    $('#block-content').css("height", (Math.max(window_height, content_height) - block_outer) + "px");
-  }
-}
-
 function onDblClick(node) {
   console.log($(node));
 }
 
 function init() {
-  resize_content();
+  $('#block-content').addClass('h-100');
 
   // Get the div for the page, we'll use it to get the data attribute
   // Use the dollar sign to signify that page is a jquery dom element
@@ -139,9 +97,6 @@ function init() {
    */  
   $('#editor, #toolbox, .holds-one, .holds-list').sortable({
     connectWith: ".code-placement",
-    over: function(e, ui){ 
-        resize_content();
-    },
     cancel: '.code-text',
     receive: function(event, ui) {
       // Restrict .holds-one to hold one element at a time.
@@ -239,4 +194,33 @@ function save() {
   data.toolbox = toolbox;
   data.completed = completed;
   console.log(data);
+}
+
+function addOutput() {
+  if ($('#ex-output').children().length === 1) {
+      $('#ex-output').find('i').removeClass('fa-disabled');
+      $('#test-case').find('i').removeClass('fa-disabled');
+  }
+  var newInputRow = $('<div class="row"/>');
+  var newOutputRow = newInputRow.clone();
+
+  newInputRow.appendTo('#test-case');
+  newOutputRow.appendTo('#ex-output');
+
+  newInputRow.append('<input type="text" class="row-item"></input>' + 
+                  '<i class="fa fa-vc fa-minus pull-right" onClick="minusOutput(this)"></i>');
+  newOutputRow.append('<input type="text" class="row-item"></input>' + 
+                  '<i class="fa fa-vc fa-minus pull-right" onClick="minusOutput(this)"></i>');
+}
+
+function minusOutput(node) {
+  if ($('#ex-output').children().length > 1) {
+    var index = $(node).parent().index();
+    $('#ex-output').children().eq(index).remove();
+    $('#test-case').children().eq(index).remove();
+
+    if ($('#ex-output').children().length === 1) {
+      $('#ex-output, #test-case').find('i').addClass('fa-disabled');
+    }
+  }
 }

@@ -1,3 +1,12 @@
+/*CSS for all block-related things.*/
+
+/*CSS related to divs holding blocks.*/
+
+#block-content {
+    display: flex;
+    flex-direction: column;
+}
+
 #editor>div, #catalog>div {
     float: left;
     clear: left;
@@ -9,6 +18,24 @@
     margin-right: 5px;
 }
 
+#toolbox>div {
+    display: inline-block;
+}
+
+#editor-div {
+    flex-grow: 1;
+}
+
+/*General card stuff.*/
+.card {
+    margin: 10px;
+}
+
+.card-header>h3 {
+    display: inline-block;
+}
+
+/*CSS for code blocks.*/
 .code-block {
     padding: 5px;
     border: 1px solid #ddd;
@@ -27,31 +54,6 @@
     vertical-align: middle;
 }
 
-#toolbox>div {
-    display: inline-block;
-}
-
-.card {
-    margin: 10px;
-}
-
-.card-header>h3 {
-    display: inline-block;
-}
-
-.sortable.hover {
-    color: #ddd;
-}
-
-#block-content {
-    display: flex;
-    flex-direction: column;
-}
-
-#editor-div {
-    flex-grow: 1;
-}
-
 .holds-one {
     padding: 5px;
     min-height: 1.5em;
@@ -60,6 +62,7 @@
     min-width: 25px;
 }
 
+/*CSS for flashing incorrect blocks.*/
 .flash {
   -moz-animation: flash 1s ease-out;
   -moz-animation-iteration-count: 1;

@@ -41,7 +41,7 @@ public class Block {
     }
 
     public Block() {
-        children = new ArrayList<>();
+        children = new ArrayList<Block>();
     }
 
 
@@ -49,12 +49,14 @@ public class Block {
         this.block_id = block_id;
         this.value = value;
         this.can_edit = can_edit;
+        this.children = new ArrayList<Block>();
     }
     public Block(long block_id, String value,  Type t,boolean can_edit) {
         this.block_id = block_id;
         this.value = value;
         this.can_edit = can_edit;
         this.type=t;
+        this.children = new ArrayList<Block>();
     }
 
     public long getBlock_id() {
@@ -96,6 +98,16 @@ public class Block {
 
     public void setChildren(List<Block> children) {
         this.children = children;
+    }
+
+    public void addChild(Block newBlock) {
+        this.children.add(newBlock);
+    }
+
+    public void removeChild(int index) {
+        if (index > -1 && index < this.children.size()) {
+            this.children.remove(index);
+        }
     }
 
     @Override

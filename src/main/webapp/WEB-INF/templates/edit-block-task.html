@@ -60,9 +60,14 @@
       <div class="card small-card" id="input-div">
         <div class="card-header card-title-block">
           <h3 class="card-title">Test Input</h3>
-        </div>
-        <div class="card-block textarea-parent">
-          <textarea type="text" id="test-case" th:text="${task.test_case}"></textarea>
+          <span class="align-middle pull-right">
+            <i class="fa fa-lg fa-vc fa-plus" onClick="addOutput()"></i>
+          </span>        </div>
+        <div id="test-case" class="card-block input-parent container-fluid">
+          <div class="row">
+            <input type="text" class="row-item" th:value="${task.test_case}"></input>
+            <i class="fa fa-vc fa-minus pull-right" onClick="minusOutput(this)"></i>
+          </div>
         </div>
       </div>
     </div>
@@ -95,10 +100,16 @@
       <!-- A div of input boxes to specify expected output. -->
       <div class="card small-card" id="ex-output-div">
         <div class="card-header card-title-block">
-          <h3 class="card-title">Expected Output</h3>
+          <h3 class="card-title">Test Output</h3>
+          <span class="align-middle pull-right">
+            <i class="fa fa-lg fa-vc fa-plus" onClick="addOutput()"></i>
+          </span>
         </div>
-        <div class="card-block textarea-parent">
-          <textarea type="text" id="ex-output" th:text="${task.expected_output}"></textarea>
+        <div id="ex-output" class="card-block input-parent container-fluid">
+          <div class="row">
+            <input type="text" class="row-item" th:value="${task.expected_output}"></input>
+            <i class="fa fa-vc fa-minus pull-right" onClick="minusOutput(this)"></i>
+          </div>
         </div>
       </div>
 

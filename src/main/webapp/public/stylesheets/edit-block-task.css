@@ -67,3 +67,12 @@ html, body {
 .med-card {
     flex-grow: 1;
 }
+
+#ex-output i, #test-case i {
+    margin-left: 10px;
+}
+
+#ex-output>.row, #test-case>.row {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
