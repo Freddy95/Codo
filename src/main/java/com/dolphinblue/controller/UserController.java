@@ -67,6 +67,13 @@ public class UserController {
             // Add the user information to the thymeleaf model
             model.addAttribute("user_info", user);
 
+            // Check to see if the user is a new user
+            if (user.isNew_user()) {
+                user.setNew_user(false);
+                ofy.save().entity(user);
+                user.setNew_user(true);
+            }
+
             // Get the main site lessons for the user and add them to the thymeleaf model
             List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
             Collections.sort(main_lessons);

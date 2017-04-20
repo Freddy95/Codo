@@ -19,12 +19,14 @@ public class User {
     private String email;
     private String password;
     private String avatar; //Gotten through third party site
+    private boolean new_user;
+    private boolean first_lesson;
     private List<String> admin_msg;//list of moderator messages received
     private boolean is_moderator;
     @Load private List<Key<Lesson>> lessons; // list of lessons the user has started or completed
     @Load private Key<Lesson> current_lesson;//current lesson user is on
 
-    public User(String user_id,String username, String first_name, String last_name, String email, String password, String avatar, List<Key<Lesson>> lessons) {
+    public User(String user_id,String username, String first_name, String last_name, String email, String password, String avatar, boolean new_user, boolean first_lesson, List<Key<Lesson>> lessons) {
         this.user_id = user_id;
         this.username=username;
         this.first_name = first_name;
@@ -32,6 +34,8 @@ public class User {
         this.email = email;
         this.password = password;
         this.avatar = avatar;
+        this.new_user = new_user;
+        this.first_lesson = first_lesson;
         this.lessons = lessons;
     }
 
@@ -96,6 +100,22 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public boolean isNew_user() {
+        return new_user;
+    }
+
+    public void setNew_user(boolean new_user) {
+        this.new_user = new_user;
+    }
+
+    public boolean isFirst_lesson() {
+        return first_lesson;
+    }
+
+    public void setFirst_lesson(boolean first_lesson) {
+        this.first_lesson = first_lesson;
     }
 
     public List<String> getAdmin_msg() {

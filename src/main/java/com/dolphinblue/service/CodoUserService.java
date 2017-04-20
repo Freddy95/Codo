@@ -5,13 +5,9 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 
 import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.ObjectifyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Matt on 4/2/17.
@@ -38,6 +34,27 @@ public class CodoUserService {
 
     }
 
+    public boolean checkNewUser(GoogleIdToken token) {
+        // Get the payload
+        Payload payload = token.getPayload();
+
+        // Get the user id
+        String id = payload.getSubject();
+
+        // Get the objectify service
+        Objectify ofy = OfyService.ofy();
+        // Check for the user
+        User check = ofy.load().type(User.class).id(id).now();
+
+        // If the user doesn't exist, return true meaning the user is new
+        if (check == null) {
+            return true;
+        } else {
+            // If the user does exist, return false as the user is in the database
+            return false;
+        }
+    }
+
     /**
      * Use the user id to get user info, add it to the database
      * @param userId the id of the user in the Google User service
@@ -60,26 +77,28 @@ public class CodoUserService {
             Objectify ofy = OfyService.ofy();
             User fetched = ofy.load().type(User.class).id(id).now();
 
-            if(fetched!=null){
+            if (fetched!=null) {
                 //update the fields from google's service
                 fetched.setAvatar(pictureUrl);
                 fetched.setEmail(email);
                 fetched.setFirst_name(first);
                 fetched.setLast_name(last);
                 ofy.save().entity(fetched).now();
+                System.out.println("You are a returning user");
                 return true;
-            }else {
+            } else {
 
                 //TODO: get rid of password field, add default lessons
-                User usr = new User(id, "", first, last, email, "", pictureUrl, new ArrayList());
+                User usr = new User(id, "", first, last, email, "", pictureUrl, true, true, new ArrayList());
 
                 //now add the user
 
                 ofy.save().entity(usr).now();
+
+                System.out.println("You are a new user");
+
                 return true;
             }
-
-
         } else {
             System.out.println("Invalid ID token.");
         }
