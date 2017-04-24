@@ -84,7 +84,25 @@ function init() {
               return false;
             }
           });
-      }
+      };
+      ui.helper.find('.holds-one, .holds-list').sortable({
+        connectWith: ".code-placement",
+        cancel: '.code-text',
+        receive: function(event, ui) {
+          // Restrict .holds-one to hold one element at a time.
+          if ($(this).hasClass('holds-one')) {
+            if ($(this).children().length > 1) {
+              if (ui.item.hasClass('ui-sortable-handle')) {
+                $(ui.sender).sortable('cancel');
+              }
+              else {
+                ui.helper.remove();
+              }
+            }
+          }
+        }
+      });
+      $('#editor, #toolbox, .holds-one, .holds-list').not('#catalog *').sortable('refresh');
     }
   });
 
@@ -98,11 +116,16 @@ function init() {
       // Restrict .holds-one to hold one element at a time.
       if ($(this).hasClass('holds-one')) {
         if ($(this).children().length > 1) {
-          $(ui.sender).sortable('cancel');
+          if (ui.item.hasClass('ui-sortable-handle')) {
+            $(ui.sender).sortable('cancel');
+          }
+          else {
+            ui.helper.remove();
+          }
         }
       }
     }
-  });
+  }).disableSelection();
 
   // Items that get dumped in trash should be removed from the page.
   $("#trash").droppable({
