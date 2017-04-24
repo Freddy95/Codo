@@ -9,4 +9,12 @@ body, button, input, optgroup, select, textarea {
 
 .fa-disabled {
     color: lightgrey;
+
+html,body{
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+*[contenteditable] {
+    -webkit-user-select: auto !important;
 }

@@ -11,41 +11,7 @@ var lesson_id = "";
 var completed = "";
 
 // Convenience methood to get value from a placeholder.
-function getCodeBlocks(node) {
-  return $(node).children().children();
-}
 
-// Extracts block values from a node.
-function getCodeBlockAttr(value) {
-  var block = {};
-  block.block_id = parseInt($(value).attr('id'));
-  if (($(value).attr('data-children')) === "false") {
-    block.value = $(value).text();
-  }
-  else {
-    block.children = [];
-    $.each($(value).children(), function(index, v) {
-      child_block = getCodeBlockAttr(getCodeBlocks($(v)));
-      block.children.push(child_block);
-    });
-  }
-  return block;
-}
-
-function getCodeBlockValue(value) {
-  var s;
-  if (($(value).attr('data-children')) === "false") {
-    s = $(value).text();
-  }
-  else {
-    block.children = [];
-    $.each($(value).children(), function(index, v) {
-      child_block = getCodeBlockValue(getCodeBlocks($(v)));
-      block.children.push(child_block);
-    });
-  }
-  return s;
-}
 function init() {
   $('#block-content').addClass('h-100');
 
@@ -74,16 +40,21 @@ function init() {
     helper: "clone",
     connectToSortable: '.code-placement',
     stop: function(e, ui) {
-      var code_block = ui.helper.children()
-      if (code_block.attr('data-children') === "false" &&
-            code_block.attr('data-type') === "STATIC") {
-        code_block.attr('contenteditable', 'true')
-          .keydown(function(e) {
-            // trap the return key being pressed
-            if (e.keyCode === 13) {
+      var code_block = ui.helper.children();
+      if (code_block.attr('data-children') === "false" && code_block.attr('data-type') === "STATIC") {
+        code_block.bind('click',
+        function(){
+            $(this).attr('contentEditable',true);
+        }).blur(
+        function() {
+            $(this).attr('contentEditable', false);
+        }).keydown(
+        function (e){
+          if(e.keyCode == 13){
+              $(this).attr('contentEditable', false);
               return false;
-            }
-          });
+          }
+        });
       };
       ui.helper.find('.holds-one, .holds-list').sortable({
         connectWith: ".code-placement",
@@ -137,33 +108,32 @@ function init() {
   });
 
   $('#editor .code-block[data-type="STATIC"], #toolbox .code-block[data-type="STATIC"]')
-    .attr('contenteditable', 'true')
-    .keydown(function(e) {
-        // trap the return key being pressed
-        if (e.keyCode === 13) {
+    .bind('click',
+    function(){
+        $(this).attr('contentEditable',true);
+    }).blur(
+    function() {
+        $(this).attr('contentEditable',false);
+    }).keydown(
+    function (e){
+      if(e.keyCode == 13){
+          $(this).attr('contentEditable',false);
           return false;
-        }
-      });
+      }
+    });
+}
+
+function run() {
+  run_helper(false);
 }
 
 // Save data.
 function save() {
   var data = {};
 
-  var editor = [];
-  var toolbox = [];
+  var editor = getBlocksIn($('#editor'));
+  var toolbox = getBlocksIn($('#toolbox'));
 
-  $.each(getCodeBlocks($('#editor')), function(index, value) {
-    var block = getCodeBlockAttr(value);
-    editor.push(block);
-  });
-
-  $.each(getCodeBlocks($('#toolbox')), function(index, value) {
-    var block = getCodeBlockAttr(value);
-    toolbox.push(block);
-  });
-
-  // data.task_id = task_id;
   data.editor = editor;
   data.toolbox = toolbox;
   data.completed = completed;
