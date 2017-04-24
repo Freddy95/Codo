@@ -1,19 +1,18 @@
 {
-  "title": "Data Types",
+  "title": "Sample Free Code Lesson",
   "shared": false,
   "site_owned": true,
-  "index": 2,
+  "index": 4,
   "description": "Freecode Lesson",
   "tasks": [
     {
       "title": "Printing & Strings",
-      "instructions": "Freecode instruction",
-      "expected_output": "Hello\nWorld!",
+      "instructions": "Output \"Hello World!\" to the console",
+      "expected_output": "Hello World!",
       "test_case": "",
       "type": "FREECODE-TASK",
-      "hint": "Make sure that the \"Hello\" block is above the \"World!\" one.",
-      "freecode": "console.log(\"Hello World!\");"
-
+      "hint": "Make sure that the correct thing is printed",
+      "freecode": "var x;"
     }
   ]
 }
