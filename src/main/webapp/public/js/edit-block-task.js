@@ -133,10 +133,40 @@ function save() {
   var editor = getBlocksIn($('#editor'));
   var toolbox = getBlocksIn($('#toolbox'));
 
+  var instructions = $('#instructions').text();
+  var hint = $('#hint').text();
+
   data.editor = editor;
   data.toolbox = toolbox;
   data.completed = completed;
-  console.log(data);
+  data.instructions = instructions;
+  data.hint = hint;
+
+  var test_case = [];
+  var ex_output = [];
+  $('#test-case').find('.row-item').each(function() {
+    test_case.push($(this).val());
+  });
+  $('#ex-output').find('.row-item').each(function() {
+    ex_output.push($(this).val());
+  });
+  data.test_case = test_case;
+  data.expected_output = ex_output;
+
+  $.ajax({
+    headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+    },
+    'type': 'POST',
+    'url': '/savecreatedlesson/' + 1 + '/task/' + 1,
+    'data': JSON.stringify(data),
+    'dataType': 'json'
+  }).done(function() {
+    return true;
+  }).fail(function() {
+    return false;
+  });
 }
 
 function addOutput() {
