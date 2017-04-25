@@ -59,9 +59,9 @@
             <i class="fa fa-lg fa-vc fa-plus" onClick="addOutput()"></i>
           </span>        </div>
         <div id="test-case" class="card-block input-parent container-fluid">
-          <div class="row">
-            <input type="text" class="row-item" th:value="${task.test_case}"></input>
-            <i class="fa fa-vc fa-minus pull-right" onClick="minusOutput(this)"></i>
+          <div class="input-group">
+            <input type="text" class="form-control row-item" placeholder="Input" th:value="${task.test_case}">
+            <div class="input-group-addon fa fa-minus" onClick="minusOutput(this)"></div>
           </div>
         </div>
       </div>
@@ -101,9 +101,9 @@
           </span>
         </div>
         <div id="ex-output" class="card-block input-parent container-fluid">
-          <div class="row">
-            <input type="text" class="row-item" th:value="${task.expected_output}"></input>
-            <i class="fa fa-vc fa-minus pull-right" onClick="minusOutput(this)"></i>
+          <div class="input-group">
+            <input type="text" class="form-control row-item" placeholder="Output" th:value="${task.expected_output}">
+            <div class="input-group-addon fa fa-minus" onClick="minusOutput(this)"></div>
           </div>
         </div>
       </div>

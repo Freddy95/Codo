@@ -8,7 +8,7 @@ function getCodeBlockAttr(value) {
   var block = {};
   block.block_id = parseInt($(value).attr('id'));
   block.type = $(value).attr('data-type');
-  block.can_edit = $(value).attr('data-children');
+  block.can_edit = $(value).attr('data-children')
   if (($(value).attr('data-children')) === "false") {
     block.value = $(value).text();
   }
@@ -23,18 +23,7 @@ function getCodeBlockAttr(value) {
 }
 
 function getCodeBlockValue(value) {
-  var s;
-  if (($(value).attr('data-children')) === "false") {
-    s = $(value).text();
-  }
-  else {
-    block.children = [];
-    $.each($(value).children(), function(index, v) {
-      child_block = getCodeBlockValue(getCodeBlocks($(v)));
-      block.children.push(child_block);
-    });
-  }
-  return s;
+  return $(value).text();
 }
 
 function getBlocksIn(node) {
@@ -84,12 +73,9 @@ function run_helper(arrow) {
 
 
   // Redirect console.log and window.one-error to output.
-  // var former = window.console.log;
-  var former_log = console.log;
-  // var former_onerror = window.onerror;
 
   console.log = function(msg) {
-    former_log(msg);
+    // former_log(msg);
     $('#output').append(document.createTextNode(msg)).append($('<br />'));
   }
 
@@ -118,9 +104,6 @@ function run_helper(arrow) {
       }
     }
   }
-
-  console.log = former_log;
-  // onerror = former_onerror;
 
   /* Adds a next arrow if it doesn't exist already and if the solution is correct.
    */

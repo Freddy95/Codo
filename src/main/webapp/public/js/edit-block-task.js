@@ -42,7 +42,7 @@ function init() {
     stop: function(e, ui) {
       var code_block = ui.helper.children();
       if (code_block.attr('data-children') === "false" && code_block.attr('data-type') === "STATIC") {
-        code_block.bind('click',
+        code_block.on('dblclick',
         function(){
             $(this).attr('contentEditable',true);
         }).blur(
@@ -52,7 +52,7 @@ function init() {
         function (e){
           if(e.keyCode == 13){
               $(this).attr('contentEditable', false);
-              return false;
+              $(this).blur();
           }
         });
       };
@@ -107,20 +107,19 @@ function init() {
     }
   });
 
-  $('#editor .code-block[data-type="STATIC"], #toolbox .code-block[data-type="STATIC"]')
-    .bind('click',
-    function(){
-        $(this).attr('contentEditable',true);
-    }).blur(
-    function() {
-        $(this).attr('contentEditable',false);
-    }).keydown(
-    function (e){
-      if(e.keyCode == 13){
-          $(this).attr('contentEditable',false);
-          return false;
-      }
-    });
+  $('#editor, #toolbox').on('dblclick', '.code-block[data-type="STATIC"] span.code-text', function(){
+    new_input = $("<input class='code-text' />").val($(this).text())
+    $(this).replaceWith(new_input);
+    new_input.focus();
+  });
+
+  $('#editor, #toolbox').on('dblclick blur', '.code-block[data-type="STATIC"] input.code-text', function(){
+    $(this).replaceWith($("<span class='code-text' />").text($(this).val()));
+  }).on('keypress', '.code-block[data-type="STATIC"] input.code-text', function(e) {
+    if(e.which == 13) {
+      $(this).replaceWith($("<span class='code-text' />").text($(this).val()));
+    }
+  });
 }
 
 function run() {
@@ -145,16 +144,16 @@ function addOutput() {
       $('#ex-output').find('i').removeClass('fa-disabled');
       $('#test-case').find('i').removeClass('fa-disabled');
   }
-  var newInputRow = $('<div class="row"/>');
+  var newInputRow = $('<div class="input-group"/>');
   var newOutputRow = newInputRow.clone();
 
   newInputRow.appendTo('#test-case');
   newOutputRow.appendTo('#ex-output');
 
-  newInputRow.append('<input type="text" class="row-item"></input>' + 
-                  '<i class="fa fa-vc fa-minus pull-right" onClick="minusOutput(this)"></i>');
-  newOutputRow.append('<input type="text" class="row-item"></input>' + 
-                  '<i class="fa fa-vc fa-minus pull-right" onClick="minusOutput(this)"></i>');
+  newInputRow.append('<input type="text" class="form-control row-item" placeholder="Input">' +
+            '<div class="input-group-addon fa fa-minus" onClick="minusOutput(this)"></div>');
+  newOutputRow.append('<input type="text" class="form-control row-item" placeholder="Output">' +
+            '<div class="input-group-addon fa fa-minus" onClick="minusOutput(this)"></div>');
 }
 
 function minusOutput(node) {
