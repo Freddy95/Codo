@@ -40,26 +40,12 @@ function init() {
     helper: "clone",
     connectToSortable: '.code-placement',
     stop: function(e, ui) {
-      var code_block = ui.helper.children();
-      if (code_block.attr('data-children') === "false" && code_block.attr('data-type') === "STATIC") {
-        code_block.on('dblclick',
-        function(){
-            $(this).attr('contentEditable',true);
-        }).blur(
-        function() {
-            $(this).attr('contentEditable', false);
-        }).keydown(
-        function (e){
-          if(e.keyCode == 13){
-              $(this).attr('contentEditable', false);
-              $(this).blur();
-          }
-        });
-      };
       ui.helper.find('.holds-one, .holds-list').sortable({
         connectWith: ".code-placement",
         cancel: '.code-text',
         receive: function(event, ui) {
+          ui.helper.first().removeAttr('style');
+          
           // Restrict .holds-one to hold one element at a time.
           if ($(this).hasClass('holds-one')) {
             if ($(this).children().length > 1) {
@@ -84,6 +70,8 @@ function init() {
     connectWith: ".code-placement",
     cancel: '.code-text',
     receive: function(event, ui) {
+      ui.helper.first().removeAttr('style');
+      
       // Restrict .holds-one to hold one element at a time.
       if ($(this).hasClass('holds-one')) {
         if ($(this).children().length > 1) {
@@ -193,7 +181,7 @@ function minusOutput(node) {
     $('#test-case').children().eq(index).remove();
 
     if ($('#ex-output').children().length === 1) {
-      $('#ex-output, #test-case').find('i').addClass('fa-disabled');
+      $('#ex-output, #test-case').find('.fa-minus').addClass('fa-disabled');
     }
   }
 }
