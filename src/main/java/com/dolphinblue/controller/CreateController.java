@@ -39,12 +39,8 @@ public class CreateController {
      * @return
      */
     @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
-    public @ResponseBody String save_created_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel blocks){
-        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
-        if(!isAuthenticated){
-            // If the user isn't properly authenticated send them back to the login page
-            return "redirect:/login";
-        }
+    public @ResponseBody SaveTaskModel save_created_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel blocks){
+
         System.out.println("toolbox");
         System.out.println(blocks.getToolbox());
         System.out.println("editor");
@@ -55,7 +51,7 @@ public class CreateController {
         for(int i = 0; i < blocks.getToolbox().getBlocks().size(); i++){
             System.out.println(blocks.getToolbox().getBlocks().get(i));
         }
-        return "createtask";
+        return blocks;
     }
 
     /**
