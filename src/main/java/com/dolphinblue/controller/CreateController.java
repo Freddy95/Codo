@@ -39,8 +39,8 @@ public class CreateController {
      * @return
      */
     @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
-    public @ResponseBody SaveTaskModel save_created_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel blocks){
-
+    public @ResponseBody void save_created_lesson(@PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel blocks){
+        System.out.println(blocks.toString());
         System.out.println("toolbox");
         System.out.println(blocks.getToolbox());
         System.out.println("editor");
@@ -51,7 +51,6 @@ public class CreateController {
         for(int i = 0; i < blocks.getToolbox().getBlocks().size(); i++){
             System.out.println(blocks.getToolbox().getBlocks().get(i));
         }
-        return blocks;
     }
 
     /**
