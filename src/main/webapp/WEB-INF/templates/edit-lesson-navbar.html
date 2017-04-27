@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>  
+  <nav id="lesson-navbar" th:fragment="navbar" class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target=".dual-collapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Brand on the right. -->
+    <div class="navbar-collapse collapse dual-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <span class="navbar-brand">
+                    Codo
+                </span>    
+            </li>
+        </ul>
+    </div>
+
+    <!-- Title located in the center. -->
+    <div class="navbar-collapse collapse dual-collapse">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+                <span id="task-brand" class="navbar-brand">
+                    <span id="lesson-title" >Edit Lesson</span>
+                    </a>
+                </span>    
+            </li>
+        </ul>
+    </div>
+
+    <!-- Button on the right to go home. -->
+    <div class="navbar-collapse collapse dual-collapse">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item step-12">
+                <a class="nav-link" href="/user"
+                    data-toggle="tooltip" data-placement="bottom" title="Home">
+                  <i class="fa fa-lg fa-home" aria-hidden="true"></i>
+                </a>    
+            </li>
+        </ul>
+    </div>
+  </nav>
+</body>
+  
+</html>
