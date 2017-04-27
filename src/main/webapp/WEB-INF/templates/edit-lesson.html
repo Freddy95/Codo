@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<div class="container" id="page">
+<div class="container" id="page" >
     <!-- The lesson navbar. -->
     <div class="row">
         <div class="col">
@@ -23,7 +23,7 @@
 
     <!-- Lesson Title and Box to edit it -->
    <div class="row justify-content-start">
-        <div class="col-3">Title: </div>
+       <div class="col-3"><h2>Title:</h2> </div>
         <div class="col-4" >
             <span id="title-text" th:text="${lesson.title}">Lesson Title</span>
           <div class="float-right" id="title_edit" >
@@ -44,9 +44,9 @@
     <!-- TODO: do we want to change this to match the title or do we want to change the title method of edititng to match this? -->
 
     <div class="row justify-content-start">
-       <div class="col-3">Description:</div>
+       <div class="col-3"><h2>Description:</h2></div>
         <div class="col-5 h-200">
-        <textarea></textarea>
+        <textarea th:text="${lesson.description}"></textarea>
         </div>
         <div  class="col-2">
             <button type="button" id="submit-description-button" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
@@ -54,6 +54,7 @@
     </div>
 
     <!-- The sortable list of tasks -->
+    <!-- TODO: add loop to go through the tasks for a lesson -->
     <div class="row justify-content-start">
         <div class="col-1"><h2>Tasks</h2></div>
         <div class="col-2">
