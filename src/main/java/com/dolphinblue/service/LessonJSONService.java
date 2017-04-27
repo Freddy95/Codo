@@ -3,6 +3,7 @@ package com.dolphinblue.service;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class LessonJSONService {
             l.setSite_owned((Boolean) json_object.get("site_owned"));
             l.setDescription((String) json_object.get("description"));
             l.setIndex((Long) json_object.get("index"));
+            l.setLast_edited(new Date());
             JSONArray json_tasks = (JSONArray) json_object.get("tasks");
             //create and save task objects for lesson.
             l.setTasks(create_tasks_from_json(json_tasks));
