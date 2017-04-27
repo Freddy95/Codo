@@ -35,6 +35,26 @@ function init() {
    */
   expected_output = String(expected_output).replace("\n","<br>") + "<br>";
 
+  // Function for sortables to receive.
+  var receiveFunction = function(event, ui) {
+    // Fix styling for items dragged from catalog.
+    ui.helper.first().removeAttr('style');
+    
+    // Restrict .holds-one to hold one element at a time.
+    if ($(this).hasClass('holds-one')) {
+      if ($(this).children().length > 1) {
+        // Revert to the previous position if the item is sortable.
+        if (ui.item.hasClass('ui-sortable-handle')) {
+          $(ui.sender).sortable('cancel');
+        }
+        else {
+          // Items dragged from the catalog do not have sortable yet, so just remove them.
+          ui.helper.remove();
+        }
+      }
+    }
+  };
+
   // Items in the catalog should be clonable.
   $( "#catalog>*" ).draggable({
     helper: "clone",
@@ -43,21 +63,7 @@ function init() {
       ui.helper.find('.holds-one, .holds-list').sortable({
         connectWith: ".code-placement",
         cancel: '.code-text',
-        receive: function(event, ui) {
-          ui.helper.first().removeAttr('style');
-          
-          // Restrict .holds-one to hold one element at a time.
-          if ($(this).hasClass('holds-one')) {
-            if ($(this).children().length > 1) {
-              if (ui.item.hasClass('ui-sortable-handle')) {
-                $(ui.sender).sortable('cancel');
-              }
-              else {
-                ui.helper.remove();
-              }
-            }
-          }
-        }
+        receive: receiveFunction
       });
       $('#editor, #toolbox, .holds-one, .holds-list').not('#catalog *').sortable('refresh');
     }
@@ -69,21 +75,7 @@ function init() {
   $('#editor, #toolbox, .holds-one, .holds-list').not('#catalog *').sortable({
     connectWith: ".code-placement",
     cancel: '.code-text',
-    receive: function(event, ui) {
-      ui.helper.first().removeAttr('style');
-      
-      // Restrict .holds-one to hold one element at a time.
-      if ($(this).hasClass('holds-one')) {
-        if ($(this).children().length > 1) {
-          if (ui.item.hasClass('ui-sortable-handle')) {
-            $(ui.sender).sortable('cancel');
-          }
-          else {
-            ui.helper.remove();
-          }
-        }
-      }
-    }
+    receive: receiveFunction
   }).disableSelection();
 
   // Items that get dumped in trash should be removed from the page.
@@ -95,21 +87,33 @@ function init() {
     }
   });
 
-  $('#editor, #toolbox').on('dblclick', '.code-block[data-type="STATIC"] span.code-text', function(){
-    new_input = $("<input class='code-text' />").val($(this).text())
-    $(this).replaceWith(new_input);
-    new_input.focus();
-  });
-
-  $('#editor, #toolbox').on('dblclick blur', '.code-block[data-type="STATIC"] input.code-text', function(){
-    $(this).replaceWith($("<span class='code-text' />").text($(this).val()));
-  }).on('keypress', '.code-block[data-type="STATIC"] input.code-text', function(e) {
-    if(e.which == 13) {
-      $(this).replaceWith($("<span class='code-text' />").text($(this).val()));
+  // Manage editable blocks.
+  $('#editor .code-block[data-type="STATIC"], #toolbox .code-block[data-type="STATIC"]')
+    .on('dblclick', 'span.code-text', function(){
+      // Double clicking a block will create an input.
+      new_input = $("<input class='code-text' />").val($(this).text())
+      $(this).replaceWith(new_input);
+      new_input.focus();
+    })
+    .on('dblclick blur', 'input.code-text', function(){
+      // Double clicking an input or clicking away from one will return it into block form.
+      try {
+        $(this).replaceWith($("<span class='code-text' />").text($(this).val()));
+      }
+      // For some reason, this throws an exception on blur events, but it seems to work.
+      // Squelching the exception.
+      catch (e) {}
+    })
+    .on('keypress', 'input.code-text', function(e) {
+      // Hitting the enter key on an input will also revert it to block form.
+      if(e.which == 13) {
+        $(this).replaceWith($("<span class='code-text' />").text($(this).val()));
+      }
     }
-  });
+  );
 }
 
+// Runs the output. Does not produce a next arrow.
 function run() {
   run_helper(false);
 }
@@ -126,7 +130,6 @@ function save() {
 
   data.editor = editor;
   data.toolbox = toolbox;
-  data.completed = completed;
   data.instructions = instructions;
   data.hint = hint;
 
@@ -157,6 +160,7 @@ function save() {
   });
 }
 
+// Adds an input and output.
 function addOutput() {
   if ($('#ex-output').children().length === 1) {
       $('#ex-output').find('i').removeClass('fa-disabled');
@@ -174,6 +178,7 @@ function addOutput() {
             '<div class="input-group-addon fa fa-minus" onClick="minusOutput(this)"></div>');
 }
 
+// Removes an input and output.
 function minusOutput(node) {
   if ($('#ex-output').children().length > 1) {
     var index = $(node).parent().index();
