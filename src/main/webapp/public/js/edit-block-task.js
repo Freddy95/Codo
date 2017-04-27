@@ -127,11 +127,13 @@ function save() {
 
   var instructions = $('#instructions').text();
   var hint = $('#hint').text();
+  var title = $('#task-title').text();
 
   data.editor = editor;
   data.toolbox = toolbox;
   data.instructions = instructions;
   data.hint = hint;
+  data.title = title;
 
   var test_case = [];
   var ex_output = [];
@@ -189,4 +191,26 @@ function minusOutput(node) {
       $('#ex-output, #test-case').find('.fa-minus').addClass('fa-disabled');
     }
   }
+}
+
+// Allows editing of the title.
+function editTitle() {
+  var task_title = $('#task-title');
+  var title_button = $('#title-button');
+  var title_icon = $('#title-icon');
+  console.log(task_title.text());
+  if (task_title.is('input')) {
+    task_title.replaceWith($("<span id='task-title' />").text(task_title.val()));
+    title_button.attr('title', 'Edit Title');
+    // title_button.removeClass('btn-success').addClass('btn-secondary');
+    title_icon.removeClass('fa-save').addClass('fa-pencil');
+  }
+  else {
+    task_title.replaceWith($("<input id='task-title' />").val(task_title.text()));
+    title_button.attr('title', 'Save Title');
+    // title_button.removeClass('btn-secondary').addClass('btn-success');
+    title_icon.removeClass('fa-pencil').addClass('fa-save');
+  }
+
+
 }
