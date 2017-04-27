@@ -7,7 +7,7 @@ function getCodeBlocks(node) {
 function getCodeBlockAttr(value) {
   var block = {};
   block.block_id = parseInt($(value).attr('id'));
-  block.type = $(value).attr('data-type');
+  block.type = Boolean($(value).attr('data-type'));
   block.can_edit = $(value).attr('data-children')
   if (($(value).attr('data-children')) === "false") {
     block.value = $(value).text();

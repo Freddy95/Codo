@@ -9,6 +9,7 @@ var next_task = "";
 var task_id = "";
 var lesson_id = "";
 var completed = "";
+var isDirty = false;
 
 // Convenience methood to get value from a placeholder.
 
@@ -20,12 +21,8 @@ function init() {
   var $page_info = $("#page-info");
 
   // Get the data attributes for the data needed in this javascript file.
-  test_case = $page_info.data("test-case");
-  expected_output = $page_info.data("ex-output");
-  next_task = $page_info.data('next-task');
   task_id = $page_info.data('task-id');
   lesson_id = $page_info.data('lesson-id');
-  completed = $page_info.data('completed');
 
   // Remove the element once done loading from the page.
   $page_info.remove();
@@ -37,6 +34,8 @@ function init() {
 
   // Function for sortables to receive.
   var receiveFunction = function(event, ui) {
+    isDirty = true;
+
     // Fix styling for items dragged from catalog.
     ui.helper.first().removeAttr('style');
     
@@ -60,6 +59,7 @@ function init() {
     helper: "clone",
     connectToSortable: '.code-placement',
     stop: function(e, ui) {
+      ui.helper.find('.code-block').removeAttr('id');
       ui.helper.find('.holds-one, .holds-list').sortable({
         connectWith: ".code-placement",
         cancel: '.code-text',
@@ -88,14 +88,14 @@ function init() {
   });
 
   // Manage editable blocks.
-  $('#editor .code-block[data-type="STATIC"], #toolbox .code-block[data-type="STATIC"]')
-    .on('dblclick', 'span.code-text', function(){
+  $('#editor, #toolbox')
+    .on('dblclick', '.code-block[data-type="STATIC"] span.code-text', function(){
       // Double clicking a block will create an input.
       new_input = $("<input class='code-text' />").val($(this).text())
       $(this).replaceWith(new_input);
       new_input.focus();
     })
-    .on('dblclick blur', 'input.code-text', function(){
+    .on('dblclick blur', '.code-block[data-type="STATIC"] input.code-text', function(){
       // Double clicking an input or clicking away from one will return it into block form.
       try {
         $(this).replaceWith($("<span class='code-text' />").text($(this).val()));
@@ -104,13 +104,24 @@ function init() {
       // Squelching the exception.
       catch (e) {}
     })
-    .on('keypress', 'input.code-text', function(e) {
+    .on('keypress', '.code-block[data-type="STATIC"] input.code-text', function(e) {
       // Hitting the enter key on an input will also revert it to block form.
       if(e.which == 13) {
         $(this).replaceWith($("<span class='code-text' />").text($(this).val()));
       }
     }
   );
+
+  $('body').on('keypress', '#instructions, #hint, input#task-title', function() {
+    isDirty = true;
+  });
+
+  $(window).bind('beforeunload', function() {
+  if(unsaved){
+      return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+  }
+});
+
 }
 
 // Runs the output. Does not produce a next arrow.
@@ -198,7 +209,6 @@ function editTitle() {
   var task_title = $('#task-title');
   var title_button = $('#title-button');
   var title_icon = $('#title-icon');
-  console.log(task_title.text());
   if (task_title.is('input')) {
     task_title.replaceWith($("<span id='task-title' />").text(task_title.val()));
     title_button.attr('title', 'Edit Title');
