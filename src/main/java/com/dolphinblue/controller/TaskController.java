@@ -199,6 +199,13 @@ public class TaskController {
 
         // Load the lesson from the datastore and add it to the thymeleaf model
         Lesson l = ofy.load().type(Lesson.class).id(lessonId).now();
+        Lesson original_lesson = (Lesson) ofy.load().key(l.getOriginal_lesson()).now();
+        if(original_lesson.getLast_edited().compareTo(l.getLast_accessed()) > 0){
+            //the lesson has been changed
+            System.out.println("LESSON UPDATED");
+            //TODO: Make prompt to user to see if they want to continue with old version.
+        }
+        l.setLast_accessed(new Date());
         model.addAttribute("lesson", l);
 
         //get task titles and check to see which tasks have already been started

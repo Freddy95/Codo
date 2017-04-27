@@ -24,6 +24,10 @@ public class Lesson implements Comparable<Lesson>{
     @Index private  boolean site_owned;
     private Key<Lesson> original_lesson;
     private String description;
+    //Date when lesson was last edited or changed.
+    private Date last_edited;
+    //Date when this lesson was last access by user working on it
+    private Date last_accessed;
     public Lesson(){
         this.tasks = new ArrayList<>();
     }
@@ -130,5 +134,21 @@ public class Lesson implements Comparable<Lesson>{
             return -1;
         }
         return 1;
+    }
+
+    public Date getLast_edited() {
+        return last_edited;
+    }
+
+    public void setLast_edited(Date last_edited) {
+        this.last_edited = last_edited;
+    }
+
+    public Date getLast_accessed() {
+        return last_accessed;
+    }
+
+    public void setLast_accessed(Date last_accessed) {
+        this.last_accessed = last_accessed;
     }
 }
