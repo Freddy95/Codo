@@ -72,11 +72,11 @@ public class TaskController {
         editor.add(new Block(9, "console.log(x);", Type.STATIC, false));
         editor.add(testChild);
 
-        catalog.add(new Block(10, "// Click to edit", Type.STATIC, false));
-        catalog.add(new Block(11, "butts;", Type.LOG, true));
-        catalog.add(new Block(12, "blah;", Type.IF, true));
-        catalog.add(new Block(13, "butts;", Type.WHILE, true));
-        catalog.add(new Block(14, "butts;", Type.FOR, true));
+        catalog.add(new Block(-1, "// Click to edit", Type.STATIC, false));
+        catalog.add(new Block(-1, "butts;", Type.LOG, true));
+        catalog.add(new Block(-1, "blah;", Type.IF, true));
+        catalog.add(new Block(-1, "butts;", Type.WHILE, true));
+        catalog.add(new Block(-1, "butts;", Type.FOR, true));
 
 
 
