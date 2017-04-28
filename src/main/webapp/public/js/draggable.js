@@ -2,6 +2,8 @@ $(document).ready(function() {
   init();
 });
 
+var isDirty = false;
+
 // Strings for grabbing values from Thymeleaf Template.
 
 function resize_content() {
@@ -45,6 +47,7 @@ function resize_content() {
 }
 
 function init() {
+
   resize_content();
   /* Expected output has newlines, we'll turn them in to <br> so it works
    * with html
@@ -66,10 +69,18 @@ function init() {
       if ($(this).hasClass('holds-one')) {
         if ($(this).children().length > 1) {
           $(ui.sender).sortable('cancel');
+          return;
         }
       }
+      isDirty = true;
     }
   }).disableSelection();
+
+  $(window).bind('beforeunload', function() {
+    if(isDirty){
+        return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+    }
+  });
 
   if(new_lesson) {
       startTutorial();
@@ -122,6 +133,7 @@ function save() {
     'data': JSON.stringify(data),
     'dataType': 'json'
   }).done(function() {
+    isDirty = false;
     return true;
   }).fail(function() {
     return false;

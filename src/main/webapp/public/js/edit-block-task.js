@@ -34,8 +34,6 @@ function init() {
 
   // Function for sortables to receive.
   var receiveFunction = function(event, ui) {
-    isDirty = true;
-
     // Fix styling for items dragged from catalog.
     if (ui.helper) {
       ui.helper.first().removeAttr('style');
@@ -47,13 +45,17 @@ function init() {
         // Revert to the previous position if the item is sortable.
         if (ui.item.hasClass('ui-sortable-handle')) {
           $(ui.sender).sortable('cancel');
+          return;
         }
         else {
           // Items dragged from the catalog do not have sortable yet, so just remove them.
           ui.helper.remove();
+          return;
         }
       }
     }
+
+    isDirty = true;
   };
 
   // Items in the catalog should be clonable.
