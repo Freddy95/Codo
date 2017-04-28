@@ -126,17 +126,17 @@ function init() {
 
 // Runs the output. Does not produce a next arrow.
 function run() {
-  var test_case = [];
-  var expected_output = [];
-
-  // for (i = 0; i < $(''))
+  test_case = [];
+  expected_output = [];
 
   $('#test-case').find('.row-item').each(function() {
     test_case.push($(this).val());
   });
   $('#ex-output').find('.row-item').each(function() {
-    ex_output.push($(this).val());
+    expected_output.push($(this).val().replace("\n","<br>") + "<br>");
   });
+
+  var completed = run_helper(false);
 }
 
 // Save data.
@@ -186,9 +186,10 @@ function save() {
 
 // Adds an input and output.
 function addOutput() {
+  debugger;
   if ($('#ex-output').children().length === 1) {
-      $('#ex-output').find('i').removeClass('fa-disabled');
-      $('#test-case').find('i').removeClass('fa-disabled');
+      $('#ex-output').find('.fa-minus').removeClass('fa-disabled');
+      $('#test-case').find('.fa-minus').removeClass('fa-disabled');
   }
   var newInputRow = $('<div class="input-group"/>');
   var newOutputRow = newInputRow.clone();

@@ -1,0 +1,15 @@
+<!-- A template for the hint modal. -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body> 
+  <div th:fragment="item">
+    <div class="input-group">
+      <input type="text" class="form-control row-item" th:placeholder="${default}" th:value="${value}">
+      <div th:unless="${disabled}" class="input-group-addon fa fa-minus" onClick="minusOutput(this)"></div>
+      <div th:if="${disabled}" class="input-group-addon fa fa-minus fa-disabled" onClick="minusOutput(this)"></div>
+    </div>
+  </div>
+</body>
+
+</html>

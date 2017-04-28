@@ -50,20 +50,20 @@ function run_helper(arrow) {
   fullCode = codeArray.join('\n');
 
   var codeLines = [];
-  for (var i = 0; i < codeArray.length; i++) {
-    if (codeArray[i] != '{') {
-      codeLines.push(codeArray[i]);
+  for (var code_lines_inc = 0; code_lines_inc < codeArray.length; code_lines_inc++) {
+    if (codeArray[code_lines_inc] != '{') {
+      codeLines.push(codeArray[code_lines_inc]);
     }
     else {
-      s = codeArray[i];
+      s = codeArray[code_lines_inc];
       openBrackets = 1;
       while (openBrackets > 0) {
-        i++;
-        s += codeArray[i] + '\n';
-        if (codeArray[i] === '{') {
+        code_lines_inc++;
+        s += codeArray[code_lines_inc] + '\n';
+        if (codeArray[code_lines_inc] === '{') {
           openBrackets += 1
         }
-        else if (codeArray[i] === '}') {
+        else if (codeArray[code_lines_inc] === '}') {
           openBrackets -= 1
         }
       }
@@ -71,31 +71,30 @@ function run_helper(arrow) {
     }
   }
 
-
-
   // Redirect console.log and window.one-error to output.
-
   console.log = function(msg) {
     // former_log(msg);
     $('#output').append(document.createTextNode(msg)).append($('<br />'));
   }
 
   window.onerror = function(messageOrEvent, source, lineno, colno, error) {
-    // former_onerror(messageOrEvent);
     $('#output').append(document.createTextNode(messageOrEvent)).append($('<br />'));
   }
 
   var correct = true;
 
-  for (i = 0; i < test_case.length; i++) {
+  var total_output = "";
+  for (test_case_inc = 0; test_case_inc < test_case.length; test_case_inc++) {
     try {
       // Try running the full program.
+      eval(test_case[test_case_inc]);
       eval(fullCode);
     } catch (e) {
       // If it doesn't work, evaluate line by line.
-      for (i = 0; i < codeLines.length; i++) {
+      for (code_lines_inc = 0; code_lines_inc < codeLines.length; code_lines_inc++) {
         try {
-          eval(codeLines[i]);
+          eval(test_case[test_case_inc]);
+          eval(codeLines[code_lines_inc]);
         }
         // Flash on a block that errors.
         catch(e) {
@@ -108,7 +107,8 @@ function run_helper(arrow) {
         }
       }
     }
-    if ($('#output').html() != expected_output) {
+    total_output += expected_output[test_case_inc]
+    if ($('#output').html() != total_output) {
       correct = false;
       break;
     }
@@ -130,4 +130,6 @@ function run_helper(arrow) {
                                                       'href="/user" onClick="save()"></a>'));
     }
   }
+
+  return correct;
 }

@@ -1,0 +1,27 @@
+<!-- A template for the hint modal. -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body> 
+  <div th:fragment="list">
+    <div class="card-header card-title-block">
+      <h3 class="card-title" th:text="${title}"></h3>
+      <span class="align-middle pull-right">
+        <i class="fa fa-lg fa-vc fa-plus" onClick="addOutput()"></i>
+      </span>
+    </div>
+    <div th:unless="${#lists.isEmpty(list)}" th:id="${list_id}" class="output-list card-block input-parent container-fluid" th:each="item : ${list}">
+      <th:block th:if="${#lists.size(list) > 1}">
+        <div th:replace="output-item :: item(value=${item}, default=${default})"></div>
+      </th:block>
+      <th:block th:unless="${#lists.size(list) > 1}">
+        <div th:replace="output-item :: item(value=${item}, default=${default},disabled=true)"></div>
+      </th:block>
+    </div>
+    <div th:if="${#lists.isEmpty(list)}" id="test-case" class="card-block input-parent container-fluid" th:each="item : ${list}">
+      <div th:replace="output-item :: item(default=${default},disabled=true)"></div>
+    </div>
+  </div>
+</body>
+
+</html>
