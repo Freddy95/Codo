@@ -3,8 +3,6 @@ $(document).ready(function() {
 });
 
 // Strings for grabbing values from Thymeleaf Template.
-var test_case = "";
-var expected_output = "";
 var next_task = "";
 var task_id = "";
 var lesson_id = "";
@@ -59,8 +57,6 @@ function init() {
   var $page_info = $("#page-info");
 
   // Get the data attributes for the data needed in this javascript file.
-  test_case = $page_info.data("test-case");
-  expected_output = $page_info.data("ex-output");
   next_task = $page_info.data('next-task');
   task_id = $page_info.data('task-id');
   lesson_id = $page_info.data('lesson-id');

@@ -13,6 +13,10 @@
   <script th:src="@{/public/js/lib/intro.js/intro.js}"></script>
   <script type="text/javascript" th:src="@{/public/js/block-helper.js}"></script>
   <script type="text/javascript" th:src="@{/public/js/draggable.js}"></script>
+  <script th:inline="javascript">
+    var test_case = [[${task.test_case}]];
+    var expected_output = [[${task.expected_output}]];
+  </script>
 </head>
 <body>
 
@@ -67,7 +71,7 @@
 </div>
 
 <!-- Passing thymeleaf attributes to javascript. -->
-<div id="page-info" th:attr="data-test-case=${task.test_case},data-completed=${task.completed},data-next-task=${next_task},data-ex-output=${task.expected_output},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id},data-new-lesson=${new_lesson}">
+<div id="page-info" th:attr="data-test-case=${#arrays.toStringArray(#arrays.toArray(task.test_case))},data-completed=${task.completed},data-next-task=${next_task},data-ex-output=${#arrays.toStringArray(#arrays.toArray(task.expected_output))},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id},data-new-lesson=${new_lesson}">
 </div>
 </body>
 </html>

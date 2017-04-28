@@ -3,8 +3,8 @@ $(document).ready(function() {
 });
 
 // Strings for grabbing values from Thymeleaf Template.
-var test_case = "";
-var expected_output = "";
+var test_case = [];
+var expected_output = [];
 var next_task = "";
 var task_id = "";
 var lesson_id = "";
@@ -126,7 +126,17 @@ function init() {
 
 // Runs the output. Does not produce a next arrow.
 function run() {
-  run_helper(false);
+  var test_case = [];
+  var expected_output = [];
+
+  for (i = 0; i < $(''))
+
+  $('#test-case').find('.row-item').each(function() {
+    test_case.push($(this).val());
+  });
+  $('#ex-output').find('.row-item').each(function() {
+    ex_output.push($(this).val());
+  });
 }
 
 // Save data.
@@ -146,15 +156,15 @@ function save() {
   data.hint = hint;
   data.title = title;
 
-  var test_case = [];
+  var t_case = [];
   var ex_output = [];
   $('#test-case').find('.row-item').each(function() {
-    test_case.push($(this).val());
+    t_case.push($(this).val());
   });
   $('#ex-output').find('.row-item').each(function() {
     ex_output.push($(this).val());
   });
-  data.test_case = test_case;
+  data.test_case = t_case;
   data.expected_output = ex_output;
 
   $.ajax({
@@ -167,6 +177,7 @@ function save() {
     'data': JSON.stringify(data),
     'dataType': 'json'
   }).done(function() {
+    isDirty = false;
     return true;
   }).fail(function() {
     return false;

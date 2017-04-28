@@ -85,31 +85,39 @@ function run_helper(arrow) {
     $('#output').append(document.createTextNode(messageOrEvent)).append($('<br />'));
   }
 
-  try {
-    // Try running the full program.
-    eval(fullCode);
-  } catch (e) {
-    // If it doesn't work, evaluate line by line.
-    for (i = 0; i < codeLines.length; i++) {
-      try {
-        eval(codeLines[i]);
+  var correct = true;
+
+  for (i = 0; i < test_case.length; i++) {
+    try {
+      // Try running the full program.
+      eval(fullCode);
+    } catch (e) {
+      // If it doesn't work, evaluate line by line.
+      for (i = 0; i < codeLines.length; i++) {
+        try {
+          eval(codeLines[i]);
+        }
+        // Flash on a block that errors.
+        catch(e) {
+          value = $('#editor').children().eq(i).find('.code-block');
+          $(value).addClass('flash');
+          setTimeout( function(){
+            $(value).removeClass('flash');
+          }, 1000);
+          throw(e);
+        }
       }
-      // Flash on a block that errors.
-      catch(e) {
-        value = $('#editor').children().eq(i).find('.code-block');
-        $(value).addClass('flash');
-        setTimeout( function(){
-          $(value).removeClass('flash');
-        }, 1000);
-        throw(e);
-      }
+    }
+    if ($('#output').html() != expected_output) {
+      correct = false;
+      break;
     }
   }
 
   /* Adds a next arrow if it doesn't exist already and if the solution is correct.
    */
   if ($('#output-div>.card-title-block').children().length === 1 &&
-      $('#output').html() === expected_output && arrow) {
+      correct && arrow) {
     completed = true;
     // Adding next arrow to next task.
     if (next_task > 0) {
