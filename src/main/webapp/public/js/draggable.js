@@ -77,7 +77,23 @@ function init() {
 }
 
 function run() {
-  run_helper(true);
+  var correct = run_helper();
+
+  // If the arrow doesn't already exist and the output is correct, then mark the task as complete and show the arrow.
+  if ($('#output-div>.card-title-block').children().length === 1 &&
+      correct) {
+    completed = true;
+    // Adding next arrow to next task.
+    if (next_task > 0) {
+      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/'
+                                                        + lesson_id + '/task/' + next_task + '" onClick="save()"></a>'));
+    }
+    // If last lesson, just redirect to user page.
+    else {
+      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right"' + 
+                                                      'href="/user" onClick="save()"></a>'));
+    }
+  }
 }
 
 // Save data.

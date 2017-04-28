@@ -36,19 +36,25 @@ function getBlocksIn(node) {
   return node_list;
 }
 
-function run_helper(arrow) {
+/*
+ * Runs the code given the test cases and expected output, and evaluates to see if it's correct.
+ */
+function run_helper() {
   // Empty the output when running.
   $('#output').empty();
 
   codeArray = [];
 
-  // Add code to the. stored array.
+  // Add block values to an array of code segments..
   $.each(getCodeBlocks($('#editor')), function(index, value) {
     codeArray.push(getCodeBlockValue(value));
   });
 
+  // Join the full program together using newlines.
   fullCode = codeArray.join('\n');
 
+  // Look for individual statements, and group code in brackets with the parent block
+  // e.g., an if, for, or while statement.
   var codeLines = [];
   for (var code_lines_inc = 0; code_lines_inc < codeArray.length; code_lines_inc++) {
     if (codeArray[code_lines_inc] != '{') {
@@ -98,7 +104,7 @@ function run_helper(arrow) {
         }
         // Flash on a block that errors.
         catch(e) {
-          value = $('#editor').children().eq(i).find('.code-block');
+          value = $('#editor').children().eq(code_lines_inc).find('.code-block');
           $(value).addClass('flash');
           setTimeout( function(){
             $(value).removeClass('flash');
@@ -107,27 +113,13 @@ function run_helper(arrow) {
         }
       }
     }
+
+    // Evaluate the code to see if it matches expected output.
     total_output += expected_output[test_case_inc]
     if ($('#output').html() != total_output) {
+      // Stop early if it does not.
       correct = false;
       break;
-    }
-  }
-
-  /* Adds a next arrow if it doesn't exist already and if the solution is correct.
-   */
-  if ($('#output-div>.card-title-block').children().length === 1 &&
-      correct && arrow) {
-    completed = true;
-    // Adding next arrow to next task.
-    if (next_task > 0) {
-      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/'
-                                                        + lesson_id + '/task/' + next_task + '" onClick="save()"></a>'));
-    }
-    // If last lesson, just redirect to user page.
-    else {
-      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right"' + 
-                                                      'href="/user" onClick="save()"></a>'));
     }
   }
 

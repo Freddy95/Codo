@@ -37,7 +37,9 @@ function init() {
     isDirty = true;
 
     // Fix styling for items dragged from catalog.
-    ui.helper.first().removeAttr('style');
+    if (ui.helper) {
+      ui.helper.first().removeAttr('style');
+    }
     
     // Restrict .holds-one to hold one element at a time.
     if ($(this).hasClass('holds-one')) {
@@ -136,7 +138,21 @@ function run() {
     expected_output.push($(this).val().replace("\n","<br>") + "<br>");
   });
 
-  var completed = run_helper(false);
+  debugger;
+  try {
+    var completed = run_helper();
+
+    if (completed) {
+      $('#test-status').replaceWith('<div id="test-status" class="btn btn-outline-success">Correct</div>');
+    }
+    else {
+      $('#test-status').replaceWith('<div id="test-status" class="btn btn-outline-danger">Incorrect</div>');
+    }
+  }
+  catch (e) {
+    $('#test-status').replaceWith('<div id="test-status" class="btn btn-outline-danger">Incorrect</div>');
+    throw e;
+  }
 }
 
 // Save data.
@@ -231,6 +247,4 @@ function editTitle() {
     title_button.attr('title', 'Save Title');
     title_icon.removeClass('fa-pencil').addClass('fa-save');
   }
-
-
 }
