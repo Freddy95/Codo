@@ -3,11 +3,6 @@ $(document).ready(function() {
 });
 
 // Strings for grabbing values from Thymeleaf Template.
-var next_task = "";
-var task_id = "";
-var lesson_id = "";
-var completed = "";
-var new_lesson = "";
 
 function resize_content() {
   padding = 10;
@@ -51,25 +46,12 @@ function resize_content() {
 
 function init() {
   resize_content();
-
-  // Get the div for the page, we'll use it to get the data attribute
-  // Use the dollar sign to signify that page is a jquery dom element
-  var $page_info = $("#page-info");
-
-  // Get the data attributes for the data needed in this javascript file.
-  next_task = $page_info.data('next-task');
-  task_id = $page_info.data('task-id');
-  lesson_id = $page_info.data('lesson-id');
-  completed = $page_info.data('completed');
-  new_lesson = $page_info.data('new-lesson');
-
-  // Remove the element once done loading from the page.
-  $page_info.remove();
-
   /* Expected output has newlines, we'll turn them in to <br> so it works
    * with html
    */
-  expected_output = String(expected_output).replace("\n","<br>") + "<br>";
+  for (i = 0; i < expected_output.length; i++) {
+    expected_output[i] = String(expected_output[i]).replace("\n","<br>") + "<br>";
+  }
 
   /* Makes child elements of editor, toolbox, and holds-one draggable
    * between all elements of those types.

@@ -16,6 +16,11 @@
   <script th:inline="javascript">
     var test_case = [[${task.test_case}]];
     var expected_output = [[${task.expected_output}]];
+    var next_task = [[${next_task}]];
+    var task_id = [[${task.task_id}]];
+    var lesson_id = [[${lesson.lesson_id}]];
+    var completed = [[${task.completed}]];
+    var new_lesson = [[${new_lesson}]];
   </script>
 </head>
 <body>
@@ -68,10 +73,6 @@
       </div>
     </div>
   </div>
-</div>
-
-<!-- Passing thymeleaf attributes to javascript. -->
-<div id="page-info" th:attr="data-test-case=${#arrays.toStringArray(#arrays.toArray(task.test_case))},data-completed=${task.completed},data-next-task=${next_task},data-ex-output=${#arrays.toStringArray(#arrays.toArray(task.expected_output))},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id},data-new-lesson=${new_lesson}">
 </div>
 </body>
 </html>
