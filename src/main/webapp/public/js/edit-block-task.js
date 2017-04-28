@@ -117,7 +117,7 @@ function init() {
   });
 
   $(window).bind('beforeunload', function() {
-  if(unsaved){
+  if(isDirty){
       return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
   }
 });
@@ -129,7 +129,7 @@ function run() {
   var test_case = [];
   var expected_output = [];
 
-  for (i = 0; i < $(''))
+  // for (i = 0; i < $(''))
 
   $('#test-case').find('.row-item').each(function() {
     test_case.push($(this).val());
@@ -223,13 +223,11 @@ function editTitle() {
   if (task_title.is('input')) {
     task_title.replaceWith($("<span id='task-title' />").text(task_title.val()));
     title_button.attr('title', 'Edit Title');
-    // title_button.removeClass('btn-success').addClass('btn-secondary');
     title_icon.removeClass('fa-save').addClass('fa-pencil');
   }
   else {
     task_title.replaceWith($("<input id='task-title' />").val(task_title.text()));
     title_button.attr('title', 'Save Title');
-    // title_button.removeClass('btn-secondary').addClass('btn-success');
     title_icon.removeClass('fa-pencil').addClass('fa-save');
   }
 
