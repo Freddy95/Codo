@@ -60,23 +60,23 @@ public class TaskController {
 
         toolbox.add(new Block(1, "x = 2;", Type.STATIC, false));
         toolbox.add(new Block(2, "x += 5;", Type.STATIC, false));
-        toolbox.add(new Block(2, "x > 5;", Type.STATIC, false));
-        toolbox.add(new Block(3, "blah;", Type.IF, true));
+        toolbox.add(new Block(3, "x > 5;", Type.STATIC, false));
+        toolbox.add(new Block(4, "blah;", Type.IF, true));
 
-        Block testChild = new Block(4, "butts;", Type.FOR, true);
-        testChild.addChild(new Block(1, "x = 2;", Type.STATIC, false));
-        testChild.addChild(new Block(4, "butts;", Type.LOG, true));
+        Block testChild = new Block(5, "butts;", Type.FOR, true);
+        testChild.addChild(new Block(6, "x = 2;", Type.STATIC, false));
+        testChild.addChild(new Block(7, "butts;", Type.LOG, true));
 
 
-        editor.add(new Block(2, "x += 1;", Type.STATIC, false));
-        editor.add(new Block(2, "console.log(x);", Type.STATIC, false));
+        editor.add(new Block(8, "x += 1;", Type.STATIC, false));
+        editor.add(new Block(9, "console.log(x);", Type.STATIC, false));
         editor.add(testChild);
 
-        catalog.add(new Block(2, "// Click to edit", Type.STATIC, false));
-        catalog.add(new Block(4, "butts;", Type.LOG, true));
-        catalog.add(new Block(3, "blah;", Type.IF, true));
-        catalog.add(new Block(4, "butts;", Type.WHILE, true));
-        catalog.add(new Block(4, "butts;", Type.FOR, true));
+        catalog.add(new Block(-1, "// Click to edit", Type.STATIC, false));
+        catalog.add(new Block(-1, "butts;", Type.LOG, true));
+        catalog.add(new Block(-1, "blah;", Type.IF, true));
+        catalog.add(new Block(-1, "butts;", Type.WHILE, true));
+        catalog.add(new Block(-1, "butts;", Type.FOR, true));
 
 
 
@@ -199,6 +199,13 @@ public class TaskController {
 
         // Load the lesson from the datastore and add it to the thymeleaf model
         Lesson l = ofy.load().type(Lesson.class).id(lessonId).now();
+        Lesson original_lesson = (Lesson) ofy.load().key(l.getOriginal_lesson()).now();
+        if(original_lesson.getLast_edited().compareTo(l.getLast_accessed()) > 0){
+            //the lesson has been changed
+            System.out.println("LESSON UPDATED");
+            //TODO: Make prompt to user to see if they want to continue with old version.
+        }
+        l.setLast_accessed(new Date());
         model.addAttribute("lesson", l);
 
         //get task titles and check to see which tasks have already been started
