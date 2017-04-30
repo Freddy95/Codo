@@ -11,44 +11,6 @@ var lesson_id = "";
 var completed = "";
 var new_lesson = "";
 
-// Convenience methood to get value from a placeholder.
-function getCodeBlocks(node) {
-  return $(node).children().children();
-}
-
-// Extracts block values from a node.
-function getCodeBlockAttr(value) {
-  var block = {};
-  block.block_id = parseInt($(value).attr('id'));
-  if (($(value).attr('data-children')) === "false") {
-    block.value = $(value).text();
-  }
-  else {
-    block.children = [];
-    $.each($(value).children(), function(index, v) {
-      child_block = getCodeBlockAttr(getCodeBlocks($(v)));
-      block.children.push(child_block);
-    });
-  }
-  return block;
-}
-
-function getCodeBlockValue(value) {
-  var s;
-  if (($(value).attr('data-children')) === "false") {
-    s = $(value).text();
-  }
-  else {
-    block.children = [];
-    $.each($(value).children(), function(index, v) {
-      child_block = getCodeBlockValue(getCodeBlocks($(v)));
-      block.children.push(child_block);
-    });
-  }
-  return s;
-}
-
-
 function resize_content() {
   padding = 10;
   border = 1;
@@ -131,94 +93,13 @@ function init() {
     }
   }).disableSelection();
 
-  console.log(new_lesson);
   if(new_lesson) {
       startTutorial();
   }
 }
 
 function run() {
-  // Empty the output when running.
-  $('#output').empty();
-
-  codeArray = [];
-
-  // Add code to the. stored array.
-  $.each(getCodeBlocks($('#editor')), function(index, value) {
-    codeArray.push(getCodeBlockValue(value));
-  });
-
-  fullCode = codeArray.join('\n');
-
-  var codeLines = [];
-  for (var i = 0; i < codeArray.length; i++) {
-    if (codeArray[i] != '{') {
-      codeLines.push(codeArray[i]);
-    }
-    else {
-      s = codeArray[i];
-      openBrackets = 1;
-      while (openBrackets > 0) {
-        i++;
-        s += codeArray[i] + '\n';
-        if (codeArray[i] === '{') {
-          openBrackets += 1
-        }
-        else if (codeArray[i] === '}') {
-          openBrackets -= 1
-        }
-      }
-      codeLines[codeLines.length-1] += s;
-    }
-  }
-
-  // Redirect console.log and window.one-error to output.
-  // var former = window.console.log;
-  window.console.log = function(msg) {
-    $('#output').append(document.createTextNode(msg)).append($('<br />'));
-  }
-
-  window.onerror = function(messageOrEvent, source, lineno, colno, error) {
-    $('#output').text(messageOrEvent);
-  }
-
-  try {
-    // Try running the full program.
-    eval(fullCode);
-  } catch (e) {
-    // If it doesn't work, evaluate line by line.
-    for (i = 0; i < codeLines.length; i++) {
-      try {
-        eval(codeLines[i]);
-      }
-      // Flash on a block that errors.
-      catch(e) {
-        value = $('#editor').children().eq(i).find('.code-block');
-        $(value).addClass('flash');
-        setTimeout( function(){
-          $(value).removeClass('flash');
-        }, 1000);
-        throw(e);
-      }
-    }
-  }
-
-  /* Adds a next arrow if it doesn't exist already and if the solution is correct.
-   */
-  if ($('#output-div>.card-title-block').children().length === 1 &&
-      $('#output').html() === expected_output) {
-    completed = true;
-    // Adding next arrow to next task.
-    if (next_task > 0) {
-      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/'
-                                                        + lesson_id + '/task/' + next_task + '" onClick="save()"></a>'));
-    }
-    // If last lesson, just redirect to user page.
-    else {
-      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right"' + 
-                                                      'href="/user" onClick="save()"></a>'));
-    }
-  }
+  run_helper(true);
 }
 
 // Save data.
@@ -229,15 +110,8 @@ function save() {
   var editor = [];
   var toolbox = [];
 
-  $.each(getCodeBlocks($('#editor')), function(index, value) {
-    var block = getCodeBlockAttr(value);
-    editor.push(block);
-  });
-
-  $.each(getCodeBlocks($('#toolbox')), function(index, value) {
-    var block = getCodeBlockAttr(value);
-    toolbox.push(block);
-  });
+  editor = getBlocksIn($('#editor'));
+  toolbox = getBlocksIn($('#toolbox'));
 
   // data.task_id = task_id;
   data.editor = editor;

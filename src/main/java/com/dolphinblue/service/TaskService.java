@@ -84,5 +84,47 @@ public class TaskService {
         model.addAttribute("task_titles", taskTitleList);
     }
 
+    /**
+     *
+     * Gets the next task in lesson to edit based on index of last deleted task.
+     * @param lesson -- lesson
+     * @param index -- index of last task deleted
+     * @return
+     */
+    public Task get_edit_task(Lesson lesson, int index){
+        Objectify ofy = OfyService.ofy();
+        if (index == -1){
+            index = 0;
+        }
+        //set current task to edit
+        if(lesson.getTasks().size() == 0){
+            Task task = new Task();
+            lesson.getTasks().add(ofy.save().entity(task).now());
+            return task;
+
+        }else{
+            if(index >= lesson.getTasks().size()){
+                index = lesson.getTasks().size() - 1;
+            }
+            Key k = lesson.getTasks().get(index);
+            Task task = (Task) ofy.load().key(k).now();
+            return task;
+        }
+    }
+
+    /**
+     * Deletes a task from a lesson, returns index of that deleted task.
+     * @param lesson -- lesson
+     * @param task_key -- key of task to deleted
+     * @return -- index of deleted task. Returns -1 if task is not in lesson.
+     */
+    public int delete_task(Lesson lesson, Key task_key){
+        int index = -1;
+        if(lesson.getTasks().contains(task_key)){
+            index = lesson.getTasks().indexOf(task_key);
+            lesson.getTasks().remove(task_key);
+        }
+        return index;
+    }
 
 }

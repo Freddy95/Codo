@@ -5,10 +5,9 @@
   <title>Codo - Home</title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"></meta>
   <div th:replace="standard-scripts-css :: standard" th:remove="tag"></div>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/main.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/edit-block-task.css}"></link>
-  <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/draggable-style.css}"></link>
-  <script type="text/javascript" th:src="@{/public/js/block-helper.js}"></script> 
-  <script type="text/javascript" th:src="@{/public/js/edit-block-task.js}"></script>
+  <script type="text/javascript" th:src="@{/public/js/edit-freecode-task.js}"></script>
 </head>
 <body>
 
@@ -68,28 +67,11 @@
 
     <!-- Column containing editor and toolbox. -->
     <div class="col-6 task-col">
-      <div th:insert="draggable:: #block-content" th:with="hint=''" th:remove="tag"></div>
+        <div class="card-block code-placement" id="freecodeeditor" th:text="${task.freecode}">    </div>
     </div>
 
     <!-- Column containing catalog, expected output, and actual output. -->
     <div class="col-3 task-col">
-
-      <!-- Div containing the block catalog. -->
-      <div class="card med-card" id="catalog-div">
-        <div class="card-header card-title-block">
-          <h3 class="card-title">Block Catalog</h3>
-        </div>
-
-        <!-- The actual div containing catalog blocks. -->
-        <div class="card-block code-placement" id="catalog">
-          <div th:each="block : ${catalog}" th:insert="code-block :: block(${block})"  th:remove="tag"></div>
-        </div>
-
-        <!-- Blocks from the editor or toolbar dragged here will be deleted. -->
-        <div id="trash" class="card-footer card-danger card-inverse text-center">
-          <i class="fa fa-lg fa-trash"></i>
-        </div>
-      </div>
 
       <!-- A div of input boxes to specify expected output. -->
       <div class="card small-card" id="ex-output-div">

@@ -10,3 +10,8 @@ body, button, input, optgroup, select, textarea {
 .fa-disabled {
     color: lightgrey;
 }
+
+div[contenteditable] {
+    -moz-user-modify: read-write;
+    -webkit-user-modify: read-write;
+}

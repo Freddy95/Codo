@@ -42,7 +42,8 @@
     border-radius: 5px;
     background-color: white;
     color: darkslategrey;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
 }
 
 .code-block:focus {

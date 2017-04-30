@@ -8,6 +8,7 @@
         <!-- For blocks. -->
         <div class="code-block"
           th:case="${T(com.dolphinblue.models.Block$Type).FOR}"
+          th:id="${block.block_id}"
           th:attr="data-children='true',data-type=${block.type}">
             for (
                 <th:block th:each="i: ${#numbers.sequence(0, 2)}">
@@ -25,27 +26,42 @@
         <!-- If blocks. -->
         <div class="code-block"
           th:case="${T(com.dolphinblue.models.Block$Type).IF}"
+          th:id="${block.block_id}"
           th:attr="data-children='true',data-type=${block.type}">
             if (
-                <div class="holds-one code-placement"></div>
+                <div class="holds-one code-placement">
+                  <th:block th:if="${#lists.size(block.children) > 0}">
+                      <div th:insert="code-block :: block(${block.children[0]})" th:remove="tag" />
+                    </th:block>
+                </div>
             )
         </div>
 
         <!-- While blocks. -->
         <div class="code-block"
           th:case="${T(com.dolphinblue.models.Block$Type).WHILE}"
+          th:id="${block.block_id}"
           th:attr="data-children='true',data-type=${block.type}">
             while (
-                <div class="holds-one code-placement"></div>
+                <div class="holds-one code-placement">
+                  <th:block th:if="${#lists.size(block.children) > 0}">
+                      <div th:insert="code-block :: block(${block.children[0]})" th:remove="tag" />
+                    </th:block>
+                </div>
             )
         </div>
 
         <!-- Console.log blocks. -->
         <div class="code-block"
           th:case="${T(com.dolphinblue.models.Block$Type).LOG}"
+          th:id="${block.block_id}"
           th:attr="data-children='true',data-type=${block.type}">
             console.log(
-                <div class="holds-one code-placement"></div>
+                <div class="holds-one code-placement">
+                  <th:block th:if="${#lists.size(block.children) > 0}">
+                      <div th:insert="code-block :: block(${block.children[0]})" th:remove="tag" />
+                    </th:block>
+                </div>
             );
         </div>
       </th:block>
@@ -53,7 +69,9 @@
 
     <!-- If it's a normal type of block,  -->
     <th:block th:case="*">
-        <div class="code-block" th:id="${block.block_id}" th:attr="data-children='false',data-type=${block.type}">
+        <div class="code-block"
+          th:id="${block.block_id}"
+          th:attr="data-children='false',data-type=${block.type}">
           <span class="code-text" th:text="${block.value}"></span>
         </div>
     </th:block>

@@ -3,7 +3,7 @@
   "shared": false,
   "site_owned": true,
   "index": 4,
-  "description": "Freecode Lesson",
+  "description": "Sample Freecode Lesson for Hello World!",
   "tasks": [
     {
       "title": "Printing & Strings",

@@ -9,6 +9,7 @@ import com.googlecode.objectify.cmd.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -117,6 +118,7 @@ public class LessonService {
             l.setOriginal_lesson(m);
             l.setSite_owned(true);
             l.setIndex(m.getIndex());
+            l.setLast_accessed(new Date());
             //Get original lesson tasks.
             List<Task> tasks = get_tasks_by_id(m.getTasks());
             //create task objects

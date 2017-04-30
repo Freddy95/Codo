@@ -1,0 +1,19 @@
+#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+#sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }
+html>body #sortable li { height: 1.5em; line-height: 1.2em; }
+
+/*CSS for code blocks.*/
+.task-block {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    color: darkslategrey;
+    align-items: center;
+}
+
+.task-block:focus {
+    background-color: darkslategrey;
+    color: white;
+    border: darkslategrey;
+}
