@@ -7,6 +7,7 @@
   <div th:replace="standard-scripts-css :: standard" th:remove="tag"></div>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/main.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/edit-block-task.css}"></link>
+  <script type="text/javascript" th:src="@{/public/js/lib/src-min-noconflict/ace.js}"></script>
   <script type="text/javascript" th:src="@{/public/js/edit-freecode-task.js}"></script>
 </head>
 <body>
@@ -67,8 +68,20 @@
 
     <!-- Column containing editor and toolbox. -->
     <div class="col-6 task-col">
-        <div class="card-block code-placement" id="freecodeeditor" th:text="${task.freecode}">    </div>
+       <div class="card h-100" id="instructions-div">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">Editor</h3>
+        </div>
+        <div class="card-block code-placement" id="freecodeeditor" th:text="${task.freecode}">
+          <!-- the text editor for the free code lesson code -->
+        </div>
+
+        <div class="card-footer">
+          <button class="btn btn-sm btn-primary float-right" id="runbutton">Run</button>
+        </div>
+      </div>
     </div>
+
 
     <!-- Column containing catalog, expected output, and actual output. -->
     <div class="col-3 task-col">

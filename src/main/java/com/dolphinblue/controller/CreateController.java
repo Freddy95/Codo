@@ -73,6 +73,29 @@ public class CreateController {
         return "createtask";
     }
 
+    
+    /**
+     * This route should be called when a user first wants to create a new freecode lesson.
+     * Creates a lesson and task object, saves them in datastore.
+     * @param model -- thymeleaf model
+     * @return -- editfrecodetask page.
+     */
+    @RequestMapping(value = "/createlesson/freecode", method = RequestMethod.GET)
+    public String get_create_freecode(Model model){
+        Objectify ofy = OfyService.ofy();
+        Lesson l = new Lesson();
+        Task t  = new Task();
+        //add task to lesson and save to datastore
+        l.getTasks().add(ofy.save().entity(t).now());
+        //save lesson to datastore
+        ofy.save().entity(l);
+        model.addAttribute("lesson", l);
+        model.addAttribute("task", t);
+        return "edit-freecode-task";
+    }
+
+
+
     /**
      * Deletes the current task in the lesson user is creating.
      * @param token -- user access token
