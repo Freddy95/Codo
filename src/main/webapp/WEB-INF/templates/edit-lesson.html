@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <!-- TODO: display lesson title in the tab bar -->
@@ -22,48 +22,49 @@
     </div>
 
     <!-- Lesson Title and Box to edit it -->
-   <div class="row justify-content-start">
-       <div class="col-3"><h2>Title:</h2> </div>
-        <div class="col-4" >
-            <span id="title-text" th:text="${lesson.title}">Lesson Title</span>
-          <div class="float-right" id="title_edit" >
-            <!-- the icon to edit the username -->
-            <i class="fa fa-lg fa-pencil" ></i>
-          </div>
+    <form>
+   <div class="form-group row">
+       <label for="title-textbox" class="col-sm-2 col-form-label col-form-label-lg">Title</label>
+       <div class="col-sm-3">
+          <input type="text" class="form-control" id="title-textbox" th:text="${user.username}"/>
         </div>
-        <!-- the form to edit the username, hidden originally, then shown then the pencil is pressed -->
-        <div class="input-group" id="title-edit-form" style="display: none;">
-          <input type="text" class="form-control" id="username-textbox" th:text="${user.username}"/>
-          <span class="input-group-btn">
-            <button class="btn btn-secondary" id="title-no-btn" type="button">NO</button>
-            <button class="btn btn-secondary" id="title-submit-btn" type="button">OK</button>
-          </span>
-        </div>
+       <div class="col-sm-2">
+           <button class="btn btn-success btn-sm" id="title-submit-btn" type="button"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+       </div>
    </div>
     <!-- Textbox to edit the less description -->
     <!-- TODO: do we want to change this to match the title or do we want to change the title method of edititng to match this? -->
 
-    <div class="row justify-content-start">
-       <div class="col-3"><h2>Description:</h2></div>
-        <div class="col-5 h-200">
-        <textarea th:text="${lesson.description}"></textarea>
+    <div class="row form-group">
+        <label for="description-text" class="col-sm-2 col-form-label col-form-label-lg">Description</label>
+        <div class="col-3 h-200">
+        <textarea id="description-text" class="form-control" th:text="${lesson.description}"></textarea>
         </div>
         <div  class="col-2">
-            <button type="button" id="submit-description-button" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+            <button type="button" id="submit-description-button" class="btn btn-success btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
         </div>
     </div>
+
+    <div class="row form-group">
+
+        <label for="public-radio" class="col-sm-2 col-form-label col-form-label-lg">Public</label>
+        <div  class="col-2">
+            <input type="checkbox" class="form-check" id="public-radio" th:selected="${lesson.shared}">
+        </div>
+    </div>
+    </form>
 
     <!-- The sortable list of tasks -->
     <!-- TODO: add loop to go through the tasks for a lesson -->
     <div class="row justify-content-start">
         <div class="col-1"><h2>Tasks</h2></div>
         <div class="col-2">
-            <button type="button" id="add-task-button" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <button type="button" id="add-task-button" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </div>
     </div>
     <div class="row justify-content-start">
         <div class="col">
-            <ul id="sortable">
+            <ul class="sortable" id="tasks-list">
                 <li class="task-block">Item 1 <span class="edit-task-button"><i class="fa fa-pencil" aria-hidden="true"></i></span> <span class="delete-task-button"><i class="fa fa-trash" aria-hidden="true"></i></span></li>
                 <li class="task-block">Item 2 <span class="edit-task-button"><i class="fa fa-pencil" aria-hidden="true"></i></span> <span class="delete-task-button"><i class="fa fa-trash" aria-hidden="true"></i></span></li>
             </ul>
