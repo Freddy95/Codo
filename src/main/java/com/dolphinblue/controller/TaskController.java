@@ -51,8 +51,12 @@ public class TaskController {
         t.setTitle("First Block Task");
         t.setInstructions("These are the instructions.");
         t.setHint("This is the hint.");
-        t.setTest_case("x = 1;");
-        t.setExpected_output("3");
+
+        String[] test = {"x = 1;"};
+        String[] expected = {"3"};
+        t.setTest_case(Arrays.asList(test));
+        t.setExpected_output(Arrays.asList(expected));
+
 
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();
@@ -101,8 +105,10 @@ public class TaskController {
         t.setTitle("First Block Task");
         t.setInstructions("These are the instructions.");
         t.setHint("This is the hint.");
-        t.setTest_case("x = 1;");
-        t.setExpected_output("3");
+        String[] test = {"x = 1;"};
+        String[] expected = {"3"};
+        t.setTest_case(Arrays.asList(test));
+        t.setExpected_output(Arrays.asList(expected));
 
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();
@@ -435,8 +441,10 @@ public class TaskController {
         t.setTitle("First Block Task");
         t.setInstructions("These are the instructions.");
         t.setHint("This is the hint.");
-        t.setTest_case("x = 1;");
-        t.setExpected_output("3");
+        String[] test = {"x = 1;"};
+        String[] expected = {"3"};
+        t.setTest_case(Arrays.asList(test));
+        t.setExpected_output(Arrays.asList(expected));
 
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();

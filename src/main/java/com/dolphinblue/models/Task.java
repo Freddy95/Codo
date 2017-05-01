@@ -19,8 +19,8 @@ public class Task {
     private String title;
     private String instructions;
     private String hint;
-    private String test_case;
-    private String expected_output;
+    private List<String> test_case;
+    private List<String> expected_output;
     @Load private List<Key<Block>> toolbox;//list of block ids in the toolbox. Must be fetched when task is fetched.
     @Load private List<Key<Block>> editor;//list of blocks in the editor. Must be fetched when task is fetched
     private String freecode;
@@ -35,7 +35,7 @@ public class Task {
         toolbox = new ArrayList<>();
     }
 
-    public Task(Long task_id, String title, String instructions, String hint, String test_case, String expected_output, List<Key<Block>> toolbox, List<Key<Block>> editor, String freecode, boolean completed, Type type) {
+    public Task(Long task_id, String title, String instructions, String hint, List<String> test_case, List<String> expected_output, List<Key<Block>> toolbox, List<Key<Block>> editor, String freecode, boolean completed, Type type) {
         this.task_id = task_id;
         this.title = title;
         this.instructions = instructions;
@@ -87,19 +87,19 @@ public class Task {
         this.hint = hint;
     }
 
-    public String getTest_case() {
+    public List<String> getTest_case() {
         return test_case;
     }
 
-    public void setTest_case(String test_case) {
+    public void setTest_case(List<String> test_case) {
         this.test_case = test_case;
     }
 
-    public String getExpected_output() {
+    public List<String> getExpected_output() {
         return expected_output;
     }
 
-    public void setExpected_output(String expected_output) {
+    public void setExpected_output(List<String> expected_output) {
         this.expected_output = expected_output;
     }
 

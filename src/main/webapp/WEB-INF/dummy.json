@@ -8,8 +8,8 @@
     {
       "title": "Printing & Strings",
       "instructions": "Output \"Hello World!\" to the console",
-      "expected_output": "Hello World!",
-      "test_case": "",
+      "expected_output": ["Hello World!"],
+      "test_case": [""],
       "type": "FREECODE-TASK",
       "hint": "Make sure that the correct thing is printed",
       "freecode": "var x;"
