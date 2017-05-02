@@ -13,6 +13,15 @@
   <!-- import the ace code editor library that we'll use for the freecode editor -->
   <script type="text/javascript" th:src="@{/public/js/lib/src-min-noconflict/ace.js}" charset="utf-8"></script>
   <script type="text/javascript" th:src="@{/public/js/freecode.js}"></script>
+    <script th:inline="javascript">
+    var test_case = [[${task.test_case}]];
+    var expected_output = [[${task.expected_output}]];
+    var next_task = [[${next_task}]];
+    var task_id = [[${task.task_id}]];
+    var lesson_id = [[${lesson.lesson_id}]];
+    var completed = [[${task.completed}]];
+    var new_lesson = [[${new_lesson}]];
+  </script>
 </head>
 <body>
 
