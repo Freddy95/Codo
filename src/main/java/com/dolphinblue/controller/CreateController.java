@@ -174,7 +174,6 @@ public class CreateController {
 
     /**
      * Deletes the current task in the lesson user is creating.
-     * @param token -- user access token
      * @param id -- lesson id
      * @param taskId -- id of task to delete
      * @param model -- thymeleaf model
@@ -182,13 +181,9 @@ public class CreateController {
      * @return --
      */
     @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.DELETE)
-    public String delete_task(@CookieValue("token") String token,  @PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
+    public void delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
 
-        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
-        if(!isAuthenticated){
-            // If the user isn't properly authenticated send them back to the login page
-            return "redirect:/login";
-        }
+
 
         Objectify ofy = OfyService.ofy();
         //get key of task
@@ -208,7 +203,6 @@ public class CreateController {
 
         //add lesson to model
         model.addAttribute("lesson", lesson);
-        return "";
     }
 
 
