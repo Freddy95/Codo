@@ -68,58 +68,31 @@
           </li> -->
 
           <!-- The tab for a user's lessons. -->
-          <!-- <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" data-toggle="pill" href="#your">Your Lessons</a>
-          </li> -->
+          </li>
         </ul>
       </div>
       <div class="tab-content step-6">
         <div class="tab-pane fade show active" id="main" role="tabpanel">
-          <div class="row" th:each="index: ${#numbers.sequence(0, #lists.size(main_lessons) - 1, 2)}">
-            <div th:replace="lessoncard :: myfragment(${main_lessons[index]})"></div>
-            <div th:if="${index  < #lists.size(main_lessons) - 1}" class="col-6 align-items-center">
-              <div th:replace="lessoncard :: subfragment(${main_lessons[index + 1]})" th:remove="tag"></div>
-            </div>
-          </div>
+          <div th:replace="lesson-list :: list-display(lesson_list=${main_lessons})"></div>
         </div>
 
         <!-- The tab for the shared lessons. -->
         <!-- <div class="tab-pane fade" id="shared" role="tabpanel">
-          <div class="row justify-content-center">
-            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-          </div>
-          <div class="row justify-content-center">
-            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-          </div>
-          <div class="row justify-content-center">
-            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-          </div>
+          <div th:replace="lesson-list :: list-display(lesson_list=${shared_lessons})"></div>
         </div> -->
 
         <!-- The tab for a user's lessons. -->
-        <!-- <div class="tab-pane fade" id="your" role="tabpanel">
+        <div class="tab-pane fade" id="your" role="tabpanel">
           <div class="row justify-content-center add-button">
             <a class="btn btn-primary" href="#"
                 data-toggle="tooltip" data-placement="left" title="Add Lesson">
               <i class="fa fa-lg fa-plus" aria-hidden="true"></i>
             </a>
           </div>
-          <div class="row justify-content-center">
-            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-          </div>
-          <div class="row justify-content-center">
-            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-          </div>
-          <div class="row justify-content-center">
-            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-            <div th:replace="lessoncard :: myfragment(${lesson})"></div>
-          </div>
-        </div> -->
+          <div th:replace="lesson-list :: list-display(lesson_list=${own_lessons})"></div>
+        </div>
       </div>
     </div>
   </div>

@@ -164,8 +164,8 @@ function save() {
   var editor = getBlocksIn($('#editor'));
   var toolbox = getBlocksIn($('#toolbox'));
 
-  var instructions = $('#instructions').text();
-  var hint = $('#hint').text();
+  var instructions = $('#instructions').val();
+  var hint = $('#hint').val();
   var title = $('#task-title').text();
 
   data.editor = editor;
