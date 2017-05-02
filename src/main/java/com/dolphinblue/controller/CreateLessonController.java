@@ -264,6 +264,8 @@ public class CreateLessonController {
 
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         lessonService.lesson_model_to_lesson(lesson, lesson_model);
+        //change date last edited.
+        lesson.setLast_edited(new Date());
         ofy.save().entity(lesson).now();
 
     }
