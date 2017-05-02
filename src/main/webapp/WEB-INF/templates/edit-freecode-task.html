@@ -54,19 +54,10 @@
 
       <!-- An div of input boxes to specify test cases. Should be in the form of a JSON string. -->
       <div class="card small-card" id="input-div">
-        <div class="card-header card-title-block">
-          <h3 class="card-title">Test Input</h3>
-          <span class="align-middle pull-right">
-            <i class="fa fa-lg fa-vc fa-plus" onClick="addOutput()"></i>
-          </span>        </div>
-        <div id="test-case" class="card-block input-parent container-fluid">
-          <div class="input-group">
-            <input type="text" class="form-control row-item" placeholder="Input" th:value="${task.test_case}">
-            <div class="input-group-addon fa fa-minus" onClick="minusOutput(this)"></div>
-          </div>
-        </div>
+        <div th:replace="output-list :: list(list_id='test-case', title='Test Input',list=${task.test_case},default='Input')"></div>
       </div>
     </div>
+
 
     <!-- Column containing editor and toolbox. -->
     <div class="col-6 task-col">
@@ -78,9 +69,9 @@
           <!-- the text editor for the free code lesson code -->
         </div>
 
-        <div class="card-footer">
-          <button class="btn btn-sm btn-primary float-right" id="runbutton">Run</button>
-        </div>
+        <!--<div class="card-footer">-->
+          <!--<button class="btn btn-sm btn-primary float-right" id="runbutton">Run</button>-->
+        <!--</div>-->
       </div>
     </div>
 
@@ -90,18 +81,7 @@
 
       <!-- A div of input boxes to specify expected output. -->
       <div class="card small-card" id="ex-output-div">
-        <div class="card-header card-title-block">
-          <h3 class="card-title">Test Output</h3>
-          <span class="align-middle pull-right">
-            <i class="fa fa-lg fa-vc fa-plus" onClick="addOutput()"></i>
-          </span>
-        </div>
-        <div id="ex-output" class="card-block input-parent container-fluid">
-          <div class="input-group">
-            <input type="text" class="form-control row-item" placeholder="Output" th:value="${task.expected_output}">
-            <div class="input-group-addon fa fa-minus" onClick="minusOutput(this)"></div>
-          </div>
-        </div>
+        <div th:replace="output-list :: list(list_id='ex-output',title='Test Output',list=${task.expected_output},default='Output')"></div>
       </div>
 
       <!-- Editor program output is placed here. -->

@@ -16,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import java.util.ArrayList;
+
 /**
  * Created by FreddyEstevez on 4/13/17.
  * Handles requests for creating/updating/saving created lessons.
@@ -140,6 +142,12 @@ public class CreateController {
         Objectify ofy = OfyService.ofy();
         Lesson l = new Lesson();
         Task t  = new Task();
+        ArrayList<String> examples = new ArrayList<>();
+        examples.add("hello");
+        examples.add("world");
+
+        t.setTest_case(examples);
+        t.setExpected_output(examples);
         //add task to lesson and save to datastore
         l.getTasks().add(ofy.save().entity(t).now());
         //save lesson to datastore

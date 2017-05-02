@@ -28,6 +28,8 @@ $(function(){
       lessonId=$pageInfo.data("lesson-id"),
       type=$pageInfo.data("type");
 
+  debugger;
+
   //build the json that we'll send to the backend
   save = function(){
     // get the url we'll send the ajax call to
