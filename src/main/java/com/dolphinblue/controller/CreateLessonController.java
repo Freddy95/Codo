@@ -218,7 +218,7 @@ public class CreateLessonController {
 
 
     /**
-     * Deletes the current task in the lesson user is creating.
+     * Saves the current task in the lesson user is creating.
      * @param token -- user access token
      * @param id -- lesson id
      * @param taskId -- id of task to delete
@@ -252,7 +252,7 @@ public class CreateLessonController {
 
 
     /**
-     * This route should be called when a user wants to save a lesson
+     * This route should be called when a user wants to save a created lesson.
      * Creates a lesson object and saves it in the datastore.
      * @param model -- thymeleaf model
      * @return -- editlesson page.
@@ -271,13 +271,13 @@ public class CreateLessonController {
 
 
     /**
-     * This route should be called when a user first wants to create a new lesson.
-     * Creates a lesson object and saves it in the datastore.
-     * @param model -- thymeleaf model
-     * @return -- editlesson page.
+     * This route should be called when a user wants to delete a lesson
+     * Deletes lesson and all its tasks from the datastore.
+     * @param id -- id of lesson
+     * @return -- user page.
      */
     @RequestMapping(value = "/createlesson/{lessonId}", method = RequestMethod.DELETE)
-    public @ResponseBody String delete_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model, Model model){
+    public String delete_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id){
 
         Objectify ofy = OfyService.ofy();
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
