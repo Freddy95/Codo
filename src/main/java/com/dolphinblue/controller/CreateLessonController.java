@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Controller
 @EnableWebMvc
-public class CreateController {
+public class CreateLessonController {
     @Autowired
     LessonService lessonService;
     @Autowired
@@ -35,7 +35,28 @@ public class CreateController {
     @Autowired
     TaskService taskService;
 
+    /**
+     * Returns the page to edit a lesson
+     * @param model lesson model retrieved from database
+     * @return edit-lesson template
+     */
+    @RequestMapping("/debug-edit-lesson")
+    public String debug_edit_lesson(@CookieValue("token") String token, Model model){
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            return "redirect:login";
+        }
 
+        Lesson l = new Lesson();
+        l.setTitle("Default Title");
+        l.setDescription("Default Description");
+        l.setShared(true);
+        model.addAttribute("lesson",l);
+
+        //TODO: add code to fetch lesson from url and load it into the page
+        return "edit-lesson";
+    }
 
     /**
      * This route should be called when a user first wants to create a new lesson.
@@ -182,9 +203,6 @@ public class CreateController {
      */
     @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.DELETE)
     public void delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
-
-
-
         Objectify ofy = OfyService.ofy();
         //get key of task
         Key task_key = Key.create(Task.class, taskId);
@@ -196,8 +214,6 @@ public class CreateController {
 
         taskService.delete_task(lesson, task_key);
         ofy.save().entity(lesson).now();
-
-
     }
 
 
