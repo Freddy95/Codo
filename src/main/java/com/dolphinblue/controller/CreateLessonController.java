@@ -257,7 +257,7 @@ public class CreateLessonController {
      * @param model -- thymeleaf model
      */
     @RequestMapping(value = "/createlesson/{lessonId}", method = RequestMethod.POST)
-    public @ResponseBody void save_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model, Model model){
+    public @ResponseBody void save_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model){
 
 
         Objectify ofy = OfyService.ofy();
