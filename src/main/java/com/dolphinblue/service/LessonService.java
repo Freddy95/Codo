@@ -325,7 +325,11 @@ public class LessonService {
         return ofy.load().type(Lesson.class).filter("creator_id", user.getUser_id()).filter("site_owned", false).list();
     }
 
-
+    /**
+     * Converts a SaveLessonModel object to a lesson object.
+     * @param lesson
+     * @param lesson_model
+     */
     public void lesson_model_to_lesson(Lesson lesson, SaveLessonModel lesson_model){
         Objectify ofy = OfyService.ofy();
         TaskService taskService = new TaskService();
