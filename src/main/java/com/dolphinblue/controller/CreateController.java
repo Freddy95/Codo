@@ -32,7 +32,6 @@ public class CreateController {
 
     /**
      * Saves the current block - task in the created lesson
-     * @param token -- user access token
      * @param id -- lesson id
      * @param taskId -- id of task to be saved
      * @param blocks -- list of blocks to be saved
@@ -55,9 +54,9 @@ public class CreateController {
 
     /**
      * This route should be called when a user first wants to create a new lesson.
-     * Creates a lesson and task object, saves them in datastore.
+     * Creates a lesson object and saves it in the datastore.
      * @param model -- thymeleaf model
-     * @return -- createtask page.
+     * @return -- createlessonpage page.
      */
     @RequestMapping(value = "/createlesson", method = RequestMethod.GET)
     public String get_create_lesson_page(Model model){
@@ -68,12 +67,28 @@ public class CreateController {
         l.getTasks().add(ofy.save().entity(t).now());
         //save lesson to datastore
         ofy.save().entity(l);
-        model.addAttribute("lesson", l);
-        model.addAttribute("task", t);
-        return "createtask";
+        model.addAttribute("lesson", l.getLesson_id());
+        return "createlessonpage";
     }
 
-    
+    /**
+     * This route should be called when a user wants to add a new task to a created lesson.
+     * Creates task object, saves it in datastore, and save it to list of tasks in lesson object.
+     * @param model -- thymeleaf model
+     * @param id -- lesson id
+     * @return -- create task page
+     * TODO: add query parameter to determine if task created should be block or freecode.
+     */
+    @RequestMapping(value = "/createlesson/{lessonId}/createtask", method = RequestMethod.GET)
+    public String get_create_task_page(Model model, @PathVariable(value = "lessonId") long id){
+        Objectify ofy = OfyService.ofy();
+        Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
+        Task task = new Task();
+        lesson.getTasks().add(ofy.save().entity(task).now());
+        model.addAttribute("lesson", lesson.getLesson_id());
+        model.addAttribute("task", task.getTask_id());
+        return "createtaskpage";
+    }
     /**
      * This route should be called when a user first wants to create a new freecode lesson.
      * Creates a lesson and task object, saves them in datastore.
