@@ -14,7 +14,6 @@
 <body>
 
 <div class="container" id="page" >
-  <div class="container">
     <!-- The lesson navbar. -->
     <div class="row">
       <div class="col">
@@ -22,74 +21,79 @@
       </div>
     </div>
 
-    <!-- Lesson Title and Box to edit it -->
-    <form>
-     <div class="form-group row">
-        <label for="title-textbox" class="col-2 col-form-label col-form-label-lg">Title</label>
-        <div class="col-3">
-          <input type="text" class="form-control" id="title-textbox" th:text="${user.username}"/>
-        </div>
-        <div class="col-2">
-          <button class="btn btn-success btn-sm" id="title-submit-btn" type="button"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <!-- Lesson Title and Box to edit it -->
+      <form>
+       <div class="form-group row">
+          <label for="title-textbox" class="col-2 col-form-label col-form-label-lg">Title</label>
+          <div class="col-8">
+            <input type="text" class="form-control" id="title-textbox" th:text="${user.username}"/>
+          </div>
+          <div class="col-2">
+            <button class="btn btn-success btn-sm" id="title-submit-btn" type="button"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+         </div>
        </div>
-     </div>
-    <!-- Textbox to edit the less description -->
-    <!-- TODO: do we want to change this to match the title or do we want to change the title method of edititng to match this? -->
+      <!-- Textbox to edit the less description -->
+      <!-- TODO: do we want to change this to match the title or do we want to change the title method of edititng to match this? -->
 
-    <div class="row form-group">
-      <label for="description-text" class="col-2 col-form-label col-form-label-lg">Description</label>
-      <div class="col-3 h-200">
-      <textarea id="description-text" class="form-control" th:text="${lesson.description}"></textarea>
+      <div class="row form-group">
+        <label for="description-text" class="col-2 col-form-label col-form-label-lg">Description</label>
+        <div class="col-8">
+        <textarea id="description-text" class="form-control" th:text="${lesson.description}"></textarea>
+        </div>
+        <div  class="col-2">
+          <button type="button" id="submit-description-button" class="btn btn-success btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+        </div>
       </div>
-      <div  class="col-2">
-        <button type="button" id="submit-description-button" class="btn btn-success btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
-      </div>
-    </div>
 
-    <div class="row form-group">
-
-      <label for="public-radio" class="col-2 col-form-label col-form-label-lg">Public</label>
-      <div class="col-2">
-        <input type="checkbox" class="form-check" id="public-radio" th:selected="${lesson.shared}">
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label col-form-label-lg">Public</label>
+        <div class="col-sm-10 align-self-center">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" id="public-radio" th:selected="${lesson.shared}">
+            </label>
+          </div>
+        </div>
       </div>
-    </div>
-    </form>
 
-    <!-- The sortable list of tasks -->
-    <!-- TODO: add loop to go through the tasks for a lesson -->
-    <div class="card">
-      <div class="card-header card-title-block">
-        <h3 class="card-title">Tasks</h3>
-        <span type="button" id="add-task-button" class="btn btn-success btn-sm pull-right align-middle">
-            <i class="fa fa-vc fa-plus" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div class="card-block">
-        <div class="col">
-          <ul class="sortable" id="tasks-list">
-            <li class="task-block">
-              Item 1 
-              <span class="pull-right">
-                <span class="task-button edit-task-button">
-                  <i class="fa fa-pencil" aria-hidden="true"></i>
+      <!-- The sortable list of tasks -->
+      <!-- TODO: add loop to go through the tasks for a lesson -->
+      <div class="card">
+        <div class="card-header card-title-block">
+          <h3 class="card-title">Tasks</h3>
+          <span type="button" id="add-task-button" class="btn btn-success btn-sm pull-right align-middle">
+              <i class="fa fa-vc fa-plus" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="card-block">
+          <div class="col">
+            <ul class="sortable" id="tasks-list">
+              <li class="task-block">
+                Item 1 
+                <span class="pull-right">
+                  <span class="task-button edit-task-button">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </span>
+                  <span class="task-button delete-task-button">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </span>
                 </span>
-                <span class="task-button delete-task-button">
-                  <i class="fa fa-trash" aria-hidden="true"></i>
+              </li>
+              <li class="task-block">
+                Item 2 
+                <span class="pull-right">
+                  <span class="task-button edit-task-button">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </span>
+                  <span class="task-button delete-task-button">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </span>
                 </span>
-              </span>
-            </li>
-            <li class="task-block">
-              Item 2 
-              <span class="pull-right">
-                <span class="task-button edit-task-button">
-                  <i class="fa fa-pencil" aria-hidden="true"></i>
-                </span>
-                <span class="task-button delete-task-button">
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                </span>
-              </span>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

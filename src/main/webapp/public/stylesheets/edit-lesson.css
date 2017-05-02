@@ -36,3 +36,7 @@ nav, .nav {
 .task-button {
     margin-left: 10px;
 }
+
+.form-check {
+    margin: 0;
+}
