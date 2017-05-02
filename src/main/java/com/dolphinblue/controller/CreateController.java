@@ -194,15 +194,9 @@ public class CreateController {
         //Get lesson and delete the task key from the list of tasks.
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
 
-        //delete task and get index of deleted task
-        int index = taskService.delete_task(lesson, task_key);
+        taskService.delete_task(lesson, task_key);
 
-        //find which task to add to model
-        Task task = taskService.get_edit_task(lesson, index);
-        model.addAttribute("task", task);
 
-        //add lesson to model
-        model.addAttribute("lesson", lesson);
     }
 
 
