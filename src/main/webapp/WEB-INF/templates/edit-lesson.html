@@ -98,13 +98,12 @@
       </div>
 
       <div id="button-row" class="row justify-content-center">
-        <button type="button" class="btn btn-success" onClick="save()">
+        <a type="button" class="btn btn-success" onClick="save()">
           <i class="fa fa-save" aria-hidden="true"></i>
           Save Changes
-        </button>
+        </a>
         <a class="btn btn-danger" th:href="'/deletelesson/' + ${lesson.lesson_id}">
-          <i class="fa fa-trash" aria-hidden="true"></i>
-          Delete Lesson
+          <i class="fa fa-trash" aria-hidden="true"></i>Delete Lesson
         </a>
       </div>
     </div>

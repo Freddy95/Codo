@@ -50,6 +50,6 @@ nav, .nav {
     margin-right: 5px;
 }
 
-#button-row>button {
+#button-row>a {
     margin: 5px;
 }
