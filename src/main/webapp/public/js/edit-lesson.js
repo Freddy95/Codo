@@ -37,6 +37,10 @@ function save() {
     console.log(data);
 
     $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
       method:'POST',
       url: '/createlesson/' + lesson_id,
       dataType:'json',
