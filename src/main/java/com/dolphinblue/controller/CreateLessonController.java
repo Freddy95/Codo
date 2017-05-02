@@ -25,7 +25,7 @@ import java.util.*;
  */
 @Controller
 @EnableWebMvc
-public class CreateController {
+public class CreateLessonController {
     @Autowired
     LessonService lessonService;
     @Autowired
@@ -35,7 +35,28 @@ public class CreateController {
     @Autowired
     TaskService taskService;
 
+    /**
+     * Returns the page to edit a lesson
+     * @param model lesson model retrieved from database
+     * @return edit-lesson template
+     */
+    @RequestMapping("/debug-edit-lesson")
+    public String debug_edit_lesson(@CookieValue("token") String token, Model model){
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            return "redirect:login";
+        }
 
+        Lesson l = new Lesson();
+        l.setTitle("Default Title");
+        l.setDescription("Default Description");
+        l.setShared(true);
+        model.addAttribute("lesson",l);
+
+        //TODO: add code to fetch lesson from url and load it into the page
+        return "edit-lesson";
+    }
 
     /**
      * This route should be called when a user first wants to create a new lesson.
@@ -111,14 +132,13 @@ public class CreateController {
      * TODO: add query parameter to determine if task created should be block or freecode.
      */
     @RequestMapping(value = "/createlesson/{lessonId}/createtask", method = RequestMethod.GET)
-    public String get_create_task_page(Model model, @PathVariable(value = "lessonId") long id){
+    public void create_task(Model model, @PathVariable(value = "lessonId") long id){
         Objectify ofy = OfyService.ofy();
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         Task task = new Task();
         lesson.getTasks().add(ofy.save().entity(task).now());
-        model.addAttribute("lesson_id", lesson.getLesson_id());
+        ofy.save().entity(lesson).now();
         model.addAttribute("task_id", task.getTask_id());
-        return "createtaskpage";
     }
 
 
@@ -183,9 +203,6 @@ public class CreateController {
      */
     @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.DELETE)
     public void delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
-
-
-
         Objectify ofy = OfyService.ofy();
         //get key of task
         Key task_key = Key.create(Task.class, taskId);
@@ -197,8 +214,6 @@ public class CreateController {
 
         taskService.delete_task(lesson, task_key);
         ofy.save().entity(lesson).now();
-
-
     }
 
 
