@@ -255,7 +255,7 @@ public class CreateLessonController {
      * Creates a lesson object and saves it in the datastore.
      * @param model -- thymeleaf model
      */
-    @RequestMapping(value = "/createlesson/{lessonId}/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/createlesson/{lessonId}", method = RequestMethod.POST)
     public @ResponseBody void save_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model){
 
 

@@ -157,7 +157,8 @@ public class LessonController {
             }
         }
         // Check to see if any task was found
-        if(task == null) {
+        if(task == null)
+        {
             // If no task was found, populate the last completed task
             task = tasks.get(tasks.size() - 1);
         }
@@ -432,10 +433,12 @@ public class LessonController {
         t.setTitle("First Block Task");
         t.setInstructions("These are the instructions.");
         t.setHint("This is the hint.");
-        String[] test = {"x = 1;"};
+        String[] test = {"var x = 1;"};
         String[] expected = {"3"};
         t.setTest_case(Arrays.asList(test));
         t.setExpected_output(Arrays.asList(expected));
+        l.getTasks().add(OfyService.ofy().save().entity(t).now());
+
 
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();
@@ -450,6 +453,12 @@ public class LessonController {
         model.addAttribute("toolbox", toolbox);
         model.addAttribute("editor", editor);
         model.addAttribute("task", t);
+        String task_titles[] = {t.getTitle()};
+        Boolean task_statuses[] = {t.isCompleted()};
+
+        model.addAttribute("task_titles",task_titles);
+        model.addAttribute("task_statuses",task_statuses);
+
 
         model.addAttribute("prev_task", -1);
         model.addAttribute("next_task", -1);
