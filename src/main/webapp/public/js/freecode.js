@@ -21,7 +21,8 @@ $(function () {
     var $runbtn = $("#runbutton");
     $runbtn.click( function () {
         // get the expected output,test case input, and next task/completed status
-        var $output=$("#output");
+        var $output=$("#output")
+            $page = $("#page");
 
         // Empty the output when running.
         $output.empty();
