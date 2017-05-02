@@ -42,7 +42,7 @@
           <div class="row form-group">
             <label for="description" class="col-2 col-form-label col-form-label-lg">Description</label>
             <div class="col-10">
-            <textarea id="description" class="form-control" th:text="${lesson.description}"></textarea>
+            <textarea id="description" class="form-control" th:value="${lesson.description}"></textarea>
             </div>
           </div>
 
@@ -98,7 +98,7 @@
       </div>
 
       <div id="button-row" class="row justify-content-center">
-        <button type="button" class="btn btn-success">
+        <button type="button" class="btn btn-success" onClick="save()">
           <i class="fa fa-save" aria-hidden="true"></i>
           Save Changes
         </button>
