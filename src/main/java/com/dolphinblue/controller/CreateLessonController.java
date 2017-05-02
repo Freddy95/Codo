@@ -277,7 +277,7 @@ public class CreateLessonController {
      * @return -- editlesson page.
      */
     @RequestMapping(value = "/createlesson/{lessonId}", method = RequestMethod.DELETE)
-    public @ResponseBody void delete_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model, Model model){
+    public @ResponseBody String delete_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model, Model model){
 
         Objectify ofy = OfyService.ofy();
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
@@ -285,6 +285,7 @@ public class CreateLessonController {
             taskService.delete_task(lesson, lesson.getTasks().get(i));
         }
         ofy.delete().entity(lesson).now();
+        return "redirect:user";
 
     }
 }
