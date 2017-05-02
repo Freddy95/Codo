@@ -7,9 +7,11 @@ import com.dolphinblue.service.*;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
+import com.googlecode.objectify.ObjectifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -446,14 +448,47 @@ public class TaskController {
         editor.add(new Block(2, "x += 1;", Type.ASSIGN, true));
         editor.add(new Block(2, "console.log(x);", Type.ASSIGN, true));
 
+        l.getTasks().add(OfyService.ofy().save().entity(t).now());
+
         model.addAttribute("lesson", l);
         model.addAttribute("toolbox", toolbox);
         model.addAttribute("editor", editor);
         model.addAttribute("task", t);
 
-        model.addAttribute("prev_task", -1);
-        model.addAttribute("next_task", -1);
+        String task_titles[] = {t.getTitle()};
+        Boolean task_statuses[] = {t.isCompleted()};
 
+        model.addAttribute("task_titles",task_titles);
+        model.addAttribute("task_statuses",task_statuses);
+        model.addAttribute("prev_task", 0);
+        model.addAttribute("next_task", 0);
+
+        return "freecode";
+    }
+
+    /**
+     * This route should be called when a user first wants to create a new freecode lesson.
+     * Creates a lesson and task object, saves them in datastore.
+     * @param model -- thymeleaf model
+     * @return -- editfrecodetask page.
+     */
+    @RequestMapping(value = "/testing/freecode", method = RequestMethod.GET)
+    public String get_create_freecode(Model model){
+        Objectify ofy = OfyService.ofy();
+        Lesson l = new Lesson();
+        Task t  = new Task();
+        ArrayList<String> examples = new ArrayList<>();
+        examples.add("hello");
+        examples.add("world");
+
+        t.setTest_case(examples);
+        t.setExpected_output(examples);
+        //add task to lesson and save to datastore
+        l.getTasks().add(ofy.save().entity(t).now());
+        //save lesson to datastore
+        ofy.save().entity(l);
+        model.addAttribute("lesson", l);
+        model.addAttribute("task", t);
         return "freecode";
     }
 

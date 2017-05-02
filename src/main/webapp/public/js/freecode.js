@@ -28,7 +28,11 @@ $(function () {
             next_task=$page.data("next-task"),
             $output=$("#output");
 
-        expected_output = String(expected_output).replace("\n","<br/>") + "<br/>";
+
+        //convert the test-case value to a json array
+        var testCase = JSON.parse(test_case);
+
+        var expectedOutput = JSON.parse(expected_output);
 
         // Empty the output when running.
         $output.empty();
