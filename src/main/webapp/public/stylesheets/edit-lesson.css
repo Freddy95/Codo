@@ -40,3 +40,16 @@ nav, .nav {
 .form-check {
     margin: 0;
 }
+
+#task-card {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.fa {
+    margin-right: 5px;
+}
+
+#button-row>button {
+    margin: 5px;
+}
