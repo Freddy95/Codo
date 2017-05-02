@@ -1,6 +1,12 @@
-.sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-.sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }
-html>body .sortable li { height: 1.5em; line-height: 1.2em; }
+.sortable { 
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.sortable li { 
+    margin-bottom: 10px;
+    padding: 10px;
+}
 
 /*CSS for code blocks.*/
 .task-block {
@@ -21,4 +27,12 @@ html>body .sortable li { height: 1.5em; line-height: 1.2em; }
 #description-text{
     width:100%;
     min-height: 200px;
+}
+
+nav, .nav {
+    margin-bottom: 25px;
+}
+
+.task-button {
+    margin-left: 10px;
 }
