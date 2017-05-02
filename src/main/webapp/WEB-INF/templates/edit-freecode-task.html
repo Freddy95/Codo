@@ -7,6 +7,8 @@
   <div th:replace="standard-scripts-css :: standard" th:remove="tag"></div>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/main.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/edit-block-task.css}"></link>
+  <!-- font for the text editor -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
   <script type="text/javascript" th:src="@{/public/js/lib/src-min-noconflict/ace.js}"></script>
   <script type="text/javascript" th:src="@{/public/js/edit-freecode-task.js}"></script>
 </head>
@@ -112,7 +114,7 @@
     </div>
   </div>
 </div>
-<div id="page-info" th:attr="data-test-case=${task.test_case},data-completed=${task.completed},data-next-task=${next_task},data-ex-output=${task.expected_output},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id}">
+<div id="page-info" th:attr="data-title=${task.title},data-type=${task.type},data-test-case=${task.test_case},data-completed=${task.completed},data-next-task=${next_task},data-ex-output=${task.expected_output},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id}">
 </div>
 </body>
 </html>
