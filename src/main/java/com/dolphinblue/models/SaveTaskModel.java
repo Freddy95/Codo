@@ -5,7 +5,7 @@ import java.util.*;
  * This class is used for retrieving updated blocks from the front end
  */
 public class SaveTaskModel {
-
+    private long task_id;
     private boolean completed;
     private String hint;
     private String title;
@@ -104,5 +104,13 @@ public class SaveTaskModel {
 
     public void setFreecode(String freecode) {
         this.freecode = freecode;
+    }
+
+    public long getTask_id() {
+        return task_id;
+    }
+
+    public void setTask_id(long task_id) {
+        this.task_id = task_id;
     }
 }

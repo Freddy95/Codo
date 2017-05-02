@@ -1,9 +1,6 @@
 package com.dolphinblue.controller;
 
-import com.dolphinblue.models.Lesson;
-import com.dolphinblue.models.SaveTaskModel;
-import com.dolphinblue.models.Task;
-import com.dolphinblue.models.User;
+import com.dolphinblue.models.*;
 import com.dolphinblue.service.*;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -83,10 +80,13 @@ public class CreateLessonController {
 
 
         Lesson l = new Lesson();
+        l.setTitle("Default Title.");
+        l.setDescription("Default Description.");
         l.setCreator_id(id);
         //save lesson to datastore
         ofy.save().entity(l).now();
         model.addAttribute("lesson_id", l.getLesson_id());
+
         String requestUrl = "/createlesson/" + l.getLesson_id();
         return "redirect:" + requestUrl;
     }
@@ -201,7 +201,7 @@ public class CreateLessonController {
      * TODO: return create task page?
      * @return --
      */
-    @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/createlesson/{lessonId}/task/{taskId}", method = RequestMethod.DELETE)
     public void delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
         Objectify ofy = OfyService.ofy();
         //get key of task
@@ -226,7 +226,7 @@ public class CreateLessonController {
      * TODO: return create task page?
      * @return --
      */
-    @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/createlesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
     public @ResponseBody String save_task(@CookieValue("token") String token,  @PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel task_model, Model model){
 
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
@@ -251,4 +251,41 @@ public class CreateLessonController {
     }
 
 
+    /**
+     * This route should be called when a user wants to save a lesson
+     * Creates a lesson object and saves it in the datastore.
+     * @param model -- thymeleaf model
+     * @return -- editlesson page.
+     */
+    @RequestMapping(value = "/createlesson/{lessonId}", method = RequestMethod.POST)
+    public @ResponseBody void save_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model, Model model){
+
+
+        Objectify ofy = OfyService.ofy();
+
+        Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
+        lessonService.lesson_model_to_lesson(lesson, lesson_model);
+        ofy.save().entity(lesson).now();
+
+    }
+
+
+    /**
+     * This route should be called when a user first wants to create a new lesson.
+     * Creates a lesson object and saves it in the datastore.
+     * @param model -- thymeleaf model
+     * @return -- editlesson page.
+     */
+    @RequestMapping(value = "/createlesson/{lessonId}", method = RequestMethod.DELETE)
+    public @ResponseBody String delete_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model, Model model){
+
+        Objectify ofy = OfyService.ofy();
+        Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
+        for (int i = 0; i < lesson.getTasks().size(); i++){
+            taskService.delete_task(lesson, lesson.getTasks().get(i));
+        }
+        ofy.delete().entity(lesson).now();
+        return "redirect:user";
+
+    }
 }
