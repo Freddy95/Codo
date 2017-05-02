@@ -1,6 +1,8 @@
 package com.dolphinblue.service;
 
 import com.dolphinblue.models.*;
+
+import com.dolphinblue.models.Block.Type;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,21 @@ import java.util.Map;
  */
 @Service
 public class TaskService {
+
+    /**
+     * Returns a default block catalog.
+     */
+    public List<Block> get_catalog() {
+        List<Block> catalog = new ArrayList<Block>();
+        catalog.add(new Block(-1, "// Click to edit", Type.STATIC, false));
+        catalog.add(new Block(-1, "butts;", Type.LOG, true));
+        catalog.add(new Block(-1, "blah;", Type.IF, true));
+        catalog.add(new Block(-1, "butts;", Type.WHILE, true));
+        catalog.add(new Block(-1, "butts;", Type.FOR, true));
+        catalog.add(new Block(-1, "{", Type.CURL, false));
+        catalog.add(new Block(-1, "}", Type.CURL, false));
+        return catalog;
+    }
 
     /**
      * Gets previous task in lesson. Adds to model
