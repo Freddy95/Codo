@@ -77,7 +77,8 @@ public class UserController {
                 lesson.setPercent_complete(100 * lessonService.get_percent_complete(lesson));
             }
             model.addAttribute("main_lessons", main_lessons);
-
+            List<Lesson> own_lessons = lessonService.get_own_lessons(user);
+            model.addAttribute("own_lessons", own_lessons);
             // Fixes a bug with user login
             Lesson l;
             //should only be null if user is a new user

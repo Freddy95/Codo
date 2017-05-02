@@ -314,4 +314,16 @@ public class LessonService {
         // Return the updated task
         return task;
     }
+
+    /**
+     * gets the main lesson objects specific to a single user
+     * @param user
+     * @return list of main lessons for a specific user
+     */
+    public List<Lesson> get_own_lessons(User user){
+        Objectify ofy = OfyService.ofy();
+        return ofy.load().type(Lesson.class).filter("creator_id", user.getUser_id()).filter("site_owned", false).list();
+    }
+
+
 }
