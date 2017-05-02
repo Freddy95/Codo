@@ -309,7 +309,7 @@ public class TaskController {
 
     @RequestMapping(value = "/savelesson/{lessonId}/freecodetask/{taskId}",  method = RequestMethod.POST)
     public @ResponseBody
-    SaveFreecodeTaskModel update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") Long taskId, @RequestBody SaveFreecodeTaskModel taskModel) {
+    SaveTaskModel update_freecode_task(@CookieValue("token") String token, @PathVariable(value = "taskId") Long taskId, @RequestBody SaveTaskModel taskModel) {
         // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
