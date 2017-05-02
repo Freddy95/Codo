@@ -435,9 +435,18 @@ public class TaskController {
         t.setInstructions("These are the instructions.");
         t.setHint("This is the hint.");
         String[] test = {"x = 1;"};
-        String[] expected = {"3"};
-        t.setTest_case(Arrays.asList(test));
-        t.setExpected_output(Arrays.asList(expected));
+
+        ArrayList<String> input = new ArrayList<>();
+        ArrayList<String> output = new ArrayList<>();
+        input.add("var x = 'hello';");
+        input.add("var x = 'world';");
+
+        output.add("hello");
+        output.add("world");
+
+
+        t.setTest_case(input);
+        t.setExpected_output(output);
 
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();

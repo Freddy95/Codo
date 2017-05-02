@@ -21,18 +21,7 @@ $(function () {
     var $runbtn = $("#runbutton");
     $runbtn.click( function () {
         // get the expected output,test case input, and next task/completed status
-        var $page=$("#page"),
-            test_case=$page.data("test-case"),
-            expected_output=$page.data("ex-output"),
-            completed=$page.data("completed"),
-            next_task=$page.data("next-task"),
-            $output=$("#output");
-
-
-        //convert the test-case value to a json array
-        var testCase = JSON.parse(test_case);
-
-        var expectedOutput = JSON.parse(expected_output);
+        var $output=$("#output");
 
         // Empty the output when running.
         $output.empty();
@@ -49,15 +38,29 @@ $(function () {
         //pull out any xhr requests
         //TODO: how do we add test-case variables to input?
         //TODO: maybe append them as var declarations in the beginning of the cleaned code string?
-        var code = editor.getValue();
-        code = clean(code);
-        //run the code
-        eval(code);
-        //check if it's the right values
-        var results=$output.html(),
-            expected=(results==clean_output(expected_output));
+        //iterate over each test case
+        var is_correct=true;
+        for(var i = 0; i<test_case.length; i++) {
+            var code = editor.getValue(),
+                test = test_case[i],
+                expect = expected_output[i];
+            expect += "<br>"; // add a line break to the end of the output
+            code = clean(code);
+            //append the variables to the code and run it
+            code = test + code;
+            //run the code
+            eval(code);
+            //check if it's the right values
+            var results = $output.html(),
+                expected = (expect == clean_output(results));
+
+            if(!expected){
+                is_correct=false;
+                break;
+            }
+        }
         //check that it matches the expected output
-        if(expected){
+        if(is_correct){
             completed = true;
             // Adding next arrow to next task.
             if (next_task > 0) {
