@@ -35,4 +35,12 @@ function save() {
     // Grab current order of tasks.
 
     console.log(data);
+
+    $.ajax({
+      method:'POST',
+      url: '/createlesson/' + lesson_id + '/save',
+      dataType:'json',
+      data:JSON.stringify(data),
+    });
+
 }
