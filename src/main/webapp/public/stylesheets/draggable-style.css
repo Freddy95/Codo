@@ -26,15 +26,6 @@
     flex-grow: 1;
 }
 
-/*General card stuff.*/
-.card {
-    margin: 10px;
-}
-
-.card-header>h3 {
-    display: inline-block;
-}
-
 /*CSS for code blocks.*/
 .code-block {
     padding: 5px;
