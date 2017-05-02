@@ -174,4 +174,38 @@ public class CreateController {
         model.addAttribute("lesson", lesson);
         return "";
     }
+
+
+    /**
+     * Deletes the current task in the lesson user is creating.
+     * @param token -- user access token
+     * @param id -- lesson id
+     * @param taskId -- id of task to delete
+     * @param model -- thymeleaf model
+     * TODO: return create task page?
+     * @return --
+     */
+    @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
+    public @ResponseBody String save_task(@CookieValue("token") String token,  @PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel task_model, Model model){
+
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            return "redirect:/login";
+        }
+
+        Objectify ofy = OfyService.ofy();
+
+        Task task = ofy.load().type(Task.class).id(taskId).now();
+        taskService.task_model_to_task(task, task_model);
+        ofy.save().entity(task).now();
+        model.addAttribute("task", task);
+        model.addAttribute("task_id", taskId);
+        model.addAttribute("lesson_id", id);
+        if(task.getFreecode() == null){
+            return "createblocktaskpage";
+        }
+
+        return "createfreecodetaskpage";
+    }
 }

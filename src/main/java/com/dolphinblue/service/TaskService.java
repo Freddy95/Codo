@@ -1,7 +1,6 @@
 package com.dolphinblue.service;
 
-import com.dolphinblue.models.Lesson;
-import com.dolphinblue.models.Task;
+import com.dolphinblue.models.*;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import org.springframework.stereotype.Service;
@@ -127,4 +126,36 @@ public class TaskService {
         return index;
     }
 
+    /**
+     * Turns a SaveTaskModel object to Task object and returns it.
+     * @param task
+     * @param task_model
+     * @return -- task object.
+     */
+    public Task task_model_to_task(Task task, SaveTaskModel task_model){
+        Objectify ofy = OfyService.ofy();
+
+        task.setTitle(task_model.getTitle());
+        task.setTest_case(task_model.getTest_case());
+        task.setExpected_output(task_model.getExpected_output());
+        task.setInstructions(task_model.getInstructions());
+        task.setHint(task_model.getHint());
+        if(task_model.getFreecode() == null){
+            //block task
+            List<Key<Block>> editor_keys = new ArrayList<>();
+            List<Block> editor_list = task_model.getEditor().getBlocks();
+            for (int i = 0; i < editor_list.size(); i++){
+                editor_keys.add(ofy.save().entity(editor_list.get(i)).now());
+            }
+            List<Key<Block>> toolbox_keys = new ArrayList<>();
+            List<Block> toolbox_list = task_model.getToolbox().getBlocks();
+            for (int i = 0; i < toolbox_list.size(); i++){
+                toolbox_keys.add(ofy.save().entity(toolbox_list.get(i)).now());
+            }
+            return task;
+        }
+        //freecode task
+        task.setFreecode(task_model.getFreecode());
+        return task;
+    }
 }
