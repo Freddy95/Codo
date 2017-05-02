@@ -13,8 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 
 /**
  * Created by FreddyEstevez on 4/13/17.
@@ -86,8 +86,9 @@ public class CreateLessonController {
         //save lesson to datastore
         ofy.save().entity(l).now();
         model.addAttribute("lesson_id", l.getLesson_id());
-        model.addAttribute("lesson", l);
-        return "editlesson";
+
+        String requestUrl = "/createlesson/" + l.getLesson_id();
+        return "redirect:" + requestUrl;
     }
 
 
@@ -117,7 +118,7 @@ public class CreateLessonController {
         List<Task> tasks = lessonService.get_tasks_by_id(task_keys);
         model.addAttribute("tasks", tasks);
         model.addAttribute("lesson", lesson);
-        return "editlesson";
+        return "edit-lesson";
     }
 
 
