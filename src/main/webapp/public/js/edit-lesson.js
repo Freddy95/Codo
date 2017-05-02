@@ -38,7 +38,7 @@ function save() {
 
     $.ajax({
       method:'POST',
-      url: '/createlesson/' + lesson_id + '/save',
+      url: '/createlesson/' + lesson_id,
       dataType:'json',
       data:JSON.stringify(data),
     });
