@@ -255,7 +255,6 @@ public class CreateLessonController {
      * This route should be called when a user wants to save a created lesson.
      * Creates a lesson object and saves it in the datastore.
      * @param model -- thymeleaf model
-     * @return -- editlesson page.
      */
     @RequestMapping(value = "/createlesson/{lessonId}", method = RequestMethod.POST)
     public @ResponseBody void save_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model, Model model){
