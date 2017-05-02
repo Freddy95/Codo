@@ -83,7 +83,7 @@ public class CreateController {
         Lesson l = new Lesson();
         l.setCreator_id(id);
         //save lesson to datastore
-        ofy.save().entity(l);
+        ofy.save().entity(l).now();
         model.addAttribute("lesson_id", l.getLesson_id());
         return "createlessonpage";
     }
