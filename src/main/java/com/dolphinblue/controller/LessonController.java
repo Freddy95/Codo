@@ -1,6 +1,7 @@
 package com.dolphinblue.controller;
 
 import com.dolphinblue.models.Lesson;
+import com.dolphinblue.models.Task;
 import com.dolphinblue.models.User;
 import com.dolphinblue.service.AuthenticationService;
 import com.dolphinblue.service.CodoUserService;
@@ -48,4 +49,43 @@ public class LessonController {
         //TODO: add code to fetch lesson from url and load it into the page
         return "edit-lesson";
     }
+
+    public String get_freecode_task(@CookieValue("token") String token, Long task_id, Model model) {
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            return "redirect:login";
+        }
+
+        // Create an objectify object to make requests to the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // Pull the task information from the datastore
+        Task task = ofy.load().type(Task.class).id(task_id).now();
+        model.addAttribute("freecodeTask", task);
+
+        // Populate the HTML lesson page with the correct task
+        //String requestUrl = "/lesson/" + lessonId + "/task/" + task.getTask_id();
+        //return "redirect:" + requestUrl;
+
+        return "edit-freecode-task";
+    }
+
+    public Task save_freecode_task(@CookieValue("token") String token, Task freecodeTask) {
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            return null;
+        }
+
+        // Create the objectify object to get stuff from the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // Save the changes to the datastore
+        ofy.save().entity(freecodeTask);
+
+        // TODO: add save freecode task
+        return freecodeTask;
+    }
+
 }
