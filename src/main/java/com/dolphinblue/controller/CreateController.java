@@ -3,7 +3,9 @@ package com.dolphinblue.controller;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.SaveTaskModel;
 import com.dolphinblue.models.Task;
+import com.dolphinblue.models.User;
 import com.dolphinblue.service.*;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.googlecode.objectify.Key;
@@ -59,12 +61,25 @@ public class CreateController {
      * @return -- createlessonpage page.
      */
     @RequestMapping(value = "/createlesson", method = RequestMethod.GET)
-    public String get_create_lesson_page(Model model){
+    public String get_create_lesson_page(@CookieValue("token") String token, Model model){
+        // Check if the user is still authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            return null;
+        }
+
         Objectify ofy = OfyService.ofy();
+
+        // Get the google id token from the authentication token from the browser cookie
+        GoogleIdToken googletoken = authenticationService.getIdToken(token, new JacksonFactory(), new NetHttpTransport());
+
+        // Use google's token to contact google app engine's user api and get the user info
+        String id = userService.getUserId(googletoken);
+
+
         Lesson l = new Lesson();
-        Task t  = new Task();
-        //add task to lesson and save to datastore
-        l.getTasks().add(ofy.save().entity(t).now());
+        l.setCreator_id(id);
         //save lesson to datastore
         ofy.save().entity(l);
         model.addAttribute("lesson_id", l.getLesson_id());
@@ -145,7 +160,7 @@ public class CreateController {
      * TODO: return create task page?
      * @return --
      */
-    @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/savecreatedlesson/{lessonId}/deletetask/{taskId}", method = RequestMethod.DELETE)
     public String delete_task(@CookieValue("token") String token,  @PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
 
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
@@ -185,7 +200,7 @@ public class CreateController {
      * TODO: return create task page?
      * @return --
      */
-    @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/savecreatedlesson/{lessonId}/savetask/{taskId}", method = RequestMethod.POST)
     public @ResponseBody String save_task(@CookieValue("token") String token,  @PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel task_model, Model model){
 
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
@@ -208,4 +223,6 @@ public class CreateController {
 
         return "createfreecodetaskpage";
     }
+
+
 }
