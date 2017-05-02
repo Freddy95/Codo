@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by FreddyEstevez on 4/13/17.
@@ -40,7 +41,7 @@ public class CreateController {
      * This route should be called when a user first wants to create a new lesson.
      * Creates a lesson object and saves it in the datastore.
      * @param model -- thymeleaf model
-     * @return -- createlessonpage page.
+     * @return -- editlesson page.
      */
     @RequestMapping(value = "/createlesson", method = RequestMethod.GET)
     public String get_create_lesson_page(@CookieValue("token") String token, Model model){
@@ -65,8 +66,40 @@ public class CreateController {
         //save lesson to datastore
         ofy.save().entity(l).now();
         model.addAttribute("lesson_id", l.getLesson_id());
-        return "createlessonpage";
+        return "editlesson";
     }
+
+
+
+    /**
+     * This route should be called when a user wants to open their own created lesson.
+     * Should add lesson_id, lesson, and list of tasks in lesson to model.
+     * @param model -- thymeleaf model
+     * @param id -- id of lesson to edit
+     * @return -- editlesson page.
+     */
+    @RequestMapping(value = "/createlesson/{lessonId}", method = RequestMethod.GET)
+    public String get_created_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, Model model){
+        // Check if the user is still authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            return "redirect:/login";
+        }
+
+        Objectify ofy = OfyService.ofy();
+        Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
+
+
+        model.addAttribute("lesson_id", lesson.getLesson_id());
+        List<Key<Task>> task_keys = lesson.getTasks();
+        List<Task> tasks = lessonService.get_tasks_by_id(task_keys);
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("lesson", lesson);
+        return "editlesson";
+    }
+
+
 
     /**
      * This route should be called when a user wants to add a new task to a created lesson.
@@ -106,9 +139,9 @@ public class CreateController {
         model.addAttribute("task", task);
         if(task.getFreecode() == null){
             //blocktask
-            return "createblocktaskpage";
+            return "edit-block-task";
         }
-        return "createfreecodetaskpage";
+        return "edit-freecode-task";
     }
 
     /**
@@ -206,10 +239,10 @@ public class CreateController {
         model.addAttribute("task_id", taskId);
         model.addAttribute("lesson_id", id);
         if(task.getFreecode() == null){
-            return "createblocktaskpage";
+            return "edit-block-task";
         }
 
-        return "createfreecodetaskpage";
+        return "edit-freecode-task";
     }
 
 
