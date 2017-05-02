@@ -17,7 +17,7 @@ public class Lesson implements Comparable<Lesson>{
     private Long index;
     private String title;
     @Index private String user_id; //user who is working on the lesson
-    private Key<User> creator_id; //user who created the lesson
+    @Index private String creator_id; //user who created the lesson
     private List<Key<Task>> tasks; //holds lists of tasks ids for this lesson
     private double percent_complete; // Hold the percent of task the user has completed
     @Index private boolean shared;
@@ -32,7 +32,7 @@ public class Lesson implements Comparable<Lesson>{
         this.tasks = new ArrayList<>();
     }
 
-    public Lesson(Long lesson_id, String title, String user, Key creator, List<Key<Task>> tasks, boolean shared, boolean site_owned) {
+    public Lesson(Long lesson_id, String title, String user, String creator, List<Key<Task>> tasks, boolean shared, boolean site_owned) {
         this.lesson_id = lesson_id;
         this.title = title;
         this.user_id = user;
@@ -66,12 +66,12 @@ public class Lesson implements Comparable<Lesson>{
         this.user_id = user.getUser_id();
     }
 
-    public Key getCreator_id() {
+    public String getCreator_id() {
         return creator_id;
     }
 
-    public void setCreator_id(User creator) {
-        this.creator_id = Key.create(User.class, creator.getUser_id());
+    public void setCreator_id(String creator) {
+        this.creator_id = creator;
     }
 
     public List<Key<Task>> getTasks() {

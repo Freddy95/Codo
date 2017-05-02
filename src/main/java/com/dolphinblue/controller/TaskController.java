@@ -51,12 +51,16 @@ public class TaskController {
         t.setTitle("First Block Task");
         t.setInstructions("These are the instructions.");
         t.setHint("This is the hint.");
-        t.setTest_case("x = 1;");
-        t.setExpected_output("3");
 
-        ArrayList<Block> toolbox = new ArrayList<Block>();
-        ArrayList<Block> editor = new ArrayList<Block>();
-        ArrayList<Block> catalog = new ArrayList<Block>();
+        String[] test = {"x = 1;"};
+        String[] expected = {"3"};
+        t.setTest_case(Arrays.asList(test));
+        t.setExpected_output(Arrays.asList(expected));
+
+
+        List<Block> toolbox = new ArrayList<Block>();
+        List<Block> editor = new ArrayList<Block>();
+        List<Block> catalog = taskService.get_catalog();
 
         toolbox.add(new Block(1, "x = 2;", Type.STATIC, false));
         toolbox.add(new Block(2, "x += 5;", Type.STATIC, false));
@@ -71,15 +75,6 @@ public class TaskController {
         editor.add(new Block(8, "x += 1;", Type.STATIC, false));
         editor.add(new Block(9, "console.log(x);", Type.STATIC, false));
         editor.add(testChild);
-
-        catalog.add(new Block(-1, "// Click to edit", Type.STATIC, false));
-        catalog.add(new Block(-1, "butts;", Type.LOG, true));
-        catalog.add(new Block(-1, "blah;", Type.IF, true));
-        catalog.add(new Block(-1, "butts;", Type.WHILE, true));
-        catalog.add(new Block(-1, "butts;", Type.FOR, true));
-
-
-
 
         model.addAttribute("lesson", l);
         model.addAttribute("toolbox", toolbox);
@@ -101,8 +96,10 @@ public class TaskController {
         t.setTitle("First Block Task");
         t.setInstructions("These are the instructions.");
         t.setHint("This is the hint.");
-        t.setTest_case("x = 1;");
-        t.setExpected_output("3");
+        String[] test = {"x = 1;"};
+        String[] expected = {"3"};
+        t.setTest_case(Arrays.asList(test));
+        t.setExpected_output(Arrays.asList(expected));
 
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();
@@ -303,7 +300,7 @@ public class TaskController {
 
     @RequestMapping(value = "/savelesson/{lessonId}/freecodetask/{taskId}",  method = RequestMethod.POST)
     public @ResponseBody
-    SaveFreecodeTaskModel update_task(@CookieValue("token") String token, @PathVariable(value = "taskId") Long taskId, @RequestBody SaveFreecodeTaskModel taskModel) {
+    SaveTaskModel update_freecode_task(@CookieValue("token") String token, @PathVariable(value = "taskId") Long taskId, @RequestBody SaveTaskModel taskModel) {
         // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
@@ -435,8 +432,10 @@ public class TaskController {
         t.setTitle("First Block Task");
         t.setInstructions("These are the instructions.");
         t.setHint("This is the hint.");
-        t.setTest_case("x = 1;");
-        t.setExpected_output("3");
+        String[] test = {"x = 1;"};
+        String[] expected = {"3"};
+        t.setTest_case(Arrays.asList(test));
+        t.setExpected_output(Arrays.asList(expected));
 
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();

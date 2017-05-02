@@ -2,10 +2,7 @@ package com.dolphinblue.service;
 
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Lesson;
@@ -72,10 +69,24 @@ public class LessonJSONService {
             //create new task object.
             Task t = new Task();
             //set task attributes.
+
             t.setTitle((String) json_t.get("title"));
             t.setInstructions((String) json_t.get("instructions"));
-            t.setExpected_output((String) json_t.get("expected_output"));
-            t.setTest_case((String) json_t.get("test_case"));
+
+            JSONArray expected_output_json = (JSONArray) json_t.get("expected_output");
+            String[] expected_output = new String[expected_output_json.size()];
+            expected_output_json.toArray(expected_output);
+            t.setExpected_output(
+                    Arrays.asList(expected_output)
+            );
+
+            JSONArray test_case_json = (JSONArray) json_t.get("test_case");
+            String[] test_case = new String[test_case_json.size()];
+            test_case_json.toArray(test_case);
+            t.setTest_case(
+                    Arrays.asList(test_case)
+            );
+
             t.setHint((String) json_t.get("hint"));
 
             //check if type of task is block task

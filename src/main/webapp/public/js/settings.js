@@ -18,22 +18,21 @@ $(function(){
         $userNameNoBtn=$("#username-no-btn"),
         $resetLessonBtn=$("#reset-lessons-btn"),
         $deleteAcctBtn=$("#delete-account-btn"),
-        $updateInfoBtn=$("#update-account-btn");
+        $userNameDone=$("#username-done");
 
     //the base url
     var baseUrl="http://localhost:8080";
 
     //handler for the edit username button being clicked
     $showUserNameEditBtn.click(function () {
-        $showUserNameEditBtn.hide();
+        $userNameDone.hide();
         $userNameEditForm.show();
-
     });
 
     //handler to hide the username edit form
     $userNameNoBtn.click(function(){
-        $showUserNameEditBtn.show();
         $userNameEditForm.hide();
+        $userNameDone.show();
     });
 
     $usernameSubmitBtn.click(function(){

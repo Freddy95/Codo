@@ -2,14 +2,9 @@ $(document).ready(function() {
   init();
 });
 
+var isDirty = false;
+
 // Strings for grabbing values from Thymeleaf Template.
-var test_case = "";
-var expected_output = "";
-var next_task = "";
-var task_id = "";
-var lesson_id = "";
-var completed = "";
-var new_lesson = "";
 
 function resize_content() {
   padding = 10;
@@ -52,28 +47,14 @@ function resize_content() {
 }
 
 function init() {
+
   resize_content();
-
-  // Get the div for the page, we'll use it to get the data attribute
-  // Use the dollar sign to signify that page is a jquery dom element
-  var $page_info = $("#page-info");
-
-  // Get the data attributes for the data needed in this javascript file.
-  test_case = $page_info.data("test-case");
-  expected_output = $page_info.data("ex-output");
-  next_task = $page_info.data('next-task');
-  task_id = $page_info.data('task-id');
-  lesson_id = $page_info.data('lesson-id');
-  completed = $page_info.data('completed');
-  new_lesson = $page_info.data('new-lesson');
-
-  // Remove the element once done loading from the page.
-  $page_info.remove();
-
   /* Expected output has newlines, we'll turn them in to <br> so it works
    * with html
    */
-  expected_output = String(expected_output).replace("\n","<br>") + "<br>";
+  for (i = 0; i < expected_output.length; i++) {
+    expected_output[i] = String(expected_output[i]).replace("\n","<br>") + "<br>";
+  }
 
   /* Makes child elements of editor, toolbox, and holds-one draggable
    * between all elements of those types.
@@ -88,10 +69,18 @@ function init() {
       if ($(this).hasClass('holds-one')) {
         if ($(this).children().length > 1) {
           $(ui.sender).sortable('cancel');
+          return;
         }
       }
+      isDirty = true;
     }
   }).disableSelection();
+
+  $(window).bind('beforeunload', function() {
+    if(isDirty){
+        return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+    }
+  });
 
   if(new_lesson) {
       startTutorial();
@@ -99,7 +88,23 @@ function init() {
 }
 
 function run() {
-  run_helper(true);
+  var correct = run_helper();
+
+  // If the arrow doesn't already exist and the output is correct, then mark the task as complete and show the arrow.
+  if ($('#output-div>.card-title-block').children().length === 1 &&
+      correct) {
+    completed = true;
+    // Adding next arrow to next task.
+    if (next_task > 0) {
+      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/'
+                                                        + lesson_id + '/task/' + next_task + '" onClick="save()"></a>'));
+    }
+    // If last lesson, just redirect to user page.
+    else {
+      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right"' + 
+                                                      'href="/user" onClick="save()"></a>'));
+    }
+  }
 }
 
 // Save data.
@@ -128,6 +133,7 @@ function save() {
     'data': JSON.stringify(data),
     'dataType': 'json'
   }).done(function() {
+    isDirty = false;
     return true;
   }).fail(function() {
     return false;

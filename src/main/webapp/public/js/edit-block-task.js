@@ -3,8 +3,8 @@ $(document).ready(function() {
 });
 
 // Strings for grabbing values from Thymeleaf Template.
-var test_case = "";
-var expected_output = "";
+var test_case = [];
+var expected_output = [];
 var next_task = "";
 var task_id = "";
 var lesson_id = "";
@@ -34,10 +34,10 @@ function init() {
 
   // Function for sortables to receive.
   var receiveFunction = function(event, ui) {
-    isDirty = true;
-
     // Fix styling for items dragged from catalog.
-    ui.helper.first().removeAttr('style');
+    if (ui.helper) {
+      ui.helper.first().removeAttr('style');
+    }
     
     // Restrict .holds-one to hold one element at a time.
     if ($(this).hasClass('holds-one')) {
@@ -45,13 +45,17 @@ function init() {
         // Revert to the previous position if the item is sortable.
         if (ui.item.hasClass('ui-sortable-handle')) {
           $(ui.sender).sortable('cancel');
+          return;
         }
         else {
           // Items dragged from the catalog do not have sortable yet, so just remove them.
           ui.helper.remove();
+          return;
         }
       }
     }
+
+    isDirty = true;
   };
 
   // Items in the catalog should be clonable.
@@ -117,7 +121,7 @@ function init() {
   });
 
   $(window).bind('beforeunload', function() {
-  if(unsaved){
+  if(isDirty){
       return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
   }
 });
@@ -126,7 +130,31 @@ function init() {
 
 // Runs the output. Does not produce a next arrow.
 function run() {
-  run_helper(false);
+  test_case = [];
+  expected_output = [];
+
+  $('#test-case').find('.row-item').each(function() {
+    test_case.push($(this).val());
+  });
+  $('#ex-output').find('.row-item').each(function() {
+    expected_output.push($(this).val().replace("\n","<br>") + "<br>");
+  });
+
+  debugger;
+  try {
+    var completed = run_helper();
+
+    if (completed) {
+      $('#test-status').replaceWith('<div id="test-status" class="btn btn-outline-success">Correct</div>');
+    }
+    else {
+      $('#test-status').replaceWith('<div id="test-status" class="btn btn-outline-danger">Incorrect</div>');
+    }
+  }
+  catch (e) {
+    $('#test-status').replaceWith('<div id="test-status" class="btn btn-outline-danger">Incorrect</div>');
+    throw e;
+  }
 }
 
 // Save data.
@@ -136,8 +164,8 @@ function save() {
   var editor = getBlocksIn($('#editor'));
   var toolbox = getBlocksIn($('#toolbox'));
 
-  var instructions = $('#instructions').text();
-  var hint = $('#hint').text();
+  var instructions = $('#instructions').val();
+  var hint = $('#hint').val();
   var title = $('#task-title').text();
 
   data.editor = editor;
@@ -146,15 +174,15 @@ function save() {
   data.hint = hint;
   data.title = title;
 
-  var test_case = [];
+  var t_case = [];
   var ex_output = [];
   $('#test-case').find('.row-item').each(function() {
-    test_case.push($(this).val());
+    t_case.push($(this).val());
   });
   $('#ex-output').find('.row-item').each(function() {
     ex_output.push($(this).val());
   });
-  data.test_case = test_case;
+  data.test_case = t_case;
   data.expected_output = ex_output;
 
   $.ajax({
@@ -167,6 +195,7 @@ function save() {
     'data': JSON.stringify(data),
     'dataType': 'json'
   }).done(function() {
+    isDirty = false;
     return true;
   }).fail(function() {
     return false;
@@ -175,9 +204,10 @@ function save() {
 
 // Adds an input and output.
 function addOutput() {
+  debugger;
   if ($('#ex-output').children().length === 1) {
-      $('#ex-output').find('i').removeClass('fa-disabled');
-      $('#test-case').find('i').removeClass('fa-disabled');
+      $('#ex-output').find('.fa-minus').removeClass('fa-disabled');
+      $('#test-case').find('.fa-minus').removeClass('fa-disabled');
   }
   var newInputRow = $('<div class="input-group"/>');
   var newOutputRow = newInputRow.clone();
@@ -212,15 +242,11 @@ function editTitle() {
   if (task_title.is('input')) {
     task_title.replaceWith($("<span id='task-title' />").text(task_title.val()));
     title_button.attr('title', 'Edit Title');
-    // title_button.removeClass('btn-success').addClass('btn-secondary');
     title_icon.removeClass('fa-save').addClass('fa-pencil');
   }
   else {
     task_title.replaceWith($("<input id='task-title' />").val(task_title.text()));
     title_button.attr('title', 'Save Title');
-    // title_button.removeClass('btn-secondary').addClass('btn-success');
     title_icon.removeClass('fa-pencil').addClass('fa-save');
   }
-
-
 }

@@ -16,21 +16,26 @@ $(function(){
     });
     editor.getSession().setMode("ace/mode/javascript");
 
-
-  
   // get the buttons from the dom
   var $instructionsText = $("#instructions"),
     $hintText = $("#hint"),
     $outputText = $("#output"),
     $testCase = $("#test-case"),
-    $expectedOutput = $("#ex-output");
+    $expectedOutput = $("#ex-output"),
+      $pageInfo = $("#page-info"),
+      title = $pageInfo.data("title"),
+      taskId = $pageInfo.data("task-id"),
+      lessonId=$pageInfo.data("lesson-id"),
+      type=$pageInfo.data("type");
+
+  debugger;
 
   //build the json that we'll send to the backend
   save = function(){
-      console.log("hello")
     // get the url we'll send the ajax call to
     // as well as a fake uid for the lesson json
     // TODO: do we nee dthis? ask henry
+      //FIXME: use a query paramater
     var baseurl= "http://localhost:8080/savefreecodetask/",
       id = 0;
 
@@ -40,6 +45,11 @@ $(function(){
     data.instructions = $instructionsText.text();
     data.hint = $hintText.text();
     data.completed = false;
+    data.toolbox=null;
+    data.editor=null;
+    data.title=title;
+    data.task_id=taskId;
+    data.type=type;
     
     var test_case = [];
     var ex_output = [];
