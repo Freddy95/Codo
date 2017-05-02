@@ -101,5 +101,11 @@ function startTutorial() {
         window.location.href = "/lesson/" + lesson_id;
     });
 
-    //tutorial.start();
+    $.ajax({
+        method:'POST',
+        url:"/user/toggle",
+        success:function() {
+        },error:function() {
+        }
+    });
 }

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.List;
 
@@ -67,8 +68,6 @@ public class UserController {
             // Add the user information to the thymeleaf model
             model.addAttribute("user_info", user);
 
-
-
             // Get the main site lessons for the user and add them to the thymeleaf model
             List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
             Collections.sort(main_lessons);
@@ -108,6 +107,32 @@ public class UserController {
         } else {
             return "redirect:login";
         }
+    }
+
+    @RequestMapping(value = "/user/toggle", method = RequestMethod.POST)
+    public void toggle_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
+        // Check if the user is still authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            resp.setStatus(500);
+        }
+
+        String userId = userService.getUserId(authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport()));
+        // Create the objectify object to store stuff from the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // Get the user object from the datastore
+        User user = ofy.load().type(User.class).id(userId).now();
+
+        // Reset the tutorial booleans and save them to the datastore
+        user.setNew_user(false);
+
+        // Save the user to the datastore
+        ofy.save().entity(user).now();
+
+        //give the ok response
+        resp.setStatus(200);
     }
 
 }
