@@ -130,6 +130,7 @@ public class TaskService {
 
     /**
      * Deletes a task from a lesson, returns index of that deleted task.
+     * Also deletes all blocks associated with that task.
      * @param lesson -- lesson
      * @param task_key -- key of task to deleted
      * @return -- index of deleted task. Returns -1 if task is not in lesson.
@@ -137,8 +138,18 @@ public class TaskService {
     public int delete_task(Lesson lesson, Key task_key){
         int index = -1;
         if(lesson.getTasks().contains(task_key)){
+            Objectify ofy = OfyService.ofy();
+            Task task = (Task) ofy.load().key(task_key).now();
+            for(int i = 0; i < task.getEditor().size(); i++){
+                ofy.delete().key(task.getEditor().get(i)).now();
+            }
+            for(int i = 0; i < task.getToolbox().size(); i++){
+                ofy.delete().key(task.getToolbox().get(i)).now();
+            }
+
             index = lesson.getTasks().indexOf(task_key);
             lesson.getTasks().remove(task_key);
+            ofy.delete().key(task_key).now();
         }
         return index;
     }

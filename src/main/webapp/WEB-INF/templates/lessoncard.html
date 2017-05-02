@@ -3,20 +3,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body> 
-  <div th:fragment="myfragment(variable)" class="col-6 align-items-center">
+  <div th:fragment="myfragment" class="col-6 align-items-center">
     <!-- All of the lesson card is a link to the relevant lesson. -->
-    <a th:fragment="subfragment(variable)" class="lesson-link" th:href="'/lesson/' + ${variable.lesson_id}">
+    <a th:fragment="subfragment" class="lesson-link" th:href="${path} + ${lesson.lesson_id}">
     <div class="row lesson-box">
 
       <!-- The left portion contains the title and progress. -->
       <div class="col-4 title-box">
-        <span th:text="${variable.title}"></span>
+        <span th:text="${lesson.title}"></span>
         <br/>
-        <span th:text="${variable.percent_complete}"></span>
+        <span th:text="${lesson.percent_complete}"></span>
       </div>
 
       <!-- The right portion contains the description. -->
-      <div class="col-8 description-box" th:text="${variable.description}"></div>
+      <div class="col-8 description-box" th:text="${lesson.description}"></div>
     </div>
     </a>
   </div>

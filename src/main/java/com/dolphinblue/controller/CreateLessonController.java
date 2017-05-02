@@ -16,8 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 
 /**
  * Created by FreddyEstevez on 4/13/17.
@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Controller
 @EnableWebMvc
-public class CreateController {
+public class CreateLessonController {
     @Autowired
     LessonService lessonService;
     @Autowired
@@ -35,7 +35,28 @@ public class CreateController {
     @Autowired
     TaskService taskService;
 
+    /**
+     * Returns the page to edit a lesson
+     * @param model lesson model retrieved from database
+     * @return edit-lesson template
+     */
+    @RequestMapping("/debug-edit-lesson")
+    public String debug_edit_lesson(@CookieValue("token") String token, Model model){
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            return "redirect:login";
+        }
 
+        Lesson l = new Lesson();
+        l.setTitle("Default Title");
+        l.setDescription("Default Description");
+        l.setShared(true);
+        model.addAttribute("lesson",l);
+
+        //TODO: add code to fetch lesson from url and load it into the page
+        return "edit-lesson";
+    }
 
     /**
      * This route should be called when a user first wants to create a new lesson.
@@ -66,7 +87,8 @@ public class CreateController {
         //save lesson to datastore
         ofy.save().entity(l).now();
         model.addAttribute("lesson_id", l.getLesson_id());
-        return "editlesson";
+        String requestUrl = "/createlesson/" + l.getLesson_id();
+        return "redirect:" + requestUrl;
     }
 
 
@@ -96,7 +118,7 @@ public class CreateController {
         List<Task> tasks = lessonService.get_tasks_by_id(task_keys);
         model.addAttribute("tasks", tasks);
         model.addAttribute("lesson", lesson);
-        return "editlesson";
+        return "edit-lesson";
     }
 
 
@@ -110,14 +132,13 @@ public class CreateController {
      * TODO: add query parameter to determine if task created should be block or freecode.
      */
     @RequestMapping(value = "/createlesson/{lessonId}/createtask", method = RequestMethod.GET)
-    public String get_create_task_page(Model model, @PathVariable(value = "lessonId") long id){
+    public void create_task(Model model, @PathVariable(value = "lessonId") long id){
         Objectify ofy = OfyService.ofy();
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         Task task = new Task();
         lesson.getTasks().add(ofy.save().entity(task).now());
-        model.addAttribute("lesson_id", lesson.getLesson_id());
+        ofy.save().entity(lesson).now();
         model.addAttribute("task_id", task.getTask_id());
-        return "createtaskpage";
     }
 
 
@@ -174,7 +195,6 @@ public class CreateController {
 
     /**
      * Deletes the current task in the lesson user is creating.
-     * @param token -- user access token
      * @param id -- lesson id
      * @param taskId -- id of task to delete
      * @param model -- thymeleaf model
@@ -182,14 +202,7 @@ public class CreateController {
      * @return --
      */
     @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.DELETE)
-    public String delete_task(@CookieValue("token") String token,  @PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
-
-        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
-        if(!isAuthenticated){
-            // If the user isn't properly authenticated send them back to the login page
-            return "redirect:/login";
-        }
-
+    public void delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
         Objectify ofy = OfyService.ofy();
         //get key of task
         Key task_key = Key.create(Task.class, taskId);
@@ -199,16 +212,8 @@ public class CreateController {
         //Get lesson and delete the task key from the list of tasks.
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
 
-        //delete task and get index of deleted task
-        int index = taskService.delete_task(lesson, task_key);
-
-        //find which task to add to model
-        Task task = taskService.get_edit_task(lesson, index);
-        model.addAttribute("task", task);
-
-        //add lesson to model
-        model.addAttribute("lesson", lesson);
-        return "";
+        taskService.delete_task(lesson, task_key);
+        ofy.save().entity(lesson).now();
     }
 
 
