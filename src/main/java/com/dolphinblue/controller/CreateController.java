@@ -195,6 +195,7 @@ public class CreateController {
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
 
         taskService.delete_task(lesson, task_key);
+        ofy.save().entity(lesson).now();
 
 
     }
