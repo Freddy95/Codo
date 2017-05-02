@@ -41,7 +41,7 @@
         <h2>You're learning:</h2>
       </div>
       <div class="row justify-content-center">
-        <div th:replace="lessoncard :: myfragment(${lesson})"></div>
+        <div th:replace="lessoncard :: myfragment(lesson=${lesson}, path='/lesson/')"></div>
       </div>
     </div>
   </div>
@@ -75,7 +75,7 @@
       </div>
       <div class="tab-content step-6">
         <div class="tab-pane fade show active" id="main" role="tabpanel">
-          <div th:replace="lesson-list :: list-display(lesson_list=${main_lessons})"></div>
+          <div th:replace="lesson-list :: list-display(lesson_list=${main_lessons},path='/lesson/')"></div>
         </div>
 
         <!-- The tab for the shared lessons. -->
@@ -86,12 +86,12 @@
         <!-- The tab for a user's lessons. -->
         <div class="tab-pane fade" id="your" role="tabpanel">
           <div class="row justify-content-center add-button">
-            <a class="btn btn-primary" href="#"
+            <a class="btn btn-primary" href="/createlesson"
                 data-toggle="tooltip" data-placement="left" title="Add Lesson">
               <i class="fa fa-lg fa-plus" aria-hidden="true"></i>
             </a>
           </div>
-          <div th:replace="lesson-list :: list-display(lesson_list=${own_lessons})"></div>
+          <div th:replace="lesson-list :: list-display(lesson_list=${own_lessons},path='/createlesson/')"></div>
         </div>
       </div>
     </div>
