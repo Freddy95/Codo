@@ -276,7 +276,7 @@ public class CreateLessonController {
      * @param model -- thymeleaf model
      * @return -- editlesson page.
      */
-    @RequestMapping(value = "/createlesson/{lessonId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deletelesson/{lessonId}", method = RequestMethod.GET)
     public @ResponseBody String delete_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model, Model model){
 
         Objectify ofy = OfyService.ofy();
@@ -285,7 +285,7 @@ public class CreateLessonController {
             taskService.delete_task(lesson, lesson.getTasks().get(i));
         }
         ofy.delete().entity(lesson).now();
-        return "redirect:user";
+        return "redirect:/user";
 
     }
 }

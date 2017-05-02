@@ -102,10 +102,10 @@
           <i class="fa fa-save" aria-hidden="true"></i>
           Save Changes
         </button>
-        <button type="button" class="btn btn-danger">
+        <a class="btn btn-danger" th:href="'/deletelesson/' + ${lesson.lesson_id}">
           <i class="fa fa-trash" aria-hidden="true"></i>
           Delete Lesson
-        </button>
+        </a>
       </div>
     </div>
   </div>
