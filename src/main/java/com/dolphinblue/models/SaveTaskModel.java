@@ -14,6 +14,7 @@ public class SaveTaskModel {
     private List<String> expected_output;
     private BlockList toolbox;
     private BlockList editor;
+    private String freecode;
 
     public SaveTaskModel() {
 
@@ -95,5 +96,13 @@ public class SaveTaskModel {
                 "HINT = " +  this.hint + " ,\n" +
                 "TEST CASE = " +  this.test_case.toString() + " ,\n" +
                 "EXPECTED OUTPUT = " +  this.expected_output.toString();
+    }
+
+    public String getFreecode() {
+        return freecode;
+    }
+
+    public void setFreecode(String freecode) {
+        this.freecode = freecode;
     }
 }

@@ -32,7 +32,6 @@ public class CreateController {
 
     /**
      * Saves the current block - task in the created lesson
-     * @param token -- user access token
      * @param id -- lesson id
      * @param taskId -- id of task to be saved
      * @param blocks -- list of blocks to be saved
@@ -78,8 +77,9 @@ public class CreateController {
      * @param model -- thymeleaf model
      * @param id -- lesson id
      * @return -- create task page
+     * TODO: add query parameter to determine if task created should be block or freecode.
      */
-    @RequestMapping(value = "/createlesson/{lessonId}/createtask")
+    @RequestMapping(value = "/createlesson/{lessonId}/createtask", method = RequestMethod.GET)
     public String get_create_task_page(Model model, @PathVariable(value = "lessonId") long id){
         Objectify ofy = OfyService.ofy();
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
