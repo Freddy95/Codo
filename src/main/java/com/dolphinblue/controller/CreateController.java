@@ -69,7 +69,7 @@ public class CreateController {
         l.getTasks().add(ofy.save().entity(t).now());
         //save lesson to datastore
         ofy.save().entity(l);
-        model.addAttribute("lesson", l.getLesson_id());
+        model.addAttribute("lesson_id", l.getLesson_id());
         return "createlessonpage";
     }
 
@@ -87,10 +87,35 @@ public class CreateController {
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         Task task = new Task();
         lesson.getTasks().add(ofy.save().entity(task).now());
-        model.addAttribute("lesson", lesson.getLesson_id());
-        model.addAttribute("task", task.getTask_id());
+        model.addAttribute("lesson_id", lesson.getLesson_id());
+        model.addAttribute("task_id", task.getTask_id());
         return "createtaskpage";
     }
+
+
+    /**
+     * This route should be called when a user wants edit an already created task.
+     * Gets task and adds it to thymeleaf model.
+     * @param model -- thymeleaf model
+     * @param id -- lesson id
+     * @param taskId -- task id
+     * @return -- create task page
+     * TODO: add query parameter to determine if task created should be block or freecode.
+     */
+    @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}", method = RequestMethod.GET)
+    public String get_create_task_page(Model model, @PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId){
+        Objectify ofy = OfyService.ofy();
+        Task task = ofy.load().type(Task.class).id(taskId).now();
+        model.addAttribute("lesson_id", id);
+        model.addAttribute("task_id", task.getTask_id());
+        model.addAttribute("task", task);
+        if(task.getFreecode() == null){
+            //blocktask
+            return "createblocktaskpage";
+        }
+        return "createfreecodetaskpage";
+    }
+
     /**
      * This route should be called when a user first wants to create a new freecode lesson.
      * Creates a lesson and task object, saves them in datastore.
@@ -156,5 +181,39 @@ public class CreateController {
         //add lesson to model
         model.addAttribute("lesson", lesson);
         return "";
+    }
+
+
+    /**
+     * Deletes the current task in the lesson user is creating.
+     * @param token -- user access token
+     * @param id -- lesson id
+     * @param taskId -- id of task to delete
+     * @param model -- thymeleaf model
+     * TODO: return create task page?
+     * @return --
+     */
+    @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
+    public @ResponseBody String save_task(@CookieValue("token") String token,  @PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel task_model, Model model){
+
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            return "redirect:/login";
+        }
+
+        Objectify ofy = OfyService.ofy();
+
+        Task task = ofy.load().type(Task.class).id(taskId).now();
+        taskService.task_model_to_task(task, task_model);
+        ofy.save().entity(task).now();
+        model.addAttribute("task", task);
+        model.addAttribute("task_id", taskId);
+        model.addAttribute("lesson_id", id);
+        if(task.getFreecode() == null){
+            return "createblocktaskpage";
+        }
+
+        return "createfreecodetaskpage";
     }
 }
