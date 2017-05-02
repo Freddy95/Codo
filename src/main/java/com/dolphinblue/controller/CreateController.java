@@ -34,27 +34,7 @@ public class CreateController {
     @Autowired
     TaskService taskService;
 
-    /**
-     * Saves the current block - task in the created lesson
-     * @param id -- lesson id
-     * @param taskId -- id of task to be saved
-     * @param blocks -- list of blocks to be saved
-     * @return
-     */
-    @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
-    public @ResponseBody void save_created_lesson(@PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel blocks){
-        System.out.println(blocks.toString());
-        System.out.println("toolbox");
-        System.out.println(blocks.getToolbox());
-        System.out.println("editor");
-        System.out.println(blocks.getEditor());
-        for(int i = 0; i < blocks.getEditor().getBlocks().size(); i++){
-            System.out.println(blocks.getEditor().getBlocks().get(i));
-        }
-        for(int i = 0; i < blocks.getToolbox().getBlocks().size(); i++){
-            System.out.println(blocks.getToolbox().getBlocks().get(i));
-        }
-    }
+
 
     /**
      * This route should be called when a user first wants to create a new lesson.
@@ -168,7 +148,7 @@ public class CreateController {
      * TODO: return create task page?
      * @return --
      */
-    @RequestMapping(value = "/savecreatedlesson/{lessonId}/deletetask/{taskId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.DELETE)
     public String delete_task(@CookieValue("token") String token,  @PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
 
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
@@ -208,7 +188,7 @@ public class CreateController {
      * TODO: return create task page?
      * @return --
      */
-    @RequestMapping(value = "/savecreatedlesson/{lessonId}/savetask/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/savecreatedlesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
     public @ResponseBody String save_task(@CookieValue("token") String token,  @PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel task_model, Model model){
 
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
