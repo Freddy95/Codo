@@ -159,13 +159,15 @@ public class CreateLessonController {
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         model.addAttribute("task", task);
         model.addAttribute("lesson", lesson);
-        model.addAttribute("editor", lessonService.get_blocks_by_id(task.getEditor()));
-        model.addAttribute("toolbox", lessonService.get_blocks_by_id(task.getToolbox()));
-        model.addAttribute("catalog", taskService.get_catalog());
+
         if(task.getFreecode() == null){
             //blocktask
+            model.addAttribute("editor", lessonService.get_blocks_by_id(task.getEditor()));
+            model.addAttribute("toolbox", lessonService.get_blocks_by_id(task.getToolbox()));
+            model.addAttribute("catalog", taskService.get_catalog());
             return "edit-block-task";
         }
+        model.addAttribute("freecode", task.getFreecode());
         return "edit-freecode-task";
     }
 
