@@ -13,7 +13,7 @@
       <!-- Pop a modal to edit the lesson and task details. -->
       <li class="nav-item">
         <a class="nav-link btn-outline-secondary"
-          data-toggle="tooltip" data-placement="bottom">
+          data-toggle="tooltip" data-placement="bottom" th:href="'/createlesson/' + ${lesson.lesson_id}">
           <i class="fa fa-lg fa-chevron-left" aria-hidden="true"></i>
           Return to Lesson
         </a>
@@ -51,6 +51,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link"
+          th:href="'/createlesson/' + ${lesson.lesson_id} + '/createtask/' + ${task.task_id} + '/delete'"
           data-toggle="tooltip" data-placement="bottom" title="Delete Task">
           <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
         </a>  

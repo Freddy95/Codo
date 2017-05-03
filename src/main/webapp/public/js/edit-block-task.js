@@ -18,14 +18,6 @@ function init() {
 
   // Get the div for the page, we'll use it to get the data attribute
   // Use the dollar sign to signify that page is a jquery dom element
-  var $page_info = $("#page-info");
-
-  // Get the data attributes for the data needed in this javascript file.
-  task_id = $page_info.data('task-id');
-  lesson_id = $page_info.data('lesson-id');
-
-  // Remove the element once done loading from the page.
-  $page_info.remove();
 
   /* Expected output has newlines, we'll turn them in to <br> so it works
    * with html
@@ -191,7 +183,7 @@ function save() {
         'Content-Type': 'application/json' 
     },
     'type': 'POST',
-    'url': '/savecreatedlesson/' + 1 + '/task/' + 1,
+    'url': '/savecreatedlesson/' + lesson_id + '/task/' + task_id,
     'data': JSON.stringify(data),
     'dataType': 'json'
   }).done(function() {
