@@ -206,13 +206,13 @@ public class CreateLessonController {
         Objectify ofy = OfyService.ofy();
         //get key of task
         Key task_key = Key.create(Task.class, taskId);
-        //delete task from datastore
-        ofy.delete().type(Task.class).id(taskId).now();
 
+        
         //Get lesson and delete the task key from the list of tasks.
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
 
         taskService.delete_task(lesson, task_key);
+
         ofy.save().entity(lesson).now();
     }
 
