@@ -158,8 +158,22 @@ public class CreateLessonController {
         Objectify ofy = OfyService.ofy();
         Task task = ofy.load().type(Task.class).id(taskId).now();
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
-        model.addAttribute("task", task);
         model.addAttribute("lesson", lesson);
+
+        //get task titles and check to see which tasks have already been started
+        taskService.get_task_navigation(lesson, model);
+
+        //get next and previous task
+        taskService.get_next_task(task, lesson, model);
+        taskService.get_previous_task(task, lesson, model);
+
+        //task is being worked on so it is in progress
+        task.setIn_progress(true);
+
+        //save change
+        ofy.save().entity(task).now();
+
+        model.addAttribute("task", task);
 
         if(task.getFreecode() == null){
             //blocktask
