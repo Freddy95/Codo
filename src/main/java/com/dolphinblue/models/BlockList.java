@@ -16,7 +16,7 @@ public class BlockList {
     @JsonProperty(value="blocks")
     public List<Block> blocks;
 
-    public BlockList{
+    public BlockList(){
         blocks = new ArrayList<>();
     }
 
