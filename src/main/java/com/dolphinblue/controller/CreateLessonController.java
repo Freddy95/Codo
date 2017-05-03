@@ -192,6 +192,7 @@ public class CreateLessonController {
      * @param model -- thymeleaf model
      * @return -- editfrecodetask page.
      */
+    //NOTE: this is a method for testing a template, we'll get rid of it soon
     @RequestMapping(value = "/createlesson/freecode", method = RequestMethod.GET)
     public String get_create_freecode(Model model){
         Objectify ofy = OfyService.ofy();

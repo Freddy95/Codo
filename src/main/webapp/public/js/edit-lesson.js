@@ -15,7 +15,7 @@ function init() {
     $('.sortable').sortable({
         placeholder: "ui-state-highlight"
     }).disableSelection();
-};
+}
 
 // Save data.
 function save() {
@@ -24,7 +24,7 @@ function save() {
     // Delete every task first.
     for(taskToDeleteInc = 0; taskToDeleteInc < tasksToDelete.length; taskToDeleteInc++) {
         //TODO: Send delete request for each task.
-        console.log(tasksToDelete[taskToDeleteInc])
+        console.log(tasksToDelete[taskToDeleteInc]);
     }
 
     // Grab detail fields.
@@ -48,30 +48,19 @@ function save() {
     });
 }
 
-function addBlockTask() {
+function addTask(type) {
+  
     $.ajax({
       method:'GET',
         data:{
-         "type":"block"
+         "type":type
         },
       url: '/createlesson/' + lesson_id + '/createtask',
       success: function(data, status, xhttp) {
         console.log(data);
+        //redirect to the newly created task
+        window.location.href = '/createlesson/' + lesson_id + '/createtask/'+data;
       }
-    });
-
-}
-
-function addFreeCodeTask() {
-    $.ajax({
-        method:'GET',
-        data:{
-            "type":"freecode"
-        },
-        url: '/createlesson/' + lesson_id + '/createtask',
-        success: function(data, status, xhttp) {
-            console.log(data);
-        }
     });
 
 }
