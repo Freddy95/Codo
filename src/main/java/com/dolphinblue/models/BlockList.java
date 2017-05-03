@@ -33,4 +33,7 @@ public class BlockList {
         this.blocks = blocks;
     }
 
+    public String toString(){
+        return blocks.get(0).getValue();
+    }
 }

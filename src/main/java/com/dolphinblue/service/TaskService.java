@@ -185,6 +185,8 @@ public class TaskService {
             for (int i = 0; i < toolbox_list.size(); i++){
                 toolbox_keys.add(ofy.save().entity(toolbox_list.get(i)).now());
             }
+            task.setEditor(editor_keys);
+            task.setToolbox(toolbox_keys);
             return task;
         }
         //freecode task
