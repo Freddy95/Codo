@@ -59,7 +59,7 @@ $(function () {
             }
         }
         //check that it matches the expected output
-        if(is_correct){
+        if(is_correct && (completed!=true)){
             completed = true;
             // Adding next arrow to next task.
             if (next_task > 0) {
