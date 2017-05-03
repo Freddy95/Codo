@@ -3,6 +3,7 @@ package com.dolphinblue.models;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +15,10 @@ public class BlockList {
 
     @JsonProperty(value="blocks")
     public List<Block> blocks;
+
+    public BlockList(){
+        blocks = new ArrayList<>();
+    }
 
     @JsonCreator
     public BlockList(List<Block> blocks){
