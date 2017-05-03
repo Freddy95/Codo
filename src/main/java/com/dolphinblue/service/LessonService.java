@@ -46,25 +46,6 @@ public class LessonService {
     }
 
     /**
-     * This returns the main lessons.
-     * @param lesson_keys -- The keys of lessons to check if they are main lessons.
-     * @return -- returns main lessons.
-     */
-    public List<Lesson> get_main_lessons_by_id(List<Key<Lesson>> lesson_keys) {
-        Objectify ofy = OfyService.ofy();
-        List<Lesson> main_lessons = new ArrayList<>();
-        for(int i = 0; i < lesson_keys.size(); i++) {
-            Key<Lesson> lesson_key = lesson_keys.get(i);
-            Lesson lesson = ofy.load().key(lesson_key).now();
-            if(lesson.isSite_owned()) {
-                //if its a main lesson, add to list.
-                main_lessons.add(lesson);
-            }
-        }
-        return main_lessons;
-    }
-
-    /**
      * Creates main lesson objects for a specific user ONLY IF the user doesn't have a certain lesson object
      * @param user -- User to create lesson objects for.
      */
@@ -265,6 +246,16 @@ public class LessonService {
     public List<Lesson> get_main_lessons_by_user(User user){
         Objectify ofy = OfyService.ofy();
         return ofy.load().type(Lesson.class).filter("user_id", user.getUser_id()).filter("site_owned", true).list();
+    }
+
+    /**
+     * gets the shared lesson objects site wide
+     * @param user
+     * @return list of shared lessons for the site
+     */
+    public List<Lesson> get_shared_lessons_by_user(User user){
+        Objectify ofy = OfyService.ofy();
+        return ofy.load().type(Lesson.class).filter("user_id !=", user.getUser_id()).filter("site_owned", false).list();
     }
 
     /**
