@@ -9,6 +9,10 @@
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/draggable-style.css}"></link>
   <script type="text/javascript" th:src="@{/public/js/block-helper.js}"></script> 
   <script type="text/javascript" th:src="@{/public/js/edit-block-task.js}"></script>
+  <script th:inline="javascript">
+    var lesson_id = [[${lesson.lesson_id}]];
+    var task_id = [[${task.task_id}]];
+  </script>
 </head>
 <body>
 

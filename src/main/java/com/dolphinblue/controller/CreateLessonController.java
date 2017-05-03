@@ -131,11 +131,12 @@ public class CreateLessonController {
      * TODO: add query parameter to determine if task created should be block or freecode.
      */
     @RequestMapping(value = "/createlesson/{lessonId}/createtask", method = RequestMethod.GET)
+    @ResponseBody
     public long create_task(Model model, @PathVariable(value = "lessonId") long id){
         Objectify ofy = OfyService.ofy();
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         Task task = new Task();
-        task.setTitle("New Task.");
+        task.setTitle("New Task");
         lesson.getTasks().add(ofy.save().entity(task).now());
         ofy.save().entity(lesson).now();
         return task.getTask_id();
@@ -207,8 +208,8 @@ public class CreateLessonController {
      * TODO: return create task page?
      * @return --
      */
-    @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}", method = RequestMethod.DELETE)
-    public void delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
+    @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}/delete", method = RequestMethod.GET)
+    public String delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
         Objectify ofy = OfyService.ofy();
         //get key of task
         Key task_key = Key.create(Task.class, taskId);
@@ -220,6 +221,8 @@ public class CreateLessonController {
         taskService.delete_task(lesson, task_key);
 
         ofy.save().entity(lesson).now();
+        String requestUrl = "/createlesson/" + id;
+        return "redirect:" + requestUrl;
     }
 
 

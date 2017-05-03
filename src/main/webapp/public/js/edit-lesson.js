@@ -46,5 +46,19 @@ function save() {
       dataType:'json',
       data:JSON.stringify(data),
     });
+}
+
+function addTask() {
+    $.ajax({
+      method:'GET',
+      url: '/createlesson/' + lesson_id + '/createtask',
+      success: function(data, status, xhttp) {
+        console.log(data);
+      }
+    });
+
+}
+
+function deleteTask(node) {
 
 }
