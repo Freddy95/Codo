@@ -208,7 +208,7 @@ public class CreateLessonController {
      * TODO: return create task page?
      * @return --
      */
-    @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}", method = RequestMethod.DELETE)
     public String delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
         Objectify ofy = OfyService.ofy();
         //get key of task
@@ -221,8 +221,8 @@ public class CreateLessonController {
         taskService.delete_task(lesson, task_key);
 
         ofy.save().entity(lesson).now();
-        String requestUrl = "/createlesson/" + id;
-        return "redirect:" + requestUrl;
+
+        return "";
     }
 
 

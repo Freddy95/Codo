@@ -194,9 +194,18 @@ function save() {
   });
 }
 
+function deleteTask() {
+  $.ajax({
+    method:'DELETE',
+    url: '/createlesson/' + lesson_id + '/createtask/' + task_id,
+    success: function(data, status, xhttp) {
+      window.location.replace('../../createlesson/' + lesson_id);
+    }
+  });
+}
+
 // Adds an input and output.
 function addOutput() {
-  debugger;
   if ($('#ex-output').children().length === 1) {
       $('#ex-output').find('.fa-minus').removeClass('fa-disabled');
       $('#test-case').find('.fa-minus').removeClass('fa-disabled');
