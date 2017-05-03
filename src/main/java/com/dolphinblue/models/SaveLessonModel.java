@@ -1,5 +1,6 @@
 package com.dolphinblue.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class SaveLessonModel {
     private List<SaveTaskModel> tasks;
 
     public SaveLessonModel(){
-
+        tasks = new ArrayList<>();
     }
 
     public String getTitle() {
