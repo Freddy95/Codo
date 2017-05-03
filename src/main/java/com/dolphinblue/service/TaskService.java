@@ -167,7 +167,7 @@ public class TaskService {
      */
     public Task task_model_to_task(Task task, SaveTaskModel task_model){
         Objectify ofy = OfyService.ofy();
-
+        BlockService blockService = new BlockService();
         task.setTitle(task_model.getTitle());
         task.setTest_case(task_model.getTest_case());
         task.setExpected_output(task_model.getExpected_output());
@@ -175,16 +175,12 @@ public class TaskService {
         task.setHint(task_model.getHint());
         if(task_model.getFreecode() == null){
             //block task
-            List<Key<Block>> editor_keys = new ArrayList<>();
-            List<Block> editor_list = task_model.getEditor().getBlocks();
-            for (int i = 0; i < editor_list.size(); i++){
-                editor_keys.add(ofy.save().entity(editor_list.get(i)).now());
-            }
-            List<Key<Block>> toolbox_keys = new ArrayList<>();
-            List<Block> toolbox_list = task_model.getToolbox().getBlocks();
-            for (int i = 0; i < toolbox_list.size(); i++){
-                toolbox_keys.add(ofy.save().entity(toolbox_list.get(i)).now());
-            }
+            List<SaveBlockModel> editor_list = task_model.getEditor().getBlocks();
+            List<Key<Block>> editor_keys = blockService.save_list_blocks(editor_list);
+            List<SaveBlockModel> toolbox_list = task_model.getToolbox().getBlocks();
+            List<Key<Block>> toolbox_keys = blockService.save_list_blocks(toolbox_list);
+
+
             task.setEditor(editor_keys);
             task.setToolbox(toolbox_keys);
             return task;
@@ -193,4 +189,7 @@ public class TaskService {
         task.setFreecode(task_model.getFreecode());
         return task;
     }
+
+
+
 }

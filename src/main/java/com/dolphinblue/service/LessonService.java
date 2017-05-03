@@ -171,20 +171,21 @@ public class LessonService {
      * @param blocks -- the list of blocks to be updated
      * @return -- the list of updated block keys
      */
-    public List<Key<Block>> update_blocks(long task_id, List<Block> blocks) {
+    public List<Key<Block>> update_blocks(long task_id, List<SaveBlockModel> blocks) {
         // Get the objectify object to access the datastore
         Objectify ofy = OfyService.ofy();
         // Create a list of block ids
+        BlockService blockService = new BlockService();
         List<Key<Block>> block_keys = new ArrayList<>();
 
         // For each block in the block list
         for(int i = 0; i < blocks.size(); i++) {
             //System.out.println("Getting new block from blocks list");
             // Get the new block from the list
-            Block new_block = blocks.get(i);
+            SaveBlockModel new_block = blocks.get(i);
             // Get the original block from the datastore
-            Block old_block = ofy.load().type(Block.class).id(blocks.get(i).getBlock_id()).now();
-
+            Block old_b = ofy.load().type(Block.class).id(blocks.get(i).getBlock_id()).now();
+            SaveBlockModel old_block = blockService.block_to_block_model(old_b);
 
             if(new_block.isCan_edit()){
                 //check to see if children blocks are equal

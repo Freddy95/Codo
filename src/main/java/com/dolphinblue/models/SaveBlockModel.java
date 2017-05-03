@@ -1,6 +1,5 @@
 package com.dolphinblue.models;
 
-import com.dolphinblue.service.OfyService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
@@ -14,48 +13,31 @@ import java.util.List;
  * Model representing a block
  */
 @Entity
-public class Block {
+public class SaveBlockModel {
     @Id public Long block_id;
     public String value;
-    public Type type;
+    public Block.Type type;
 
     public boolean can_edit;
-    List<Key<Block>> children;
+    List<SaveBlockModel> children;
 
-    // Types of blocks available.
-    public enum Type {
-        STATIC,
-        IF,
-        ASSIGN,
-        FOR,
-        WHILE,
-        LOG,
-        CURL,
-        SQUARE,
-        ELSE,
-        ELSE_IF,
-        SWITCH,
-        CASE
-        ;
-    }
-
-    public Block() {
-        children = new ArrayList<Key<Block>>();
+    public SaveBlockModel() {
+        children = new ArrayList<SaveBlockModel>();
     }
 
 
-    public Block(long block_id, String value,  boolean can_edit) {
+    public SaveBlockModel(long block_id, String value,  boolean can_edit) {
         this.block_id = block_id;
         this.value = value;
         this.can_edit = can_edit;
-        this.children = new ArrayList<Key<Block>>();
+        this.children = new ArrayList<SaveBlockModel>();
     }
-    public Block(long block_id, String value,  Type t,boolean can_edit) {
+    public SaveBlockModel(long block_id, String value,  Block.Type t,boolean can_edit) {
         this.block_id = block_id;
         this.value = value;
         this.can_edit = can_edit;
         this.type=t;
-        this.children = new ArrayList<Key<Block>>();
+        this.children = new ArrayList<SaveBlockModel>();
     }
 
     public Long getBlock_id() {
@@ -74,11 +56,11 @@ public class Block {
         this.value = value;
     }
 
-    public Type getType() {
+    public Block.Type getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(Block.Type type) {
         this.type = type;
     }
 
@@ -91,10 +73,16 @@ public class Block {
     }
 
 
+    public List<SaveBlockModel> getChildren() {
+        return children;
+    }
 
+    public void setChildren(List<SaveBlockModel> children) {
+        this.children = children;
+    }
 
-    public void addChild(Block newBlock) {
-        this.children.add(OfyService.ofy().save().entity(newBlock).now());
+    public void addChild(SaveBlockModel newBlock) {
+        this.children.add(newBlock);
     }
 
     public void removeChild(int index) {
@@ -112,13 +100,5 @@ public class Block {
                 ", can_edit=" + this.can_edit +
                 ", children" + this.children+
                 '}';
-    }
-
-    public List<Key<Block>> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Key<Block>> children) {
-        this.children = children;
     }
 }
