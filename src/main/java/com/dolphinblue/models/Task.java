@@ -33,6 +33,8 @@ public class Task {
     public Task(){
         editor = new ArrayList<>();
         toolbox = new ArrayList<>();
+        test_case = new ArrayList<>();
+        expected_output = new ArrayList<>();
     }
 
     public Task(Long task_id, String title, String instructions, String hint, List<String> test_case, List<String> expected_output, List<Key<Block>> toolbox, List<Key<Block>> editor, String freecode, boolean completed, Type type) {
