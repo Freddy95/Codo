@@ -222,12 +222,11 @@ public class CreateLessonController {
      * TODO: return create task page?
      * @return --
      */
-    @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}", method = RequestMethod.DELETE)
-    public String delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
+    @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}/delete", method = RequestMethod.POST)
+    public @ResponseBody void delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId){
         Objectify ofy = OfyService.ofy();
         //get key of task
         Key task_key = Key.create(Task.class, taskId);
-
 
         //Get lesson and delete the task key from the list of tasks.
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
@@ -235,8 +234,6 @@ public class CreateLessonController {
         taskService.delete_task(lesson, task_key);
 
         ofy.save().entity(lesson).now();
-
-        return "";
     }
 
 
