@@ -22,32 +22,28 @@ $(function(){
     $outputText = $("#output"),
     $testCase = $("#test-case"),
     $expectedOutput = $("#ex-output"),
+      $taskTitle = $("#task-title"),
       $pageInfo = $("#page-info"),
-      title = $pageInfo.data("title"),
       taskId = $pageInfo.data("task-id"),
       lessonId=$pageInfo.data("lesson-id"),
       type=$pageInfo.data("type");
 
-  debugger;
 
   //build the json that we'll send to the backend
   save = function(){
     // get the url we'll send the ajax call to
     // as well as a fake uid for the lesson json
-    // TODO: do we nee dthis? ask henry
-      //FIXME: use a query paramater
-    var baseurl= "http://localhost:8080/savefreecodetask/",
-      id = 0;
+    var baseurl= "http://localhost:8080/createlesson/"+lessonId+"/createtask/"+taskId;
 
     //make a data object to send to the backend
     var data={};
     //get the instructions and assign them to the data we'll return
-    data.instructions = $instructionsText.text();
-    data.hint = $hintText.text();
+    data.instructions = $instructionsText.val();
+    data.hint = $hintText.val();
     data.completed = false;
     data.toolbox=null;
     data.editor=null;
-    data.title=title;
+    data.title=$("#task-title").text();
     data.task_id=taskId;
     data.type=type;
     
@@ -72,7 +68,8 @@ $(function(){
       method:'POST',
       url: baseurl,
       dataType:'json',
-     data:JSON.stringify(data),
+      contentType: "application/json; charset=utf-8",
+      data:JSON.stringify(data)
     });
 
   };
@@ -108,5 +105,20 @@ function minusOutput(node) {
     }
   }
 }
-
+// Allows editing of the title.
+function editTitle() {
+  var task_title = $('#task-title');
+  var title_button = $('#title-button');
+  var title_icon = $('#title-icon');
+  if (task_title.is('input')) {
+    task_title.replaceWith($("<span id='task-title' />").text(task_title.val()));
+    title_button.attr('title', 'Edit Title');
+    title_icon.removeClass('fa-save').addClass('fa-pencil');
+  }
+  else {
+    task_title.replaceWith($("<input id='task-title' />").val(task_title.text()));
+    title_button.attr('title', 'Save Title');
+    title_icon.removeClass('fa-pencil').addClass('fa-save');
+  }
+}
 

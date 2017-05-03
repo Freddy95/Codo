@@ -132,11 +132,16 @@ public class CreateLessonController {
      */
     @RequestMapping(value = "/createlesson/{lessonId}/createtask", method = RequestMethod.GET)
     @ResponseBody
-    public long create_task(Model model, @PathVariable(value = "lessonId") long id){
+    public long create_task(Model model, @PathVariable(value = "lessonId") long id, @RequestParam("type") String type){
         Objectify ofy = OfyService.ofy();
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         Task task = new Task();
         task.setTitle("New Task");
+        if(type.equals("freecode")){
+          task.setFreecode("console.log('hello world!');");
+        }else{
+          task.setFreecode(null);
+        }
         lesson.getTasks().add(ofy.save().entity(task).now());
         ofy.save().entity(lesson).now();
         return task.getTask_id();
@@ -192,6 +197,7 @@ public class CreateLessonController {
      * @param model -- thymeleaf model
      * @return -- editfrecodetask page.
      */
+    //NOTE: this is a method for testing a template, we'll get rid of it soon
     @RequestMapping(value = "/createlesson/freecode", method = RequestMethod.GET)
     public String get_create_freecode(Model model){
         Objectify ofy = OfyService.ofy();

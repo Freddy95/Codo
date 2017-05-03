@@ -73,11 +73,16 @@ public class UserController {
             Collections.sort(main_lessons);
             for (int i = 0; i < main_lessons.size(); i++){
                 Lesson lesson = main_lessons.get(i);
-                lesson.setPercent_complete(100 * lessonService.get_percent_complete(lesson));
+                lesson.setPercent_complete((Math.round(1000 * lessonService.get_percent_complete(lesson)))/10);
+                System.out.println(lesson.getPercent_complete());
             }
             model.addAttribute("main_lessons", main_lessons);
+            // Get the owned lessons for the user
             List<Lesson> own_lessons = lessonService.get_own_lessons(user);
             model.addAttribute("own_lessons", own_lessons);
+            // Get the shared lessons for the user
+            List<Lesson> shared_lessons = lessonService.get_shared_lessons_by_user(user);
+            model.addAttribute("shared_lessons", shared_lessons);
             // Fixes a bug with user login
             Lesson l;
             //should only be null if user is a new user
