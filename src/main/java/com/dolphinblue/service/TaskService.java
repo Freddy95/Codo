@@ -140,12 +140,17 @@ public class TaskService {
         if(lesson.getTasks().contains(task_key)){
             Objectify ofy = OfyService.ofy();
             Task task = (Task) ofy.load().key(task_key).now();
-            for(int i = 0; i < task.getEditor().size(); i++){
-                ofy.delete().key(task.getEditor().get(i)).now();
+            if(task.getEditor() != null){
+                for(int i = 0; i < task.getEditor().size(); i++){
+                    ofy.delete().key(task.getEditor().get(i)).now();
+                }
             }
-            for(int i = 0; i < task.getToolbox().size(); i++){
-                ofy.delete().key(task.getToolbox().get(i)).now();
+            if(task.getToolbox() != null){
+                for(int i = 0; i < task.getToolbox().size(); i++){
+                    ofy.delete().key(task.getToolbox().get(i)).now();
+                }
             }
+
 
             index = lesson.getTasks().indexOf(task_key);
             lesson.getTasks().remove(task_key);
