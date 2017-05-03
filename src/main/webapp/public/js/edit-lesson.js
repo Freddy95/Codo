@@ -48,13 +48,30 @@ function save() {
     });
 }
 
-function addTask() {
+function addBlockTask() {
     $.ajax({
       method:'GET',
+        data:{
+         "type":"block"
+        },
       url: '/createlesson/' + lesson_id + '/createtask',
       success: function(data, status, xhttp) {
         console.log(data);
       }
+    });
+
+}
+
+function addFreeCodeTask() {
+    $.ajax({
+        method:'GET',
+        data:{
+            "type":"freecode"
+        },
+        url: '/createlesson/' + lesson_id + '/createtask',
+        success: function(data, status, xhttp) {
+            console.log(data);
+        }
     });
 
 }
