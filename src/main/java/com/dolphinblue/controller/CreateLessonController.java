@@ -131,6 +131,7 @@ public class CreateLessonController {
      * TODO: add query parameter to determine if task created should be block or freecode.
      */
     @RequestMapping(value = "/createlesson/{lessonId}/createtask", method = RequestMethod.GET)
+    @ResponseBody
     public long create_task(Model model, @PathVariable(value = "lessonId") long id){
         Objectify ofy = OfyService.ofy();
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();

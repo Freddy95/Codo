@@ -59,6 +59,6 @@ function addTask() {
 
 }
 
-function deleteTask(this) {
+function deleteTask(node) {
 
 }

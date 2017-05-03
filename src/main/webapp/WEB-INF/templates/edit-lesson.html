@@ -69,33 +69,12 @@
         <div class="card-header card-title-block">
           <h3 class="card-title">Tasks</h3>
           <span class="align-middle">
-            <a class="fa fa-lg fa-vc fa-plus pull-right"></a>
+            <a class="fa fa-lg fa-vc fa-plus pull-right" onClick="addTask()"></a>
           </span>
         </div>
         <div class="card-block">
-          <ul class="sortable" id="task-list">
-            <li class="task-block">
-              Item 1 
-              <span class="pull-right">
-                <span class="task-button edit-task-button">
-                  <i class="fa fa-pencil" aria-hidden="true"></i>
-                </span>
-                <span class="task-button delete-task-button">
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                </span>
-              </span>
-            </li>
-            <li class="task-block">
-              Item 2 
-              <span class="pull-right">
-                <span class="task-button edit-task-button">
-                  <i class="fa fa-pencil" aria-hidden="true"></i>
-                </span>
-                <span class="task-button delete-task-button">
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                </span>
-              </span>
-            </li>
+          <ul class="sortable" id="task-list" th:each="task : ${tasks}">
+            <div th:replace="task-item :: task(task=${task})"></div>
           </ul>
         </div>
       </div>
