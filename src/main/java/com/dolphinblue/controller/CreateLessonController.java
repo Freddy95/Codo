@@ -150,6 +150,7 @@ public class CreateLessonController {
      * @param taskId -- task id
      * @return -- create task page
      * TODO: add query parameter to determine if task created should be block or freecode.
+     * TODO: send list of block objects in editor with their actual values not just keys.
      */
     @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}", method = RequestMethod.GET)
     public String get_create_task_page(Model model, @PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId){
@@ -158,6 +159,9 @@ public class CreateLessonController {
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         model.addAttribute("task", task);
         model.addAttribute("lesson", lesson);
+        model.addAttribute("editor", lessonService.get_blocks_by_id(task.getEditor()));
+        model.addAttribute("toolbox", lessonService.get_blocks_by_id(task.getToolbox()));
+        model.addAttribute("catalog", taskService.get_catalog());
         if(task.getFreecode() == null){
             //blocktask
             return "edit-block-task";
@@ -207,7 +211,7 @@ public class CreateLessonController {
         //get key of task
         Key task_key = Key.create(Task.class, taskId);
 
-        
+
         //Get lesson and delete the task key from the list of tasks.
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
 
