@@ -245,8 +245,8 @@ public class CreateLessonController {
         }
 
         Objectify ofy = OfyService.ofy();
-
         Task task = ofy.load().type(Task.class).id(taskId).now();
+
         taskService.task_model_to_task(task, task_model);
         ofy.save().entity(task).now();
         model.addAttribute("task", task);
