@@ -183,7 +183,7 @@ function save() {
         'Content-Type': 'application/json' 
     },
     'type': 'POST',
-    'url': '/savecreatedlesson/' + lesson_id + '/task/' + task_id,
+    'url': '/createlesson/' + lesson_id + '/createtask/' + task_id,
     'data': JSON.stringify(data),
     'dataType': 'json'
   }).done(function() {
