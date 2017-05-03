@@ -37,8 +37,6 @@ $(function () {
             $output.text(messageOrEvent);
         };
         //pull out any xhr requests
-        //TODO: how do we add test-case variables to input?
-        //TODO: maybe append them as var declarations in the beginning of the cleaned code string?
         //iterate over each test case
         var is_correct=true;
         for(var i = 0; i<test_case.length; i++) {
