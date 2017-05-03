@@ -16,6 +16,7 @@ $(function(){
         $userNameEditForm=$("#username-edit-form"),
         $userNameTextbox=$("#username-textbox"),
         $userNameNoBtn=$("#username-no-btn"),
+        $resetTutorialBtn=$("#reset-tutorial-btn"),
         $resetLessonBtn=$("#reset-lessons-btn"),
         $deleteAcctBtn=$("#delete-account-btn"),
         $userNameDone=$("#username-done");
@@ -56,6 +57,19 @@ $(function(){
         });
     });
 
+    $resetTutorialBtn.click(function() {
+        // send a reset tutorial request to the server
+        $.ajax({
+            method:'POST',
+            url:"/settings/resettutorial",
+            success:function() {
+                alert("The tutorial will begin to play when you press the home button.");
+            },error:function() {
+                alert("The tutorial could not be restarted. Please try again later.");
+            }
+        });
+    })
+
     $resetLessonBtn.click(function(){
       //send a reset request to the server
         $.ajax({
@@ -68,6 +82,7 @@ $(function(){
             }
         });
     });
+
    $deleteAcctBtn.click(function(){
       //send a reset request to the server
         $.ajax({

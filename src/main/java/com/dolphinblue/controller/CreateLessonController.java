@@ -85,7 +85,6 @@ public class CreateLessonController {
         l.setCreator_id(id);
         //save lesson to datastore
         ofy.save().entity(l).now();
-        model.addAttribute("lesson_id", l.getLesson_id());
 
         String requestUrl = "/createlesson/" + l.getLesson_id();
         return "redirect:" + requestUrl;
@@ -132,13 +131,14 @@ public class CreateLessonController {
      * TODO: add query parameter to determine if task created should be block or freecode.
      */
     @RequestMapping(value = "/createlesson/{lessonId}/createtask", method = RequestMethod.GET)
-    public void create_task(Model model, @PathVariable(value = "lessonId") long id){
+    public long create_task(Model model, @PathVariable(value = "lessonId") long id){
         Objectify ofy = OfyService.ofy();
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         Task task = new Task();
+        task.setTitle("New Task.");
         lesson.getTasks().add(ofy.save().entity(task).now());
         ofy.save().entity(lesson).now();
-        model.addAttribute("task_id", task.getTask_id());
+        return task.getTask_id();
     }
 
 
@@ -155,9 +155,9 @@ public class CreateLessonController {
     public String get_create_task_page(Model model, @PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId){
         Objectify ofy = OfyService.ofy();
         Task task = ofy.load().type(Task.class).id(taskId).now();
-        model.addAttribute("lesson_id", id);
-        model.addAttribute("task_id", task.getTask_id());
+        Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         model.addAttribute("task", task);
+        model.addAttribute("lesson", lesson);
         if(task.getFreecode() == null){
             //blocktask
             return "edit-block-task";
@@ -201,7 +201,7 @@ public class CreateLessonController {
      * TODO: return create task page?
      * @return --
      */
-    @RequestMapping(value = "/createlesson/{lessonId}/task/{taskId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}", method = RequestMethod.DELETE)
     public void delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
         Objectify ofy = OfyService.ofy();
         //get key of task
@@ -226,7 +226,7 @@ public class CreateLessonController {
      * TODO: return create task page?
      * @return --
      */
-    @RequestMapping(value = "/createlesson/{lessonId}/task/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}", method = RequestMethod.POST)
     public @ResponseBody String save_task(@CookieValue("token") String token,  @PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel task_model, Model model){
 
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
@@ -254,10 +254,9 @@ public class CreateLessonController {
     /**
      * This route should be called when a user wants to save a created lesson.
      * Creates a lesson object and saves it in the datastore.
-     * @param model -- thymeleaf model
      */
     @RequestMapping(value = "/createlesson/{lessonId}", method = RequestMethod.POST)
-    public @ResponseBody void save_lesson(@CookieValue("token") String token, @PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model, Model model){
+    public @ResponseBody void save_lesson(@PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model){
 
 
         Objectify ofy = OfyService.ofy();
@@ -267,7 +266,6 @@ public class CreateLessonController {
         //change date last edited.
         lesson.setLast_edited(new Date());
         ofy.save().entity(lesson).now();
-
     }
 
 

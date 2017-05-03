@@ -11,6 +11,9 @@ public class SaveLessonModel {
     private boolean shared;
     private List<SaveTaskModel> tasks;
 
+    public SaveLessonModel(){
+
+    }
 
     public String getTitle() {
         return title;

@@ -181,4 +181,31 @@ public class SettingsController {
         resp.setStatus(200);
     }
 
+    @RequestMapping(value = "/settings/resettutorial", method = RequestMethod.POST)
+    public void reset_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
+        // Check if the user is still authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            resp.setStatus(500);
+        }
+
+        String userId = userService.getUserId(authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport()));
+        // Create the objectify object to store stuff from the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // Get the user object from the datastore
+        User user = ofy.load().type(User.class).id(userId).now();
+
+        // Reset the tutorial booleans and save them to the datastore
+        user.setNew_user(true);
+        user.setFirst_lesson(true);
+
+        // Save the user to the datastore
+        ofy.save().entity(user).now();
+
+        //give the ok response
+        resp.setStatus(200);
+    }
+
 }

@@ -325,7 +325,11 @@ public class LessonService {
         return ofy.load().type(Lesson.class).filter("creator_id", user.getUser_id()).filter("site_owned", false).list();
     }
 
-
+    /**
+     * Converts a SaveLessonModel object to a lesson object.
+     * @param lesson
+     * @param lesson_model
+     */
     public void lesson_model_to_lesson(Lesson lesson, SaveLessonModel lesson_model){
         Objectify ofy = OfyService.ofy();
         TaskService taskService = new TaskService();
@@ -335,26 +339,36 @@ public class LessonService {
         lesson.setShared(lesson_model.isShared());
         List<Key<Task>> lesson_task_keys = lesson.getTasks();
         List<Key<Task>> lesson_model_task_keys = new ArrayList<>();
-        for(int i = 0; i < lesson_model.getTasks().size(); i++){
-            Key<Task> task_key = Key.create(Task.class, lesson_model.getTasks().get(i).getTask_id());
-            lesson_model_task_keys.add(task_key);
-        }
+        if (lesson_model.getTasks() != null) {
 
-        for(int i = 0; i < lesson_task_keys.size(); i++){
-            Key<Task> task_key = lesson_task_keys.get(i);
-            if(!lesson_model_task_keys.contains(task_key)){
-                //new lesson model doesn't contain this task so remove it.
-                taskService.delete_task(lesson, task_key);
-            }else{
-                //new lesson model has it so update this task
-                Task task = ofy.load().key(task_key).now();
-                SaveTaskModel task_model = lesson_model.getTasks().get(lesson_model_task_keys.indexOf(task_key));
-                taskService.task_model_to_task(task, task_model);
-                ofy.save().entity(task).now();
+            for(int i = 0; i < lesson_model.getTasks().size(); i++){
+                Key<Task> task_key = Key.create(Task.class, lesson_model.getTasks().get(i).getTask_id());
+                lesson_model_task_keys.add(task_key);
             }
-        }
 
-        lesson.setTasks(lesson_model_task_keys);
+            for(int i = 0; i < lesson_task_keys.size(); i++){
+                Key<Task> task_key = lesson_task_keys.get(i);
+                if(!lesson_model_task_keys.contains(task_key)){
+                    //new lesson model doesn't contain this task so remove it.
+                    taskService.delete_task(lesson, task_key);
+                }else{
+                    //new lesson model has it so update this task
+                    Task task = ofy.load().key(task_key).now();
+                    SaveTaskModel task_model = lesson_model.getTasks().get(lesson_model_task_keys.indexOf(task_key));
+                    taskService.task_model_to_task(task, task_model);
+                    ofy.save().entity(task).now();
+                }
+            }
+
+            lesson.setTasks(lesson_model_task_keys);
+        }else {
+            if(lesson_task_keys != null){
+                for(int i = 0; i < lesson_task_keys.size(); i++){
+                    taskService.delete_task(lesson, lesson_task_keys.get(i));
+                }
+            }
+            lesson.setTasks(new ArrayList<Key<Task>>());
+        }
 
     }
 
