@@ -156,9 +156,9 @@ public class CreateLessonController {
     public String get_create_task_page(Model model, @PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId){
         Objectify ofy = OfyService.ofy();
         Task task = ofy.load().type(Task.class).id(taskId).now();
-        model.addAttribute("lesson_id", id);
-        model.addAttribute("task_id", task.getTask_id());
+        Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         model.addAttribute("task", task);
+        model.addAttribute("lesson", lesson);
         if(task.getFreecode() == null){
             //blocktask
             return "edit-block-task";
