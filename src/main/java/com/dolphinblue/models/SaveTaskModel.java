@@ -17,7 +17,8 @@ public class SaveTaskModel {
     private String freecode;
 
     public SaveTaskModel() {
-
+        test_case = new ArrayList<>();
+        expected_output = new ArrayList<>();
     }
 
     public SaveTaskModel(BlockList toolbox, BlockList editor, boolean completed) {
