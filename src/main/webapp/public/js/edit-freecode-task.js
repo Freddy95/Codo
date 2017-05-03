@@ -74,6 +74,16 @@ $(function(){
 
   };
 
+  deleteTask = function() {
+  $.ajax({
+    method:'POST',
+    url: '/createlesson/' + lessonId + '/createtask/' + taskId + '/delete',
+    success: function(data, status, xhttp) {
+      window.location.replace('../../../createlesson/' + lessonId);
+    }
+  });
+}
+
 });
 // Adds an input and output.
 function addOutput() {
@@ -121,4 +131,3 @@ function editTitle() {
     title_icon.removeClass('fa-pencil').addClass('fa-save');
   }
 }
-
