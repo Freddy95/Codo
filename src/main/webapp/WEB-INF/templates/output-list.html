@@ -10,15 +10,17 @@
         <i class="fa fa-lg fa-vc fa-plus" onClick="addOutput()"></i>
       </span>
     </div>
-    <div th:unless="${#lists.isEmpty(list)}" th:id="${list_id}" class="output-list card-block input-parent container-fluid" th:each="item : ${list}">
+    <div th:unless="${#lists.isEmpty(list)}" th:id="${list_id}" class="output-list card-block input-parent container-fluid" >
       <th:block th:if="${#lists.size(list) > 1}">
-        <div th:replace="output-item :: item(value=${item}, default=${default})"></div>
+        <th:block th:each="item : ${list}">
+          <div th:replace="output-item :: item(value=${item}, default=${default})"></div>
+        </th:block>
       </th:block>
       <th:block th:unless="${#lists.size(list) > 1}">
         <div th:replace="output-item :: item(value=${item}, default=${default},disabled=true)"></div>
       </th:block>
     </div>
-    <div th:if="${#lists.isEmpty(list)}" id="test-case" class="card-block input-parent container-fluid">
+    <div th:if="${#lists.isEmpty(list)}" th:id="${list_id}" class="card-block input-parent container-fluid">
       <div th:replace="output-item :: item(default=${default},disabled=true)"></div>
     </div>
   </div>
