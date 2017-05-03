@@ -52,8 +52,9 @@ function init() {
   /* Expected output has newlines, we'll turn them in to <br> so it works
    * with html
    */
+  var stringRegex = /\n/g;//need to use regex to find all occurences
   for (i = 0; i < expected_output.length; i++) {
-    expected_output[i] = String(expected_output[i]).replace("\n","<br>") + "<br>";
+    expected_output[i] = String(expected_output[i]).replace(stringRegex,"<br>") + "<br>";
   }
 
   /* Makes child elements of editor, toolbox, and holds-one draggable
