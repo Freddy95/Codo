@@ -152,12 +152,6 @@ public class LessonJSONService {
                 case "ELSE IF":
                     b.setType(Block.Type.ELSE_IF);
                     break;
-                case "SWITCH":
-                    b.setType(Block.Type.SWITCH);
-                    break;
-                case "CASE":
-                    b.setType(Block.Type.CASE);
-                    break;
                 case "IF":
                     b.setType(Block.Type.IF);
                     break;
