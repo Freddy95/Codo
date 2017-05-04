@@ -31,6 +31,8 @@ public class CreateLessonController {
     CodoUserService userService;
     @Autowired
     TaskService taskService;
+    @Autowired
+    BlockService blockService;
 
     /**
      * Returns the page to edit a lesson
@@ -161,6 +163,7 @@ public class CreateLessonController {
     @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}", method = RequestMethod.GET)
     public String get_create_task_page(Model model, @PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId){
         Objectify ofy = OfyService.ofy();
+
         Task task = ofy.load().type(Task.class).id(taskId).now();
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         model.addAttribute("lesson", lesson);
@@ -182,8 +185,10 @@ public class CreateLessonController {
 
         if(task.getFreecode() == null){
             //blocktask
-            model.addAttribute("editor", lessonService.get_blocks_by_id(task.getEditor()));
-            model.addAttribute("toolbox", lessonService.get_blocks_by_id(task.getToolbox()));
+            List<Block> editor_block = lessonService.get_blocks_by_id(task.getEditor());
+            List<Block> toolbox_block = lessonService.get_blocks_by_id(task.getToolbox());
+            model.addAttribute("editor", blockService.get_list_blocks(editor_block));
+            model.addAttribute("toolbox", blockService.get_list_blocks(toolbox_block));
             model.addAttribute("catalog", taskService.get_catalog());
             return "edit-block-task";
         }
@@ -228,12 +233,11 @@ public class CreateLessonController {
      * TODO: return create task page?
      * @return --
      */
-    @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}", method = RequestMethod.DELETE)
-    public String delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, Model model){
+    @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}/delete", method = RequestMethod.POST)
+    public @ResponseBody void delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId){
         Objectify ofy = OfyService.ofy();
         //get key of task
         Key task_key = Key.create(Task.class, taskId);
-
 
         //Get lesson and delete the task key from the list of tasks.
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
@@ -241,8 +245,6 @@ public class CreateLessonController {
         taskService.delete_task(lesson, task_key);
 
         ofy.save().entity(lesson).now();
-
-        return "";
     }
 
 

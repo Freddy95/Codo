@@ -1,0 +1,327 @@
+{
+	"title": "Loops",
+	"shared": false,
+	"site_owned": true,
+	"index" : 4,
+	"description" : "Loops let you do things over and over again. Loops let you do things over and over again. Sorry if I repeated myself.",
+	"tasks" :[
+		{
+			"title" : "While Loops",
+			"instructions" : "Loops are a construct in programming that allow for statements to be repeated. There are four main types of loops in Javascript: <br/><ul><li>While Loops </li><li>Do-While Loops </li><li>For Loop</li><li>For-Each Loop</li></ul>The first type of loop we’ll go over is a <b>while</b> loop. A while loop repeats the statements inside of it until a certain condition is met. A <b>condition</b> for a loop is an expression that evaluates to a boolean value, such as <span class=”instr-block”>x>1</span>. <br/>Run the program first, to see how it iterates. Then change the value of x so it will print the numbers from 0 to 4. ",
+			"expected_output" : ["0\n1\n2\n3\n4"],
+			"test_case" : [""],
+			"type" : "BLOCK-TASK",
+			"hint" : "Run the program with the run button!",
+			"program_blocks":[
+				{
+					"value" : "var x = 2;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},
+				{
+					"value" : "while(x<5)",
+					"type" : "WHILE",
+					"can_edit" : false
+        },
+				{
+					"value" : "{",
+					"type" : "CURL",
+					"can_edit" : false
+        },
+				{
+					"value" : "console.log(x);",
+					"type" : "LOG",
+					"can_edit" : false
+        },
+        {
+          "value" : "x=x+1;",
+          "type" : "ASSIGN",
+          "can_edit" : false
+        },
+
+        {
+					"value" : "}",
+					"type" : "CURL",
+					"can_edit" : false
+        }
+
+			],
+			"toolbox":[
+				{
+					"value" : "var x = 0;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},
+        {
+					"value" : "var x = 4;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},
+        {
+					"value" : "var x = 3;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},
+        {
+          "value" : "x = x-1;",
+          "type" : "ASSIGN",
+          "can_edit" : false
+        }
+			]
+		},{
+			"title" : "While Loops Continued",
+			"instructions" : "Any expression that evaluates to a Boolean can be used in a while loops. The loop will run as long as the expression is True. This means that there can be <b>infinite loops</b>. If an expression never evaluates to false the loop will keep going forever. That would mean big trouble for your progam!Below is some code that has an infinite loop.<br/>Rearrange the code to get rid of the infinite loop and make it print out \“No Stinking Loops!\”.",
+			"expected_output" : ["No Stinking Loops!"],
+			"test_case" : [""],
+			"type" : "BLOCK-TASK",
+			"hint" : "Make sure the condition of the loop is correct!",
+			"program_blocks" : [
+				{
+					"value" : "var str;",
+					"type" : "DECLARE",
+					"can_edit" : false
+				},{
+					"value" : "str=\"No Stinking Loops\";",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "var loopBool;",
+					"type" : "DECLARE",
+					"can_edit" : false
+				},{
+					"value" : "while(loopBool)",
+					"type" : "WHILE",
+					"can_edit" : false
+				}
+				,{
+					"value" : "{",
+					"type" : "CURL",
+					"can_edit" : false
+				}
+				,{
+					"value" : "console.log('I Love Loops!');",
+					"type" : "LOG",
+					"can_edit" : false
+				}
+				,{
+					"value" : "}",
+					"type" : "CURL",
+					"can_edit" : false
+				}
+				,{
+					"value" : "console.log(str);",
+					"type" : "LOG",
+					"can_edit" : false
+				}
+			],
+			"toolbox" : [
+				{
+					"value" : "str = true;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "x = true;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "loopBool=true;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "loopBool=false;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				}
+			]
+		},{
+			"title" : "For Loops",
+			"instructions" : "As you probably saw in the first task, while loops deal a lot with incrementing numbers. There’s a special kind of loop that automatically increments a Number variable. The loops has three parts. The <b>declaration</b> of the variable. The <b>condition</b> to end the loop. And the <b>increment</b> value for the loop. <br/>Here’s what a for loop looks like:<br/><span class=”instr-block”>for(var x=0; x<4; x++)</span><br/>Using a for loop, create a program that prints out “1 2 3 4”.",
+			"expected_output" : ["1\n2\n3\n4"],
+			"test_case" : [""],
+			"type" : "BLOCK-TASK",
+			"hint" : "Make sure the for loop is printing out numbers!",
+			"program_blocks" : [
+			{
+					"value" : "var str;",
+					"type" : "DECLARE",
+					"can_edit" : false
+				},{
+					"value" : "str=\"No Stinking Loops\";",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "var i;",
+					"type" : "DECLARE",
+					"can_edit" : false
+				},{
+					"value" : "for(i=0;i<5;i++)",
+					"type" : "FOR",
+					"can_edit" : false
+				}
+				,{
+					"value" : "{",
+					"type" : "CURL",
+					"can_edit" : false
+				}
+				,{
+					"value" : "console.log('I Love Loops!');",
+					"type" : "LOG",
+					"can_edit" : false
+				}
+				,{
+					"value" : "}",
+					"type" : "CURL",
+					"can_edit" : false
+				}
+			],
+			"toolbox" : [
+				{
+					"value" : "console.log(i);",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "x = true;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "str = 'hello';",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "console.log(x);",
+					"type" : "LOG",
+					"can_edit" : false
+				}
+      ]
+		},{
+			"title" : "For...In Loop",
+			"instructions" : "There’s also another type of for loop, a loop that iterates over an array. The for…in loop pulls out each value of an array one by one. The format of the loop if <span class=”instr-block”>for(value in array)</span>. The for…in loop is useful for doing operations on arrays of values.<br/>For the code below fix it so it prints out each element of the array.",
+			"expected_output" : ["Einstein\nTesla\nCurie\nLovelace"],
+			"test_case" : [""],
+			"type" : "BLOCK-TASK",
+			"hint" : "Make sure you're printing the value from the array!",
+			"program_blocks" : [
+				{
+					"value" : "var arr;",
+					"type" : "DECLARE",
+					"can_edit" : false
+				},{
+					"value" : "arr=['Einstein','Tesla','Curie','Lovelace'];",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "var x;",
+					"type" : "DECLARE",
+					"can_edit" : false
+				},{
+					"value" : "x='0';",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "for(val in arr)",
+					"type" : "FOR",
+					"can_edit" : false
+				},{
+					"value" : "{",
+					"type" : "CURLY",
+					"can_edit" : false
+				},{
+					"value" : "console.log(x);",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+  					"value" : "}",
+  					"type" : "CURLY",
+  					"can_edit" : false
+  				}
+			],
+			"toolbox" : [
+				{
+					"value" : "console.log(x);",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "console.log(val);",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "x++;",
+					"type" : "PLUS",
+					"can_edit" : false
+				},{
+					"value" : "x--;",
+					"type" : "MINUS",
+					"can_edit" : false
+				},{
+					"value" : "console.log(arr);",
+					"type" : "LOG",
+					"can_edit" : false
+        }]
+		},{
+			"title" : "For Loops with Arrays",
+			"instructions" : "ou don’t need to just use a for..in loop to iterate over arrays. You can also use a for loop on the indices of an array. The Javascript <b>Array</b> class has a value called <b>.length</b> that gives you the length of the array. You can use that as a bound for the loop to iterate over an array.",
+			"expected_output" : ["Einstein\nTesla\nCurie\nLovelace"],
+			"test_case" : [""],
+			"type" : "BLOCK-TASK",
+			"hint" : "You should have two print statements, one that prints a number and the other that prints an error.",
+			"program_blocks" : [
+        {
+					"value" : "var arr;",
+					"type" : "DECLARE",
+					"can_edit" : false
+				},{
+					"value" : "arr=['Einstein','Tesla','Curie','Lovelace'];",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},
+				{
+					"value" : "for(x=0;x<2;x++)",
+					"type" : "DECLARE",
+					"can_edit" : false
+				},{
+					"value" : "{",
+					"type" : "CURLY",
+					"can_edit" : false
+        },
+				{
+					"value" : "console.log(arr[x]);",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "}",
+					"type" : "CURLY",
+					"can_edit" : false
+        }
+			],
+			"toolbox" : [
+				{
+					"value" : "x = 10;",
+					"type" : "ASSIGN",
+					"can_edit" : false
+				},{
+					"value" : "console.log(x);",
+					"type" : "LOG",
+					"can_edit" : false
+				},{
+					"value" : "for(x=1;x<arr.length;x++)",
+					"type" : "FOR",
+					"can_edit" : false
+				},{
+					"value" : "for(x=0;x<arr.length;x++)",
+					"type" : "FOR",
+					"can_edit" : false
+				}
+			]
+		},{
+			"title" : "FizzBuzz",
+			"instructions" : "There is a game called Fizzbuzz. It has to do with numbers, you count up to a certain number and say certain things based on what the number is. If the number is <b>divisible by 3</b> you say “Fizz”. If it is <b>divisible by 5</b> you say “Buzz”. If it’s <b>divisible by 3 and 5</b> you say “FizzBuzz”. If it’s <b>not divisible by either</b> you say the number. So for example, if the number was 15, you would say “Fizzbuzz”. <br/>Write a program to play FizzBuzz and print out the appropriate value for each number using a for loop and if statements.<br/><b>The values we will be testing for sample input will be in the variable x. They will start at 1. So the fizzbuzz loop will go from 1 to x.</b><br/>",
+			"expected_output" : ["1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz","1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizz Buzz"],
+			"test_case" : ["10","15"],
+			"type" : "FREECODE-TASK",
+			"hint" : "Make sure you're using loops and if statements correctly!",
+			"program_blocks" : null,
+			"toolbox" : null,
+      "freecode":"//write your Fizzbuzz program here"
+		}
+	]
+}

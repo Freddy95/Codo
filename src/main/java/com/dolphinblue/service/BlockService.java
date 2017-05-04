@@ -5,6 +5,7 @@ import com.dolphinblue.models.SaveBlockModel;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import org.springframework.stereotype.Service;
+import sun.java2d.opengl.OGLContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,5 +66,22 @@ public class BlockService {
         }
         return block_model;
 
+    }
+
+    public List<SaveBlockModel> get_list_blocks(List<Block> blocks){
+        List<SaveBlockModel> list = new ArrayList<>();
+        for(int i = 0; i < blocks.size(); i++){
+            list.add(block_to_block_model(blocks.get(i)));
+        }
+        return list;
+    }
+
+    public void delete_block(Block block){
+        Objectify ofy = OfyService.ofy();
+        for(int i = 0; i < block.getChildren().size(); i++){
+            Block b = ofy.load().key(block.getChildren().get(i)).now();
+            delete_block(b);
+        }
+        ofy.delete().entity(block).now();
     }
 }
