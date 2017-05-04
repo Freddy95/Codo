@@ -60,7 +60,12 @@
 					"value" : "console.log();",
 					"type" : "LOG",
 					"can_edit" : true,
-					"children" : "str1"
+					"children" : [
+						{
+							"value" : "str1",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				},
 				{
 					"value" : "// This is a comment",

@@ -21,10 +21,14 @@ function init() {
 function save() {
     var data = {};
 
-    // Delete every task first.
-    for(taskToDeleteInc = 0; taskToDeleteInc < tasksToDelete.length; taskToDeleteInc++) {
+    // Delete every task to delete first.
+    while (tasksToDelete.length > 0) {
         //TODO: Send delete request for each task.
-        console.log(tasksToDelete[taskToDeleteInc]);
+        var currentTaskId = tasksToDelete.pop();
+        $.ajax({
+            method:'POST',
+            url: '/createlesson/' + lesson_id + '/createtask/' + currentTaskId + '/delete'
+        });
     }
 
     // Grab detail fields.
@@ -33,7 +37,13 @@ function save() {
     data.shared = $('#shared').is(":checked");
 
     // Grab current order of tasks.
+    var taskList = [];
+    $('#task-list').find('.task-block').each(function() {
+        taskList.push($(this).attr('id'));
+    });
 
+    data.tasks = taskList;
+    
     console.log(data);
 
     $.ajax({
@@ -42,14 +52,13 @@ function save() {
             'Content-Type': 'application/json'
         },
       method:'POST',
-      url: '/createlesson/' + lesson_id,
+      url: '/createlesson/' + lesson_id + '/post',
       dataType:'json',
       data:JSON.stringify(data),
     });
 }
 
 function addTask(type) {
-  
     $.ajax({
       method:'GET',
         data:{
@@ -57,14 +66,14 @@ function addTask(type) {
         },
       url: '/createlesson/' + lesson_id + '/createtask',
       success: function(data, status, xhttp) {
-        console.log(data);
         //redirect to the newly created task
         window.location.href = '/createlesson/' + lesson_id + '/createtask/'+data;
       }
     });
-
 }
 
 function deleteTask(node) {
-
+    var task_block = $(node).closest('.task-block');
+    tasksToDelete.push(task_block.attr('id'));
+    task_block.remove();
 }

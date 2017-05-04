@@ -127,6 +127,10 @@ public class LessonJSONService {
             Block b = new Block();
             //set block attributes.
             b.setCan_edit((Boolean) json_b.get("can_edit"));
+            if ((Boolean) b.isCan_edit()) {
+                // Handle the nested blocks if there are any
+                b.setChildren(create_blocks_from_json((JSONArray) json_b.get("children")));
+            }
             b.setValue((String) json_b.get("value"));
             String type = (String) json_b.get("type");
             //set type of block.
@@ -156,7 +160,7 @@ public class LessonJSONService {
                     b.setType(Block.Type.IF);
                     break;
                 default:
-                    b.setType(Block.Type.LOG);
+                    b.setType(Block.Type.STATIC);
                     break;
             }
             blocks.add(b);
