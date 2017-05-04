@@ -81,7 +81,7 @@
 					"type" : "DECLARE",
 					"can_edit" : false
 				},{
-					"value" : "str=\"No Stinking Loops\";",
+					"value" : "str=\"No Stinking Loops!\";",
 					"type" : "ASSIGN",
 					"can_edit" : false
 				},{
@@ -135,8 +135,8 @@
 			]
 		},{
 			"title" : "For Loops",
-			"instructions" : "As you probably saw in the first task, while loops deal a lot with incrementing numbers. There’s a special kind of loop that automatically increments a Number variable. The loops has three parts. The <b>declaration</b> of the variable. The <b>condition</b> to end the loop. And the <b>increment</b> value for the loop. <br/>Here’s what a for loop looks like:<br/><span class=”instr-block”>for(var x=0; x<4; x++)</span><br/>Using a for loop, create a program that prints out “1 2 3 4”.",
-			"expected_output" : ["1\n2\n3\n4"],
+			"instructions" : "As you probably saw in the first task, while loops deal a lot with incrementing numbers. There’s a special kind of loop that automatically increments a Number variable. The loops has three parts. The <b>declaration</b> of the variable. The <b>condition</b> to end the loop. And the <b>increment</b> value for the loop. <br/>Here’s what a for loop looks like:<br/><span class=”instr-block”>for(var x=0; x<4; x++)</span><br/>Using a for loop, create a program that prints out \“0 1 2 3 4\”.",
+			"expected_output" : ["0\n1\n2\n3\n4"],
 			"test_case" : [""],
 			"type" : "BLOCK-TASK",
 			"hint" : "Make sure the for loop is printing out numbers!",
@@ -193,70 +193,6 @@
 					"can_edit" : false
 				}
       ]
-		},{
-			"title" : "For...In Loop",
-			"instructions" : "There’s also another type of for loop, a loop that iterates over an array. The for…in loop pulls out each value of an array one by one. The format of the loop if <span class=”instr-block”>for(value in array)</span>. The for…in loop is useful for doing operations on arrays of values.<br/>For the code below fix it so it prints out each element of the array.",
-			"expected_output" : ["Einstein\nTesla\nCurie\nLovelace"],
-			"test_case" : [""],
-			"type" : "BLOCK-TASK",
-			"hint" : "Make sure you're printing the value from the array!",
-			"program_blocks" : [
-				{
-					"value" : "var arr;",
-					"type" : "DECLARE",
-					"can_edit" : false
-				},{
-					"value" : "arr=['Einstein','Tesla','Curie','Lovelace'];",
-					"type" : "ASSIGN",
-					"can_edit" : false
-				},{
-					"value" : "var x;",
-					"type" : "DECLARE",
-					"can_edit" : false
-				},{
-					"value" : "x='0';",
-					"type" : "ASSIGN",
-					"can_edit" : false
-				},{
-					"value" : "for(val in arr)",
-					"type" : "FOR",
-					"can_edit" : false
-				},{
-					"value" : "{",
-					"type" : "CURLY",
-					"can_edit" : false
-				},{
-					"value" : "console.log(x);",
-					"type" : "LOG",
-					"can_edit" : false
-				},{
-  					"value" : "}",
-  					"type" : "CURLY",
-  					"can_edit" : false
-  				}
-			],
-			"toolbox" : [
-				{
-					"value" : "console.log(x);",
-					"type" : "LOG",
-					"can_edit" : false
-				},{
-					"value" : "console.log(val);",
-					"type" : "LOG",
-					"can_edit" : false
-				},{
-					"value" : "x++;",
-					"type" : "PLUS",
-					"can_edit" : false
-				},{
-					"value" : "x--;",
-					"type" : "MINUS",
-					"can_edit" : false
-				},{
-					"value" : "console.log(arr);",
-					"type" : "LOG",
-					"can_edit" : false
-        }]
 		},{
 			"title" : "For Loops with Arrays",
 			"instructions" : "ou don’t need to just use a for..in loop to iterate over arrays. You can also use a for loop on the indices of an array. The Javascript <b>Array</b> class has a value called <b>.length</b> that gives you the length of the array. You can use that as a bound for the loop to iterate over an array.",
@@ -316,7 +252,7 @@
 			"title" : "FizzBuzz",
 			"instructions" : "There is a game called Fizzbuzz. It has to do with numbers, you count up to a certain number and say certain things based on what the number is. If the number is <b>divisible by 3</b> you say “Fizz”. If it is <b>divisible by 5</b> you say “Buzz”. If it’s <b>divisible by 3 and 5</b> you say “FizzBuzz”. If it’s <b>not divisible by either</b> you say the number. So for example, if the number was 15, you would say “Fizzbuzz”. <br/>Write a program to play FizzBuzz and print out the appropriate value for each number using a for loop and if statements.<br/><b>The values we will be testing for sample input will be in the variable x. They will start at 1. So the fizzbuzz loop will go from 1 to x.</b><br/>",
 			"expected_output" : ["1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz","1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizz Buzz"],
-			"test_case" : ["10","15"],
+			"test_case" : ["var x = 10;","var x = 15;"],
 			"type" : "FREECODE-TASK",
 			"hint" : "Make sure you're using loops and if statements correctly!",
 			"program_blocks" : null,
