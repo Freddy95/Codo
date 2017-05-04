@@ -14,22 +14,22 @@ public class BlockList {
 
 
     @JsonProperty(value="blocks")
-    public List<Block> blocks;
+    public List<SaveBlockModel> blocks;
 
     public BlockList(){
         blocks = new ArrayList<>();
     }
 
     @JsonCreator
-    public BlockList(List<Block> blocks){
+    public BlockList(List<SaveBlockModel> blocks){
        this.blocks = blocks;
     }
 
-    public List<Block> getBlocks(){
+    public List<SaveBlockModel> getBlocks(){
         return blocks;
     }
 
-    public void setBlocks(List<Block> blocks) {
+    public void setBlocks(List<SaveBlockModel> blocks) {
         this.blocks = blocks;
     }
 
