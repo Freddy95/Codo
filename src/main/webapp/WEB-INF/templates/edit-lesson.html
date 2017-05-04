@@ -110,8 +110,10 @@
           </div>
         </div>
         <div class="card-block">
-          <ul class="sortable" id="task-list" th:each="task : ${tasks}">
-            <div th:replace="task-item :: task(task=${task})"></div>
+          <ul class="sortable" id="task-list">
+            <th:block th:each="task : ${tasks}">
+              <div th:replace="task-item :: task(task=${task})"></div>
+            </th:block>
           </ul>
         </div>
       </div>

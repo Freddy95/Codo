@@ -63,9 +63,9 @@
           </li>
 
           <!-- The tab for shared lessons. -->
-          <!-- <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" data-toggle="pill" href="#shared">Shared Lessons</a>
-          </li> -->
+          </li>
 
           <!-- The tab for a user's lessons. -->
           <li class="nav-item">
@@ -79,9 +79,9 @@
         </div>
 
         <!-- The tab for the shared lessons. -->
-        <!-- <div class="tab-pane fade" id="shared" role="tabpanel">
-          <div th:replace="lesson-list :: list-display(lesson_list=${shared_lessons})"></div>
-        </div> -->
+        <div class="tab-pane fade" id="shared" role="tabpanel">
+          <div th:replace="lesson-list :: list-display(lesson_list=${shared_lessons},path='/lesson/')"></div>
+        </div>
 
         <!-- The tab for a user's lessons. -->
         <div class="tab-pane fade" id="your" role="tabpanel">
