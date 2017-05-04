@@ -1,6 +1,8 @@
 body, button, input, optgroup, select, textarea {
     font-family: 'Questrial', Verdana, Helvetica, sans-serif;
+    width:100%;
 /*    background-color: #FFFFCC;
+
 */}
 
 .fa-vc {
