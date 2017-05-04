@@ -62,7 +62,7 @@
 					"can_edit" : true,
 					"children" : [
 						{
-							"value" : "str1;",
+							"value" : "str1",
 							"type" : "STATIC",
 							"can_edit" : false
 						}]
