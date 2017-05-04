@@ -286,6 +286,7 @@ public class LessonController {
         task.setCompleted(blocks.getCompleted());
 
         // Update the blocks for this task
+
         List<Key<Block>> editor = lessonService.update_blocks(task.getTask_id(), blocks.getEditor().getBlocks());
         List<Key<Block>> toolbox = lessonService.update_blocks(task.getTask_id(), blocks.getToolbox().getBlocks());
 
