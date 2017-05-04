@@ -36,6 +36,8 @@ public class LessonController {
     CodoUserService userService;
     @Autowired
     TaskService taskService;
+    @Autowired
+    BlockService blockService;
 
     /**
      *  This is for debugging a block task
@@ -241,12 +243,12 @@ public class LessonController {
             //this is a block task
             // Load the editor blocks for the task and add them to the thymeleaf model
             List<Key<Block>> e_block_keys = task.getEditor();
-            List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);
+            List<SaveBlockModel> editor_blocks = blockService.get_list_blocks(lessonService.get_blocks_by_id(e_block_keys));
             model.addAttribute("editor", editor_blocks);
 
             // Load the toolbox blocks for the task and add them to the thymeleaf model
             List<Key<Block>> t_block_keys = task.getToolbox();
-            List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
+            List<SaveBlockModel> toolbox_blocks = blockService.get_list_blocks(lessonService.get_blocks_by_id(t_block_keys));
             model.addAttribute("toolbox", toolbox_blocks);
             // Populate the HTML lesson page with the correct task
             return "block-task";
