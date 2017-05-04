@@ -60,7 +60,7 @@
 					"value" : "console.log();",
 					"type" : "LOG",
 					"can_edit" : true,
-					"children" : "str1"
+					"children" : [{"str1"}]
 				},
 				{
 					"value" : "// This is a comment",
