@@ -26,17 +26,13 @@ public class Block {
     public enum Type {
         STATIC,
         IF,
-        ASSIGN,
         FOR,
         WHILE,
         LOG,
         CURL,
         SQUARE,
         ELSE,
-        ELSE_IF,
-        SWITCH,
-        CASE
-        ;
+        ELSE_IF
     }
 
     public Block() {

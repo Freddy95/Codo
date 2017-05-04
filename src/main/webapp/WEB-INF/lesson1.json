@@ -28,30 +28,48 @@
 			]
 		},{
 			"title" : "Variables",
-			"instructions" : "Often times in a program you want to use the same data multiple times. For example, say you have a long sentence like \"The quick brown fox jumps over the lazy dog.\" You don't want to type out the entire sentence each time you want to use it. This is where <b>variables</b> become useful.<br/><br/><b>Variables</b>, similar to those used in algebra, are used to represent values in a program. Take a look at the block in the Editor, <span class = \"instr-block\">var str;</span>. When a variable is created it is said to be <b>declared</b>. This block <span class = \"instr-block\">var str;</span> declares a variable, var, with the name <b>str</b>. The next block, <span class = \"instr-block\">str = \"The quick brown fox jumps over the lazy dog.\";</span> assigns the String value to the variable name <b>str</b> and as such is called an <b>assignment</b>.<br/><br/>Now drag the <span class = \"instr-block\">console.log(str);</span> block from the Toolbox into the Editor. Be careful to put the block after the others already placed there. When you run the code you'll notice that even though the console.log() statement only has the variable name <b>str</b>, it still prints out the sentence assigned to it.<br/><br/>Variable names such as <b>str</b> can consist of any combination of numbers and letters with the following exceptions:<ul><li>The first character in the name can only be a letter or underscore ( _ )</li><li>The rest of the variable name can only contain letters, numbers, or underscores (no spaces, symbols, or special characters)</li></ul><br/>There is no limit to the length of variable names and it is important to note that variable names are case sensitive so str is a different name than Str or STR.<br/><br/>One last thing before moving to the next task. Note the block in the toolbox that looks like this <span class = \"instr-block\">// This is a comment</span>. The double slash (//) indicates a comment in the program. Comments are lines that will be ignored by the computer when running the program and can contain any characters.",
+			"instructions" : "Often times in a program you want to use the same data multiple times. For example, say you have a long sentence like \"Pack my box with five dozen liquor jugs.\" You don't want to type out the entire sentence each time you want to use it. This is where <b>variables</b> become useful.<br/><br/><b>Variables</b>, similar to those used in algebra, are used to represent values in a program. Take a look at the block in the Editor, <span class = \"instr-block\">var str1;</span>. When a variable is created it is said to be <b>declared</b>. This block <span class = \"instr-block\">var str1;</span> declares a variable, var, with the name <b>str1</b>. The next block, <span class = \"instr-block\">str1 = \"Pack my box with five dozen liquor jugs.\";</span> assigns the String value to the variable name <b>str1</b> and as such is called an <b>assignment</b>. A second sentence is similarly assigned to the variable str2.<br/><br/>Now drag the <span class = \"instr-block\">console.log(str1);</span> block from the Toolbox into the Editor. Be careful to put the block after the others already placed there. When you run the code you'll notice that even though the console.log() statement only has the variable name <b>str1</b>, it still prints out the sentence assigned to it.<br/><br/>Variable names such as <b>str1</b> and <b>str2</b> can consist of any combination of numbers and letters with the following exceptions:<ul><li>The first character in the name can only be a letter or underscore ( _ )</li><li>The rest of the variable name can only contain letters, numbers, or underscores (no spaces, symbols, or special characters)</li></ul><br/>There is no limit to the length of variable names and it is important to note that variable names are case sensitive so str is a different name than Str or STR.<br/><br/>One last thing before moving to the next task. Note the block in the toolbox that looks like this <span class = \"instr-block\">// This is a comment</span>. The double slash (//) indicates a comment in the program. Comments are lines that will be ignored by the computer when running the program and can contain any characters.",
 			"expected_output" : ["The quick brown fox jumps over the lazy dog."],
 			"test_case" : [""],
 			"type" : "BLOCK-TASK",
-			"hint" : "",
+			"hint" : "Change the console.log() statement so it prints out str2.",
 			"program_blocks" : [
 				{
-					"value" : "var str;",
-					"type" : "DECLARE",
+					"value" : "var str1;",
+					"type" : "STATIC",
 					"can_edit" : false
-				},{
-					"value" : "str = \"The quick brown fox jumps over the lazy dog.\";",
-					"type" : "ASSIGN",
+				},
+				{
+					"value" : "var str2;",
+					"type" : "STATIC",
+					"can_edit" : false
+				},
+				{
+					"value" : "str1 = \"Pack my box with five dozen liquor jugs.\";",
+					"type" : "STATIC",
+					"can_edit" : false
+				},
+				{
+					"value" : "str2 = \"The quick brown fox jumps over the lazy dog.\";",
+					"type" : "STATIC",
 					"can_edit" : false
 				}
 			],
 			"toolbox" : [
 				{
-					"value" : "console.log(str);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
-				},{
+					"can_edit" : true,
+					"children" : "str1"
+				},
+				{
 					"value" : "// This is a comment",
-					"type" : "COMMENT",
+					"type" : "STATIC",
+					"can_edit" : false
+				},
+				{
+					"value" : "str2",
+					"type" : "STATIC",
 					"can_edit" : false
 				}
 
@@ -66,22 +84,22 @@
 			"program_blocks" : [
 				{
 					"value" : "var x;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "var y;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				}
 			],
 			"toolbox" : [
 				{
 					"value" : "x = 3;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "y = 6;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "console.log(x + y);",
@@ -93,7 +111,7 @@
 					"can_edit" : false
 				},{
 					"value" : "var total = x + y;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "console.log(total);",
@@ -101,31 +119,31 @@
 					"can_edit" : false
 				},{
 					"value" : "var total = 3 + 6;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "var total = x - y;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "var total = x * y;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "var total = x / y;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "x = -3;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "x = 3.5;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "y = 5.5;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				}
 
@@ -140,11 +158,11 @@
 			"program_blocks" : [
 				{
 					"value" : "var age = 20;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "var alice = \"Alice is \";",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "console.log(\"Alice\" + \"Bob\");",
@@ -163,23 +181,23 @@
 					"can_edit" : false
 				},{
 					"value" : "age++;",
-					"type" : "PLUS",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "age--;",
-					"type" : "MINUS",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "var cats = 5;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "cats += 3;",
-					"type" : "PLUS",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "console.log(cats);",
-					"type" : "LOG",
+					"type" : "STATIC",
 					"can_edit" : false
 				}
 
@@ -194,7 +212,7 @@
 			"program_blocks" : [
 				{
 					"value" : "var x;",
-					"type" : "DECLARE",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "console.log(x);",
@@ -205,7 +223,7 @@
 			"toolbox" : [
 				{
 					"value" : "x = 10;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "console.log(\"Multiplying\" * \"Strings\");",

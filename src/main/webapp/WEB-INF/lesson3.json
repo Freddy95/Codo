@@ -91,7 +91,7 @@
       "program_blocks" : [
         {
           "value" : "var x = 5;",
-          "type" : "ASSIGN",
+          "type" : "STATIC",
           "can_edit" : false
         },{
           "value" : "if (x > 4)",
@@ -136,7 +136,7 @@
       "toolbox" : [
         {
           "value" : "var x = 3;",
-          "type" : "ASSIGN",
+          "type" : "STATIC",
           "can_edit" : false
         }
       ]
@@ -241,17 +241,17 @@
       "program_blocks" : [
         {
           "value" : "var x = 10;",
-          "type" : "ASSIGN",
+          "type" : "STATIC",
           "can_edit" : false
         },
         {
           "value" : "var str;",
-          "type" : "ASSIGN",
+          "type" : "STATIC",
           "can_edit" : false
         },
         {
           "value" : "switch (x)",
-          "type" : "SWITCH",
+          "type" : "STATIC",
           "can_edit" : false
         },
         {
@@ -261,42 +261,42 @@
         },
         {
           "value" : "case 5:",
-          "type" : "CASE",
+          "type" : "STATIC",
           "can_edit" : false
         },
         {
           "value" : "str = \"x = 5\";",
-          "type" : "ASSIGN",
+          "type" : "STATIC",
           "can_edit" : false
         },
         {
           "value" : "break;",
-          "type" : "BREAK",
+          "type" : "STATIC",
           "can_edit" : false
         },
         {
           "value" : "case 10:",
-          "type" : "CASE",
+          "type" : "STATIC",
           "can_edit" : false
         },
         {
           "value" : "str = \"x = 10\";",
-          "type" : "ASSIGN",
+          "type" : "STATIC",
           "can_edit" : false
         },
         {
           "value" : "case 15:",
-          "type" : "CASE",
+          "type" : "STATIC",
           "can_edit" : false
         },
         {
           "value" : "str = \"x = 15\";",
-          "type" : "ASSIGN",
+          "type" : "STATIC",
           "can_edit" : false
         },
         {
           "value" : "break;",
-          "type" : "BREAK",
+          "type" : "STATIC",
           "can_edit" : false
         },
         {
@@ -313,7 +313,7 @@
       "toolbox" : [
         {
           "value" : "break;",
-          "type" : "BREAK",
+          "type" : "STATIC",
           "can_edit" : false
         },
       ]
