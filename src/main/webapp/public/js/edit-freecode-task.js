@@ -178,11 +178,11 @@ function editTitle() {
   if (task_title.is('input')) {
     task_title.replaceWith($("<span id='task-title' />").text(task_title.val()));
     title_button.attr('title', 'Edit Title');
-    title_icon.removeClass('fa-save').addClass('fa-pencil');
+    title_icon.removeClass('fa-check').addClass('fa-pencil');
   }
   else {
     task_title.replaceWith($("<input id='task-title' />").val(task_title.text()));
     title_button.attr('title', 'Save Title');
-    title_icon.removeClass('fa-pencil').addClass('fa-save');
+    title_icon.removeClass('fa-pencil').addClass('fa-check');
   }
 }
