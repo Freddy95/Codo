@@ -32,8 +32,7 @@ public class Block {
         CURL,
         SQUARE,
         ELSE,
-        ELSE_IF,
-        COMMIT
+        ELSE_IF
     }
 
     public Block() {
