@@ -132,7 +132,6 @@ function run() {
     expected_output.push($(this).val().replace("\n","<br>") + "<br>");
   });
 
-  debugger;
   try {
     var completed = run_helper();
 
