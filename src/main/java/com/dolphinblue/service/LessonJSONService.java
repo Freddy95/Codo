@@ -129,7 +129,7 @@ public class LessonJSONService {
             b.setCan_edit((Boolean) json_b.get("can_edit"));
             if (b.isCan_edit()) {
                 // Handle the nested blocks if there are any
-                json_b.get("children");
+                b.setChildren(create_blocks_from_json((JSONArray) json_b.get("children")));
             }
             b.setValue((String) json_b.get("value"));
             String type = (String) json_b.get("type");
