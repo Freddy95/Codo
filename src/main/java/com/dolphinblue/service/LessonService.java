@@ -69,7 +69,7 @@ public class LessonService {
             LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson1.json");
             LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson2.json");
             LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson3.json");
-            LessonJSONService.create_lesson_from_JSON("WEB-INF/dummy.json");
+            LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson4.json");
             main_lessons = ofy.load().type(Lesson.class).filter("site_owned", true).list();
             System.out.println("Main lessons size : " + main_lessons.size());
         }else{

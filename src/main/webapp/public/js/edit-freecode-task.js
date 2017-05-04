@@ -74,12 +74,22 @@ $(function(){
 
   };
 
+  deleteTask = function() {
+  $.ajax({
+    method:'POST',
+    url: '/createlesson/' + lessonId + '/createtask/' + taskId + '/delete',
+    success: function(data, status, xhttp) {
+      window.location.replace('../../../createlesson/' + lessonId);
+    }
+  });
+}
+
 });
 // Adds an input and output.
 function addOutput() {
   if ($('#ex-output').children().length === 1) {
-      $('#ex-output').find('i').removeClass('fa-disabled');
-      $('#test-case').find('i').removeClass('fa-disabled');
+      $('#ex-output').find('.fa-minus').removeClass('fa-disabled');
+      $('#test-case').find('.fa-minus').removeClass('fa-disabled');
   }
   var newInputRow = $('<div class="input-group"/>');
   var newOutputRow = newInputRow.clone();
@@ -121,4 +131,3 @@ function editTitle() {
     title_icon.removeClass('fa-pencil').addClass('fa-save');
   }
 }
-
