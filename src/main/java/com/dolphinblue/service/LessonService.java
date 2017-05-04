@@ -171,20 +171,21 @@ public class LessonService {
      * @param blocks -- the list of blocks to be updated
      * @return -- the list of updated block keys
      */
-    public List<Key<Block>> update_blocks(long task_id, List<Block> blocks) {
+    public List<Key<Block>> update_blocks(long task_id, List<SaveBlockModel> blocks) {
         // Get the objectify object to access the datastore
         Objectify ofy = OfyService.ofy();
         // Create a list of block ids
+        BlockService blockService = new BlockService();
         List<Key<Block>> block_keys = new ArrayList<>();
 
         // For each block in the block list
         for(int i = 0; i < blocks.size(); i++) {
             //System.out.println("Getting new block from blocks list");
             // Get the new block from the list
-            Block new_block = blocks.get(i);
+            SaveBlockModel new_block = blocks.get(i);
             // Get the original block from the datastore
-            Block old_block = ofy.load().type(Block.class).id(blocks.get(i).getBlock_id()).now();
-
+            Block old_b = ofy.load().type(Block.class).id(blocks.get(i).getBlock_id()).now();
+            SaveBlockModel old_block = blockService.block_to_block_model(old_b);
 
             if(new_block.isCan_edit()){
                 //check to see if children blocks are equal
@@ -333,7 +334,7 @@ public class LessonService {
         if (lesson_model.getTasks() != null) {
 
             for(int i = 0; i < lesson_model.getTasks().size(); i++){
-                Key<Task> task_key = Key.create(Task.class, lesson_model.getTasks().get(i).getTask_id());
+                Key<Task> task_key = Key.create(Task.class, lesson_model.getTasks().get(i));
                 lesson_model_task_keys.add(task_key);
             }
 
@@ -342,12 +343,6 @@ public class LessonService {
                 if(!lesson_model_task_keys.contains(task_key)){
                     //new lesson model doesn't contain this task so remove it.
                     taskService.delete_task(lesson, task_key);
-                }else{
-                    //new lesson model has it so update this task
-                    Task task = ofy.load().key(task_key).now();
-                    SaveTaskModel task_model = lesson_model.getTasks().get(lesson_model_task_keys.indexOf(task_key));
-                    taskService.task_model_to_task(task, task_model);
-                    ofy.save().entity(task).now();
                 }
             }
 

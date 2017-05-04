@@ -443,11 +443,11 @@ public class LessonController {
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();
 
-        toolbox.add(new Block(1, "x = 2;", Type.ASSIGN, true));
-        toolbox.add(new Block(2, "x += 5;", Type.ASSIGN, true));
+        toolbox.add(new Block(1, "x = 2;", Type.STATIC, true));
+        toolbox.add(new Block(2, "x += 5;", Type.STATIC, true));
 
-        editor.add(new Block(2, "x += 1;", Type.ASSIGN, true));
-        editor.add(new Block(2, "console.log(x);", Type.ASSIGN, true));
+        editor.add(new Block(2, "x += 1;", Type.STATIC, true));
+        editor.add(new Block(2, "console.log(x);", Type.STATIC, true));
 
         model.addAttribute("lesson", l);
         model.addAttribute("toolbox", toolbox);

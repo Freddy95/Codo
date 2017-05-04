@@ -15,14 +15,14 @@
 			"program_blocks":[
 				{
 					"value" : "var x;",
-					"type" : "DECLARE",
+					"type" : "STATIC",
 					"can_edit" : false
 				}
 			],
 			"toolbox":[
 				{
 					"value" : "x=(2==(1+1));",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "console.log(x);",
@@ -41,28 +41,28 @@
 			"program_blocks" : [
 				{
 					"value" : "var x;",
-					"type" : "DECLARE",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" :"x = 2",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				}
 			],
 			"toolbox" : [
                                 {
 					"value" :"var y;",
-					"type" : "DELCARE",
+					"type" : "STATIC",
 					"can_edit" : false
 				},
                                 {
 					"value" :"y = 1+1",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},
                 {
                     "value" : "y=4;",
-                    "type" : "ASSIGN",
+                    "type" : "STATIC",
                     "can_edit" : false
                 },
 				{
@@ -72,7 +72,7 @@
 				},
                                 {
 					"value" : "// This is a comment",
-					"type" : "COMMENT",
+					"type" : "STATIC",
 					"can_edit" : false
 				}
 			]
@@ -93,25 +93,25 @@
 			"toolbox" : [
 				,{
 					"value" : " var x;",
-					"type" : "DECLARE",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "var y;",
-					"type" : "DECLARE",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "x = true;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 
 					"value" : "x = false;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 
 					"value" : "y = false;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				}
 			]
@@ -125,11 +125,11 @@
 			"program_blocks" : [
 				{
 					"value" : "var x;",
-					"type" : "DECLARE",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "var y;",
-					"type" : "DECLARE",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "console.log(x && y);",
@@ -140,15 +140,15 @@
 			"toolbox" : [
 				{
 					"value" : "x = true;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "y = true;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "x = false;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				}
 			]
@@ -162,7 +162,7 @@
 			"program_blocks" : [
 				{
 					"value" : "var x;",
-					"type" : "DECLARE",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "console.log(!x);",
@@ -173,11 +173,11 @@
 			"toolbox" : [
 				{
 					"value" : "x = true;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				},{
 					"value" : "x = false;",
-					"type" : "ASSIGN",
+					"type" : "STATIC",
 					"can_edit" : false
 				}
 			]

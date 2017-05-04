@@ -18,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
 
@@ -73,7 +75,9 @@ public class UserController {
             Collections.sort(main_lessons);
             for (int i = 0; i < main_lessons.size(); i++){
                 Lesson lesson = main_lessons.get(i);
-                lesson.setPercent_complete((Math.round(1000 * lessonService.get_percent_complete(lesson)))/10);
+                BigDecimal roundedPercent = new BigDecimal(Math.round(100 * lessonService.get_percent_complete(lesson)));
+                roundedPercent = roundedPercent.setScale(2, RoundingMode.HALF_UP);
+                lesson.setPercent_complete(roundedPercent.doubleValue());
                 System.out.println(lesson.getPercent_complete());
             }
             model.addAttribute("main_lessons", main_lessons);
