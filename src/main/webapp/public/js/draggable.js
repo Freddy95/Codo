@@ -228,4 +228,12 @@ function startTutorial() {
     //});
 
     tutorial.start();
+
+    $.ajax({
+        method:'POST',
+        url:"/lesson/toggle",
+        success:function() {
+        },error:function() {
+        }
+    });
 }
