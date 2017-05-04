@@ -136,18 +136,20 @@ public class TaskService {
      * @return -- index of deleted task. Returns -1 if task is not in lesson.
      */
     public int delete_task(Lesson lesson, Key task_key){
+        BlockService blockService = new BlockService();
         int index = -1;
         if(lesson.getTasks().contains(task_key)){
             Objectify ofy = OfyService.ofy();
             Task task = (Task) ofy.load().key(task_key).now();
             if(task.getEditor() != null){
                 for(int i = 0; i < task.getEditor().size(); i++){
-                    ofy.delete().key(task.getEditor().get(i)).now();
+
+                    blockService.delete_block(ofy.load().key(task.getEditor().get(i)).now());
                 }
             }
             if(task.getToolbox() != null){
                 for(int i = 0; i < task.getToolbox().size(); i++){
-                    ofy.delete().key(task.getToolbox().get(i)).now();
+                    blockService.delete_block(ofy.load().key(task.getToolbox().get(i)).now());
                 }
             }
 

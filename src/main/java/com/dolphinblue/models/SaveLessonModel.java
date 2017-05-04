@@ -10,7 +10,7 @@ public class SaveLessonModel {
     private String title;
     private String description;
     private boolean shared;
-    private List<SaveTaskModel> tasks;
+    private List<Long> tasks;
 
     public SaveLessonModel(){
         tasks = new ArrayList<>();
@@ -40,11 +40,11 @@ public class SaveLessonModel {
         this.shared = shared;
     }
 
-    public List<SaveTaskModel> getTasks() {
+    public List<Long> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<SaveTaskModel> tasks) {
+    public void setTasks(List<Long> tasks) {
         this.tasks = tasks;
     }
 }

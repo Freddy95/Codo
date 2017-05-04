@@ -334,7 +334,7 @@ public class LessonService {
         if (lesson_model.getTasks() != null) {
 
             for(int i = 0; i < lesson_model.getTasks().size(); i++){
-                Key<Task> task_key = Key.create(Task.class, lesson_model.getTasks().get(i).getTask_id());
+                Key<Task> task_key = Key.create(Task.class, lesson_model.getTasks().get(i));
                 lesson_model_task_keys.add(task_key);
             }
 
@@ -343,12 +343,6 @@ public class LessonService {
                 if(!lesson_model_task_keys.contains(task_key)){
                     //new lesson model doesn't contain this task so remove it.
                     taskService.delete_task(lesson, task_key);
-                }else{
-                    //new lesson model has it so update this task
-                    Task task = ofy.load().key(task_key).now();
-                    SaveTaskModel task_model = lesson_model.getTasks().get(lesson_model_task_keys.indexOf(task_key));
-                    taskService.task_model_to_task(task, task_model);
-                    ofy.save().entity(task).now();
                 }
             }
 
