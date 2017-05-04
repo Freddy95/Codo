@@ -11,12 +11,12 @@
       </span>
     </div>
     <div th:unless="${#lists.isEmpty(list)}" th:id="${list_id}" class="output-list card-block input-parent container-fluid" >
-      <th:block th:if="${#lists.size(list) > 1}">
+      <th:block th:if="${#lists.size(list) > 0}">
         <th:block th:each="item : ${list}">
           <div th:replace="output-item :: item(value=${item}, default=${default})"></div>
         </th:block>
       </th:block>
-      <th:block th:unless="${#lists.size(list) > 1}">
+      <th:block th:unless="${#lists.size(list) > 0}">
         <div th:replace="output-item :: item(value=${item}, default=${default},disabled=true)"></div>
       </th:block>
     </div>
