@@ -281,7 +281,7 @@ public class CreateLessonController {
      * This route should be called when a user wants to save a created lesson.
      * Creates a lesson object and saves it in the datastore.
      */
-    @RequestMapping(value = "/createlesson/{lessonId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/createlesson/{lessonId}/post", method = RequestMethod.POST)
     public @ResponseBody void save_lesson(@PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model){
 
 

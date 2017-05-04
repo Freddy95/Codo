@@ -5,14 +5,14 @@
 <body> 
   <div th:fragment="task">
     <!-- All of the lesson card is a link to the relevant lesson. -->
-    <li class="task-block">
+    <li class="task-block" th:id="${task.task_id}">
       <span th:text="${task.title}"></span>
       <span class="pull-right">
         <span class="task-button edit-task-button">
-          <a class="fa fa-pencil" aria-hidden="true" th:href="'/createlesson/'+${lesson.lesson_id}+'/createtask/' + ${task.task_id}"></a>
+          <a class="fa fa-pencil" aria-hidden="true" th:href="'/createlesson/'+${lesson.lesson_id}+'/createtask/'+${task.task_id}"></a>
         </span>
         <span class="task-button delete-task-button">
-          <i class="fa fa-trash" aria-hidden="true"></i>
+          <i class="fa fa-trash" aria-hidden="true" onClick="deleteTask(this)"></i>
         </span>
       </span>
     </li>
