@@ -256,7 +256,7 @@ public class LessonService {
      */
     public List<Lesson> get_shared_lessons_by_user(User user){
         Objectify ofy = OfyService.ofy();
-        return ofy.load().type(Lesson.class).filter("user_id !=", user.getUser_id()).filter("site_owned", false).list();
+        return ofy.load().type(Lesson.class).filter("user_id !=", user.getUser_id()).filter("site_owned", false).filter("shared",true).list();
     }
 
     /**
