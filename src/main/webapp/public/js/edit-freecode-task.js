@@ -79,7 +79,7 @@ $(function(){
     method:'POST',
     url: '/createlesson/' + lessonId + '/createtask/' + taskId + '/delete',
     success: function(data, status, xhttp) {
-      window.location.replace('../../../createlesson/' + lessonId);
+      window.location.replace('/createlesson/' + lessonId);
     }
   });
 }

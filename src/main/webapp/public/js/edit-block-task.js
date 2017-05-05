@@ -199,7 +199,7 @@ function deleteTask() {
     method:'POST',
     url: '/createlesson/' + lesson_id + '/createtask/' + task_id + '/delete',
     success: function(data, status, xhttp) {
-      window.location.replace('../../../createlesson/' + lesson_id);
+      window.location.replace('/createlesson/' + lesson_id);
     }
   });
 }

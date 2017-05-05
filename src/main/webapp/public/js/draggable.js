@@ -98,18 +98,20 @@ function run() {
     // Adding next arrow to next task.
     if (next_task > 0) {
       $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/'
-                                                        + lesson_id + '/task/' + next_task + '" onClick="save()"></a>'));
+                                                        + lesson_id + '/task/' + next_task + '" onClick="return save()"></a>'));
     }
     // If last lesson, just redirect to user page.
     else {
       $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right"' + 
-                                                      'href="/user" onClick="save()"></a>'));
+                                                      'href="/user" onClick="return save()"></a>'));
     }
   }
 }
 
 // Save data.
 function save() {
+
+  debugger;
 
   var data = {};
 
