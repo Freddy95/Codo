@@ -60,10 +60,10 @@ function init() {
   /* Makes child elements of editor, toolbox, and holds-one draggable
    * between all elements of those types.
    */  
-  $('#editor, #toolbox, .holds-one, .holds-list').sortable({
+   $('#editor, #toolbox, .holds-one, .holds-list').sortable({
     connectWith: ".code-placement",
     over: function(e, ui){ 
-        resize_content();
+      resize_content();
     },
     receive: function(event, ui) {
       // Restrict .holds-one to hold one element at a time.
@@ -77,14 +77,14 @@ function init() {
     }
   }).disableSelection();
 
-  $(window).bind('beforeunload', function() {
+   $(window).bind('beforeunload', function() {
     if(isDirty){
-        return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+      return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
     }
   });
 
-  if(new_lesson) {
-      startTutorial();
+   if(new_lesson) {
+    startTutorial();
   }
 }
 
@@ -93,26 +93,31 @@ function run() {
 
   // If the arrow doesn't already exist and the output is correct, then mark the task as complete and show the arrow.
   if ($('#output-div>.card-title-block').children().length === 1 &&
-      correct) {
+    correct) {
     completed = true;
     // Adding next arrow to next task.
     if (next_task > 0) {
-      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/'
-                                                        + lesson_id + '/task/' + next_task + '" onClick="return save()"></a>'));
+      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" onClick="saveRedirect()"></a>'));
     }
     // If last lesson, just redirect to user page.
     else {
-      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right"' + 
-                                                      'href="/user" onClick="return save()"></a>'));
+      $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" onClick="saveRedirect()"></a>'));
     }
+  }
+}
+
+function saveRedirect() {
+  save();
+  if (next_task > 0) {
+    window.location.replace('/lesson/' + lesson_id + '/task/' + next_task);
+  }
+  else {
+    window.location.replace('/user');
   }
 }
 
 // Save data.
 function save() {
-
-  debugger;
-
   var data = {};
 
   var editor = [];
@@ -128,101 +133,98 @@ function save() {
 
   $.ajax({
     headers: { 
-        'Accept': 'application/json',
-        'Content-Type': 'application/json' 
+      'Accept': 'application/json',
+      'Content-Type': 'application/json' 
     },
     'type': 'POST',
     'url': '/savelesson/' + lesson_id + '/task/' + task_id,
     'data': JSON.stringify(data),
     'dataType': 'json'
-  }).done(function() {
-    isDirty = false;
-    return true;
-  }).fail(function() {
-    return false;
   });
+
+  isDirty = false;
 }
 
 function startTutorial() {
-    new_lesson = false;
+  new_lesson = false;
     // Setup the tutorial intro for the user page
     var tutorial = introJs();
     tutorial.setOptions({
-        steps: [
-            {
+      steps: [
+      {
                 // Focus: instructions
                 element: '.step-1',
                 intro: 'These are the instructions for completing the task you are on. Follow these instructions closely to move on in the lesson.',
                 position: 'right'
-            },
-            {
+              },
+              {
                 // Focus: editor
                 element: '.step-2',
                 intro: 'This is the Editor where you will build your program using code blocks',
                 position: 'left'
-            },
-            {
+              },
+              {
                 // Focus: toolbox
                 element: '.step-3',
                 intro: 'By dragging the blocks from this Toolbox into the Editor you can make programs.',
                 position: 'top'
-            },
-            {
+              },
+              {
                 // Focus: run button
                 element: '.step-4',
                 intro: 'To test your program to see if you are ready to move on to the next task, click this button and it will run the code you built with blocks in the Editor.',
                 position: 'right'
-            },
-            {
+              },
+              {
                 // Focus: output
                 element: '.step-5',
                 intro: 'This box will display the output given by running your program. This output needs to be the correct output as specified in the instructions in order to move on to the next task.',
                 position: 'left'
-            },
-            {
+              },
+              {
                 // Focus: hint button
                 element: '.step-6',
                 intro: 'If you are having trouble getting the right output for your program, click this button to get a hint.',
                 position: 'right'
-            },
-            {
+              },
+              {
                 // Focus: save task
                 element: '.step-7',
                 intro: 'You can click this button at any time to save the progress you\'ve made.',
                 position: 'left'
-            },
-            {
+              },
+              {
                 // Focus: undo changes
                 element: '.step-8',
                 intro: 'Pressing this button will undo all of the changes made since your last save.',
                 position: 'bottom'
-            },
-            {
+              },
+              {
                 // Focus: restart task
                 element: '.step-9',
                 intro: 'To restart the task you are on from the beginning click this button.',
                 position: 'bottom'
-            },
-            {
+              },
+              {
                 // Focus: restart lesson
                 element: '.step-10',
                 intro: 'To restart all of the tasks in the lesson click this button.',
                 position: 'bottom'
-            },
-            {
+              },
+              {
                 // Focus: task navigation
                 element: '.step-11',
                 intro: 'Once you have completed a task you can navigate to it directly at anytime using this task navigation bar. Hover over the numbers in the bar to get the title of that particular task.',
                 position: 'bottom'
-            },
-            {
+              },
+              {
                 // Focus: home button
                 element: '.step-12',
                 intro: 'To go back to the home page where you were before, click this button. You\'re now ready to complete your first task!',
                 position: 'bottom'
-            }
-        ]
-    });
+              }
+              ]
+            });
 
     // Setup the page transition for the tutorial to navigate home?
     //tutorial.setOption('doneLabel', 'Start Lesson').start().oncomplete(function() {
@@ -230,4 +232,12 @@ function startTutorial() {
     //});
 
     tutorial.start();
-}
+
+    $.ajax({
+      method:'POST',
+      url:"/lesson/toggle",
+      success:function() {
+      },error:function() {
+      }
+    });
+  }

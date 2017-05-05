@@ -3,18 +3,33 @@
  * Javascript for the edit lesson page
  */
 
-$(document).ready(function() {
+ $(document).ready(function() {
   init();
 });
 
-var tasksToDelete=[];
+ var tasksToDelete=[];
+ var isDirty = false;
 
 // Convenience methood to get value from a placeholder.
 
 function init() {
     $('.sortable').sortable({
-        placeholder: "ui-state-highlight"
+        connectWith: '.sortable',
+        placeholder: "ui-state-highlight",
+        stop: function(event, ui) {
+          isDirty = true;
+        }
     }).disableSelection();
+
+    $('#title, #description, #shared').change(function() {
+        isDirty = true;
+    });
+
+    $(window).bind('beforeunload', function() {
+        if(isDirty){
+            return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+        }
+    });
 }
 
 // Save data.
@@ -51,25 +66,27 @@ function save() {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-      method:'POST',
-      url: '/createlesson/' + lesson_id + '/post',
-      dataType:'json',
-      data:JSON.stringify(data),
+        method:'POST',
+        url: '/createlesson/' + lesson_id + '/post',
+        dataType:'json',
+        data:JSON.stringify(data),
     });
+
+    isDirty = false;
 }
 
 function addTask(type) {
     $.ajax({
       method:'GET',
-        data:{
+      data:{
          "type":type
-        },
-      url: '/createlesson/' + lesson_id + '/createtask',
-      success: function(data, status, xhttp) {
+     },
+     url: '/createlesson/' + lesson_id + '/createtask',
+     success: function(data, status, xhttp) {
         //redirect to the newly created task
         window.location.href = '/createlesson/' + lesson_id + '/createtask/'+data;
-      }
-    });
+    }
+});
 }
 
 function deleteTask(node) {

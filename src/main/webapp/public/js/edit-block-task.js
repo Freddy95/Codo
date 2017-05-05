@@ -22,7 +22,7 @@ function init() {
   /* Expected output has newlines, we'll turn them in to <br> so it works
    * with html
    */
-  expected_output = String(expected_output).replace("\n","<br>") + "<br>";
+   expected_output = String(expected_output).replace("\n","<br>") + "<br>";
 
   // Function for sortables to receive.
   var receiveFunction = function(event, ui) {
@@ -68,7 +68,7 @@ function init() {
   /* Makes child elements of editor, toolbox, and holds-one draggable
    * between all elements of those types.
    */  
-  $('#editor, #toolbox, .holds-one, .holds-list').not('#catalog *').sortable({
+   $('#editor, #toolbox, .holds-one, .holds-list').not('#catalog *').sortable({
     connectWith: ".code-placement",
     cancel: '.code-text',
     receive: receiveFunction
@@ -79,19 +79,19 @@ function init() {
     accept: ".code-placement div",
     hoverClass: "ui-state-hover",
     drop: function(ev, ui) {
-        ui.draggable.remove();
+      ui.draggable.remove();
     }
   });
 
   // Manage editable blocks.
   $('#editor, #toolbox')
-    .on('dblclick', '.code-block[data-type="STATIC"] span.code-text', function(){
+  .on('dblclick', '.code-block[data-type="STATIC"] span.code-text', function(){
       // Double clicking a block will create an input.
       new_input = $("<input class='code-text' />").val($(this).text())
       $(this).replaceWith(new_input);
       new_input.focus();
     })
-    .on('dblclick blur', '.code-block[data-type="STATIC"] input.code-text', function(){
+  .on('dblclick blur', '.code-block[data-type="STATIC"] input.code-text', function(){
       // Double clicking an input or clicking away from one will return it into block form.
       try {
         $(this).replaceWith($("<span class='code-text' />").text($(this).val()));
@@ -100,23 +100,23 @@ function init() {
       // Squelching the exception.
       catch (e) {}
     })
-    .on('keypress', '.code-block[data-type="STATIC"] input.code-text', function(e) {
+  .on('keypress', '.code-block[data-type="STATIC"] input.code-text', function(e) {
       // Hitting the enter key on an input will also revert it to block form.
       if(e.which == 13) {
         $(this).replaceWith($("<span class='code-text' />").text($(this).val()));
       }
     }
-  );
+    );
 
   $('body').on('keypress', '#instructions, #hint, input#task-title', function() {
     isDirty = true;
   });
 
   $(window).bind('beforeunload', function() {
-  if(isDirty){
+    if(isDirty){
       return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
-  }
-});
+    }
+  });
 
 }
 
@@ -132,7 +132,6 @@ function run() {
     expected_output.push($(this).val().replace("\n","<br>") + "<br>");
   });
 
-  debugger;
   try {
     var completed = run_helper();
 
@@ -179,19 +178,15 @@ function save() {
 
   $.ajax({
     headers: { 
-        'Accept': 'application/json',
-        'Content-Type': 'application/json' 
+      'Accept': 'application/json',
+      'Content-Type': 'application/json' 
     },
     'type': 'POST',
     'url': '/createlesson/' + lesson_id + '/createtask/' + task_id,
     'data': JSON.stringify(data),
     'dataType': 'json'
-  }).done(function() {
-    isDirty = false;
-    return true;
-  }).fail(function() {
-    return false;
   });
+  isDirty = false;
 }
 
 function deleteTask() {
@@ -207,8 +202,8 @@ function deleteTask() {
 // Adds an input and output.
 function addOutput() {
   if ($('#ex-output').children().length === 1) {
-      $('#ex-output').find('.fa-minus').removeClass('fa-disabled');
-      $('#test-case').find('.fa-minus').removeClass('fa-disabled');
+    $('#ex-output').find('.fa-minus').removeClass('fa-disabled');
+    $('#test-case').find('.fa-minus').removeClass('fa-disabled');
   }
   var newInputRow = $('<div class="input-group"/>');
   var newOutputRow = newInputRow.clone();
@@ -217,9 +212,9 @@ function addOutput() {
   newOutputRow.appendTo('#ex-output');
 
   newInputRow.append('<input type="text" class="form-control row-item" placeholder="Input">' +
-            '<div class="input-group-addon fa fa-minus" onClick="minusOutput(this)"></div>');
+    '<div class="input-group-addon fa fa-minus" onClick="minusOutput(this)"></div>');
   newOutputRow.append('<input type="text" class="form-control row-item" placeholder="Output">' +
-            '<div class="input-group-addon fa fa-minus" onClick="minusOutput(this)"></div>');
+    '<div class="input-group-addon fa fa-minus" onClick="minusOutput(this)"></div>');
 }
 
 // Removes an input and output.
@@ -243,11 +238,11 @@ function editTitle() {
   if (task_title.is('input')) {
     task_title.replaceWith($("<span id='task-title' />").text(task_title.val()));
     title_button.attr('title', 'Edit Title');
-    title_icon.removeClass('fa-save').addClass('fa-pencil');
+    title_icon.removeClass('fa-check').addClass('fa-pencil');
   }
   else {
     task_title.replaceWith($("<input id='task-title' />").val(task_title.text()));
     title_button.attr('title', 'Save Title');
-    title_icon.removeClass('fa-pencil').addClass('fa-save');
+    title_icon.removeClass('fa-pencil').addClass('fa-check');
   }
 }

@@ -25,54 +25,54 @@
 </head>
 <body>
 
-<div class="container h-100">
-  <!-- Lesson navbar. -->
-  <div class="row">
-    <div class="col">
-      <div th:replace="lesson-navbar :: navbar"></div>
-    </div>
-  </div>
-
-  <!-- Task navbar -->
-  <div class="row">
-    <div class="col">
-      <div th:replace="task-navbar :: navbar"></div>
-    </div>
-  </div>
-
-  <!-- Lesson content -->
-  <div class="row " id="lesson-content">
-    <!-- Column containing instructions. -->
-    <div class="col-3 task-col">
-      <div class="card h-100 step-1" id="instructions-div">
-        <div class="card-header card-title-block">
-          <h3 class="card-title">Instructions</h3>
-        </div>
-        <div class="card-block code-placement" id="instructions" th:utext="${task.instructions}"></div>
+  <div class="container h-100">
+    <!-- Lesson navbar. -->
+    <div class="row">
+      <div class="col">
+        <div th:replace="lesson-navbar :: navbar"></div>
       </div>
     </div>
 
-    <!-- Column containing editor and toolbox. -->
-    <div class="col-6 task-col">
-      <div th:insert="draggable:: #block-content" th:with="hint=${task.hint}" th:remove="tag"></div>
-    </div>
-
-    <!-- Column containing expected output. -->
-    <div class="col-3 task-col">
-      <div class="card h-100 step-5" id="output-div">
-        <div class="card-header card-title-block">
-          <h3 class="card-title">Output</h3>
-
-          <!-- If the task was already completed, let the user go to the next task. -->
-          <a id="next-arrow" onClick="save()" th:if="${next_task > 0 && task.completed}"
-            class="fa fa-lg fa-vc fa-arrow-right pull-right" th:href="'/lesson/' + ${lesson.lesson_id} + '/task/' + ${next_task}"></a>
-          <a id="next-arrow" onClick="save()" th:if="${next_task < 0 && task.completed}"
-            class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user"></a>
-        </div>
-        <div class="card-block code-placement" id="output"></div>
+    <!-- Task navbar -->
+    <div class="row">
+      <div class="col">
+        <div th:replace="task-navbar :: navbar"></div>
       </div>
     </div>
-  </div>
-</div>
-</body>
-</html>
+
+    <!-- Lesson content -->
+    <div class="row " id="lesson-content">
+      <!-- Column containing instructions. -->
+      <div class="col-3 task-col">
+        <div class="card h-100 step-1" id="instructions-div">
+          <div class="card-header card-title-block">
+            <h3 class="card-title">Instructions</h3>
+          </div>
+          <div class="card-block code-placement" id="instructions" th:utext="${task.instructions}"></div>
+        </div>
+      </div>
+
+      <!-- Column containing editor and toolbox. -->
+      <div class="col-6 task-col">
+        <div th:insert="draggable:: #block-content" th:with="hint=${task.hint}" th:remove="tag"></div>
+      </div>
+
+      <!-- Column containing expected output. -->
+      <div class="col-3 task-col">
+        <div class="card h-100 step-5" id="output-div">
+          <div class="card-header card-title-block">
+            <h3 class="card-title">Output</h3>
+
+            <!-- If the task was already completed, let the user go to the next task. -->
+            <a id="next-arrow" onClick="saveRedirect()" th:if="${next_task > 0 && task.completed}"
+              class="fa fa-lg fa-vc fa-arrow-right pull-right"></a>
+              <a id="next-arrow" onClick="saveRedirect()" th:if="${next_task < 0 && task.completed}"
+              class="fa fa-lg fa-vc fa-arrow-right pull-right"></a>
+            </div>
+            <div class="card-block code-placement" id="output"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  </html>

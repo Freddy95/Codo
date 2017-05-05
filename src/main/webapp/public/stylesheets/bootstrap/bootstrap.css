@@ -2247,7 +2247,7 @@ pre code {
   font-size: 1rem;
   line-height: 1.25;
   color: #464a4c;
-  background-color: #F9FDFF;
+  background-color: #ffffff;
   background-image: none;
   -webkit-background-clip: padding-box;
           background-clip: padding-box;
@@ -2267,7 +2267,7 @@ pre code {
 
 .form-control:focus {
   color: #464a4c;
-  background-color: #F9FDFF;
+  background-color: #ffffff;
   border-color: #2797c3;
   outline: none;
 }
@@ -2307,7 +2307,7 @@ select.form-control:not([size]):not([multiple]) {
 
 select.form-control:focus::-ms-value {
   color: #464a4c;
-  background-color: #F9FDFF;
+  background-color: #ffffff;
 }
 
 .form-control-file,
@@ -3738,7 +3738,7 @@ tbody.collapse.show {
 
 .custom-select:focus::-ms-value {
   color: #464a4c;
-  background-color: #F9FDFF;
+  background-color: #ffffff;
 }
 
 .custom-select:disabled {

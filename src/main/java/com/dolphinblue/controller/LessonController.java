@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 
@@ -36,6 +37,8 @@ public class LessonController {
     CodoUserService userService;
     @Autowired
     TaskService taskService;
+    @Autowired
+    BlockService blockService;
 
     /**
      *  This is for debugging a block task
@@ -241,12 +244,12 @@ public class LessonController {
             //this is a block task
             // Load the editor blocks for the task and add them to the thymeleaf model
             List<Key<Block>> e_block_keys = task.getEditor();
-            List<Block> editor_blocks = lessonService.get_blocks_by_id(e_block_keys);
+            List<SaveBlockModel> editor_blocks = blockService.get_list_blocks(lessonService.get_blocks_by_id(e_block_keys));
             model.addAttribute("editor", editor_blocks);
 
             // Load the toolbox blocks for the task and add them to the thymeleaf model
             List<Key<Block>> t_block_keys = task.getToolbox();
-            List<Block> toolbox_blocks = lessonService.get_blocks_by_id(t_block_keys);
+            List<SaveBlockModel> toolbox_blocks = blockService.get_list_blocks(lessonService.get_blocks_by_id(t_block_keys));
             model.addAttribute("toolbox", toolbox_blocks);
             // Populate the HTML lesson page with the correct task
             return "block-task";
@@ -284,6 +287,7 @@ public class LessonController {
         task.setCompleted(blocks.getCompleted());
 
         // Update the blocks for this task
+
         List<Key<Block>> editor = lessonService.update_blocks(task.getTask_id(), blocks.getEditor().getBlocks());
         List<Key<Block>> toolbox = lessonService.update_blocks(task.getTask_id(), blocks.getToolbox().getBlocks());
 
@@ -464,6 +468,32 @@ public class LessonController {
         model.addAttribute("next_task", -1);
 
         return "freecode";
+    }
+
+    @RequestMapping(value = "/lesson/toggle", method = RequestMethod.POST)
+    public void toggle_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
+        // Check if the user is still authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            resp.setStatus(500);
+        }
+
+        String userId = userService.getUserId(authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport()));
+        // Create the objectify object to store stuff from the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // Get the user object from the datastore
+        User user = ofy.load().type(User.class).id(userId).now();
+
+        // Reset the tutorial booleans and save them to the datastore
+        user.setFirst_lesson(false);
+
+        // Save the user to the datastore
+        ofy.save().entity(user).now();
+
+        //give the ok response
+        resp.setStatus(200);
     }
 
 }
