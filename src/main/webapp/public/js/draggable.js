@@ -65,8 +65,71 @@ function init() {
     over: function(e, ui){ 
       resize_content();
     },
+    create: function(event,ui){
+      var brackCounter = 0;
+      $(this).children().each(function(i){
+          var d = $(this),
+          cb = d.find('.code-block');
+        //iterate over each element and increase the margins
+        if(cb.data('type') === 'CURL'){
+          d.css('margin-left',(brackCounter*15)+'px;');
+          if(cb.text().includes('{')){
+            brackCounter++;
+           }else{
+             if(cb.text().includes('}')){
+               brackCounter--;
+             }
+           }
+        }else{
+          d.css('margin-left',(brackCounter*15)+'px');
+        }
+      });
+    },
+    update: function(event,ui){
+      var brackCounter = 0;
+      $(this).children().each(function(i){
+          var d = $(this),
+          cb = d.find('.code-block');
+    
+        //iterate over each element and increase the margins
+        if(cb.data('type') === 'CURL'){
+          d.css('margin-left',(brackCounter*15)+'px;');
+          if(cb.text().includes('{')){
+            brackCounter++;
+           }else{
+             if(cb.text().includes('}')){
+               brackCounter--;
+             }
+           }
+        }else{
+          d.css('margin-left',(brackCounter*15)+'px');
+        }
+
+      });
+    },
     receive: function(event, ui) {
-      // Restrict .holds-one to hold one element at a time.
+
+      var brackCounter = 0;
+      //handle indentation
+      $(this).children().each(function(i){
+          var d = $(this),
+          cb = d.find('.code-block');
+    
+        //iterate over each element and increase the margins
+        if(cb.data('type') === 'CURL'){
+          d.css('margin-left',(brackCounter*15)+'px;');
+          if(cb.text().includes('{')){
+            brackCounter++;
+           }else{
+             if(cb.text().includes('}')){
+               brackCounter--;
+             }
+           }
+        }else{
+          d.css('margin-left',(brackCounter*15)+'px');
+        }
+      });
+ 
       if ($(this).hasClass('holds-one')) {
         if ($(this).children().length > 1) {
           $(ui.sender).sortable('cancel');

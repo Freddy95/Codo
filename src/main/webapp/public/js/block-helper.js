@@ -9,7 +9,7 @@ function getCodeBlockAttr(value) {
   block.block_id = parseInt($(value).attr('id'));
 
   block.type = $(value).attr('data-type');
-  block.can_edit = $(value).attr('data-children')
+  block.can_edit = $(value).attr('data-children');
   if (($(value).attr('data-children')) === "false") {
     block.value = $(value).text();
   }
@@ -67,10 +67,10 @@ function run_helper() {
         code_lines_inc++;
         s += codeArray[code_lines_inc] + '\n';
         if (codeArray[code_lines_inc] === '{') {
-          openBrackets += 1
+          openBrackets += 1;
         }
         else if (codeArray[code_lines_inc] === '}') {
-          openBrackets -= 1
+          openBrackets -= 1;
         }
       }
       codeLines[codeLines.length-1] += s;
