@@ -3,7 +3,8 @@
  * This handles the frontend code for checking and sending freecode task information
  */
 
- var editor;
+var editor;
+var isDirty;
 //shorthand for document.ready
 $(function () {
     //set up the ace editor
@@ -16,7 +17,7 @@ $(function () {
     });
     editor.getSession().setMode("ace/mode/javascript");
 
-
+    isDirty = true;
     //attach event handlers to some of the buttons
     var $runbtn = $("#runbutton");
     $runbtn.click( function () {
@@ -75,6 +76,11 @@ $(function () {
         }
     });
 
+   $(window).bind('beforeunload', function() {
+    if(isDirty){
+      return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+    }
+  });
 });
 
 function save(){
@@ -94,7 +100,10 @@ function save(){
         method:'POST',
         url:'/savelesson/'+lesson_id+'/freecodetask/'+task_id,
         data:JSON.stringify(data),
-        dataType:"json"
+        dataType:"json",
+        success: function(){
+          isDirty = false;
+        }
     });
 }
 

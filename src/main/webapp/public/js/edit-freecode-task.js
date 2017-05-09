@@ -5,6 +5,7 @@
 
 //declare this handler up here so we can assign it later
 var save = null;
+var isDirty;
 $(function () {
     //set up the ace editor
     var editor = ace.edit("freecodeeditor");
@@ -15,6 +16,8 @@ $(function () {
         fontSize: "12pt"
     });
     editor.getSession().setMode("ace/mode/javascript");
+
+    isDirty = true;
 
     // get the buttons from the dom
     var $instructionsText = $("#instructions"),
@@ -30,7 +33,7 @@ $(function () {
 
     $("#runbutton").click(function () {
         // get the expected output,test case input, and next task/completed status
-        var $output = $("#output")
+        var $output = $("#output"),
         $page = $("#page-info");
 
         // Empty the output when running.
@@ -77,7 +80,7 @@ $(function () {
             }
         }
         //check that it matches the expected output
-        if (is_correct && (completed != true)) {
+        if (is_correct && (completed !== true)) {
             completed = true;
             // Adding next arrow to next task.
             if (next_task > 0) {
@@ -133,7 +136,10 @@ $(function () {
             url: baseurl,
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(data)
+            data: JSON.stringify(data),
+            success: function(){
+              isDirty = false;
+            }
         });
 
     };
@@ -146,8 +152,13 @@ $(function () {
                 window.location.replace('/createlesson/' + lessonId);
             }
         });
-    }
+    };
 
+   $(window).bind('beforeunload', function() {
+    if(isDirty){
+      return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+    }
+  });
 });
 // Adds an input and output.
 function addOutput() {
