@@ -17,6 +17,10 @@ $(function () {
     });
     editor.getSession().setMode("ace/mode/javascript");
 
+    editor.getSession().on('change', function(e) {
+        isDirty = true;
+    });
+
     isDirty = true;
     //attach event handlers to some of the buttons
     var $runbtn = $("#runbutton");
