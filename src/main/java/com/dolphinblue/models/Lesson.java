@@ -24,6 +24,7 @@ public class Lesson implements Comparable<Lesson>{
     @Index private  boolean site_owned;
     private Key<Lesson> original_lesson;
     private String description;
+    private int rating;
     //Date when lesson was last edited or changed.
     private Date last_edited;
     //Date when this lesson was last access by user working on it
@@ -32,13 +33,14 @@ public class Lesson implements Comparable<Lesson>{
         this.tasks = new ArrayList<>();
     }
 
-    public Lesson(Long lesson_id, String title, String user, String creator, List<Key<Task>> tasks, boolean shared, boolean site_owned) {
+    public Lesson(Long lesson_id, String title, String user, String creator, List<Key<Task>> tasks, boolean shared, int rating, boolean site_owned) {
         this.lesson_id = lesson_id;
         this.title = title;
         this.user_id = user;
         this.creator_id = creator;
         this.tasks = tasks;
         this.shared = shared;
+        this.rating = rating;
         this.site_owned = site_owned;
     }
 
@@ -122,9 +124,18 @@ public class Lesson implements Comparable<Lesson>{
         this.description = description;
     }
 
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     public void setIndex(Long index){
         this.index = index;
     }
+
     public Long getIndex(){
         return  index;
     }
