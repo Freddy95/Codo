@@ -7,7 +7,7 @@
   <div th:replace="standard-scripts-css :: standard" th:remove="tag"></div>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/lessoncard.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/search.css}"></link>
-  <script th:src="@{/public/js/settings.js}"></script>
+  <script th:src="@{/public/js/search.js}"></script>
 </head>
 <body>
 
@@ -17,6 +17,7 @@
       <div th:replace="settings-navbar :: navbar"></div>
     </div>
   </div>
+  <!-- Jumbotron containing search options. -->
   <div class="row">
     <div class="col">
       <div id="jumbotron" class="jumbotron jumbotron-fluid align-items-center">
@@ -32,33 +33,52 @@
             <input class="form-control" placeholder="Search" id="search-term">
             <!-- Button that initiates search. -->
             <span class="input-group-btn">
-              <button class="btn btn-primary" type="button">
+              <button class="btn btn-primary" type="button" onClick="search()">
                 <i class="fa fa-search"></i>
               </button>
             </span>
-
           </div>          
         </div>
 
         <!-- Checkboxes for search options. -->
         <div id="search-check" class="form-inline justify-content-center row">
-          <div class="form-check form-check-inline">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" id="title" checked> Title
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" id="description" checked> Description
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" id="author" checked> Author
-            </label>
-          </div>
+          <div th:replace="search-check(input_id='title', label='Title')"></div>
+          <div th:replace="search-check(input_id='description', label='Description')"></div>
+          <div th:replace="search-check(input_id='author', label='Author')"></div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Filter bar. -->
+  <div class="row justify-content-center filter-nav">
+    <ul class="nav nav-pills nav-fill">
+      <!-- The tab for all lessons. -->
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="pill" id="all">All Lessons</a>
+      </li>
+
+      <!-- The tab for main lessons. -->
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill" id="main">Main Lessons</a>
+      </li>
+
+      <!-- The tab for shared lessons. -->
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill" id="shared">Shared Lessons</a>
+      </li>
+
+      <!-- The tab for a user's lessons. -->
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill" id="your">Your Lessons</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Search results. -->
+  <div class="row">
+    <div class="col">
+      <div id="search-results"
     </div>
   </div>
 </div>
