@@ -78,7 +78,6 @@ public class UserController {
                 BigDecimal roundedPercent = new BigDecimal(Math.round(100 * lessonService.get_percent_complete(lesson)));
                 roundedPercent = roundedPercent.setScale(2, RoundingMode.HALF_UP);
                 lesson.setPercent_complete(roundedPercent.doubleValue());
-                System.out.println(lesson.getPercent_complete());
             }
             model.addAttribute("main_lessons", main_lessons);
             // Get the owned lessons for the user
@@ -94,21 +93,29 @@ public class UserController {
                 try {
                     l = main_lessons.get(0);
                     user.setCurrent_lesson(l);
+                    // Made change to user object must save to datastore
+                    ofy.save().entity(user).now();
                 } catch (Exception e) {
                     return "redirect:user";
                 }
-                // Check to see if the user is a new user
-                if (user.isNew_user()) {
-                    user.setNew_user(false);
-                }
-                // Made change to user object must save to datastore
-                ofy.save().entity(user).now();
-                user.setNew_user(true);
             } else {
                 l = (Lesson) ofy.load().key(user.getCurrent_lesson()).now();
             }
 
             model.addAttribute("lesson", l);
+
+            // Check to see if the user is a new user
+            if (user.isNew_user()) {
+                if(user.getEmail().contains("cse308")) {
+                    user.setIs_moderator(true);
+                    // Made change to user object must save to datastore
+                    ofy.save().entity(user).now();
+                    //System.out.println("You are a moderator");
+                } else {
+                    user.setIs_moderator(false);
+                    //System.out.println("You are NOT a moderator");
+                }
+            }
 
             // Return the string representing the HTML user page
             return "user";

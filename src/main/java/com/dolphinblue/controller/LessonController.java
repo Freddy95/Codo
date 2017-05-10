@@ -203,7 +203,7 @@ public class LessonController {
         Lesson original_lesson = (Lesson) ofy.load().key(l.getOriginal_lesson()).now();
         if(original_lesson.getLast_edited().compareTo(l.getLast_accessed()) > 0){
             //the lesson has been changed
-            System.out.println("LESSON UPDATED");
+            //System.out.println("LESSON UPDATED");
             //TODO: Make prompt to user to see if they want to continue with old version.
         }
         l.setLast_accessed(new Date());
@@ -231,13 +231,6 @@ public class LessonController {
 
         // Add the user information to the thymeleaf model
         model.addAttribute("new_lesson", user.isFirst_lesson());
-
-        // Check to see if the user is a new user
-        if (user.isFirst_lesson()) {
-            user.setFirst_lesson(false);
-            ofy.save().entity(user).now();
-            System.out.println("making false");
-        }
 
         //check type of task
         if(task.getFreecode() == null){
@@ -417,7 +410,7 @@ public class LessonController {
     @RequestMapping(value = "/test", method = RequestMethod.POST)
     public @ResponseBody
     SaveTaskModel test(@RequestBody SaveTaskModel list){
-        System.out.println(list.toString());
+        //System.out.println(list.toString());
         return list;
 
     }
