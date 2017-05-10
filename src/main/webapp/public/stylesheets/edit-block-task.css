@@ -16,10 +16,6 @@
     display: flex;
 }
 
-nav, .nav {
-    margin-bottom: 25px;
-}
-
 html, body {
     height: 100vh;
 }
