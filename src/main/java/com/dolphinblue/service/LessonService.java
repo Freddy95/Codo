@@ -360,5 +360,12 @@ public class LessonService {
 
     }
 
+    public void make_private(Long lesson_id) {
+        Objectify ofy = OfyService.ofy();
+        Lesson lesson = ofy.load().type(Lesson.class).id(lesson_id).now();
+        lesson.setShared(false);
+        ofy.save().entity(lesson).now();
+    }
+
 
 }
