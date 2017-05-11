@@ -20,12 +20,14 @@ function loadRatings(){
         var temp = fillStar.clone();
         temp.data("pos" ,i);
         temp.hover(hoverStar,endHover);
+        temp.click(clickRating);
         $starSpan.append(temp);
     }
     for(i=numStars;i<5;i++){
         var temp = emptyStar.clone();
         temp.data("pos" ,i);
         temp.hover(hoverStar,endHover);
+        temp.click(clickRating);
         $starSpan.append(temp);
     }
 }
@@ -36,7 +38,6 @@ function loadRatings(){
 function hoverStar() {
   //get the position of the star
   var pos = $(this).data("pos");
-  console.log(pos);
   $("#star-rating").find(".fa").each(function(){
     if($(this).data('pos')<=pos){
       $(this).removeClass("fa-star-o");
@@ -48,12 +49,31 @@ function hoverStar() {
 function endHover(){
   //TODO: do this a better way
   $("#star-rating").find(".fa").each(function(){
-    if($(this).data('pos')<=rating){
+    if($(this).data('pos')<rating){
       $(this).removeClass("fa-star-o");
       $(this).addClass("fa-star");
     }else{
       $(this).removeClass("fa-star");
       $(this).addClass("fa-star-o");
     }
+  });
+}
+
+/**
+ * Click handler for a rating star
+ */
+function clickRating(){
+  var newRating = $(this).data('pos');
+
+  //TODO: assemble data properly
+  var data = {};
+  data.rating = newRating;
+  //TODO: fix ajax request
+  $.ajax({
+    url:'/updaterating',
+    method:'POST',
+    data:JSON.stringify(data),
+    dataType:'json',
+    contentType:'application/json'
   });
 }
