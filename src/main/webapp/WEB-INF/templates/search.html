@@ -10,8 +10,8 @@
   <script th:src="@{/public/js/search.js}"></script>
   <script th:inline="javascript">
     var filter = "all";
-    var sortBy = "title";
-    var asc = true;
+    var sortBy = "none";
+    var asc = false;
   </script>
 </head>
 <body>
@@ -74,17 +74,17 @@
         <ul class="nav nav-pills">
           <!-- The tab for all lessons. -->
           <li class="nav-item">
-            <a class="nav-link active" data-toggle="pill" id="all">None</a>
+            <a class="nav-link active" data-toggle="pill" id="none">None</a>
           </li>
 
           <!-- The tab for main lessons. -->
           <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" id="main">Title</a>
+            <a class="nav-link" data-toggle="pill" id="title">Title</a>
           </li>
 
           <!-- The tab for shared lessons. -->
           <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" id="shared">Author</a>
+            <a class="nav-link" data-toggle="pill" id="author">Author</a>
           </li>
         </ul>
       </div>
