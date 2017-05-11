@@ -33,7 +33,11 @@ function init() {
 }
 
 // Save data.
-function save() {
+function save(node) {
+    if ($(node).hasClass('disabled')) {
+        return;
+    }
+
     var data = {};
 
     // Delete every task to delete first.
@@ -83,6 +87,7 @@ function addTask(type) {
      },
      url: '/createlesson/' + lesson_id + '/createtask',
      success: function(data, status, xhttp) {
+        save();
         //redirect to the newly created task
         window.location.href = '/createlesson/' + lesson_id + '/createtask/'+data;
     }
@@ -92,5 +97,8 @@ function addTask(type) {
 function deleteTask(node) {
     var task_block = $(node).closest('.task-block');
     tasksToDelete.push(task_block.attr('id'));
-    task_block.remove();
+    task_block.parent().remove();
+    if ($('#task-list').children().length == 0) {
+        $('#save-button').addClass('disabled');
+    }
 }
