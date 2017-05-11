@@ -24,7 +24,7 @@ public class User {
     private List<String> admin_msg;//list of moderator messages received
     private boolean is_moderator;
     @Load private List<Key<Lesson>> lessons; // list of lessons the user has started or completed
-    @Load private Key<Lesson> current_lesson;//current lesson user is on
+    @Load private Key<Lesson> current_lesson; //current lesson user is on
 
     public User(String user_id,String username, String first_name, String last_name, String email, String password, String avatar, boolean new_user, boolean first_lesson, List<Key<Lesson>> lessons) {
         this.user_id = user_id;

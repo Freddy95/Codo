@@ -84,7 +84,7 @@ public class CodoUserService {
                 fetched.setFirst_name(first);
                 fetched.setLast_name(last);
                 ofy.save().entity(fetched).now();
-                System.out.println("You are a returning user");
+                //System.out.println("You are a returning user");
                 return true;
             } else {
 
@@ -95,7 +95,7 @@ public class CodoUserService {
 
                 ofy.save().entity(usr).now();
 
-                System.out.println("You are a new user");
+                //System.out.println("You are a new user");
 
                 return true;
             }

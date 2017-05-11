@@ -21,12 +21,15 @@ $(function () {
         isDirty = true;
     });
 
+    //load the rating stars
+    loadRatings();
+
     isDirty = true;
     //attach event handlers to some of the buttons
     var $runbtn = $("#runbutton");
     $runbtn.click( function () {
         // get the expected output,test case input, and next task/completed status
-        var $output=$("#output")
+        var $output=$("#output"),
         $page = $("#page");
 
         // Empty the output when running.
@@ -64,7 +67,7 @@ $(function () {
             }
         }
         //check that it matches the expected output
-        if(is_correct && (completed!=true)){
+        if(is_correct && (completed!==true)){
             completed = true;
             // Adding next arrow to next task.
             if (next_task > 0) {

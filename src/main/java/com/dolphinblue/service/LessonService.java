@@ -71,7 +71,7 @@ public class LessonService {
             LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson3.json");
             LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson4.json");
             main_lessons = ofy.load().type(Lesson.class).filter("site_owned", true).list();
-            System.out.println("Main lessons size : " + main_lessons.size());
+            //System.out.println("Main lessons size : " + main_lessons.size());
         }else{
             main_lessons = q.list();
         }
@@ -358,6 +358,13 @@ public class LessonService {
             lesson.setTasks(new ArrayList<Key<Task>>());
         }
 
+    }
+
+    public void make_private(Long lesson_id) {
+        Objectify ofy = OfyService.ofy();
+        Lesson lesson = ofy.load().type(Lesson.class).id(lesson_id).now();
+        lesson.setShared(false);
+        ofy.save().entity(lesson).now();
     }
 
 
