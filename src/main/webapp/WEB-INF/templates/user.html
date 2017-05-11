@@ -71,6 +71,10 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="pill" href="#your">Your Lessons</a>
           </li>
+            <!-- The tab for a reported lessons. -->
+          <li class="nav-item" th:if="${user_info.is_moderator}">
+            <a class="nav-link" data-toggle="pill" href="#reported">Reported Lessons</a>
+          </li>
         </ul>
       </div>
       <div class="tab-content step-6">
@@ -92,6 +96,12 @@
             </a>
           </div>
           <div th:replace="lesson-list :: list-display(lesson_list=${own_lessons},path='/createlesson/')"></div>
+        </div>
+
+        <!-- The tab for the shared lessons. -->
+        <div class="tab-pane fade" id="reported" role="tabpanel" th:if="${user_info.is_moderator}">
+          <!-- TODO: load the reposted lessons -->
+          <div th:replace="lesson-list :: list-display(lesson_list=${shared_lessons},path='/lesson/')"></div>
         </div>
       </div>
     </div>
