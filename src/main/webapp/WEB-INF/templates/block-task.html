@@ -11,6 +11,7 @@
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/draggable-style.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/js/lib/intro.js/introjs.css}"></link>
   <script th:src="@{/public/js/lib/intro.js/intro.js}"></script>
+  <script type="text/javascript" th:src="@{/public/js/rating.js}"></script>
   <script type="text/javascript" th:src="@{/public/js/block-helper.js}"></script>
   <script type="text/javascript" th:src="@{/public/js/draggable.js}"></script>
   <script th:inline="javascript">
@@ -21,6 +22,7 @@
     var lesson_id = [[${lesson.lesson_id}]];
     var completed = [[${task.completed}]];
     var new_lesson = [[${new_lesson}]];
+    var rating = [[${lesson.rating}]];
   </script>
 </head>
 <body>
