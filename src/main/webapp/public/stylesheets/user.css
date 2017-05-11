@@ -1,12 +1,7 @@
 .user-section {
-    margin-bottom: 25px;
     padding: 10px;
 }
 
-.user-section-header {
-    margin-bottom: 25px;
-}
-
-.add-button {
+.add-button, .user-section-header, #lesson-nav, .user-section {
     margin-bottom: 25px;
 }

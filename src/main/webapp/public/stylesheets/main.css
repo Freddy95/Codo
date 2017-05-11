@@ -27,6 +27,6 @@ body, button, input, optgroup, select, textarea {
 
 /* General navbar spacing. */
 
-nav, .nav {
+nav {
     margin-bottom: 25px;
 }

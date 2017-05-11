@@ -2,12 +2,11 @@ $(document).ready(function() {
   init();
 });
 
-var filter = "all";
-
 function init() {
     // On filter, refresh data.
-    $( 'a[data-toggle="pill"]' ).on( 'shown.bs.tab', function( evt ) {       
-        filter = $(evt.target).attr('id');
+    $( '#filter-select' ).change(function() {      
+        filter = $(this).val();
+        console.log(filter);
         search();
     });
 }
