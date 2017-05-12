@@ -66,6 +66,7 @@ public class UserController {
             }
             // Create user's own main lesson objects and save them in the datastore
             lessonService.create_main_lessons_for_user(user);
+            // create user's own shared lesson objects
 
             // Add the user information to the thymeleaf model
             model.addAttribute("user_info", user);
@@ -84,7 +85,7 @@ public class UserController {
             List<Lesson> own_lessons = lessonService.get_own_lessons(user);
             model.addAttribute("own_lessons", own_lessons);
             // Get the shared lessons for the user
-            List<Lesson> shared_lessons = lessonService.get_shared_lessons_by_user(user);
+            List<Lesson> shared_lessons = lessonService.create_shared_lessons_for_user(user);
             model.addAttribute("shared_lessons", shared_lessons);
             // Fixes a bug with user login
             Lesson l;

@@ -2,12 +2,25 @@ $(document).ready(function() {
   init();
 });
 
-var filter = "all";
-
 function init() {
     // On filter, refresh data.
-    $( 'a[data-toggle="pill"]' ).on( 'shown.bs.tab', function( evt ) {       
-        filter = $(evt.target).attr('id');
+    $( '#filter-select' ).change(function() {      
+        filter = $(this).val();
+        console.log(filter);
+        search();
+    });
+
+
+
+    $('a[data-toggle="pill"]').on('click', function(e) {
+        if ($(this).attr('id') === sortBy) {
+            asc = !asc;
+            search();
+        }
+    }).on('shown.bs.tab', function(e) {
+        console.log('different');
+        sortBy = $(e.target).attr('id');
+        asc = true;
         search();
     });
 }
@@ -23,6 +36,8 @@ function search() {
         }
     })
     data.filter = filter;
+    data.sortBy = sortBy;
+    data.asc = asc;
     console.log(data);
 
     // Send AJAX call. On response, display data.

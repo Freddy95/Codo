@@ -149,6 +149,9 @@ function init() {
    if(new_lesson) {
     startTutorial();
   }
+
+  //load the ratings and make the stars
+  loadRatings();
 }
 
 function run() {

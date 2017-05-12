@@ -8,6 +8,11 @@
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/lessoncard.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/search.css}"></link>
   <script th:src="@{/public/js/search.js}"></script>
+  <script th:inline="javascript">
+    var filter = "all";
+    var sortBy = "none";
+    var asc = false;
+  </script>
 </head>
 <body>
 
@@ -51,28 +56,44 @@
   </div>
 
   <!-- Filter bar. -->
-  <div class="row justify-content-center filter-nav">
-    <ul class="nav nav-pills nav-fill">
-      <!-- The tab for all lessons. -->
-      <li class="nav-item">
-        <a class="nav-link active" data-toggle="pill" id="all">All Lessons</a>
-      </li>
+  <div class="row">
+    <div class="col">
+      <div class="form-group form-inline">
+        <label for="filter-select" class="navbar-brand">Show:</label>
+        <select class="form-control" id="filter-select">
+          <option value="all">All Lessons</option>
+          <option value="main">Main Lessons</option>
+          <option value="shared">Shared Lessons</option>
+          <option value="your">Your Lessons</option>
+        </select>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group form-inline pull-right">
+        <span class="navbar-brand">Sort By: </span>
+        <ul class="nav nav-pills">
+          <!-- The tab for all lessons. -->
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="pill" id="none">None</a>
+          </li>
 
-      <!-- The tab for main lessons. -->
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill" id="main">Main Lessons</a>
-      </li>
+          <!-- The tab for main lessons. -->
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="pill" id="title">Title</a>
+          </li>
 
-      <!-- The tab for shared lessons. -->
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill" id="shared">Shared Lessons</a>
-      </li>
+          <!-- The tab for shared lessons. -->
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="pill" id="author">Author</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-      <!-- The tab for a user's lessons. -->
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill" id="your">Your Lessons</a>
-      </li>
-    </ul>
+  <!-- Sort by bar. -->
+  <div class="row justify-content-center sort-nav">
+    
   </div>
 
   <!-- Search results. -->

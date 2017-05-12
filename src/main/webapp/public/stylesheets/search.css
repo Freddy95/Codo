@@ -5,3 +5,7 @@
 #jumbotron {
     margin-top: 25px;
 }
+
+a.nav-link.active:hover{
+    color: white;
+}

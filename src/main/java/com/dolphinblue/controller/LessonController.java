@@ -141,12 +141,20 @@ public class LessonController {
             // If the user isn't properly authenticated send them back to the login page
             return "redirect:/login";
         }
+        // Get the google id token from the authentication token from the browser cookie
+        GoogleIdToken googletoken = authenticationService.getIdToken(token, new JacksonFactory(), new NetHttpTransport());
 
+        // Use google's token to contact google app engine's user api and get the user info
+        String id = userService.getUserId(googletoken);
         // Create an objectify object to make requests to the datastore
         Objectify ofy = OfyService.ofy();
 
+        User user = ofy.load().type(User.class).id(id).now();
         // Pull the lesson information from the datastore
         Lesson l = ofy.load().type(Lesson.class).id(lessonId).now();
+
+        user.setCurrent_lesson(l);
+        ofy.save().entity(user).now();
 
         // Get all of the tasks for the lesson
         List<Task> tasks = lessonService.get_tasks_by_id(l.getTasks());
@@ -208,7 +216,6 @@ public class LessonController {
         }
         l.setLast_accessed(new Date());
         model.addAttribute("lesson", l);
-
         //get task titles and check to see which tasks have already been started
         taskService.get_task_navigation(l, model);
 

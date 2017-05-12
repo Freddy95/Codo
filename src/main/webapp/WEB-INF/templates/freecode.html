@@ -12,6 +12,7 @@
 
   <!-- import the ace code editor library that we'll use for the freecode editor -->
   <script type="text/javascript" th:src="@{/public/js/lib/src-min-noconflict/ace.js}" charset="utf-8"></script>
+  <script type="text/javascript" th:src="@{/public/js/rating.js}"></script>
   <script type="text/javascript" th:src="@{/public/js/freecode.js}"></script>
     <script th:inline="javascript">
     var test_case = [[${task.test_case}]];
@@ -21,6 +22,7 @@
     var lesson_id = [[${lesson.lesson_id}]];
     var completed = [[${task.completed}]];
     var new_lesson = [[${new_lesson}]];
+    var rating = [[${lesson.rating}]];
   </script>
 </head>
 <body>
@@ -69,6 +71,27 @@
           <a id="next-arrow" onClick="save()" th:if="${next_task < 0 && task.completed}" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user"></a>
         </div>
         <div class="card-block code-placement" id="output"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reportModalLabel">Reporting a Lesson</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to report the lesson? 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" onClick="reportLesson()">Yes</button>
       </div>
     </div>
   </div>
