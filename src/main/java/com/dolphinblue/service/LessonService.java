@@ -54,7 +54,7 @@ public class LessonService {
         List<Lesson> user_lessons;
         List<Lesson> main_lessons;
         //load all main lessons user already has.
-        Query<Lesson> q = ofy.load().type(Lesson.class).filter("user_id", user.getUser_id());
+        Query<Lesson> q = ofy.load().type(Lesson.class).filter("user_id", user.getUser_id()).filter("site_owned", true);
         if (q.list().size() == 0){
             //User has no main lessons.
             user_lessons = new ArrayList<>();
@@ -258,7 +258,7 @@ public class LessonService {
      */
     public List<Lesson> get_shared_lessons_by_user(User user){
         Objectify ofy = OfyService.ofy();
-        return ofy.load().type(Lesson.class).filter("creator_id !=", user.getUser_id()).filter("site_owned", false).filter("shared",true).list();
+        return ofy.load().type(Lesson.class).filter("creator_id !=", user.getUser_id()).filter("site_owned", false).filter("shared",true).filter("user_id", user.getUser_id()).list();
     }
 
     /**
@@ -359,7 +359,6 @@ public class LessonService {
         }
 
     }
-
     public void make_private(Long lesson_id) {
         Objectify ofy = OfyService.ofy();
         Lesson lesson = ofy.load().type(Lesson.class).id(lesson_id).now();
@@ -367,5 +366,68 @@ public class LessonService {
         ofy.save().entity(lesson).now();
     }
 
+    /**
+     * Creates a user's own shared lesson objects.
+     * Also returns the user's shared lesson objects to be displayed on user page.
+     * @param user
+     * @return -- list of lesson objects.
+     */
+    public List<Lesson> create_shared_lessons_for_user(User user){
+        Objectify ofy = OfyService.ofy();
 
+        List<Lesson> user_lessons = ofy.load().type(Lesson.class)
+                .filter("user_id", user.getUser_id())
+                .filter("site_owned", false)
+                .filter("shared", true)
+                .filter("creator_id !=", user.getUser_id()).list();
+
+        List<Lesson> shared_lessons = ofy.load().type(Lesson.class)
+                .filter("user_id", null)
+                .filter("site_owned", false)
+                .filter("shared", true).list();
+
+        //check which lessons user already has
+        for(int i = 0; i < user_lessons.size(); i++){
+            for(int j = 0; j < shared_lessons.size(); j++){
+                if(user_lessons.get(i).getOriginal_lesson().getId() == shared_lessons.get(j).getLesson_id()){
+                    //user already has this lesson.
+                    shared_lessons.remove(j);
+                    break;
+                }
+            }
+        }
+
+
+
+        List<Key<Lesson>> user_lesson_keys = user.getLessons();
+
+        //user doesn't have the lessons in this list.
+        for(int i =0; i < shared_lessons.size(); i++){
+            //Original lesson object.
+            Lesson m = shared_lessons.get(i);
+            //create new lesson object
+            Lesson l = new Lesson();
+            //Set all attributes of original lesson object to new lesson object.
+            l.setTitle(m.getTitle());
+            l.setUser_id(user);
+            l.setDescription(m.getDescription());
+            l.setOriginal_lesson(m);
+            l.setSite_owned(false);
+            l.setShared(true);
+            l.setLast_accessed(new Date());
+            //Get original lesson tasks.
+            List<Task> tasks = get_tasks_by_id(m.getTasks());
+            //create task objects
+            List<Key<Task>> task_keys = create_tasks_by_id(tasks);
+            l.setTasks(task_keys);
+            //save new lesson object in datastore and add keys to user object.
+            user_lesson_keys.add(ofy.save().entity(l).now());
+            user_lessons.add(l);
+        }
+        if(shared_lessons.size() > 0){
+            //if there where new lessons added, save changes to datastore
+            ofy.save().entity(user).now();
+        }
+        return user_lessons;
+    }
 }
