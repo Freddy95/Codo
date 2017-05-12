@@ -9,7 +9,6 @@ import com.dolphinblue.service.LessonService;
 import com.dolphinblue.service.OfyService;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
