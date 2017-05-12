@@ -95,10 +95,12 @@ public class LessonService {
             //Set all attributes of original lesson object to new lesson object.
             l.setTitle(m.getTitle());
             l.setUser_id(user);
+            l.setCreator_id("");
             l.setDescription(m.getDescription());
             l.setOriginal_lesson(m);
             l.setSite_owned(true);
             l.setIndex(m.getIndex());
+            l.setLast_edited(m.getLast_edited());
             l.setLast_accessed(new Date());
             //Get original lesson tasks.
             List<Task> tasks = get_tasks_by_id(m.getTasks());

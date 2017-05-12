@@ -40,5 +40,16 @@ function search() {
     data.asc = asc;
     console.log(data);
 
+    $.ajax({
+        headers: { 
+          'Accept': 'application/json',
+          'Content-Type': 'application/json' 
+        },
+        'type': 'POST',
+        'url': '/search/request',
+        'data': JSON.stringify(data),
+        'dataType': 'json'
+    });
+
     // Send AJAX call. On response, display data.
 }

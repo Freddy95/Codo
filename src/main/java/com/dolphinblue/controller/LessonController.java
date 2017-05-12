@@ -41,92 +41,6 @@ public class LessonController {
     BlockService blockService;
 
     /**
-     *  This is for debugging a block task
-     * @param model -- the thymeleaf model used to send data to the front end
-     * @return -- the HTML page to be loaded
-     */
-    @RequestMapping(value = "/debug-edit-task", method = RequestMethod.GET)
-    public String debug_edit_task(Model model){
-        Lesson l = new Lesson();
-        l.setTitle("First Lesson");
-
-        Task t = new Task();
-        t.setTitle("First Block Task");
-        t.setInstructions("These are the instructions.");
-        t.setHint("This is the hint.");
-
-        String[] test = {"x = 1;"};
-        String[] expected = {"3"};
-        t.setTest_case(Arrays.asList(test));
-        t.setExpected_output(Arrays.asList(expected));
-
-
-        List<Block> toolbox = new ArrayList<Block>();
-        List<Block> editor = new ArrayList<Block>();
-        List<Block> catalog = taskService.get_catalog();
-
-        toolbox.add(new Block(1, "x = 2;", Type.STATIC, false));
-        toolbox.add(new Block(2, "x += 5;", Type.STATIC, false));
-        toolbox.add(new Block(3, "x > 5;", Type.STATIC, false));
-        toolbox.add(new Block(4, "blah;", Type.IF, true));
-
-        Block testChild = new Block(5, "butts;", Type.FOR, true);
-        testChild.addChild(new Block(6, "x = 2;", Type.STATIC, false));
-        testChild.addChild(new Block(7, "butts;", Type.LOG, true));
-
-
-        editor.add(new Block(8, "x += 1;", Type.STATIC, false));
-        editor.add(new Block(9, "console.log(x);", Type.STATIC, false));
-        editor.add(testChild);
-
-        model.addAttribute("lesson", l);
-        model.addAttribute("toolbox", toolbox);
-        model.addAttribute("editor", editor);
-        model.addAttribute("catalog", catalog);
-        model.addAttribute("task", t);
-
-        return "edit-block-task";
-    }
-
-    /**
-     *  This is for debugging a block task
-     * @param model -- the thymeleaf model used to send data to the front end
-     * @return -- the HTML page to be loaded
-     */
-    @RequestMapping(value = "/debug-block-task", method = RequestMethod.GET)
-    public String get_task(Model model){
-        Task t = new Task();
-        t.setTitle("First Block Task");
-        t.setInstructions("These are the instructions.");
-        t.setHint("This is the hint.");
-        String[] test = {"x = 1;"};
-        String[] expected = {"3"};
-        t.setTest_case(Arrays.asList(test));
-        t.setExpected_output(Arrays.asList(expected));
-
-        ArrayList<Block> toolbox = new ArrayList<Block>();
-        ArrayList<Block> editor = new ArrayList<Block>();
-
-        toolbox.add(new Block(1, "x = 2;", Type.STATIC, false));
-        toolbox.add(new Block(2, "x += 5;", Type.STATIC, false));
-        toolbox.add(new Block(3, "blah;", Type.IF, true));
-        toolbox.add(new Block(4, "butts;", Type.FOR, true));
-        toolbox.add(new Block(4, "{", Type.STATIC, false));
-        toolbox.add(new Block(4, "}", Type.STATIC, false));
-
-
-        editor.add(new Block(2, "x += 1;", Type.STATIC, false));
-        editor.add(new Block(2, "console.log(x);", Type.STATIC, false));
-
-        // model.addAttribute("lesson", l);
-        model.addAttribute("toolbox", toolbox);
-        model.addAttribute("editor", editor);
-        model.addAttribute("task", t);
-
-        return "debug-block-task";
-    }
-
-    /**
      * This method gets all of the information for a lesson to populate a lesson page
      * @param token -- the login token of the user
      * @param lessonId -- the lesson id to load
@@ -298,7 +212,6 @@ public class LessonController {
         // Save the changes to the datastore
         ofy.save().entity(task);
         return blocks;
-
     }
 
 
