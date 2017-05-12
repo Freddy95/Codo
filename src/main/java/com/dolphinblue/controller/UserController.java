@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -94,8 +95,6 @@ public class UserController {
                 try {
                     l = main_lessons.get(0);
                     user.setCurrent_lesson(l);
-                    // Made change to user object must save to datastore
-                    ofy.save().entity(user).now();
                 } catch (Exception e) {
                     return "redirect:user";
                 }
@@ -109,14 +108,19 @@ public class UserController {
             if (user.isNew_user()) {
                 if(user.getEmail().contains("cse308")) {
                     user.setIs_moderator(true);
-                    // Made change to user object must save to datastore
-                    ofy.save().entity(user).now();
                     //System.out.println("You are a moderator");
                 } else {
                     user.setIs_moderator(false);
                     //System.out.println("You are NOT a moderator");
                 }
             }
+
+            // Remove the admin_msgs since the user has been notified
+            List<String> new_admin_msg = new ArrayList<>();
+            user.setAdmin_msg(new_admin_msg);
+
+            // Made change to user object must save to datastore
+            ofy.save().entity(user).now();
 
             // Return the string representing the HTML user page
             return "user";
