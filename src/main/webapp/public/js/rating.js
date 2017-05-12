@@ -70,7 +70,7 @@ function clickRating(){
   data.rating = newRating;
   //TODO: fix ajax request
   $.ajax({
-    url:'/updaterating',
+    url:'/lesson/'+lesson_id+'/updaterating/',
     method:'POST',
     data:JSON.stringify(data),
     dataType:'json',
