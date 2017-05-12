@@ -50,6 +50,8 @@ public class ModeratorController {
 
         // Get the user object from the datastore
         Lesson lesson = ofy.load().type(Lesson.class).id(lessonId).now();
+        // Toggle the lesson to private
+        lesson.setShared(false);
         // Get the creator id from the lesson
         String creator_id = lesson.getCreator_id();
 
@@ -61,18 +63,12 @@ public class ModeratorController {
         admin_msgs.add(lesson.getTitle() + ": " + message);
         creator.setAdmin_msg(admin_msgs);
 
-        // Save the creator user object to the datastore
+        // Save the creator user object and lesson object to the datastore
         ofy.save().entity(creator).now();
+        ofy.save().entity(lesson).now();
 
         //give the ok response
         resp.setStatus(200);
-    }
-
-    public void make_private(Long lesson_id) {
-        Objectify ofy = OfyService.ofy();
-        Lesson lesson = ofy.load().type(Lesson.class).id(lesson_id).now();
-        lesson.setShared(false);
-        ofy.save().entity(lesson).now();
     }
 
 }
