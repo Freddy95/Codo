@@ -65,9 +65,13 @@ public class UserController {
             if(user == null){
                 return "redirect:login";
             }
+
+            // Get the badges for the user
+            List<String> badges = userService.get_badges(user.getLessons());
+            model.addAttribute("badges", badges);
+
             // Create user's own main lesson objects and save them in the datastore
             lessonService.create_main_lessons_for_user(user);
-            // create user's own shared lesson objects
 
             // Add the user information to the thymeleaf model
             model.addAttribute("user_info", user);
@@ -88,6 +92,7 @@ public class UserController {
             // Get the shared lessons for the user
             List<Lesson> shared_lessons = lessonService.create_shared_lessons_for_user(user);
             model.addAttribute("shared_lessons", shared_lessons);
+
             // Fixes a bug with user login
             Lesson l;
             //should only be null if user is a new user

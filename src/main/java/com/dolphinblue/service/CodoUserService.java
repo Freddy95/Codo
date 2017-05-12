@@ -1,13 +1,16 @@
 package com.dolphinblue.service;
 
+import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.User;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Matt on 4/2/17.
@@ -103,5 +106,31 @@ public class CodoUserService {
             System.out.println("Invalid ID token.");
         }
         return false;
+    }
+
+    /**
+     * Get a list of badges for a user
+     * @param lesson_keys -- the lessons the user has worked on
+     * @return -- the list of badges
+     */
+    public List<String> get_badges(List<Key<Lesson>> lesson_keys) {
+        // Create an arraylist for the badges
+        List<String> badges = new ArrayList<>();
+
+        // Get the contact for the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // Loop through the badges to see what has been completed
+        for (int i = 0; i < lesson_keys.size(); i++) {
+            Key lesson_key = lesson_keys.get(i);
+            Lesson lesson = ofy.load().type(Lesson.class).id(lesson_key.getId()).now();
+            double percent = lesson.getPercent_complete();
+            if(percent == 100.0) {
+                badges.add(lesson.getTitle());
+            }
+        }
+
+        // Return the badges for the completed lessons
+        return badges;
     }
 }
