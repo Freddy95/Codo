@@ -35,7 +35,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <div th:replace="task-navbar :: navbar"></div>
+      <div th:replace="task-navbar :: navbar(ismod = user.is_moderator)"></div>
     </div>
   </div>
   <div class="row " id="lesson-content">

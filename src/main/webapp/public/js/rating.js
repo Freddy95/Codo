@@ -63,17 +63,20 @@ function endHover(){
  * Click handler for a rating star
  */
 function clickRating(){
-  var newRating = $(this).data('pos');
+  var newRating = $(this).data('pos')+1;
 
   //TODO: assemble data properly
   var data = {};
   data.rating = newRating;
   //TODO: fix ajax request
   $.ajax({
-    url:'/lesson/'+lesson_id+'/updaterating/',
+    url:'/lesson/'+lesson_id+'/updaterating/'+newRating,
     method:'POST',
-    data:JSON.stringify(data),
-    dataType:'json',
-    contentType:'application/json'
+    contentType:'application/json',
+    success: function(){
+      rating = newRating;
+    }
   });
+
+  
 }
