@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Created by Devon on 5/12/17.
+ * This object is used to get search parameters when the user tries searching for a lesson on the site
  */
 public class SearchObject {
     String searchTerm; // keywords
