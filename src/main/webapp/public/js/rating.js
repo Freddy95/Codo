@@ -80,3 +80,18 @@ function clickRating(){
 
   
 }
+
+
+function hideLesson(){
+  var msg=$("#reportmsg").val();
+
+  data={};
+  data.msg=msg;
+  $.ajax({
+    method:'POST',
+    url:'/lesson/'+lesson_id+'/report',
+    data:JSON.stringify(data),
+    dataType:'json',
+    contentType:'application/json'
+  });
+}
