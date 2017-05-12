@@ -201,11 +201,13 @@ public class LessonController {
         // If the user is authenticated get their id
         GoogleIdToken googleIdToken = authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport());
         String userId = userService.getUserId(googleIdToken);
-        // TODO: we might need user and lesson id for stuff so I'm adding them in now
 
         // Create the objectify object to get stuff from the datastore
         Objectify ofy = OfyService.ofy();
 
+        User user = ofy.load().type(User.class).id(userId).now();
+
+        model.addAttribute("user",user);
         // Load the lesson from the datastore and add it to the thymeleaf model
         Lesson l = ofy.load().type(Lesson.class).id(lessonId).now();
         Lesson original_lesson = (Lesson) ofy.load().key(l.getOriginal_lesson()).now();
@@ -234,8 +236,6 @@ public class LessonController {
         model.addAttribute("task", task);
 
         // Load the user's information from the datastore and store it in a user object
-        User user = ofy.load().type(User.class).id(userId).now();
-
         // Add the user information to the thymeleaf model
         model.addAttribute("new_lesson", user.isFirst_lesson());
 
