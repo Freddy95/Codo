@@ -208,7 +208,6 @@ public class LessonController {
         }
         l.setLast_accessed(new Date());
         model.addAttribute("lesson", l);
-
         //get task titles and check to see which tasks have already been started
         taskService.get_task_navigation(l, model);
 
