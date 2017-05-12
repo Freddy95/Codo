@@ -1,6 +1,5 @@
 body, button, input, optgroup, select, textarea {
     font-family: 'Questrial', Verdana, Helvetica, sans-serif;
-    width:100%;
 /*    background-color: #FFFFCC;
 
 */}
@@ -24,4 +23,10 @@ body, button, input, optgroup, select, textarea {
 
 .card-title {
     margin-bottom: 0px;
+}
+
+/* General navbar spacing. */
+
+nav {
+    margin-bottom: 25px;
 }

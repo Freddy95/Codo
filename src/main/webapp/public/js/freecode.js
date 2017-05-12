@@ -4,6 +4,7 @@
  */
 
 var editor;
+var isDirty;
 //shorthand for document.ready
 $(function () {
     //set up the ace editor
@@ -16,13 +17,20 @@ $(function () {
     });
     editor.getSession().setMode("ace/mode/javascript");
 
+    editor.getSession().on('change', function(e) {
+        isDirty = true;
+    });
 
+    //load the rating stars
+    loadRatings();
+
+    isDirty = true;
     //attach event handlers to some of the buttons
     var $runbtn = $("#runbutton");
     $runbtn.click( function () {
         // get the expected output,test case input, and next task/completed status
-        var $output=$("#output")
-            $page = $("#page");
+        var $output=$("#output"),
+        $page = $("#page");
 
         // Empty the output when running.
         $output.empty();
@@ -41,8 +49,8 @@ $(function () {
         var is_correct=true;
         for(var i = 0; i<test_case.length; i++) {
             var code = editor.getValue(),
-                test = test_case[i],
-                expect = expected_output[i];
+            test = test_case[i],
+            expect = expected_output[i];
             expect += "<br>"; // add a line break to the end of the output
             code = clean(code);
             //append the variables to the code and run it
@@ -51,7 +59,7 @@ $(function () {
             eval(code);
             //check if it's the right values
             var results = $output.html(),
-                expected = (expect == clean_output(results));
+            expected = (expect == clean_output(results));
 
             if(!expected){
                 is_correct=false;
@@ -59,28 +67,33 @@ $(function () {
             }
         }
         //check that it matches the expected output
-        if(is_correct && (completed!=true)){
+        if(is_correct && (completed!==true)){
             completed = true;
             // Adding next arrow to next task.
             if (next_task > 0) {
               $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/lesson/' + lesson_id + '/task/' + next_task + '" onClick="save()"></a>'));
-            }
+          }
             // If last lesson, just redirect to user page.
             else {
               $('#output-div>.card-title-block').append($('<a id="next-arrow" class="fa fa-lg fa-vc fa-arrow-right pull-right" href="/user" onClick="save()"></a>'));
-            }
-            $page.data("completed",true);
+          }
+          $page.data("completed",true);
             //save the result
             save(editor.getValue(),true);
         }
-        });
+    });
 
+   $(window).bind('beforeunload', function() {
+    if(isDirty){
+      return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+    }
+  });
 });
 
 function save(){
     var $pg=$("#page"),
-        task_id=$pg.data("task-id"),
-        lesson_id=$pg.data("lesson-id");
+    task_id=$pg.data("task-id"),
+    lesson_id=$pg.data("lesson-id");
 
     var data = {
         freecode: editor.getValue(),
@@ -94,7 +107,10 @@ function save(){
         method:'POST',
         url:'/savelesson/'+lesson_id+'/freecodetask/'+task_id,
         data:JSON.stringify(data),
-        dataType:"json"
+        dataType:"json",
+        success: function(){
+          isDirty = false;
+        }
     });
 }
 

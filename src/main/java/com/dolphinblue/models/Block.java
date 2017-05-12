@@ -102,12 +102,12 @@ public class Block {
     @Override
     public String toString() {
         return "Block{" +
-                "block_id=" + this.block_id +
-                ", value='" + this.value + '\'' +
-                ", type=" + this.type +
-                ", can_edit=" + this.can_edit +
-                ", children" + this.children+
-                '}';
+        "block_id=" + this.block_id +
+        ", value='" + this.value + '\'' +
+        ", type=" + this.type +
+        ", can_edit=" + this.can_edit +
+        ", children" + this.children+
+        '}';
     }
 
     public List<Key<Block>> getChildren() {

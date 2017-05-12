@@ -119,7 +119,7 @@
       </div>
 
       <div id="button-row" class="row justify-content-center">
-        <a type="button" class="btn btn-success" onClick="save()">
+        <a id="save-button" type="button" th:class="${#lists.isEmpty(tasks)}? 'btn btn-success disabled': 'btn btn-success'" onClick="save(this)">
           <i class="fa fa-save" aria-hidden="true"></i>
           Save Changes
         </a>

@@ -71,7 +71,7 @@ public class LessonService {
             LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson3.json");
             LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson4.json");
             main_lessons = ofy.load().type(Lesson.class).filter("site_owned", true).list();
-            System.out.println("Main lessons size : " + main_lessons.size());
+            //System.out.println("Main lessons size : " + main_lessons.size());
         }else{
             main_lessons = q.list();
         }
@@ -359,7 +359,19 @@ public class LessonService {
         }
 
     }
+    public void make_private(Long lesson_id) {
+        Objectify ofy = OfyService.ofy();
+        Lesson lesson = ofy.load().type(Lesson.class).id(lesson_id).now();
+        lesson.setShared(false);
+        ofy.save().entity(lesson).now();
+    }
 
+    /**
+     * Creates a user's own shared lesson objects.
+     * Also returns the user's shared lesson objects to be displayed on user page.
+     * @param user
+     * @return -- list of lesson objects.
+     */
     public List<Lesson> create_shared_lessons_for_user(User user){
         Objectify ofy = OfyService.ofy();
 
@@ -373,6 +385,8 @@ public class LessonService {
                 .filter("user_id", null)
                 .filter("site_owned", false)
                 .filter("shared", true).list();
+
+        //check which lessons user already has
         for(int i = 0; i < user_lessons.size(); i++){
             for(int j = 0; j < shared_lessons.size(); j++){
                 if(user_lessons.get(i).getOriginal_lesson().getId() == shared_lessons.get(j).getLesson_id()){
@@ -382,6 +396,7 @@ public class LessonService {
                 }
             }
         }
+
 
 
         List<Key<Lesson>> user_lesson_keys = user.getLessons();
