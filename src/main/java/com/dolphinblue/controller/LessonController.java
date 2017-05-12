@@ -469,6 +469,30 @@ public class LessonController {
         return "freecode";
     }
 
+    @RequestMapping(value = "/lesson/{lesson_id}/updaterating/{rating}", method = RequestMethod.POST)
+    public void update_rating(@CookieValue("token") String token, HttpServletResponse resp, @PathVariable(value = "lesson_id") Long lessonId, @PathVariable(value = "rating") int rating) {
+        // Check if the user is still authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            resp.setStatus(500);
+        }
+        // Create the objectify object to get stuff from the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // Get the lesson object from the datastore
+        Lesson lesson = ofy.load().type(Lesson.class).id(lessonId).now();
+
+        // Reset the tutorial booleans and save them to the datastore
+        lesson.setRating(rating);
+
+        // Save the user to the datastore
+        ofy.save().entity(lesson).now();
+
+        // give the ok response
+        resp.setStatus(200);
+    }
+
     @RequestMapping(value = "/lesson/toggle", method = RequestMethod.POST)
     public void toggle_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
         // Check if the user is still authenticated by google
@@ -492,30 +516,6 @@ public class LessonController {
         ofy.save().entity(user).now();
 
         //give the ok response
-        resp.setStatus(200);
-    }
-
-    @RequestMapping(value = "/lesson/{lesson_id}/updaterating/{rating}", method = RequestMethod.POST)
-    public void update_rating(@CookieValue("token") String token, HttpServletResponse resp, @PathVariable(value = "lesson_id") Long lessonId, @PathVariable(value = "rating") int rating) {
-        // Check if the user is still authenticated by google
-        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
-        if(!isAuthenticated){
-            // If the user isn't properly authenticated send them back to the login page
-            resp.setStatus(500);
-        }
-        // Create the objectify object to get stuff from the datastore
-        Objectify ofy = OfyService.ofy();
-
-        // Get the lesson object from the datastore
-        Lesson lesson = ofy.load().type(Lesson.class).id(lessonId).now();
-
-        // Reset the tutorial booleans and save them to the datastore
-        lesson.setRating(rating);
-
-        // Save the user to the datastore
-        ofy.save().entity(lesson).now();
-
-        // give the ok response
         resp.setStatus(200);
     }
 
