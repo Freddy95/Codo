@@ -33,7 +33,7 @@ function init() {
 }
 
 // Save data.
-function save(node) {
+function save(node,taskId) {
     if ($(node).hasClass('disabled')) {
         return;
     }
@@ -60,6 +60,9 @@ function save(node) {
     $('#task-list').find('.task-block').each(function() {
         taskList.push($(this).attr('id'));
     });
+    if(taskId !== undefined){
+      taskList.push(taskId);
+    }
 
     data.tasks = taskList;
     
@@ -87,7 +90,7 @@ function addTask(type) {
      },
      url: '/createlesson/' + lesson_id + '/createtask',
      success: function(data, status, xhttp) {
-        save();
+        save($("#save-button"),data);
         //redirect to the newly created task
         window.location.href = '/createlesson/' + lesson_id + '/createtask/'+data;
     }
