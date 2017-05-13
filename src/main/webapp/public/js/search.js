@@ -6,19 +6,16 @@ function init() {
     // On filter, refresh data.
     $( '#filter-select' ).change(function() {      
         filter = $(this).val();
-        console.log(filter);
         search();
     });
 
-
-
+    // On sort, refresh data.
     $('a[data-toggle="pill"]').on('click', function(e) {
         if ($(this).attr('id') === sortBy) {
             asc = !asc;
             search();
         }
     }).on('shown.bs.tab', function(e) {
-        console.log('different');
         sortBy = $(e.target).attr('id');
         asc = true;
         search();
@@ -38,8 +35,8 @@ function search() {
     data.filter = filter;
     data.sortBy = sortBy;
     data.asc = asc;
-    console.log(data);
 
+    // Send AJAX call. On response, display data.
     $.ajax({
         headers: { 
           'Accept': 'application/json',
@@ -48,8 +45,62 @@ function search() {
         'type': 'POST',
         'url': '/search/request',
         'data': JSON.stringify(data),
-        'dataType': 'json'
+        'dataType': 'json',
+        'success': function(data) {
+            populateLessons(data);
+        }
     });
+}
 
-    // Send AJAX call. On response, display data.
+// Populate the search results with lessons.
+function populateLessons(data) {
+    // Empty the search results and populate them.
+    var searchResults = $('#search-results');
+    searchResults.empty();
+    searchResults.append($('<h2>Search Results</h2>').addClass('text-center'));
+
+    for (_i = 0; _i < data.length; _i += 2) {
+        // Build a row, which should have two lessons.
+        var resultRow = $('<div>').addClass('row');
+
+        // Append up to two lessons.
+        for (_j = _i; _j < data.length && _j < _i + 2; _j++) {
+            // Build title box.
+            var titleBox = $('<div>').addClass('title-box')
+                                .addClass('col-4')
+            titleBox.append($('<span>').text(data[_j].title))
+                    .append($('<br/>'))
+                    .append($('<span>').text(data[_j].percent_complete));
+
+            // Build description box.
+            var descriptionBox = $('<div>').addClass('col-8')
+                                    .addClass('description-box')
+                                    .text(data[_j].description);
+
+            // Build the actual display element.
+            var lessonBox = $('<div>').addClass('row')
+                                .addClass('lesson-box')
+                                .append(titleBox)
+                                .append(descriptionBox);
+
+            // Create the link.
+            var link = (data[_j].creator_id == user_id) ? '/createlesson/' : '/lesson/' 
+            link += data[_j].lesson_id;
+
+            var lessonLink = $('<a>').addClass('lesson-link')
+                                .attr('href', link)
+                                .append(lessonBox);
+
+            // Add col-6 styling.
+            var lessonDiv = $('<div>').addClass('col-6')
+                                .addClass('align-items-center')
+                                .append(lessonLink);
+
+            // Add it to the row.
+            lessonDiv.appendTo(resultRow);
+        }
+
+        // Append the row to the results.
+        searchResults.append(resultRow);
+    }
 }
