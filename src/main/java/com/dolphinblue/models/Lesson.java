@@ -18,7 +18,7 @@ public class Lesson implements Comparable<Lesson>{
     private String title;
     @Index private String user_id; //user who is working on the lesson
     @Index private String creator_id; //user who created the lesson
-    @Load private List<Key<Task>> tasks; //holds lists of tasks ids for this lesson
+    private List<Key<Task>> tasks; //holds lists of tasks ids for this lesson
     private double percent_complete; // Hold the percent of task the user has completed
     @Index private boolean shared;
     @Index private boolean site_owned;
