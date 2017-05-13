@@ -263,6 +263,14 @@ public class LessonService {
         return ofy.load().type(Lesson.class).filter("creator_id !=", user.getUser_id()).filter("site_owned", false).filter("shared",true).filter("user_id", user.getUser_id()).list();
     }
 
+    public List<LessonDetails> extract_details(List<Lesson> lessons) {
+        List<LessonDetails> lessonDetails = new ArrayList<LessonDetails>();
+        for (int i = 0; i < lessons.size(); i++) {
+            lessonDetails.add(new LessonDetails(lessons.get(i)));
+        }
+        return lessonDetails;
+    }
+
     /**
      * Reset a task in a lesson
      * @param task -- the task object that is to be reset

@@ -54,7 +54,7 @@ public class SearchController {
 
     @RequestMapping(value = "/search/request",  method = RequestMethod.POST)
     public @ResponseBody
-    List<Lesson> search_lessons(@CookieValue("token") String token, @RequestBody SearchObject query) {
+    List<LessonDetails> search_lessons(@CookieValue("token") String token, @RequestBody SearchObject query) {
         try {
             // Check to see if the user is authenticated by google
             boolean isAuthenticate = authenticationService.isAuthenticated(token, new JacksonFactory(), new NetHttpTransport());
@@ -78,7 +78,7 @@ public class SearchController {
 
                 // TODO: Implement search logic.
                 List<Lesson> searchedLessons = lessonService.get_main_lessons_by_user(user);
-                return searchedLessons;
+                return lessonService.extract_details(searchedLessons);
             } else {
                 return null;
             }
