@@ -86,12 +86,49 @@ public class SearchController {
             if(user == null){
                 return null;
             }
+            List<Lesson> lessons;
+            if(query.getFilter().equals("all")){
+                lessons = lessonService.get_main_lessons_by_user(user);
+                lessons.addAll(lessonService.get_own_lessons(user));
+                lessons.addAll(lessonService.get_shared_lessons_by_user(user));
+            }else if(query.getFilter().equals("main")){
+                //get main lessons
+                lessons = lessonService.get_main_lessons_by_user(user);
+            }else if(query.getFilter().equals("your")){
+                //get your created lessons
+                lessons = lessonService.get_own_lessons(user);
+            }else{
+                //get shared lessons
+                lessons = lessonService.get_shared_lessons_by_user(user);
+            }
 
-            // TODO: Implement search logic.
-            List<Lesson> searchedLessons = lessonService.get_main_lessons_by_user(user);
-            return lessonService.extract_details(searchedLessons);
+            List<String> searchBy = query.getSearchBy();
+            if(query.getSearchTerm().equals("")){
+                return lessonService.extract_details(lessons);
+            }
+            List<Lesson> list = new ArrayList<>();
+            for (int i = 0; i < searchBy.size(); i++){
+                if(searchBy.get(i).equals("author")){
+                    list.addAll(lessonService.search_by_author(lessons, query.getSearchTerm()));
+                }else if(searchBy.get(i).equals("title")) {
+
+                    list.addAll(lessonService.search_by_title(lessons, query.getSearchTerm()));
+                }else{
+                    list.addAll(lessonService.search_by_description(lessons, query.getSearchTerm()));
+                }
+            }
+
+            return lessonService.extract_details(list);
         } else {
             return null;
         }
     }
+
+
+
+
+
+
+
+
 }
