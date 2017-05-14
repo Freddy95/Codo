@@ -54,43 +54,31 @@ function startTutorial() {
             {
                 // Focus: welcome message
                 element: '.step-1',
-                intro: 'Welcome to Codo! Let\'s show you around a bit before you get started.',
+                intro: 'Welcome to Codo! Let\'s show you around before you get started.',
                 position: 'bottom'
             },
             {
-                // Focus: search
+                // Focus: nav-bar
                 element: '.step-2',
-                intro: 'First, we\'ll go over some basic navigation. This is the search button, it will bring you to a page where you can search through all of the lessons offered on our site.',
-                position: 'bottom'
+                intro: 'First you can use these buttons to navigate to the search and settings page, as well as logout of the site.',
+                position: 'left'
             },
             {
-                // Focus: settings
+                // Focus: main lessons
                 element: '.step-3',
-                intro: 'Click this button to go to the settings page where you can change your username and reset all lesson progress.',
-                position: 'bottom'
+                intro: 'The main lessons offered by the site are displayed here, they teach the basics of JavaScript programming.',
+                position: 'top'
             },
             {
-                // Focus: logout
+                // Focus: created lessons
                 element: '.step-4',
-                intro: 'Click this button to logout when you\'re done working on your lessons.',
-                position: 'bottom'
-            },
-            {
-                // Focus: lesson tabs
-                element: '.step-5',
-                intro: 'You can use these tabs to navigate between different lessons offered on our site. \"Main Lessons\" are created by us, \"Shared Lessons\" are created by other users, and \"Your Lessons\" are lessons you have made.',
-                position: 'right'
-            },
-            {
-                // Focus: lessons offered in each tab
-                element: '.step-6',
-                intro: 'To navigate to a lesson within a category, click on the lesson that interests you.',
+                intro: 'To find lessons created by different users of the site, click on the \"Shared Lessons\" tab. To create your own, click on the \"Your Lessons\" tab.',
                 position: 'top'
             },
             {
                 // Focus: current lesson
-                element: '.step-7',
-                intro: 'The lesson you are currently working on will be displayed here. Click on the lesson to get started.',
+                element: '.step-5',
+                intro: 'After choosing a lesson, the one you are currently working on will be displayed here. To get started, click on the lesson.',
                 position: 'bottom'
             }
         ]
