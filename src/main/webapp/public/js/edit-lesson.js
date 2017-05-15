@@ -37,6 +37,11 @@ function save(node,taskId) {
     if ($(node).hasClass('disabled')) {
         return;
     }
+    
+    if(username===""||username==undefined||username==null){
+        $("#usernameModal").modal('show');
+        return;
+    }
 
     var data = {};
 
@@ -66,8 +71,6 @@ function save(node,taskId) {
 
     data.tasks = taskList;
     
-    console.log(data);
-
     $.ajax({
         headers: {
             'Accept': 'application/json',
@@ -104,4 +107,23 @@ function deleteTask(node) {
     if ($('#task-list').children().length == 0) {
         $('#save-button').addClass('disabled');
     }
+}
+
+
+/**
+ * creates a username if the user doesn't have one
+ */
+function createUsername() {
+
+    var username = $("#usernametxt").val();
+
+    $.ajax({
+        method:'POST',
+        url:'/editusername',
+        dataType:'text',
+        data:username,
+        success:function(){
+            $("#usernameModal").modal('hide');
+        }
+    });
 }

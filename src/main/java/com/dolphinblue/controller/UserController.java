@@ -166,4 +166,27 @@ public class UserController {
         resp.setStatus(200);
     }
 
+    @RequestMapping(value = "/editusername", method = RequestMethod.POST)
+    public void create_username(@RequestBody String newUsername, @CookieValue("token") String token,HttpServletResponse resp){
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            resp.setStatus(500);
+        }
+
+        String userId = userService.getUserId(authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport()));
+        // Create the objectify object to store stuff from the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // Get the user object from the datastore
+        User user = ofy.load().type(User.class).id(userId).now();
+
+        user.setUsername(newUsername);
+
+        //save the username
+        ofy.save().entity(user).now();
+
+        resp.setStatus(200);
+    }
+
 }
