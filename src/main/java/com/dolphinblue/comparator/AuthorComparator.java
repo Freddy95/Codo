@@ -23,6 +23,6 @@ public class AuthorComparator implements Comparator<LessonDetails> {
         }
         User user1 = ofy.load().type(User.class).id(lesson1.getCreator_id()).now();
         User user2 = ofy.load().type(User.class).id(lesson2.getCreator_id()).now();
-        return user1.getUsername().compareTo(user2.getUser_id());
+        return user1.getUsername().compareTo(user2.getUsername());
     }
 }
