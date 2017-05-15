@@ -24,7 +24,7 @@ public class Lesson implements Comparable<Lesson>{
     @Index private  boolean site_owned;
     @Index private Long original_lesson;
     private String description;
-    private int rating;
+    @Index private int rating;
     //Date when lesson was last edited or changed.
     private Date last_edited;
     //Date when this lesson was last access by user working on it

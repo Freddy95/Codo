@@ -49,7 +49,7 @@ public class LessonService {
         // Get the ofy service for the datastore
         Objectify ofy = OfyService.ofy();
         // Get the lessons with this as the original
-        Query<Lesson> q = ofy.load().type(Lesson.class).filter("original_lesson", original_key);
+        Query<Lesson> q = ofy.load().type(Lesson.class).filter("original_lesson", original_key).filter("rating >", 0);
         System.out.println("Query Size: " + q.list().size());
         // Create variables for total and average
         int average, total = 0;
