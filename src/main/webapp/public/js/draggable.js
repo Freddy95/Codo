@@ -217,80 +217,44 @@ function startTutorial() {
     var tutorial = introJs();
     tutorial.setOptions({
       steps: [
-      {
-                // Focus: instructions
-                element: '.step-1',
-                intro: 'These are the instructions for completing the task you are on. Follow these instructions closely to move on in the lesson.',
-                position: 'right'
-              },
-              {
-                // Focus: editor
-                element: '.step-2',
-                intro: 'This is the Editor where you will build your program using code blocks',
-                position: 'left'
-              },
-              {
-                // Focus: toolbox
-                element: '.step-3',
-                intro: 'By dragging the blocks from this Toolbox into the Editor you can make programs.',
-                position: 'top'
-              },
-              {
-                // Focus: run button
-                element: '.step-4',
-                intro: 'To test your program to see if you are ready to move on to the next task, click this button and it will run the code you built with blocks in the Editor.',
-                position: 'right'
-              },
-              {
-                // Focus: output
-                element: '.step-5',
-                intro: 'This box will display the output given by running your program. This output needs to be the correct output as specified in the instructions in order to move on to the next task.',
-                position: 'left'
-              },
-              {
-                // Focus: hint button
-                element: '.step-6',
-                intro: 'If you are having trouble getting the right output for your program, click this button to get a hint.',
-                position: 'right'
-              },
-              {
-                // Focus: save task
-                element: '.step-7',
-                intro: 'You can click this button at any time to save the progress you\'ve made.',
-                position: 'left'
-              },
-              {
-                // Focus: undo changes
-                element: '.step-8',
-                intro: 'Pressing this button will undo all of the changes made since your last save.',
-                position: 'bottom'
-              },
-              {
-                // Focus: restart task
-                element: '.step-9',
-                intro: 'To restart the task you are on from the beginning click this button.',
-                position: 'bottom'
-              },
-              {
-                // Focus: restart lesson
-                element: '.step-10',
-                intro: 'To restart all of the tasks in the lesson click this button.',
-                position: 'bottom'
-              },
-              {
-                // Focus: task navigation
-                element: '.step-11',
-                intro: 'Once you have completed a task you can navigate to it directly at anytime using this task navigation bar. Hover over the numbers in the bar to get the title of that particular task.',
-                position: 'bottom'
-              },
-              {
-                // Focus: home button
-                element: '.step-12',
-                intro: 'To go back to the home page where you were before, click this button. You\'re now ready to complete your first task!',
-                position: 'bottom'
-              }
-              ]
-            });
+          {
+              // Focus: instructions
+              element: '.step-1',
+              intro: 'To begin each task, look at the instructions found here. By following them closely, you can learn new concepts that will help you move on to the next task in the lesson.',
+              position: 'right'
+          },
+          {
+              // Focus: editor
+              element: '.step-2',
+              intro: 'This is the Editor where you build your program and run the code by pressing the \"Run\" button. If you\'re having trouble getting the right output, press the \"?\" at the top for a hint.',
+              position: 'left'
+          },
+          {
+              // Focus: toolbox
+              element: '.step-3',
+              intro: 'Drag the blocks in this Toolbox into the Editor to build a program that produces the right output.',
+              position: 'top'
+          },
+          {
+              // Focus: output
+              element: '.step-4',
+              intro: 'This box displays the output given by running your program. The output needs to be the correct output as specified in the instructions in order to move on to the next task.',
+              position: 'left'
+          },
+          {
+              // Focus: task navbar
+              element: '.step-5',
+              intro: 'This is the task navigation bar. On the right are buttons for restarting the current task or lesson. You can use the middle numbers to move to any task you\'ve completed within the lesson. And finally on the right you can save the task, as well as revert the current changes.',
+              position: 'bottom'
+          },
+          {
+              // Focus: lesson navbar
+              element: '.step-6',
+              intro: 'This is the lesson navigation bar where you can see the title of the current lesson you are working on. You can also rate the lesson using the star rating system and navigate home. ',
+              position: 'bottom'
+          }
+      ]
+    });
 
     // Setup the page transition for the tutorial to navigate home?
     //tutorial.setOption('doneLabel', 'Start Lesson').start().oncomplete(function() {

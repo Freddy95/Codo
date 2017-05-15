@@ -33,8 +33,8 @@
       </div> -->
     </div>
   </div>
-  <div class="row justify-content-center user-section" id="progress">
-    <div class="col step-7">
+  <div class="row justify-content-center user-section step-5" id="progress">
+    <div class="col">
 
       <!-- Displays the lesson in progress. -->
       <div class="row justify-content-center user-section-header">
@@ -54,12 +54,12 @@
       </div>
 
       <!-- The pills to link to the different sections. -->
-      <div id="lesson-nav" class="row justify-content-center">
+      <div id="lesson-nav" class="row justify-content-center step-4">
         <ul class="nav nav-pills nav-fill">
 
           <!-- The tab for main lessons. -->
           <li class="nav-item">
-            <a class="nav-link active step-5" data-toggle="pill" href="#main">Main Lessons</a>
+            <a class="nav-link active" data-toggle="pill" href="#main">Main Lessons</a>
           </li>
 
           <!-- The tab for shared lessons. -->
@@ -77,7 +77,7 @@
           </li>
         </ul>
       </div>
-      <div class="tab-content step-6">
+      <div class="tab-content step-3">
         <div class="tab-pane fade show active" id="main" role="tabpanel">
           <div th:replace="lesson-list :: list-display(lesson_list=${main_lessons},path='/lesson/')"></div>
         </div>
