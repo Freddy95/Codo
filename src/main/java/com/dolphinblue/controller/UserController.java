@@ -81,9 +81,8 @@ public class UserController {
             Collections.sort(main_lessons);
             for (int i = 0; i < main_lessons.size(); i++){
                 Lesson lesson = main_lessons.get(i);
-                BigDecimal roundedPercent = new BigDecimal(Math.round(100 * lessonService.get_percent_complete(lesson)));
-                roundedPercent = roundedPercent.setScale(2, RoundingMode.HALF_UP);
-                lesson.setPercent_complete(roundedPercent.doubleValue());
+                int roundedPercent = lessonService.get_percent_complete(lesson);
+                lesson.setPercent_complete(roundedPercent);
             }
             model.addAttribute("main_lessons", main_lessons);
             // Get the owned lessons for the user

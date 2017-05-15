@@ -25,14 +25,14 @@ public class LessonService {
      * @param lesson -- Lesson to get percentage completed.
      * @return -- percentage completed.
      */
-    public double get_percent_complete(Lesson lesson) {
+    public int get_percent_complete(Lesson lesson) {
         Objectify ofy = OfyService.ofy();
         //Get tasks of lesson.
         List<Key<Task>> tasks = lesson.getTasks();
         //number of lessons.
-        double total = tasks.size();
+        int total = tasks.size();
         //number of lessons completed.
-        double count = 0;
+        int count = 0;
 
         for(int i = 0; i < tasks.size(); i++) {
             Key task_key = tasks.get(i);
@@ -42,6 +42,7 @@ public class LessonService {
                 count++;
             }
         }
+
         return (count/total);
     }
 
