@@ -109,10 +109,19 @@ public class CreateLessonController {
             // If the user isn't properly authenticated send them back to the login page
             return "redirect:/login";
         }
+        // Get the google id token from the authentication token from the browser cookie
+        GoogleIdToken googletoken = authenticationService.getIdToken(token, new JacksonFactory(), new NetHttpTransport());
 
+        // Use google's token to contact google app engine's user api and get the user info
+        String userid = userService.getUserId(googletoken);
+        // Create an objectify object to make requests to the datastore
         Objectify ofy = OfyService.ofy();
+
+        User user = ofy.load().type(User.class).id(userid).now();
+
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
 
+        model.addAttribute("username",user.getUsername());
 
         model.addAttribute("lesson_id", lesson.getLesson_id());
         List<Key<Task>> task_keys = lesson.getTasks();
@@ -229,7 +238,6 @@ public class CreateLessonController {
      * Deletes the current task in the lesson user is creating.
      * @param id -- lesson id
      * @param taskId -- id of task to delete
-     * @param model -- thymeleaf model
      * TODO: return create task page?
      * @return --
      */

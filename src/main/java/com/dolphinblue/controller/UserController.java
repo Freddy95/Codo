@@ -73,8 +73,13 @@ public class UserController {
             // Create user's own main lesson objects and save them in the datastore
             lessonService.create_main_lessons_for_user(user);
 
+            ArrayList<String> arr = new ArrayList<>();
             // Add the user information to the thymeleaf model
             model.addAttribute("user_info", user);
+            model.addAttribute("messages",user.getAdmin_msg());
+
+            //clear the admin messages after render
+            user.setAdmin_msg(null);
 
             // Get the main site lessons for the user and add them to the thymeleaf model
             List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
@@ -157,6 +162,29 @@ public class UserController {
         ofy.save().entity(user).now();
 
         //give the ok response
+        resp.setStatus(200);
+    }
+
+    @RequestMapping(value = "/editusername", method = RequestMethod.POST)
+    public void create_username(@RequestBody String newUsername, @CookieValue("token") String token,HttpServletResponse resp){
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            resp.setStatus(500);
+        }
+
+        String userId = userService.getUserId(authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport()));
+        // Create the objectify object to store stuff from the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // Get the user object from the datastore
+        User user = ofy.load().type(User.class).id(userId).now();
+
+        user.setUsername(newUsername);
+
+        //save the username
+        ofy.save().entity(user).now();
+
         resp.setStatus(200);
     }
 

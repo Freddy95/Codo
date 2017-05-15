@@ -1,0 +1,15 @@
+<!-- A template for lesson cards. -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body> 
+  <!-- All of the lesson card is a link to the relevant lesson. -->
+  <li th:fragment="option" class="nav-item">
+    <a th:class="${active}?'nav-link active':'nav-link'" data-toggle="pill" th:id="${value}">
+      <span th:text="${text}"></span>
+      <i class="fa fa-sort-asc" style="display: none;"></i>
+    </a>
+  </li>
+</body>
+
+</html>

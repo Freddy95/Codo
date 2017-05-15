@@ -12,7 +12,26 @@
     var filter = "all";
     var sortBy = "none";
     var asc = false;
+    var user_id = [[${user_id}]];
   </script>
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
 </head>
 <body>
 
@@ -73,19 +92,10 @@
         <span class="navbar-brand">Sort By: </span>
         <ul class="nav nav-pills">
           <!-- The tab for all lessons. -->
-          <li class="nav-item">
-            <a class="nav-link active" data-toggle="pill" id="none">None</a>
-          </li>
-
-          <!-- The tab for main lessons. -->
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" id="title">Title</a>
-          </li>
-
-          <!-- The tab for shared lessons. -->
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" id="author">Author</a>
-          </li>
+          <div th:replace="search-option :: option(active=true, value='none', text='None', toggle='false')"></div>
+          <div th:replace="search-option :: option(active=false,value='title', text='Title', toggle='false')"></div>
+          <div th:replace="search-option :: option(active=false,value='author', text='Author', toggle='false')"></div>
+          <div th:replace="search-option :: option(active=false,value='rating', text='Rating', toggle='false')"></div>
         </ul>
       </div>
     </div>
@@ -99,7 +109,7 @@
   <!-- Search results. -->
   <div class="row">
     <div class="col">
-      <div id="search-results"
+      <div id="search-results"></div>
     </div>
   </div>
 </div>

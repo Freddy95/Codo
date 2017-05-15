@@ -12,6 +12,7 @@
   <script type="text/javascript" th:src="@{/public/js/edit-lesson.js}"></script>
   <script th:inline="javascript">
     var lesson_id = [[${lesson.lesson_id}]];
+    var username = [[${username}]];
   </script>
 </head>
 <body>
@@ -126,6 +127,25 @@
         <a class="btn btn-danger" th:href="'/deletelesson/' + ${lesson.lesson_id}">
           <i class="fa fa-trash" aria-hidden="true"></i>Delete Lesson
         </a>
+      </div>
+      <div class="alert alert-success" id="lesson-saved-alert" role="alert">
+        <strong>Lesson Saved!</strong> The lesson was saved to our servers.
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="usernameModal" tabindex="-1" role="dialog" aria-labelledby="usernameModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="usernameModalLabel">Create a Username</h5>
+      </div>
+      <div class="modal-body">
+        Please create a username before you post a lesson:<br/>
+        <input  class="w-100 form-control" id = "usernametxt" type="text" placeholder="Username"></input>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onClick="createUsername()">Ok</button>
       </div>
     </div>
   </div>
