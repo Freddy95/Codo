@@ -499,10 +499,18 @@ public class LessonService {
      * @param lesson -- lesson to change
      * @param new_rating -- new rate
      */
-    public int update_average_rating(Lesson lesson, int new_rating){
-        lesson.setNumber_of_ratings(lesson.getNumber_of_ratings() + 1);
-        lesson.setRating(lesson.getRating() + new_rating);
-        return lesson.getRating()/lesson.getNumber_of_ratings();
+    public void update_average_rating(Lesson original_lesson, Lesson lesson, int new_rating){
+        if(lesson.getRating() == 0){
+            //first rate by this user
+            original_lesson.setNumber_of_ratings(original_lesson.getNumber_of_ratings() + 1);
+            original_lesson.setRating(original_lesson.getRating() + new_rating);
+        }else {
+            //just change rating to be the rating plus difference of new rating - old rating
+            //dont increase number of ratings
+            int old_rating = lesson.getRating();
+            original_lesson.setRating(original_lesson.getRating() + (new_rating - old_rating));
+        }
+
     }
 
     /**

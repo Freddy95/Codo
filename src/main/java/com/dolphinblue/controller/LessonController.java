@@ -396,13 +396,14 @@ public class LessonController {
         // Get the lesson object from the datastore
         Lesson lesson = ofy.load().type(Lesson.class).id(lessonId).now();
 
-        // Reset the tutorial booleans and save them to the datastore
-        lesson.setRating(rating);
-
         //update average rating
         Lesson original_lesson = ofy.load().key(lesson.getOriginal_lesson()).now();
-        lessonService.update_average_rating(original_lesson, rating);
+        lessonService.update_average_rating(original_lesson, lesson, rating);
         ofy.save().entity(original_lesson).now();
+
+        lesson.setRating(rating);
+
+
 
         // Save the user to the datastore
         ofy.save().entity(lesson).now();
