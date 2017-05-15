@@ -57,9 +57,19 @@
       </div> -->
     </div>
   </div>
+  <div class="row justify-content-center">
+    <div class="col-5">
+      <div class="alert alert-warning alert-dismissible fade show" role="alert" th:each="msg : ${messages}">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <p th:text="${msg}">Admin Message</p>
+      </div>
+    </div>
+  </div>
+
   <div class="row justify-content-center user-section step-5" id="progress">
     <div class="col">
-
       <!-- Displays the lesson in progress. -->
       <div class="row justify-content-center user-section-header">
         <h2>You're learning:</h2>
