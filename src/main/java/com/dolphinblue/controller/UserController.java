@@ -84,7 +84,7 @@ public class UserController {
             // Get the main site lessons for the user and add them to the thymeleaf model
             List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
             Collections.sort(main_lessons);
-            for (int i = 0; i < main_lessons.size(); i++){
+            for (int i = 0; i < main_lessons.size(); i++) {
                 Lesson lesson = main_lessons.get(i);
                 int roundedPercent = lessonService.get_percent_complete(lesson);
                 lesson.setPercent_complete(roundedPercent);
