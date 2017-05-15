@@ -5,3 +5,14 @@
 .add-button, .user-section-header, #lesson-nav, .user-section {
     margin-bottom: 25px;
 }
+
+.badge-item {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

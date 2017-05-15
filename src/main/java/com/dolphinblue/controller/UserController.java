@@ -73,7 +73,6 @@ public class UserController {
             // Create user's own main lesson objects and save them in the datastore
             lessonService.create_main_lessons_for_user(user);
 
-            ArrayList<String> arr = new ArrayList<>();
             // Add the user information to the thymeleaf model
             model.addAttribute("user_info", user);
             model.addAttribute("messages",user.getAdmin_msg());
