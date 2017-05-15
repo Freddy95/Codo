@@ -4,46 +4,54 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Load;
+
+import com.dolphinblue.models.Lesson;
 
 import java.util.*;
 /**
  * Created by FreddyEstevez on 3/21/17.
  * Represent model for lessons
  */
-@Entity
-public class Lesson implements Comparable<Lesson>{
+public class LessonDetails {
 
-    @Id private Long lesson_id;
-    private Long index;
+    private Long lesson_id;
     private String title;
-    @Index private String user_id; //user who is working on the lesson
-    @Index private String creator_id; //user who created the lesson
-    private List<Key<Task>> tasks; //holds lists of tasks ids for this lesson
-    private int percent_complete; // Hold the percent of task the user has completed
-    @Index private boolean shared;
-
-    @Index private boolean site_owned;
-    private Key<Lesson> original_lesson;
+    private String user_id; //user who is working on the lesson
+    private String creator_id; //user who created the lesson
+    private double percent_complete; // Hold the percent of task the user has completed
+    private boolean shared;
+    private boolean site_owned;
     private String description;
+    private Long index;
     private int rating;
-    private int number_of_ratings;
     //Date when lesson was last edited or changed.
     private Date last_edited;
     //Date when this lesson was last access by user working on it
     private Date last_accessed;
-    public Lesson(){
-        this.tasks = new ArrayList<>();
-    }
 
-    public Lesson(Long lesson_id, String title, String user, String creator, List<Key<Task>> tasks, boolean shared, int rating, boolean site_owned) {
+    public LessonDetails(Long lesson_id, String title, String user, String creator, boolean shared, int rating, boolean site_owned) {
         this.lesson_id = lesson_id;
         this.title = title;
         this.user_id = user;
         this.creator_id = creator;
-        this.tasks = tasks;
         this.shared = shared;
         this.rating = rating;
         this.site_owned = site_owned;
+    }
+
+    public LessonDetails(Lesson l) {
+        this.lesson_id = l.getLesson_id();
+        this.title = l.getTitle();
+        this.user_id = l.getUser_id();
+        this.creator_id = l.getCreator_id();
+        this.percent_complete = l.getPercent_complete();
+        this.shared = l.isShared();
+        this.site_owned = l.isSite_owned();
+        this.description = l.getDescription();
+        this.last_edited = l.getLast_edited();
+        this.last_accessed = l.getLast_accessed();
+        this.index = l.getIndex();
     }
 
     public Long getLesson_id() {
@@ -78,19 +86,11 @@ public class Lesson implements Comparable<Lesson>{
         this.creator_id = creator;
     }
 
-    public List<Key<Task>> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Key<Task>> tasks) {
-        this.tasks = tasks;
-    }
-
-    public int getPercent_complete() {
+    public double getPercent_complete() {
         return percent_complete;
     }
 
-    public void setPercent_complete(int percent_complete) {
+    public void setPercent_complete(double percent_complete) {
         this.percent_complete = percent_complete;
     }
 
@@ -108,15 +108,6 @@ public class Lesson implements Comparable<Lesson>{
 
     public void setSite_owned(boolean site_owned) {
         this.site_owned = site_owned;
-    }
-
-
-    public Key<Lesson> getOriginal_lesson() {
-        return original_lesson;
-    }
-
-    public void setOriginal_lesson(Lesson original_lesson) {
-        this.original_lesson = Key.create(Lesson.class, original_lesson.getLesson_id());
     }
 
     public String getDescription() {
@@ -165,15 +156,4 @@ public class Lesson implements Comparable<Lesson>{
     public void setLast_accessed(Date last_accessed) {
         this.last_accessed = last_accessed;
     }
-
-
-
-    public int getNumber_of_ratings() {
-        return number_of_ratings;
-    }
-
-    public void setNumber_of_ratings(int number_of_ratings) {
-        this.number_of_ratings = number_of_ratings;
-    }
-
 }

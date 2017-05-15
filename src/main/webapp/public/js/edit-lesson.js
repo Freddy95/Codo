@@ -3,21 +3,25 @@
  * Javascript for the edit lesson page
  */
 
- $(document).ready(function() {
-  init();
+$(document).ready(function() {
+    init();
 });
 
- var tasksToDelete=[];
- var isDirty = false;
+var tasksToDelete=[];
+var isDirty = false;
 
 // Convenience methood to get value from a placeholder.
 
 function init() {
+
+    //hide the alert shown when a lesson is saved
+    $("#lesson-saved-alert").hide();
+
     $('.sortable').sortable({
         connectWith: '.sortable',
         placeholder: "ui-state-highlight",
         stop: function(event, ui) {
-          isDirty = true;
+            isDirty = true;
         }
     }).disableSelection();
 
@@ -37,7 +41,7 @@ function save(node,taskId) {
     if ($(node).hasClass('disabled')) {
         return;
     }
-    
+
     if(username===""||username==undefined||username==null){
         $("#usernameModal").modal('show');
         return;
@@ -71,15 +75,20 @@ function save(node,taskId) {
 
     data.tasks = taskList;
     
+
     $.ajax({
         headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         method:'POST',
         url: '/createlesson/' + lesson_id + '/post',
-        dataType:'json',
         data:JSON.stringify(data),
+        success:function(){
+            //when the lesson is posted successfully, show an alert
+            $("#lesson-saved-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#lesson-saved-alert").slideUp(500);
+            });
+        }
     });
 
     isDirty = false;
@@ -87,17 +96,18 @@ function save(node,taskId) {
 
 function addTask(type) {
     $.ajax({
-      method:'GET',
-      data:{
-         "type":type
-     },
-     url: '/createlesson/' + lesson_id + '/createtask',
-     success: function(data, status, xhttp) {
-        save($("#save-button"),data);
-        //redirect to the newly created task
-        window.location.href = '/createlesson/' + lesson_id + '/createtask/'+data;
-    }
-});
+          method:'GET',
+          data:{
+             "type":type
+         },
+         url: '/createlesson/' + lesson_id + '/createtask',
+         success: function(data, status, xhttp) {
+            save($("#save-button"),data);
+            //redirect to the newly created task
+            window.location.href = '/createlesson/' + lesson_id + '/createtask/'+data;
+        }
+    });
+
 }
 
 function deleteTask(node) {
@@ -115,15 +125,18 @@ function deleteTask(node) {
  */
 function createUsername() {
 
-    var username = $("#usernametxt").val();
+    var newUsername = $("#usernametxt").val();
+    username = newUsername;
+
 
     $.ajax({
         method:'POST',
         url:'/editusername',
         dataType:'text',
-        data:username,
+        data:newUsername,
         success:function(){
             $("#usernameModal").modal('hide');
         }
     });
+
 }
