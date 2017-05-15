@@ -11,11 +11,13 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.googlecode.objectify.Objectify;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,6 +61,9 @@ public class ModeratorController {
 
         // Add the message to the creator admin_msg list
         List<String> admin_msgs = creator.getAdmin_msg();
+        if(admin_msgs == null){
+            admin_msgs = new ArrayList<String>();
+        }
         admin_msgs.add(lesson.getTitle() + ": " + message);
         creator.setAdmin_msg(admin_msgs);
 

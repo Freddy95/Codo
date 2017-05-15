@@ -17,6 +17,11 @@
 <body onload="onLoad()">
 <div class="container">
   <div th:replace="user-navbar :: navbar"></div>
+  <div  class="row justify-content-center">
+    <div class="col-2 mx-auto text-center">
+          <img th:src="${user_info.avatar}" alt="Avatar Image" class="rounded-circle"></img>
+    </div>
+  </div>
   <div class="row justify-content-center user-section" id="badges">
     <div class="col">
 

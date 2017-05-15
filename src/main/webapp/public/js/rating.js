@@ -85,13 +85,16 @@ function clickRating(){
 function hideLesson(){
   var msg=$("#reportmsg").val();
 
-  data={};
-  data.msg=msg;
+  var data={};
+  data.message=msg;
+
   $.ajax({
     method:'POST',
     url:'/lesson/'+lesson_id+'/report',
     data:JSON.stringify(data),
-    dataType:'json',
-    contentType:'application/json'
+    contentType:'application/json',
+    success: function(data){
+          $('#reportModal').modal('hide');
+      }
   });
 }
