@@ -45,6 +45,24 @@ public class LessonService {
         return (count/total);
     }
 
+    public int get_average_rating(Long original_key) {
+        // Get the ofy service for the datastore
+        Objectify ofy = OfyService.ofy();
+        // Get the lessons with this as the original
+        Query<Lesson> q = ofy.load().type(Lesson.class).filter("original_lesson", original_key);
+        System.out.println("Query Size: " + q.list().size());
+        // Create variables for total and average
+        int average, total = 0;
+        for (int i = 0; i < q.list().size(); i++) {
+            // Add up all the ratings
+            Lesson lesson = q.list().get(i);
+            total = total + lesson.getRating();
+            System.out.println("Total: " + total);
+        }
+        average = total / q.list().size();
+        return average;
+    }
+
     /**
      * Creates main lesson objects for a specific user ONLY IF the user doesn't have a certain lesson object
      * @param user -- User to create lesson objects for.
@@ -77,7 +95,7 @@ public class LessonService {
         }
         for(int i = 0; i < user_lessons.size(); i++){
             for(int j = 0; j < main_lessons.size(); j++){
-                if(user_lessons.get(i).getOriginal_lesson().getId() == main_lessons.get(j).getLesson_id()){
+                if(user_lessons.get(i).getOriginal_lesson() == main_lessons.get(j).getLesson_id()){
                     //user already has this lesson.
                     main_lessons.remove(j);
                     break;
@@ -383,7 +401,7 @@ public class LessonService {
         //check which lessons user already has
         for(int i = 0; i < user_lessons.size(); i++){
             for(int j = 0; j < shared_lessons.size(); j++){
-                if(user_lessons.get(i).getOriginal_lesson().getId() == shared_lessons.get(j).getLesson_id()){
+                if(user_lessons.get(i).getOriginal_lesson() == shared_lessons.get(j).getLesson_id()){
                     //user already has this lesson.
                     shared_lessons.remove(j);
                     break;

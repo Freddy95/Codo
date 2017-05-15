@@ -210,7 +210,7 @@ public class LessonController {
         model.addAttribute("user",user);
         // Load the lesson from the datastore and add it to the thymeleaf model
         Lesson l = ofy.load().type(Lesson.class).id(lessonId).now();
-        Lesson original_lesson = (Lesson) ofy.load().key(l.getOriginal_lesson()).now();
+        Lesson original_lesson = ofy.load().type(Lesson.class).id(l.getOriginal_lesson()).now();
         if(original_lesson.getLast_edited().compareTo(l.getLast_accessed()) > 0){
             //the lesson has been changed
             //System.out.println("LESSON UPDATED");
@@ -483,11 +483,24 @@ public class LessonController {
         // Get the lesson object from the datastore
         Lesson lesson = ofy.load().type(Lesson.class).id(lessonId).now();
 
-        // Reset the tutorial booleans and save them to the datastore
+        // Reset the raiting and save it to the datastore
         lesson.setRating(rating);
 
-        // Save the user to the datastore
+        // Save the lesson to the datastore
         ofy.save().entity(lesson).now();
+
+        // Get the original lesson from the datastore
+        Long original_key = lesson.getOriginal_lesson();
+        // Get the original lesson
+        Lesson original_lesson = ofy.load().type(Lesson.class).id(original_key).now();
+
+        // Get the average rating for the original lesson
+        int average_rating = lessonService.get_average_rating(original_key);
+        System.out.println("Average Rating: " + average_rating);
+        // Set the average rating for the original lesson
+        original_lesson.setRating(average_rating);
+        // Save the original lesson back to the datastore
+        ofy.save().entity(original_lesson).now();
 
         // give the ok response
         resp.setStatus(200);

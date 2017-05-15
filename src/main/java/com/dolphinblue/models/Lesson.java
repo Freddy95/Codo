@@ -22,7 +22,7 @@ public class Lesson implements Comparable<Lesson>{
     private double percent_complete; // Hold the percent of task the user has completed
     @Index private boolean shared;
     @Index private  boolean site_owned;
-    private Key<Lesson> original_lesson;
+    @Index private Long original_lesson;
     private String description;
     private int rating;
     //Date when lesson was last edited or changed.
@@ -108,12 +108,12 @@ public class Lesson implements Comparable<Lesson>{
         this.site_owned = site_owned;
     }
 
-    public Key getOriginal_lesson() {
+    public Long getOriginal_lesson() {
         return original_lesson;
     }
 
     public void setOriginal_lesson(Lesson original_lesson) {
-        this.original_lesson = Key.create(Lesson.class, original_lesson.getLesson_id());
+        this.original_lesson = original_lesson.getLesson_id();
     }
 
     public String getDescription() {

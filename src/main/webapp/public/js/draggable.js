@@ -256,11 +256,6 @@ function startTutorial() {
       ]
     });
 
-    // Setup the page transition for the tutorial to navigate home?
-    //tutorial.setOption('doneLabel', 'Start Lesson').start().oncomplete(function() {
-    //    window.location.href = "/lesson/" + lesson_id;
-    //});
-
     tutorial.start();
 
     $.ajax({
