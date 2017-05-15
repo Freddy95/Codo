@@ -86,6 +86,7 @@ public class UserController {
             for (int i = 0; i < main_lessons.size(); i++) {
                 Lesson lesson = main_lessons.get(i);
                 int roundedPercent = lessonService.get_percent_complete(lesson);
+                System.out.println("Percent Complete: " + roundedPercent);
                 lesson.setPercent_complete(roundedPercent);
             }
             model.addAttribute("main_lessons", main_lessons);
@@ -94,6 +95,11 @@ public class UserController {
             model.addAttribute("own_lessons", own_lessons);
             // Get the shared lessons for the user
             List<Lesson> shared_lessons = lessonService.create_shared_lessons_for_user(user);
+            for (int i = 0; i < shared_lessons.size(); i++) {
+                Lesson lesson = shared_lessons.get(i);
+                int roundedPercent = lessonService.get_percent_complete(lesson);
+                lesson.setPercent_complete(roundedPercent);
+            }
             model.addAttribute("shared_lessons", shared_lessons);
 
             // Fixes a bug with user login

@@ -30,9 +30,9 @@ public class LessonService {
         //Get tasks of lesson.
         List<Key<Task>> tasks = lesson.getTasks();
         //number of lessons.
-        int total = tasks.size();
+        double total = tasks.size();
         //number of lessons completed.
-        int count = 0;
+        double count = 0;
 
         for(int i = 0; i < tasks.size(); i++) {
             Key task_key = tasks.get(i);
@@ -42,8 +42,9 @@ public class LessonService {
                 count++;
             }
         }
+        int percent = (int)((count/total) * 100);
 
-        return (count/total);
+        return percent;
     }
 
     public int get_average_rating(Long original_key) {
