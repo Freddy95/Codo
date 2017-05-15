@@ -1,6 +1,7 @@
 package com.dolphinblue.controller;
 
 import com.dolphinblue.comparator.AuthorComparator;
+import com.dolphinblue.comparator.RatingComparator;
 import com.dolphinblue.comparator.TitleComparator;
 import com.dolphinblue.models.*;
 import com.dolphinblue.service.*;
@@ -102,30 +103,40 @@ public class SearchController {
             }
 
             List<String> searchBy = query.getSearchBy();
+
+            List<LessonDetails> lesson_details_list;
+            if(query.getSearchTerm().equals("")){
+                //no search term
+                lesson_details_list =  lessonService.extract_details(lessons);
+            }
+            else{
+                List<Lesson> lesson_list = new ArrayList<>();
+                //search by author, title, description
+                for (int i = 0; i < searchBy.size(); i++){
+                    if(searchBy.get(i).equals("title")){
+                        lesson_list.addAll(lessonService.search_by_title(lessons, query.getSearchTerm()));
+                    }else if(searchBy.get(i).equals("description")) {
+                        lesson_list.addAll(lessonService.search_by_description(lessons, query.getSearchTerm()));
+                    }else{
+                        lesson_list.addAll(lessonService.search_by_author(lessons, query.getSearchTerm()));
+                    }
+                }
+                lesson_details_list =  lessonService.extract_details(lesson_list);
+            }
+
             //sort the list
             if(query.getSortBy().equals("title")){
-                Collections.sort(lessons, new TitleComparator());
+                Collections.sort(lesson_details_list, new TitleComparator());
             }else if(query.getSortBy().equals("author")){
-                Collections.sort(lessons, new AuthorComparator());
+                Collections.sort(lesson_details_list, new AuthorComparator());
+            }else if(query.getSortBy().equals("rating")){
+                Collections.sort(lesson_details_list, new RatingComparator());
             }
-
-            if(query.getSearchTerm().equals("")){
-                return lessonService.extract_details(lessons);
+            if (!query.getAsc() && !query.getSortBy().equals("none")){
+                Collections.reverse(lesson_details_list);
             }
-            List<Lesson> list = new ArrayList<>();
-            //search by author, title, description
-            for (int i = 0; i < searchBy.size(); i++){
-                if(searchBy.get(i).equals("title")){
-                    list.addAll(lessonService.search_by_title(lessons, query.getSearchTerm()));
-                }else if(searchBy.get(i).equals("description")) {
-                    list.addAll(lessonService.search_by_description(lessons, query.getSearchTerm()));
-                }else{
-                    list.addAll(lessonService.search_by_author(lessons, query.getSearchTerm()));
-                }
-            }
+            return lesson_details_list;
 
-
-            return lessonService.extract_details(list);
         } else {
             return null;
         }

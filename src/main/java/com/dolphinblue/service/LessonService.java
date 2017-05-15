@@ -264,9 +264,15 @@ public class LessonService {
     }
 
     public List<LessonDetails> extract_details(List<Lesson> lessons) {
+        Objectify ofy = OfyService.ofy();
         List<LessonDetails> lessonDetails = new ArrayList<LessonDetails>();
         for (int i = 0; i < lessons.size(); i++) {
-            lessonDetails.add(new LessonDetails(lessons.get(i)));
+
+            LessonDetails l = new LessonDetails(lessons.get(i));
+            Lesson original_lesson = ofy.load().key(lessons.get(i).getOriginal_lesson()).now();
+            //search should display average rating
+            l.setRating(get_average_rating(original_lesson));
+            lessonDetails.add(l);
         }
         return lessonDetails;
     }
@@ -486,5 +492,29 @@ public class LessonService {
             }
         }
         return list;
+    }
+
+    /**
+     * updates average rating of a lesson and returns the new average
+     * @param lesson -- lesson to change
+     * @param new_rating -- new rate
+     */
+    public int update_average_rating(Lesson lesson, int new_rating){
+        lesson.setNumber_of_ratings(lesson.getNumber_of_ratings() + 1);
+        lesson.setRating(lesson.getRating() + new_rating);
+        return lesson.getRating()/lesson.getNumber_of_ratings();
+    }
+
+    /**
+     * @returns average rating of a lesson.
+     */
+    public int get_average_rating(Lesson lesson){
+        try {
+            int ret = lesson.getRating()/lesson.getNumber_of_ratings();
+            return ret;
+        }catch (Exception e){
+            return 0;
+        }
+
     }
 }

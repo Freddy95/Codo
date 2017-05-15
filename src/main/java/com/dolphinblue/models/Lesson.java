@@ -25,6 +25,7 @@ public class Lesson implements Comparable<Lesson>{
     private Key<Lesson> original_lesson;
     private String description;
     private int rating;
+    private int number_of_ratings;
     //Date when lesson was last edited or changed.
     private Date last_edited;
     //Date when this lesson was last access by user working on it
@@ -108,7 +109,7 @@ public class Lesson implements Comparable<Lesson>{
         this.site_owned = site_owned;
     }
 
-    public Key getOriginal_lesson() {
+    public Key<Lesson> getOriginal_lesson() {
         return original_lesson;
     }
 
@@ -162,4 +163,15 @@ public class Lesson implements Comparable<Lesson>{
     public void setLast_accessed(Date last_accessed) {
         this.last_accessed = last_accessed;
     }
+
+
+
+    public int getNumber_of_ratings() {
+        return number_of_ratings;
+    }
+
+    public void setNumber_of_ratings(int number_of_ratings) {
+        this.number_of_ratings = number_of_ratings;
+    }
+
 }

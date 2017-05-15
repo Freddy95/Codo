@@ -49,7 +49,6 @@ public class LessonDetails {
         this.shared = l.isShared();
         this.site_owned = l.isSite_owned();
         this.description = l.getDescription();
-        this.rating = l.getRating();
         this.last_edited = l.getLast_edited();
         this.last_accessed = l.getLast_accessed();
         this.index = l.getIndex();
