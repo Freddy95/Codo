@@ -382,13 +382,14 @@ public class LessonService {
         List<Lesson> user_lessons = ofy.load().type(Lesson.class)
                 .filter("user_id", user.getUser_id())
                 .filter("site_owned", false)
-                .filter("shared", true)
-                .filter("creator_id !=", user.getUser_id()).list();
+                .filter("shared", true).list();
+
 
         List<Lesson> shared_lessons = ofy.load().type(Lesson.class)
                 .filter("user_id", null)
                 .filter("site_owned", false)
-                .filter("shared", true).list();
+                .filter("shared", true)
+                .filter("creator_id !=", user.getUser_id()).list();
 
         //check which lessons user already has
         for(int i = 0; i < user_lessons.size(); i++){
@@ -416,6 +417,7 @@ public class LessonService {
             l.setUser_id(user);
             l.setDescription(m.getDescription());
             l.setOriginal_lesson(m);
+            l.setCreator_id(m.getCreator_id());
             l.setSite_owned(false);
             l.setShared(true);
             l.setLast_accessed(new Date());
@@ -433,5 +435,56 @@ public class LessonService {
             ofy.save().entity(user).now();
         }
         return user_lessons;
+    }
+
+    /**
+     * searches through list of lessons for lessons that contain @param description.
+     * @param lessons -- list of lessons
+     * @param description -- description to search for
+     */
+    public List<Lesson> search_by_description(List<Lesson> lessons, String description){
+        List<Lesson> list = new ArrayList<>();
+        for (int i = 0; i < lessons.size(); i++){
+            //lesson description contains the input string
+            if(lessons.get(i).getDescription().toLowerCase().contains(description.toLowerCase())){
+                list.add(lessons.remove(i));
+                i--;
+            }
+        }
+        return list;
+    }
+    /**
+     * searches through list of lessons for lessons that contain @param author.
+     * @param lessons -- list of lessons
+     * @param author -- author to search for
+     */
+    public List<Lesson> search_by_author(List<Lesson> lessons, String author){
+        Objectify ofy = OfyService.ofy();
+        List<Lesson> list = new ArrayList<>();
+        for (int i = 0; i < lessons.size(); i++){
+            User user = ofy.load().type(User.class).id(lessons.get(i).getCreator_id()).now();
+            //lesson author contains the input string
+            if(user.getUsername().toLowerCase().contains(author.toLowerCase())){
+                list.add(lessons.remove(i));
+                i--;
+            }
+        }
+        return list;
+    }
+    /**
+     * searches through list of lessons for lessons that contain @param description.
+     * @param lessons
+     * @param title
+     */
+    public List<Lesson> search_by_title(List<Lesson> lessons, String title){
+        List<Lesson> list = new ArrayList<>();
+        for (int i = 0; i < lessons.size(); i++){
+            //lesson title contains the input string
+            if(lessons.get(i).getTitle().toLowerCase().contains(title.toLowerCase())){
+                list.add(lessons.remove(i));
+                i--;
+            }
+        }
+        return list;
     }
 }

@@ -3,12 +3,12 @@
  * Javascript for the edit lesson page
  */
 
- $(document).ready(function() {
-  init();
+$(document).ready(function() {
+    init();
 });
 
- var tasksToDelete=[];
- var isDirty = false;
+var tasksToDelete=[];
+var isDirty = false;
 
 // Convenience methood to get value from a placeholder.
 
@@ -17,7 +17,7 @@ function init() {
         connectWith: '.sortable',
         placeholder: "ui-state-highlight",
         stop: function(event, ui) {
-          isDirty = true;
+            isDirty = true;
         }
     }).disableSelection();
 
@@ -33,7 +33,7 @@ function init() {
 }
 
 // Save data.
-function save(node) {
+function save(node,taskId) {
     if ($(node).hasClass('disabled')) {
         return;
     }
@@ -60,9 +60,12 @@ function save(node) {
     $('#task-list').find('.task-block').each(function() {
         taskList.push($(this).attr('id'));
     });
+    if(taskId !== undefined){
+        taskList.push(taskId);
+    }
 
     data.tasks = taskList;
-    
+
     console.log(data);
 
     $.ajax({
@@ -81,17 +84,17 @@ function save(node) {
 
 function addTask(type) {
     $.ajax({
-      method:'GET',
-      data:{
-         "type":type
-     },
-     url: '/createlesson/' + lesson_id + '/createtask',
-     success: function(data, status, xhttp) {
-        save();
-        //redirect to the newly created task
-        window.location.href = '/createlesson/' + lesson_id + '/createtask/'+data;
-    }
-});
+        method:'GET',
+        data:{
+            "type":type
+        },
+        url: '/createlesson/' + lesson_id + '/createtask',
+        success: function(data, status, xhttp) {
+            save($("#save-button"),data);
+            //redirect to the newly created task
+            window.location.href = '/createlesson/' + lesson_id + '/createtask/'+data;
+        }
+    });
 }
 
 function deleteTask(node) {
