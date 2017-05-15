@@ -1,4 +1,4 @@
-package com.dolphinblue.Comparator;
+package com.dolphinblue.comparator;
 
 import com.dolphinblue.models.Lesson;
 

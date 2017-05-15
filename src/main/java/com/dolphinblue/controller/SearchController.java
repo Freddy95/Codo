@@ -1,15 +1,13 @@
 package com.dolphinblue.controller;
 
-import com.dolphinblue.Comparator.AuthorComparator;
-import com.dolphinblue.Comparator.TitleComparator;
+import com.dolphinblue.comparator.AuthorComparator;
+import com.dolphinblue.comparator.TitleComparator;
 import com.dolphinblue.models.*;
-import com.dolphinblue.models.Block.Type;
 import com.dolphinblue.service.*;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 
