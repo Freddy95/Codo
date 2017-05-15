@@ -74,19 +74,10 @@
         <span class="navbar-brand">Sort By: </span>
         <ul class="nav nav-pills">
           <!-- The tab for all lessons. -->
-          <li class="nav-item">
-            <a class="nav-link active" data-toggle="pill" id="none">None</a>
-          </li>
-
-          <!-- The tab for main lessons. -->
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" id="title">Title</a>
-          </li>
-
-          <!-- The tab for shared lessons. -->
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" id="author">Author</a>
-          </li>
+          <div th:replace="search-option :: option(active=true, value='none', text='None', toggle='false')"></div>
+          <div th:replace="search-option :: option(active=false,value='title', text='Title', toggle='false')"></div>
+          <div th:replace="search-option :: option(active=false,value='author', text='Author', toggle='false')"></div>
+          <div th:replace="search-option :: option(active=false,value='rating', text='Rating', toggle='false')"></div>
         </ul>
       </div>
     </div>

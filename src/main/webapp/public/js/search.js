@@ -13,13 +13,31 @@ function init() {
     $('a[data-toggle="pill"]').on('click', function(e) {
         if ($(this).attr('id') === sortBy) {
             asc = !asc;
+            if ($(this).attr('id') !== 'none') {
+                toggleArrow($(this));
+            }
             search();
         }
     }).on('shown.bs.tab', function(e) {
         sortBy = $(e.target).attr('id');
-        asc = true;
+        asc = (sortBy === 'rating') ? false : true;
+        $(this).closest('ul').find('.fa').hide();
+        if ($(e.target).attr('id') !== 'none') {
+            toggleArrow($(this));
+        }
         search();
     });
+}
+
+function toggleArrow(node) {
+    var arrow = $(node).find('.fa');
+    arrow.show();
+    if (asc) {
+        arrow.removeClass('fa-sort-desc').addClass('fa-sort-asc');
+    }
+    else {
+        arrow.addClass('fa-sort-desc').removeClass('fa-sort-asc');
+    }
 }
 
 function search() {
@@ -65,12 +83,30 @@ function populateLessons(data) {
 
         // Append up to two lessons.
         for (_j = _i; _j < data.length && _j < _i + 2; _j++) {
+            // Build ratings span.
+            rating = data[_j].rating;
+
+            var ratingsSpan = $('<span>').attr('data-toggle', 'tooltip')
+                                    .attr('title', rating + ' stars');
+
+            for (_r = 0; _r < 5; _r++) {
+                if (_r < rating - 1) {
+                    ratingsSpan.append($('<i>').addClass('fa').addClass('fa-star'));
+                }
+                else if (_r < rating - .5) {
+                    ratingsSpan.append($('<i>').addClass('fa').addClass('fa-star-half-o'));
+                }
+                else {
+                    ratingsSpan.append($('<i>').addClass('fa').addClass('fa-star-o'));
+                }
+            }
+
             // Build title box.
             var titleBox = $('<div>').addClass('title-box')
                                 .addClass('col-4')
-            titleBox.append($('<span>').text(data[_j].title))
-                    .append($('<br/>'))
-                    .append($('<span>').text(data[_j].percent_complete));
+            titleBox.append(ratingsSpan)
+                    .append($('<span>').text(data[_j].title))
+                    .append($('<span>').text(data[_j].percent_complete + '%'));
 
             // Build description box.
             var descriptionBox = $('<div>').addClass('col-8')
