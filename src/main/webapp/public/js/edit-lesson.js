@@ -3,12 +3,12 @@
  * Javascript for the edit lesson page
  */
 
- $(document).ready(function() {
-  init();
+$(document).ready(function() {
+    init();
 });
 
- var tasksToDelete=[];
- var isDirty = false;
+var tasksToDelete=[];
+var isDirty = false;
 
 // Convenience methood to get value from a placeholder.
 
@@ -17,7 +17,7 @@ function init() {
         connectWith: '.sortable',
         placeholder: "ui-state-highlight",
         stop: function(event, ui) {
-          isDirty = true;
+            isDirty = true;
         }
     }).disableSelection();
 
@@ -71,6 +71,7 @@ function save(node,taskId) {
 
     data.tasks = taskList;
     
+
     $.ajax({
         headers: {
             'Accept': 'application/json',
@@ -87,17 +88,18 @@ function save(node,taskId) {
 
 function addTask(type) {
     $.ajax({
-      method:'GET',
-      data:{
-         "type":type
-     },
-     url: '/createlesson/' + lesson_id + '/createtask',
-     success: function(data, status, xhttp) {
-        save($("#save-button"),data);
-        //redirect to the newly created task
-        window.location.href = '/createlesson/' + lesson_id + '/createtask/'+data;
-    }
-});
+          method:'GET',
+          data:{
+             "type":type
+         },
+         url: '/createlesson/' + lesson_id + '/createtask',
+         success: function(data, status, xhttp) {
+            save($("#save-button"),data);
+            //redirect to the newly created task
+            window.location.href = '/createlesson/' + lesson_id + '/createtask/'+data;
+        }
+    });
+
 }
 
 function deleteTask(node) {
@@ -126,4 +128,5 @@ function createUsername() {
             $("#usernameModal").modal('hide');
         }
     });
+
 }

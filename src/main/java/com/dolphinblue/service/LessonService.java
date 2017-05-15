@@ -95,7 +95,7 @@ public class LessonService {
         }
         for(int i = 0; i < user_lessons.size(); i++){
             for(int j = 0; j < main_lessons.size(); j++){
-                if(user_lessons.get(i).getOriginal_lesson() == main_lessons.get(j).getLesson_id()){
+                if(user_lessons.get(i).getOriginal_lesson().getId() == main_lessons.get(j).getLesson_id()){
                     //user already has this lesson.
                     main_lessons.remove(j);
                     break;
@@ -113,10 +113,12 @@ public class LessonService {
             //Set all attributes of original lesson object to new lesson object.
             l.setTitle(m.getTitle());
             l.setUser_id(user);
+            l.setCreator_id("");
             l.setDescription(m.getDescription());
             l.setOriginal_lesson(m);
             l.setSite_owned(true);
             l.setIndex(m.getIndex());
+            l.setLast_edited(m.getLast_edited());
             l.setLast_accessed(new Date());
             //Get original lesson tasks.
             List<Task> tasks = get_tasks_by_id(m.getTasks());
@@ -279,6 +281,20 @@ public class LessonService {
         return ofy.load().type(Lesson.class).filter("creator_id !=", user.getUser_id()).filter("site_owned", false).filter("shared",true).filter("user_id", user.getUser_id()).list();
     }
 
+    public List<LessonDetails> extract_details(List<Lesson> lessons) {
+        Objectify ofy = OfyService.ofy();
+        List<LessonDetails> lessonDetails = new ArrayList<LessonDetails>();
+        for (int i = 0; i < lessons.size(); i++) {
+
+            LessonDetails l = new LessonDetails(lessons.get(i));
+            Lesson original_lesson = ofy.load().key(lessons.get(i).getOriginal_lesson()).now();
+            //search should display average rating
+            l.setRating(get_average_rating(original_lesson));
+            lessonDetails.add(l);
+        }
+        return lessonDetails;
+    }
+
     /**
      * Reset a task in a lesson
      * @param task -- the task object that is to be reset
@@ -392,16 +408,17 @@ public class LessonService {
                 .filter("site_owned", false)
                 .filter("shared", true).list();
 
+
         List<Lesson> shared_lessons = ofy.load().type(Lesson.class)
                 .filter("user_id", null)
                 .filter("site_owned", false)
                 .filter("shared", true)
                 .filter("creator_id !=", user.getUser_id()).list();
-//
+
         //check which lessons user already has
         for(int i = 0; i < user_lessons.size(); i++){
             for(int j = 0; j < shared_lessons.size(); j++){
-                if(user_lessons.get(i).getOriginal_lesson() == shared_lessons.get(j).getLesson_id()){
+                if(user_lessons.get(i).getOriginal_lesson().getId() == shared_lessons.get(j).getLesson_id()){
                     //user already has this lesson.
                     shared_lessons.remove(j);
                     break;
@@ -442,5 +459,88 @@ public class LessonService {
             ofy.save().entity(user).now();
         }
         return user_lessons;
+    }
+
+    /**
+     * searches through list of lessons for lessons that contain @param description.
+     * @param lessons -- list of lessons
+     * @param description -- description to search for
+     */
+    public List<Lesson> search_by_description(List<Lesson> lessons, String description){
+        List<Lesson> list = new ArrayList<>();
+        for (int i = 0; i < lessons.size(); i++){
+            //lesson description contains the input string
+            if(lessons.get(i).getDescription().toLowerCase().contains(description.toLowerCase())){
+                list.add(lessons.remove(i));
+                i--;
+            }
+        }
+        return list;
+    }
+    /**
+     * searches through list of lessons for lessons that contain @param author.
+     * @param lessons -- list of lessons
+     * @param author -- author to search for
+     */
+    public List<Lesson> search_by_author(List<Lesson> lessons, String author){
+        Objectify ofy = OfyService.ofy();
+        List<Lesson> list = new ArrayList<>();
+        for (int i = 0; i < lessons.size(); i++){
+            User user = ofy.load().type(User.class).id(lessons.get(i).getCreator_id()).now();
+            //lesson author contains the input string
+            if(user.getUsername().toLowerCase().contains(author.toLowerCase())){
+                list.add(lessons.remove(i));
+                i--;
+            }
+        }
+        return list;
+    }
+    /**
+     * searches through list of lessons for lessons that contain @param description.
+     * @param lessons
+     * @param title
+     */
+    public List<Lesson> search_by_title(List<Lesson> lessons, String title){
+        List<Lesson> list = new ArrayList<>();
+        for (int i = 0; i < lessons.size(); i++){
+            //lesson title contains the input string
+            if(lessons.get(i).getTitle().toLowerCase().contains(title.toLowerCase())){
+                list.add(lessons.remove(i));
+                i--;
+            }
+        }
+        return list;
+    }
+
+    /**
+     * updates average rating of a lesson and returns the new average
+     * @param lesson -- lesson to change
+     * @param new_rating -- new rate
+     */
+    public void update_average_rating(Lesson original_lesson, Lesson lesson, int new_rating){
+        if(lesson.getRating() == 0){
+            //first rate by this user
+            original_lesson.setNumber_of_ratings(original_lesson.getNumber_of_ratings() + 1);
+            original_lesson.setRating(original_lesson.getRating() + new_rating);
+        }else {
+            //just change rating to be the rating plus difference of new rating - old rating
+            //dont increase number of ratings
+            int old_rating = lesson.getRating();
+            original_lesson.setRating(original_lesson.getRating() + (new_rating - old_rating));
+        }
+
+    }
+
+    /**
+     * @returns average rating of a lesson.
+     */
+    public int get_average_rating(Lesson lesson){
+        try {
+            int ret = lesson.getRating()/lesson.getNumber_of_ratings();
+            return ret;
+        }catch (Exception e){
+            return 0;
+        }
+
     }
 }

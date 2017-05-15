@@ -4,6 +4,7 @@ import com.dolphinblue.models.Block;
 import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.Task;
 import com.dolphinblue.models.User;
+import com.google.appengine.api.datastore.ReadPolicy;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
@@ -22,7 +23,7 @@ public class OfyService {
     }
 
     public static Objectify ofy() {
-        return ObjectifyService.ofy();//prior to v.4.0 use .begin() ,
+        return ObjectifyService.ofy().consistency(ReadPolicy.Consistency.STRONG);//prior to v.4.0 use .begin() ,
         //since v.4.0  use ObjectifyService.ofy();
     }
 

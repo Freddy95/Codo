@@ -2,18 +2,18 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body> 
-  <div th:fragment="list-display">
-    <!-- All of the lesson card is a link to the relevant lesson. -->
-    <th:block th:unless="${#lists.isEmpty(lesson_list)}">
-      <div class="row" th:each="index: ${#numbers.sequence(0, #lists.size(lesson_list) - 1, 2)}">
-        <div th:replace="lessoncard :: myfragment(lesson=${lesson_list[index]},path=${path})"></div>
-        <div th:if="${index  < #lists.size(lesson_list) - 1}" class="col-6 align-items-center">
-          <div th:replace="lessoncard :: subfragment(lesson=${lesson_list[index + 1]},path=${path})" th:remove="tag"></div>
-        </div>
+<body>
+<div th:fragment="list-display">
+  <!-- All of the lesson card is a link to the relevant lesson. -->
+  <th:block th:unless="${#lists.isEmpty(lesson_list)}">
+    <div class="row" th:each="index: ${#numbers.sequence(0, #lists.size(lesson_list) - 1, 2)}">
+      <div th:replace="lessoncard :: myfragment(lesson=${lesson_list[index]},path=${path})"></div>
+      <div th:if="${index  < #lists.size(lesson_list) - 1}" class="col-6 align-items-center">
+        <div th:replace="lessoncard :: subfragment(lesson=${lesson_list[index + 1]},path=${path})" th:remove="tag"></div>
       </div>
-    </th:block>
-  </div>
+    </div>
+  </th:block>
+</div>
 </body>
 
 </html>
