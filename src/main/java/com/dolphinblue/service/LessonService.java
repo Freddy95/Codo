@@ -372,14 +372,14 @@ public class LessonService {
         List<Lesson> user_lessons = ofy.load().type(Lesson.class)
                 .filter("user_id", user.getUser_id())
                 .filter("site_owned", false)
-                .filter("shared", true)
-                .filter("creator_id !=", user.getUser_id()).list();
+                .filter("shared", true).list();
 
         List<Lesson> shared_lessons = ofy.load().type(Lesson.class)
                 .filter("user_id", null)
                 .filter("site_owned", false)
-                .filter("shared", true).list();
-
+                .filter("shared", true)
+                .filter("creator_id !=", user.getUser_id()).list();
+//
         //check which lessons user already has
         for(int i = 0; i < user_lessons.size(); i++){
             for(int j = 0; j < shared_lessons.size(); j++){
@@ -406,6 +406,7 @@ public class LessonService {
             l.setUser_id(user);
             l.setDescription(m.getDescription());
             l.setOriginal_lesson(m);
+            l.setCreator_id(m.getCreator_id());
             l.setSite_owned(false);
             l.setShared(true);
             l.setLast_accessed(new Date());
