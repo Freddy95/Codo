@@ -13,6 +13,10 @@ var isDirty = false;
 // Convenience methood to get value from a placeholder.
 
 function init() {
+
+    //hide the alert shown when a lesson is saved
+    $("#lesson-saved-alert").hide();
+
     $('.sortable').sortable({
         connectWith: '.sortable',
         placeholder: "ui-state-highlight",
@@ -37,7 +41,7 @@ function save(node,taskId) {
     if ($(node).hasClass('disabled')) {
         return;
     }
-    
+
     if(username===""||username==undefined||username==null){
         $("#usernameModal").modal('show');
         return;
@@ -74,13 +78,17 @@ function save(node,taskId) {
 
     $.ajax({
         headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         method:'POST',
         url: '/createlesson/' + lesson_id + '/post',
-        dataType:'json',
         data:JSON.stringify(data),
+        success:function(){
+            //when the lesson is posted successfully, show an alert
+            $("#lesson-saved-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#lesson-saved-alert").slideUp(500);
+            });
+        }
     });
 
     isDirty = false;
@@ -117,13 +125,15 @@ function deleteTask(node) {
  */
 function createUsername() {
 
-    var username = $("#usernametxt").val();
+    var newUsername = $("#usernametxt").val();
+    username = newUsername;
+
 
     $.ajax({
         method:'POST',
         url:'/editusername',
         dataType:'text',
-        data:username,
+        data:newUsername,
         success:function(){
             $("#usernameModal").modal('hide');
         }
