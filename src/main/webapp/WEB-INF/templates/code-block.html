@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>  
-  <div th:fragment="block(block)" th:if="${block != null}" th:switch="${block.can_edit}">
+  <div th:fragment="block(block)" th:unless="${block.type == T(com.dolphinblue.models.Block$Type).NULL || block.type == null}" th:switch="${block.can_edit}">
     <!-- Code for blocks that can have blocks dropped into them. -->
     <th:block th:case="${true}">
       <th:block th:switch="${block.type}">
@@ -71,7 +71,6 @@
     <th:block th:case="*">
         <div class="code-block"
           th:id="${block.block_id}"
-          th:unless="${block.type == T(com.dolphinblue.models.Block$Type).NULL || block.type == null}"
           th:attr="data-children='false',data-type=${block.type}">
           <span class="code-text" th:text="${block.value}"></span>
         </div>
