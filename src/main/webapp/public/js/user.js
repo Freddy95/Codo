@@ -91,7 +91,7 @@ function startTutorial() {
 
     $.ajax({
         method:'POST',
-        url:"/user/toggle",
+        url:"/user/toggletutorial",
         success:function() {
         },error:function() {
         }

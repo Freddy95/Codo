@@ -140,3 +140,58 @@ function createUsername() {
     });
 
 }
+
+function startTutorial() {
+    new_user = false;
+    // Setup the tutorial intro for the user page
+    var tutorial = introJs();
+    tutorial.setOptions({
+        steps: [
+            {
+                // Focus: welcome message
+                element: '.step-1',
+                intro: 'Welcome to Codo! Let\'s show you around before you get started.',
+                position: 'bottom'
+            },
+            {
+                // Focus: nav-bar
+                element: '.step-2',
+                intro: 'First you can use these buttons to navigate to the search and settings page, as well as logout of the site.',
+                position: 'left'
+            },
+            {
+                // Focus: main lessons
+                element: '.step-3',
+                intro: 'The main lessons offered by the site are displayed here, they teach the basics of JavaScript programming.',
+                position: 'top'
+            },
+            {
+                // Focus: created lessons
+                element: '.step-4',
+                intro: 'To find lessons created by different users of the site, click on the \"Shared Lessons\" tab. To create your own, click on the \"Your Lessons\" tab.',
+                position: 'top'
+            },
+            {
+                // Focus: current lesson
+                element: '.step-5',
+                intro: 'After choosing a lesson, the one you are currently working on will be displayed here. To get started, click on the lesson.',
+                position: 'bottom'
+            }
+        ]
+    });
+
+    // Setup the page transition for the tutorial
+    //tutorial.setOption('doneLabel', 'Create Task').start().oncomplete(function() {
+    //    window.location.href = "/lesson/" + lesson_id;
+    //});
+
+    tutorial.start();
+
+    $.ajax({
+        method:'POST',
+        url:"/createlesson/toggletutorial",
+        success:function() {
+        },error:function() {
+        }
+    });
+}

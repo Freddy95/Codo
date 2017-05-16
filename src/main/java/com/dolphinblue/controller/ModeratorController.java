@@ -64,7 +64,7 @@ public class ModeratorController {
         if(admin_msgs == null){
             admin_msgs = new ArrayList<String>();
         }
-        admin_msgs.add(lesson.getTitle() + ": " + message);
+        admin_msgs.add(lesson.getTitle() + ": " + message.getMessage());
         creator.setAdmin_msg(admin_msgs);
 
         // Save the creator user object and lesson object to the datastore

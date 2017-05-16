@@ -119,7 +119,7 @@ public class UserController {
             model.addAttribute("lesson", l);
 
             // Check to see if the user is a new user
-            if (user.isNew_user()) {
+            if (user.isUser_tutorial()) {
                 if(user.getEmail().contains("cse308")) {
                     user.setIs_moderator(true);
                     //System.out.println("You are a moderator");
@@ -144,7 +144,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/user/toggle", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/toggletutorial", method = RequestMethod.POST)
     public void toggle_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
         // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
@@ -161,7 +161,7 @@ public class UserController {
         User user = ofy.load().type(User.class).id(userId).now();
 
         // Reset the tutorial booleans and save them to the datastore
-        user.setNew_user(false);
+        user.setUser_tutorial(false);
 
         // Save the user to the datastore
         ofy.save().entity(user).now();

@@ -260,7 +260,7 @@ function startTutorial() {
 
     $.ajax({
       method:'POST',
-      url:"/lesson/toggle",
+      url:"/lesson/toggletutorial",
       success:function() {
       },error:function() {
       }
