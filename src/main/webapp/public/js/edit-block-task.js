@@ -118,6 +118,21 @@ function init() {
     }
   });
 
+  if(task_tutorial) {
+    // Remove classes from the draggable.html file, if they exist, so editor and toolbox aren't affected
+    if (document.getElementById("editor-div").classList.contains('step-2')) {
+       document.getElementById("editor-div").classList.remove('step-2');
+       document.getElementById("toolbox-div").classList.remove('step-3');
+    }
+    // Remove class from the lesson-navbar.html file so the navbar isn't affected
+    if(document.getElementById("lesson-navbar").classList.contains('step-6')) {
+        document.getElementById("lesson-navbar").classList.remove('step-6');
+        // Add class to the lesson-navbar.html file so the navbar is in the correct order
+        document.getElementById("lesson-navbar").classList.add('step-1');
+    }
+    startTutorial();
+  }
+
 }
 
 // Runs the output. Does not produce a next arrow.
@@ -245,4 +260,66 @@ function editTitle() {
     title_button.attr('title', 'Save Title');
     title_icon.removeClass('fa-pencil').addClass('fa-check');
   }
+}
+
+function startTutorial() {
+    task_tutorial = false;
+    // Setup the tutorial intro for the user page
+    var tutorial = introJs();
+    tutorial.setOptions({
+        steps: [
+            {
+                // Focus: task title
+                element: '.step-1',
+                intro: 'First, you can change your task name by pressing on the pencil icon and editing the default text.',
+                position: 'bottom'
+            },
+            {
+                // Focus: task navbar
+                element: '.step-2',
+                intro: 'Use this navigation bar to go back to the Edit Lesson page, or to save your work. You can also navigate between tasks you have already created..',
+                position: 'bottom'
+            },
+            {
+                // Focus: instructions
+                element: '.step-3',
+                intro: 'Type out the instructions for your task in this box.',
+                position: 'right'
+            },
+            {
+                // Focus: hint
+                element: '.step-4',
+                intro: 'If you want to give people hints on how to solve your task, write them here.',
+                position: 'right'
+            },
+            {
+                // Focus: test input/output
+                element: '.step-5',
+                intro: 'To make test cases for your program, write variables to use in your program and assign them values in this box. Then in the \"Test Output\" box on the right, write the expected output for that test case.',
+                position: 'right'
+            },
+            {
+                // Focus: block catalogue
+                element: '.step-6',
+                intro: 'Use these pre-populated blocks to create your program in the Editor and the Toolbox you want people to use to complete your task. If you want to delete a block, drag it onto the red trashcan.',
+                position: 'left'
+            },
+            {
+                // Focus: actual output
+                element: '.step-7',
+                intro: 'Once you\'ve finished creating your program, test how it works by clicking the \"Run\" button. The output will be displayed here and the \"Status\" indicator will let you know if the output is correct.',
+                position: 'top'
+            }
+        ]
+    });
+
+    tutorial.start();
+
+    $.ajax({
+        method:'POST',
+        url:"/createblocktask/toggletutorial",
+        success:function() {
+        },error:function() {
+        }
+    });
 }
