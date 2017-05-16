@@ -93,6 +93,7 @@ public class LessonService {
             main_lessons = ofy.load().type(Lesson.class).filter("site_owned", true).list();
             //create NULL BLOCK
             Block b = new Block();
+            b.setType(Block.Type.NULL);
             ofy.save().entity(b).now();
             Block.NULL_BLOCK_ID = b.getBlock_id();
             //System.out.println("Main lessons size : " + main_lessons.size());
