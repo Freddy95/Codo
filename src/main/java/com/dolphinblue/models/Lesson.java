@@ -19,7 +19,7 @@ public class Lesson implements Comparable<Lesson>{
     @Index private String user_id; //user who is working on the lesson
     @Index private String creator_id; //user who created the lesson
     private List<Key<Task>> tasks; //holds lists of tasks ids for this lesson
-    private double percent_complete; // Hold the percent of task the user has completed
+    private int percent_complete; // Hold the percent of task the user has completed
     @Index private boolean shared;
 
     @Index private boolean site_owned;
@@ -86,11 +86,11 @@ public class Lesson implements Comparable<Lesson>{
         this.tasks = tasks;
     }
 
-    public double getPercent_complete() {
+    public int getPercent_complete() {
         return percent_complete;
     }
 
-    public void setPercent_complete(double percent_complete) {
+    public void setPercent_complete(int percent_complete) {
         this.percent_complete = percent_complete;
     }
 

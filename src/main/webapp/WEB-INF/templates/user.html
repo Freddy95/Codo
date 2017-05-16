@@ -13,24 +13,6 @@
   <link rel="stylesheet" type="text/css" th:href="@{/public/js/lib/intro.js/introjs.css}"></link>
   <script th:src="@{/public/js/lib/intro.js/intro.js}"></script>
   <script th:src="@{/public/js/user.js}"></script>
-
-  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-  <meta name="theme-color" content="#ffffff">
   
 </head>
 <body onload="onLoad()">
@@ -41,32 +23,45 @@
           <img th:src="${user_info.avatar}" alt="Avatar Image" class="rounded-circle"></img>
     </div>
   </div>
-  <div class="row justify-content-center user-section" id="badges">
+  <div class="row justify-content-center user-section">
     <div class="col">
-
       <!-- A welcome header. -->
       <div class="row justify-content-center user-section-header">
         <h2 class="step-1" th:text="|Welcome, ${user_info.first_name}!|"></h2>
       </div>
+    </div>
+  </div>
 
+  <div th:unless="${#lists.isEmpty(messages)}" class="row justify-content-center user-section">
+    <div class="col">
+      <div class="row justify-content-center user-section-header">
+        <h2>Alerts</h2>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-6">
+          <div class="alert alert-danger alert-dismissible fade show" role="alert" th:each="msg : ${messages}">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <p th:text="${msg}">Admin Message</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center user-section" id="badges">
+    <div class="col">
       <!-- A container that will eventually contain badges. -->
-<!--       <div class="row justify-content-center user-section-header">
+      <div class="row justify-content-center user-section-header">
         <h2>Badges</h2>
       </div>
       <div class="row justify-content-center">
-      </div> -->
-    </div>
-  </div>
-  <div class="row justify-content-center">
-    <div class="col-5">
-      <div class="alert alert-warning alert-dismissible fade show" role="alert" th:each="msg : ${messages}">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <p th:text="${msg}">Admin Message</p>
+        <div class="badge-item" th:each="badge: ${badges}" th:text="${badge}"></div>
       </div>
     </div>
   </div>
+  
 
   <div class="row justify-content-center user-section step-5" id="progress">
     <div class="col">
