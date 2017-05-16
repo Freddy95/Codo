@@ -18,8 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -128,6 +126,7 @@ public class UserController {
                 }
             }
 
+            System.out.println("Messages: " + user.getAdmin_msg());
             // Remove the admin_msgs since the user has been notified
             List<String> new_admin_msg = new ArrayList<>();
             user.setAdmin_msg(new_admin_msg);
