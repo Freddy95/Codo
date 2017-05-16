@@ -123,7 +123,7 @@ public class CodoUserService {
             Key lesson_key = lesson_keys.get(i);
             Lesson lesson = ofy.load().type(Lesson.class).id(lesson_key.getId()).now();
             double percent = lesson.getPercent_complete();
-            if(percent == 100.0) {
+            if(percent == 100.0 && Lesson.MAIN_LESSON_KEYS.contains(lesson.getOriginal_lesson())) {
                 badges.add(lesson.getTitle());
             }
         }
@@ -140,9 +140,9 @@ public class CodoUserService {
         Query<User> q = ofy.load().type(User.class).filter("username", username);
 
         if(q.list().size() > 0) {
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     }
 }

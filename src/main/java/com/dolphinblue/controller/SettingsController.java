@@ -78,21 +78,36 @@ public class SettingsController {
         if(!isAuthenticated){
             // If the user isn't properly authenticated send them back to the login page
             resp.setStatus(500);
+            return;
         }
-        //get the user
-        String userKey = userService.getUserId(authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport()));
-
+        if(username.equals("")){
+            //invalid username
+            resp.setStatus(400);
+            return;
+        }
+        String userId = userService.getUserId(authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport()));
         // Create the objectify object to store stuff from the datastore
         Objectify ofy = OfyService.ofy();
 
-        // Save the changed user to the datastore
-        //get the user
-        User u = ofy.load().type(User.class).id(userKey).now();
-        u.setUsername(username);
-        //now save the new username
-        ofy.save().entity(u);
-        //return ok
-        resp.setStatus(200);
+        // Get the user object from the datastore
+        User user = ofy.load().type(User.class).id(userId).now();
+
+        // Check to see if the username already exists
+        boolean exists = userService.check_username_exist(username);
+
+        if(exists) {
+            // respond with a bad response
+            resp.setStatus(400);
+        } else {
+            // set the new username
+            user.setUsername(username);
+
+            // save the user to the datastore
+            ofy.save().entity(user).now();
+
+            // send a good response
+            resp.setStatus(200);
+        }
     }
 
     /**
