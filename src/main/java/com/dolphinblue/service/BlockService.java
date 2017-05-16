@@ -36,6 +36,9 @@ public class BlockService {
     public Key<Block> save_block_model(Block block, SaveBlockModel block_model){
 
         block.setCan_edit(block_model.isCan_edit());
+        if(block_model.getType() == null && block.getValue() == null){
+            return Key.create(Block.class, Block.NULL_BLOCK_ID);
+        }
         block.setType(block_model.getType());
         block.setValue(block_model.getValue());
         block.setValue(block_model.getValue());
@@ -44,6 +47,7 @@ public class BlockService {
         for(int i = 0; i < block_model.getChildren().size(); i++){
             SaveBlockModel child_model = block_model.getChildren().get(i);
             if(child_model.getBlock_id() == null){
+
                 children_key.add(save_block_model(new Block(), child_model));
             }else {
                 Block child = OfyService.ofy().load().type(Block.class).id(child_model.getBlock_id()).now();
