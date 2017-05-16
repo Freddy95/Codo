@@ -115,6 +115,9 @@ public class UserController {
                 }
             } else {
                 l = (Lesson) ofy.load().key(user.getCurrent_lesson()).now();
+                if(l == null){
+                    l = main_lessons.get(0);
+                }
             }
 
             model.addAttribute("lesson", l);

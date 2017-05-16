@@ -121,11 +121,18 @@ public class CodoUserService {
         // Loop through the badges to see what has been completed
         for (int i = 0; i < lesson_keys.size(); i++) {
             Key lesson_key = lesson_keys.get(i);
-            Lesson lesson = ofy.load().type(Lesson.class).id(lesson_key.getId()).now();
-            double percent = lesson.getPercent_complete();
-            if(percent == 100.0 && Lesson.MAIN_LESSON_KEYS.contains(lesson.getOriginal_lesson())) {
-                badges.add(lesson.getTitle());
+            try {
+                Lesson lesson = ofy.load().type(Lesson.class).id(lesson_key.getId()).now();
+                double percent = lesson.getPercent_complete();
+                if(percent == 100.0 && Lesson.MAIN_LESSON_KEYS.contains(lesson.getOriginal_lesson())) {
+                    badges.add(lesson.getTitle());
+                }
+            }catch (Exception e){
+                //lesson has been deleted.
+                lesson_keys.remove(i);
+                i--;
             }
+
         }
 
         // Return the badges for the completed lessons

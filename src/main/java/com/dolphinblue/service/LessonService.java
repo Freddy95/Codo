@@ -93,7 +93,7 @@ public class LessonService {
         }
         for(int i = 0; i < user_lessons.size(); i++){
             for(int j = 0; j < main_lessons.size(); j++){
-                if(user_lessons.get(i).getOriginal_lesson().getId() == main_lessons.get(j).getLesson_id()){
+                if(user_lessons.get(i).getOriginal_lesson().equals(main_lessons.get(j).getLesson_id())){
                     //user already has this lesson.
                     main_lessons.remove(j);
                     break;
@@ -316,7 +316,7 @@ public class LessonService {
         for (int i = 0; i < lessons.size(); i++) {
 
             LessonDetails l = new LessonDetails(lessons.get(i));
-            Lesson original_lesson = ofy.load().key(lessons.get(i).getOriginal_lesson()).now();
+            Lesson original_lesson = ofy.load().type(Lesson.class).id(lessons.get(i).getOriginal_lesson()).now();
             //search should display average rating
             l.setRating(get_average_rating(original_lesson));
             lessonDetails.add(l);
@@ -434,20 +434,21 @@ public class LessonService {
 
         List<Lesson> user_lessons = ofy.load().type(Lesson.class)
                 .filter("user_id", user.getUser_id())
-                .filter("site_owned", false)
-                .filter("shared", true).list();
+                .filter("creator_id !=", user.getUser_id())
+                .filter("site_owned", false).list();
 
 
         List<Lesson> shared_lessons = ofy.load().type(Lesson.class)
                 .filter("user_id", null)
                 .filter("site_owned", false)
+                .filter("shared", true)
                 .filter("creator_id !=", user.getUser_id()).list();
 
         //check which lessons user already has
         for(int i = 0; i < user_lessons.size(); i++){
             for(int j = 0; j < shared_lessons.size(); j++){
-                if(!shared_lessons.get(i).isShared()){
-                    if(user_lessons.get(i).getOriginal_lesson().getId() == shared_lessons.get(j).getLesson_id()){
+                if(!shared_lessons.get(j).isShared()){
+                    if(user_lessons.get(i).getOriginal_lesson().equals(shared_lessons.get(j).getLesson_id())){
                         TaskService taskService = new TaskService();
                         for(int k = 0; k < user_lessons.get(i).getTasks().size(); k++){
                             taskService.delete_task(user_lessons.get(i), user_lessons.get(i).getTasks().get(k));
@@ -458,7 +459,7 @@ public class LessonService {
                         break;
                     }
                 }
-                if(user_lessons.get(i).getOriginal_lesson().getId() == shared_lessons.get(j).getLesson_id()){
+                if(user_lessons.get(i).getOriginal_lesson().equals(shared_lessons.get(j).getLesson_id())){
                     //user already has this lesson.
                     shared_lessons.remove(j);
                     break;

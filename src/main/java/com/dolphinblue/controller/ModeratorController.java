@@ -8,6 +8,7 @@ import com.dolphinblue.service.LessonService;
 import com.dolphinblue.service.OfyService;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,11 +51,11 @@ public class ModeratorController {
         // Get the lesson object from the datastore
         Lesson lesson = ofy.load().type(Lesson.class).id(lessonId).now();
         // Get the original lesson object from the datastore
-        Lesson original_lesson = ofy.load().type(Lesson.class).id(lesson.getOriginal_lesson().getId()).now();
+        Lesson original_lesson = ofy.load().type(Lesson.class).id(lesson.getOriginal_lesson()).now();
         // Toggle the lesson to private
         original_lesson.setShared(false);
         // Remove all of the lessons with the original lesson as the parent
-        //lessonService.remove_children_lessons(original_lesson.getLesson_id());
+        lessonService.remove_children_lessons(lesson.getOriginal_lesson());
 
         // Get the creator id from the lesson
         String creator_id = lesson.getCreator_id();
