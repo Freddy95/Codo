@@ -537,7 +537,7 @@ public class LessonService {
         List<Lesson> list = new ArrayList<>();
         for (int i = 0; i < lessons.size(); i++){
             Lesson lesson = lessons.get(i);
-            if(lesson.isSite_owned()){
+            if(lesson.getCreator_id().equals("")){
                 continue;
             }else{
                 User user = ofy.load().type(User.class).id(lesson.getCreator_id()).now();
