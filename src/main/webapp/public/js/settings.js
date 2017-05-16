@@ -28,6 +28,7 @@ $(function(){
     $showUserNameEditBtn.click(function () {
         $userNameDone.hide();
         $userNameEditForm.show();
+
     });
 
     //handler to hide the username edit form
@@ -49,6 +50,7 @@ $(function(){
             success:function(){
                 $("#username-text").text(newUsername);
                 $showUserNameEditBtn.show();
+                $userNameDone.show();
                 $userNameEditForm.hide();
             },
             error:function(e){
