@@ -109,9 +109,14 @@ function save(){
         data:JSON.stringify(data),
         dataType:"json",
         success: function(){
-          isDirty = false;
+          $("#saveConf").fadeIn('fast');
+            window.setTimeout(function() {
+              $("#saveConf").fadeOut('fast');
+            }, 2000);
         }
     });
+
+    isDirty = false;
 }
 
 //cleans up the the code using regex
