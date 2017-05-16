@@ -197,6 +197,8 @@ public class SettingsController {
         // Reset the tutorial booleans and save them to the datastore
         user.setUser_tutorial(true);
         user.setLesson_tutorial(true);
+        user.setCl_tutorial(true);
+        user.setCt_tutorial(true);
 
         // Save the user to the datastore
         ofy.save().entity(user).now();
