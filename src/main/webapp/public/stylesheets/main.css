@@ -8,9 +8,7 @@ body, button, input, optgroup, select, textarea {
     line-height:inherit!important;
 }
 
-.fa-disabled {
-    color: lightgrey;
-}
+
 
 /*General card stuff.*/
 .card {

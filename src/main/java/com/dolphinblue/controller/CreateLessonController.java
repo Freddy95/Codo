@@ -175,7 +175,20 @@ public class CreateLessonController {
      * TODO: send list of block objects in editor with their actual values not just keys.
      */
     @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}", method = RequestMethod.GET)
-    public String get_create_task_page(Model model, @PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId){
+    public String get_create_task_page(@CookieValue("token") String token, Model model, @PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId){
+        // Check if the user is still authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            return "redirect:/login";
+        }
+        // Get the google id token from the authentication token from the browser cookie
+        GoogleIdToken googletoken = authenticationService.getIdToken(token, new JacksonFactory(), new NetHttpTransport());
+
+        // Use google's token to contact google app engine's user api and get the user info
+        String userid = userService.getUserId(googletoken);
+
+
         Objectify ofy = OfyService.ofy();
 
         Task task = ofy.load().type(Task.class).id(taskId).now();
@@ -196,6 +209,12 @@ public class CreateLessonController {
         ofy.save().entity(task).now();
 
         model.addAttribute("task", task);
+
+        // Get the user to get the tutorial boolean
+        User user = ofy.load().type(User.class).id(userid).now();
+
+        // Check to see if the tutorial should be played for this page
+        model.addAttribute("task_tutorial",user.isCt_tutorial());
 
         if(task.getFreecode() == null){
             //blocktask
@@ -331,7 +350,7 @@ public class CreateLessonController {
     }
 
     @RequestMapping(value = "/createlesson/toggletutorial", method = RequestMethod.POST)
-    public void toggle_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
+    public void toggle_lesson_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
         // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
@@ -348,6 +367,32 @@ public class CreateLessonController {
 
         // Reset the tutorial booleans and save them to the datastore
         user.setCl_tutorial(false);
+
+        // Save the user to the datastore
+        ofy.save().entity(user).now();
+
+        //give the ok response
+        resp.setStatus(200);
+    }
+
+    @RequestMapping(value = "/createblocktask/toggletutorial", method = RequestMethod.POST)
+    public void toggle_task_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
+        // Check if the user is still authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            resp.setStatus(500);
+        }
+
+        String userId = userService.getUserId(authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport()));
+        // Create the objectify object to store stuff from the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // Get the user object from the datastore
+        User user = ofy.load().type(User.class).id(userId).now();
+
+        // Reset the tutorial booleans and save them to the datastore
+        user.setCt_tutorial(false);
 
         // Save the user to the datastore
         ofy.save().entity(user).now();

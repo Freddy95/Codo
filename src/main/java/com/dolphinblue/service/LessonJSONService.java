@@ -99,7 +99,6 @@ public class LessonJSONService {
                 t.setFreecode((String) json_t.get("freecode"));
             }
 
-
             //add task to list of tasks
             tasks.add(t);
         }

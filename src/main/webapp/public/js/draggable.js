@@ -147,7 +147,18 @@ function init() {
   });
 
    if(new_lesson) {
-    startTutorial();
+       // Add classes to the draggable.html file, if they don't exist, so editor and toolbox aren't affected
+       if (!document.getElementById("editor-div").classList.contains('step-2')) {
+           document.getElementById("editor-div").classList.add('step-2');
+           document.getElementById("toolbox-div").classList.add('step-3');
+       }
+       // Remove class from the lesson-navbar.html file so the navbar isn't affected
+       if(document.getElementById("lesson-navbar").classList.contains('step-1')) {
+           document.getElementById("lesson-navbar").classList.remove('step-1');
+           // Add class to the lesson-navbar.html file so the navbar is in the correct order
+           document.getElementById("lesson-navbar").classList.add('step-6');
+       }
+       startTutorial();
   }
 
   //load the ratings and make the stars

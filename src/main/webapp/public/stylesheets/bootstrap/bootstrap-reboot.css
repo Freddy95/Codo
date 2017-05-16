@@ -268,8 +268,8 @@ body {
   font-size: 1rem;
   font-weight: normal;
   line-height: 1.5;
-  color: #292b2c;
-  background-color: #F9FDFF;
+  color: #124559;
+  background-color: #dee9ea;
 }
 
 [tabindex="-1"]:focus {
@@ -325,12 +325,12 @@ blockquote {
 }
 
 a {
-  color: #124559;
+  color: #1c3144;
   text-decoration: none;
 }
 
 a:focus, a:hover {
-  color: #051419;
+  color: #060a0e;
   text-decoration: underline;
 }
 
@@ -387,7 +387,7 @@ table {
 caption {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  color: #cccccc;
+  color: #9fc0c3;
   text-align: left;
   caption-side: bottom;
 }
