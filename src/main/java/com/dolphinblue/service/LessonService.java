@@ -6,6 +6,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
 import com.googlecode.objectify.cmd.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ import java.util.List;
  */
 @Service
 public class LessonService {
+    // Use Autowired to get an instance of the different Services
+    @Autowired
+    TaskService taskService;
 
     /**
      * This is for getting percentage completed of a lesson.
@@ -45,22 +49,6 @@ public class LessonService {
         int percent = (int)((count/total) * 100);
 
         return percent;
-    }
-
-    public int get_average_rating(Long original_key) {
-        // Get the ofy service for the datastore
-        Objectify ofy = OfyService.ofy();
-        // Get the lessons with this as the original
-        Query<Lesson> q = ofy.load().type(Lesson.class).filter("original_lesson", original_key).filter("rating >", 0);
-        // Create variables for total and average
-        int average, total = 0;
-        for (int i = 0; i < q.list().size(); i++) {
-            // Add up all the ratings
-            Lesson lesson = q.list().get(i);
-            total = total + lesson.getRating();
-        }
-        average = total / q.list().size();
-        return average;
     }
 
     /**
@@ -599,5 +587,29 @@ public class LessonService {
             return 0;
         }
 
+    }
+
+    public void remove_children_lessons(Long original_key) {
+        // Get the ofy service for the datastore
+        Objectify ofy = OfyService.ofy();
+        // Get all of the lessons with this lesson as their original
+        Query<Lesson> q = ofy.load().type(Lesson.class).filter("original_lesson", original_key);
+        // Create variables for total and average
+        for (int i = 0; i < q.list().size(); i++) {
+            // Delete all of the lessons
+            Lesson lesson = q.list().get(i);
+            delete_lesson(lesson);
+        }
+    }
+
+    public void delete_lesson(Lesson lesson) {
+        // Get the connection to the datastore
+        Objectify ofy = OfyService.ofy();
+        // Loop through all of the tasks for this lesson and delete them
+        for (int i = 0; i < lesson.getTasks().size(); i++){
+            taskService.delete_task(lesson, lesson.getTasks().get(i));
+        }
+        // Delete the lesson after all the tasks have been deleted
+        ofy.delete().entity(lesson).now();
     }
 }

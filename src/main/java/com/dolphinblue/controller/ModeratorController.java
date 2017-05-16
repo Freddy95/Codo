@@ -47,10 +47,15 @@ public class ModeratorController {
         // Create the objectify object to store stuff from the datastore
         Objectify ofy = OfyService.ofy();
 
-        // Get the user object from the datastore
+        // Get the lesson object from the datastore
         Lesson lesson = ofy.load().type(Lesson.class).id(lessonId).now();
+        // Get the original lesson object from the datastore
+        Lesson original_lesson = ofy.load().type(Lesson.class).id(lesson.getOriginal_lesson().getId()).now();
         // Toggle the lesson to private
-        lesson.setShared(false);
+        original_lesson.setShared(false);
+        // Remove all of the lessons with the original lesson as the parent
+        //lessonService.remove_children_lessons(original_lesson.getLesson_id());
+
         // Get the creator id from the lesson
         String creator_id = lesson.getCreator_id();
 
@@ -67,7 +72,7 @@ public class ModeratorController {
 
         // Save the creator user object and lesson object to the datastore
         ofy.save().entity(creator).now();
-        ofy.save().entity(lesson).now();
+        ofy.save().entity(original_lesson).now();
 
         //give the ok response
         resp.setStatus(200);
