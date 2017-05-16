@@ -7,6 +7,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.cmd.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -132,5 +133,19 @@ public class CodoUserService {
 
         // Return the badges for the completed lessons
         return badges;
+    }
+
+    public boolean check_username_exist(String username) {
+        // Get the contact for the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // check to see if the username for a particular user already exists or not
+        Query<User> q = ofy.load().type(User.class).filter("username", username);
+
+        if(q.list().size() > 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

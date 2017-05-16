@@ -52,14 +52,12 @@ public class LessonService {
         Objectify ofy = OfyService.ofy();
         // Get the lessons with this as the original
         Query<Lesson> q = ofy.load().type(Lesson.class).filter("original_lesson", original_key).filter("rating >", 0);
-        System.out.println("Query Size: " + q.list().size());
         // Create variables for total and average
         int average, total = 0;
         for (int i = 0; i < q.list().size(); i++) {
             // Add up all the ratings
             Lesson lesson = q.list().get(i);
             total = total + lesson.getRating();
-            System.out.println("Total: " + total);
         }
         average = total / q.list().size();
         return average;
