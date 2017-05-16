@@ -185,12 +185,22 @@ public class UserController {
         // Get the user object from the datastore
         User user = ofy.load().type(User.class).id(userId).now();
 
-        user.setUsername(newUsername);
+        // Check to see if the username already exists
+        boolean exists = userService.check_username_exist(newUsername);
 
-        //save the username
-        ofy.save().entity(user).now();
+        if(exists) {
+            // respond with a bad response
+            resp.setStatus(400);
+        } else {
+            // set the new username
+            user.setUsername(newUsername);
 
-        resp.setStatus(200);
+            // save the user to the datastore
+            ofy.save().entity(user).now();
+
+            // send a good response
+            resp.setStatus(200);
+        }
     }
 
 }
