@@ -86,7 +86,6 @@ public class UserController {
             for (int i = 0; i < main_lessons.size(); i++) {
                 Lesson lesson = main_lessons.get(i);
                 int roundedPercent = lessonService.get_percent_complete(lesson);
-                System.out.println("Percent Complete: " + roundedPercent);
                 lesson.setPercent_complete(roundedPercent);
             }
             model.addAttribute("main_lessons", main_lessons);
@@ -122,10 +121,8 @@ public class UserController {
             if (user.isUser_tutorial()) {
                 if(user.getEmail().contains("cse308")) {
                     user.setIs_moderator(true);
-                    //System.out.println("You are a moderator");
                 } else {
                     user.setIs_moderator(false);
-                    //System.out.println("You are NOT a moderator");
                 }
             }
 

@@ -22,8 +22,6 @@ function init() {
     // Remove the element once done loading from the page.
     $page_info.remove();
 
-    console.log("The new user is: " + new_user);
-
     if (new_user) {
         // Start the tutorial
         startTutorial();
