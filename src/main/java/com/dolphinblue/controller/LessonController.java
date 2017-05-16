@@ -201,7 +201,6 @@ public class LessonController {
         task.setCompleted(blocks.getCompleted());
 
         // Update the blocks for this task
-
         List<Key<Block>> editor = lessonService.update_blocks(task.getTask_id(), blocks.getEditor().getBlocks());
         List<Key<Block>> toolbox = lessonService.update_blocks(task.getTask_id(), blocks.getToolbox().getBlocks());
 
@@ -355,7 +354,6 @@ public class LessonController {
         t.setExpected_output(Arrays.asList(expected));
         l.getTasks().add(OfyService.ofy().save().entity(t).now());
 
-
         ArrayList<Block> toolbox = new ArrayList<Block>();
         ArrayList<Block> editor = new ArrayList<Block>();
 
@@ -374,7 +372,6 @@ public class LessonController {
 
         model.addAttribute("task_titles",task_titles);
         model.addAttribute("task_statuses",task_statuses);
-
 
         model.addAttribute("prev_task", -1);
         model.addAttribute("next_task", -1);
@@ -396,7 +393,6 @@ public class LessonController {
         // Get the lesson object from the datastore
         Lesson lesson = ofy.load().type(Lesson.class).id(lessonId).now();
 
-
         //update average rating
         Lesson original_lesson = ofy.load().key(lesson.getOriginal_lesson()).now();
         lessonService.update_average_rating(original_lesson, lesson, rating);
@@ -404,11 +400,8 @@ public class LessonController {
 
         lesson.setRating(rating);
 
-
-
         // Save the user to the datastore
         ofy.save().entity(lesson).now();
-
 
         // give the ok response
         resp.setStatus(200);
