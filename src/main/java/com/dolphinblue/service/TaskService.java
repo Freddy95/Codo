@@ -24,12 +24,12 @@ public class TaskService {
     public List<Block> get_catalog() {
         List<Block> catalog = new ArrayList<Block>();
         catalog.add(new Block(-1, "// Click to edit", Type.STATIC, false));
-        catalog.add(new Block(-1, "butts;", Type.LOG, true));
-        catalog.add(new Block(-1, "blah;", Type.IF, true));
-        catalog.add(new Block(-1, "butts;", Type.WHILE, true));
-        catalog.add(new Block(-1, "butts;", Type.FOR, true));
-        catalog.add(new Block(-1, "{", Type.CURL, false));
-        catalog.add(new Block(-1, "}", Type.CURL, false));
+        catalog.add(new Block(-2, "butts;", Type.LOG, true));
+        catalog.add(new Block(-3, "blah;", Type.IF, true));
+        catalog.add(new Block(-4, "butts;", Type.WHILE, true));
+        catalog.add(new Block(-5, "butts;", Type.FOR, true));
+        catalog.add(new Block(-6, "{", Type.CURL, false));
+        catalog.add(new Block(-7, "}", Type.CURL, false));
         return catalog;
     }
 

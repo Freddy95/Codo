@@ -205,7 +205,12 @@ function save() {
     'type': 'POST',
     'url': '/savelesson/' + lesson_id + '/task/' + task_id,
     'data': JSON.stringify(data),
-    'dataType': 'json'
+    'success': function() {
+      $("#saveConf").fadeIn('fast');
+        window.setTimeout(function() {
+          $("#saveConf").fadeOut('fast');
+        }, 2000);
+    }
   });
 
   isDirty = false;

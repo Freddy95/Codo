@@ -177,14 +177,16 @@ function save() {
   data.expected_output = ex_output;
 
   $.ajax({
-    headers: { 
-      'Accept': 'application/json',
-      'Content-Type': 'application/json' 
-    },
-    'type': 'POST',
-    'url': '/createlesson/' + lesson_id + '/createtask/' + task_id,
-    'data': JSON.stringify(data),
-    'dataType': 'json'
+      method: 'POST',
+      url: "/createlesson/" + lesson_id + "/createtask/" + task_id,
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(data),
+      'success': function() {
+        $("#saveConf").fadeIn('fast');
+          window.setTimeout(function() {
+            $("#saveConf").fadeOut('fast');
+          }, 2000);
+      }
   });
   isDirty = false;
 }

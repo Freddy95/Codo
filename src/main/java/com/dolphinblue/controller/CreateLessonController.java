@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
@@ -269,12 +271,13 @@ public class CreateLessonController {
      * @return --
      */
     @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}", method = RequestMethod.POST)
-    public @ResponseBody String save_task(@CookieValue("token") String token,  @PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel task_model, Model model){
+    @ResponseBody
+    public ResponseEntity<?> save_task(@CookieValue("token") String token,  @PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId, @RequestBody SaveTaskModel task_model, Model model){
 
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated){
             // If the user isn't properly authenticated send them back to the login page
-            return "redirect:/login";
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
 
         Objectify ofy = OfyService.ofy();
@@ -285,11 +288,8 @@ public class CreateLessonController {
         model.addAttribute("task", task);
         model.addAttribute("task_id", taskId);
         model.addAttribute("lesson_id", id);
-        if(task.getFreecode() == null){
-            return "edit-block-task";
-        }
 
-        return "edit-freecode-task";
+        return new ResponseEntity<String>(HttpStatus.OK);
     }
 
 

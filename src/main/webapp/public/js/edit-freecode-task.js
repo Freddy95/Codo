@@ -104,8 +104,6 @@ $(function () {
     save = function () {
         // get the url we'll send the ajax call to
         // as well as a fake uid for the lesson json
-        var baseurl = "http://localhost:8080/createlesson/" + lessonId + "/createtask/" + taskId;
-
         //make a data object to send to the backend
         var data = {};
         //get the instructions and assign them to the data we'll return
@@ -137,14 +135,18 @@ $(function () {
         //TODO: make sure the url is correct
         $.ajax({
             method: 'POST',
-            url: baseurl,
-            dataType: 'json',
+            url: "/createlesson/" + lessonId + "/createtask/" + taskId,
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
-            success: function(){
-              isDirty = false;
+            'success': function() {
+              $("#saveConf").fadeIn('fast');
+                window.setTimeout(function() {
+                  $("#saveConf").fadeOut('fast');
+                }, 2000);
             }
         });
+
+        isDirty = false;
 
     };
 
