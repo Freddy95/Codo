@@ -1,0 +1,24 @@
+<!-- A template for lesson cards. -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body> 
+  <div th:fragment="modal" class="modal fade" id="usernameModal" tabindex="-1" role="dialog" aria-labelledby="usernameModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="usernameModalLabel">Create a Username</h5>
+        </div>
+        <div class="modal-body">
+          Please create a username before you post a lesson:<br/>
+          <input  class="w-100 form-control" id = "usernametxt" type="text" placeholder="Username"></input>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onClick="createUsername()">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
