@@ -172,10 +172,18 @@ public class UserController {
     @RequestMapping(value = "/editusername", method = RequestMethod.POST)
     public void create_username(@RequestBody String newUsername, @CookieValue("token") String token,HttpServletResponse resp){
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+
         if(!isAuthenticated){
             // If the user isn't properly authenticated send them back to the login page
             resp.setStatus(500);
         }
+        if(newUsername.equals("")){
+            //invalid username
+            resp.setStatus(400);
+            return;
+        }
+        //jackson adds an '=' at the end of the string
+        newUsername = newUsername.substring(0, newUsername.length()-1);
 
         String userId = userService.getUserId(authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport()));
         // Create the objectify object to store stuff from the datastore
@@ -187,10 +195,11 @@ public class UserController {
         // Check to see if the username already exists
         boolean exists = userService.check_username_exist(newUsername);
 
-        // if(exists) {
-        //     // respond with a bad response
-        //     resp.setStatus(400);
-        // } else {
+         if(exists) {
+             // respond with a bad response
+             resp.setStatus(400);
+             return;
+         } else {
             // set the new username
             user.setUsername(newUsername);
 
@@ -199,7 +208,7 @@ public class UserController {
 
             // send a good response
             resp.setStatus(200);
-        // }
+         }
     }
 
 }

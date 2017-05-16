@@ -3,6 +3,7 @@ package com.dolphinblue.models;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
 
 import java.util.*;
@@ -13,7 +14,7 @@ import java.util.*;
 @Entity
 public class User {
     @Id private String user_id;
-    private String username;
+    @Index private String username;
     private String first_name;
     private String last_name;
     private String email;

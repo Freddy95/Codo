@@ -140,9 +140,9 @@ public class CodoUserService {
         Query<User> q = ofy.load().type(User.class).filter("username", username);
 
         if(q.list().size() > 0) {
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     }
 }
