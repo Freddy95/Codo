@@ -72,5 +72,4 @@ public class ModeratorController {
         //give the ok response
         resp.setStatus(200);
     }
-
 }
