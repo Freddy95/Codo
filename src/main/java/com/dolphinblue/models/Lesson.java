@@ -31,6 +31,10 @@ public class Lesson implements Comparable<Lesson>{
     private Date last_edited;
     //Date when this lesson was last access by user working on it
     private Date last_accessed;
+
+    public static List<Key<Lesson>> MAIN_LESSON_KEYS = new ArrayList<>();
+
+
     public Lesson(){
         this.tasks = new ArrayList<>();
     }

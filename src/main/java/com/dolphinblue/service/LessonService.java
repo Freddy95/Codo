@@ -84,10 +84,15 @@ public class LessonService {
         q =  ofy.load().type(Lesson.class).filter("site_owned", true).filter("user_id",null);
         if(q.list().size() == 0){
             //no lessons created in datastore.
-            LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson1.json");
-            LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson2.json");
-            LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson3.json");
-            LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson4.json");
+            Lesson lesson1 = LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson1.json");
+            Lesson lesson2 = LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson2.json");
+            Lesson lesson3 = LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson3.json");
+            Lesson lesson4 = LessonJSONService.create_lesson_from_JSON("WEB-INF/lesson4.json");
+
+            Lesson.MAIN_LESSON_KEYS.add(Key.create(Lesson.class, lesson1.getLesson_id()));
+            Lesson.MAIN_LESSON_KEYS.add(Key.create(Lesson.class, lesson2.getLesson_id()));
+            Lesson.MAIN_LESSON_KEYS.add(Key.create(Lesson.class, lesson3.getLesson_id()));
+            Lesson.MAIN_LESSON_KEYS.add(Key.create(Lesson.class, lesson4.getLesson_id()));
             main_lessons = ofy.load().type(Lesson.class).filter("site_owned", true).list();
             //create NULL BLOCK
             Block b = new Block();
