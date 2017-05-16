@@ -17,7 +17,7 @@ function onSignIn(googleUser) {
             console.log('Signed in as: ' + data);
             //store the token in a cookie
             document.cookie="token="+token;
-            window.location.href = baseurl + "/user";
+            window.location.href = baseurl + "user";
         },
         error: function (e) {
            console.log(e.getStacktrace()) ;
