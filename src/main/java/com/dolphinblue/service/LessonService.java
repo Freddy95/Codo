@@ -515,10 +515,11 @@ public class LessonService {
      * @param description -- description to search for
      */
     public List<Lesson> search_by_description(List<Lesson> lessons, String description){
+        description = description.toLowerCase();
         List<Lesson> list = new ArrayList<>();
         for (int i = 0; i < lessons.size(); i++){
             //lesson description contains the input string
-            if(lessons.get(i).getDescription().toLowerCase().contains(description.toLowerCase())){
+            if(lessons.get(i).getDescription().toLowerCase().contains(description)){
                 list.add(lessons.remove(i));
                 i--;
             }
@@ -532,14 +533,22 @@ public class LessonService {
      */
     public List<Lesson> search_by_author(List<Lesson> lessons, String author){
         Objectify ofy = OfyService.ofy();
+        author = author.toLowerCase();
         List<Lesson> list = new ArrayList<>();
         for (int i = 0; i < lessons.size(); i++){
-            User user = ofy.load().type(User.class).id(lessons.get(i).getCreator_id()).now();
-            //lesson author contains the input string
-            if(user.getUsername().toLowerCase().contains(author.toLowerCase())){
-                list.add(lessons.remove(i));
-                i--;
+            Lesson lesson = lessons.get(i);
+            if(lesson.isSite_owned()){
+                continue;
+            }else{
+                User user = ofy.load().type(User.class).id(lesson.getCreator_id()).now();
+
+                //lesson author contains the input string
+                if(user.getUsername().toLowerCase().contains(author)){
+                    list.add(lessons.remove(i));
+                    i--;
+                }
             }
+
         }
         return list;
     }
