@@ -21,7 +21,9 @@ public class BlockService {
         for (int i = 0; i < block_list.size(); i++){
             SaveBlockModel block_model = block_list.get(i);
             if(block_model.getBlock_id() == null) {
-                Key<Block> block_key = save_block_model(new Block(), block_model);
+                Block b = new Block();
+                b.setOriginal(true);
+                Key<Block> block_key = save_block_model(b, block_model);
                 block_keys.add(block_key);
             }else{
                 Key<Block> block_key = save_block_model(ofy.load().type(Block.class).id(block_model.getBlock_id()).now(), block_model);
@@ -53,6 +55,16 @@ public class BlockService {
     }
 
 
+    public Key<Block> save_block_model_work(Block block, SaveBlockModel block_model){
+
+        block.setCan_edit(block_model.isCan_edit());
+        block.setType(block_model.getType());
+        block.setValue(block_model.getValue());
+
+
+        return OfyService.ofy().save().entity(block).now();
+    }
+
     public SaveBlockModel block_to_block_model(Block block){
         SaveBlockModel block_model = new SaveBlockModel();
         block_model.setBlock_id(block.getBlock_id());
@@ -77,11 +89,14 @@ public class BlockService {
 
     public void delete_block(Block block){
         Objectify ofy = OfyService.ofy();
-        for(int i = 0; i < block.getChildren().size(); i++){
-            Block b = ofy.load().key(block.getChildren().get(i)).now();
-            delete_block(b);
+        if(!block.isOriginal()){
+            for(int i = 0; i < block.getChildren().size(); i++){
+                Block b = ofy.load().key(block.getChildren().get(i)).now();
+                delete_block(b);
+            }
+            ofy.delete().entity(block).now();
         }
-        ofy.delete().entity(block).now();
+
     }
 
 

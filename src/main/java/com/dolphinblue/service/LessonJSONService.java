@@ -126,6 +126,7 @@ public class LessonJSONService {
             JSONObject json_b = iterator.next();
             Block b = new Block();
             //set block attributes.
+            b.setOriginal(true);
             b.setCan_edit((Boolean) json_b.get("can_edit"));
             if ((Boolean) b.isCan_edit()) {
                 // Handle the nested blocks if there are any
