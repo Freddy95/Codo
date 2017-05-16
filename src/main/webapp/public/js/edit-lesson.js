@@ -115,7 +115,8 @@ function deleteTask(node) {
     tasksToDelete.push(task_block.attr('id'));
     task_block.parent().remove();
     if ($('#task-list').children().length == 0) {
-        $('#save-button').addClass('disabled');
+        $('#shared').prop(disabled, true);
+        $('#shared').prop(checked, false);
     }
 }
 
