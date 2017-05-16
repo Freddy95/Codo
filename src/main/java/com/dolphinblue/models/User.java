@@ -30,7 +30,7 @@ public class User {
 
     public User(String user_id,String username, String first_name, String last_name, String email, String password, String avatar, boolean user_tutorial, boolean lesson_tutorial, List<Key<Lesson>> lessons) {
         this.user_id = user_id;
-        this.username=username;
+        this.username = username;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;

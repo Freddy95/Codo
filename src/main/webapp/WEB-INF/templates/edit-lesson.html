@@ -9,10 +9,13 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/main.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/edit-lesson.css}"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/js/lib/intro.js/introjs.css}"></link>
+  <script th:src="@{/public/js/lib/intro.js/intro.js}"></script>
   <script type="text/javascript" th:src="@{/public/js/edit-lesson.js}"></script>
   <script th:inline="javascript">
     var lesson_id = [[${lesson.lesson_id}]];
     var username = [[${username}]];
+    var creator_tutorial = [[${creator_tutorial}]]
   </script>
 </head>
 <body>
@@ -28,7 +31,7 @@
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <!-- Card to display details of lesson. -->
-      <div class="card" id="details-card">
+      <div class="card step-2" id="details-card">
         <div class="card-header card-title-block">
           <h3 class="card-title">Details</h3>
         </div>
@@ -66,11 +69,11 @@
 
       <!-- The sortable list of tasks.-->
       <!-- TODO: add loop to go through the tasks for a lesson -->
-      <div class="card" id="task-card">
+      <div class="card step-3" id="task-card">
         <div class="card-header card-title-block">
           <h3 class="card-title">Tasks</h3>
           <span class="align-middle">
-            <a class="fa fa-lg fa-vc fa-plus pull-right" data-toggle="modal" data-target=".task-type-modal"></a>
+            <a class="fa fa-lg fa-vc fa-plus pull-right step-5" data-toggle="modal" data-target=".task-type-modal"></a>
           </span>
         </div>
 
@@ -94,7 +97,7 @@
                   <br/>
                 </div>
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-6 step-6">
                     <button type="button" class="btn btn-primary" onClick="addTask('block')">Block Task</button>
                   </div>
 
@@ -119,7 +122,7 @@
         </div>
       </div>
 
-      <div id="button-row" class="row justify-content-center">
+      <div id="button-row" class="row justify-content-center step-4">
         <a id="save-button" th:class="${#lists.isEmpty(tasks)}? 'btn btn-success disabled': 'btn btn-success'" onClick="save(this)">
           <i class="fa fa-save" aria-hidden="true"></i>
           Save Changes
