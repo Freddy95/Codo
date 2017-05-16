@@ -4362,13 +4362,13 @@ tbody.collapse.show {
 
 .navbar-inverse .navbar-brand,
 .navbar-inverse .navbar-toggler {
-  color: rgba(237, 237, 237, 0.9);
+  color: #ededed;
 }
 
 .navbar-inverse .navbar-brand:focus, .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-toggler:focus,
 .navbar-inverse .navbar-toggler:hover {
-  color: rgba(237, 237, 237, 0.9);
+  color: rgba(128, 171, 175, 0.8);
 }
 
 .navbar-inverse .navbar-nav .nav-link {
@@ -4376,7 +4376,7 @@ tbody.collapse.show {
 }
 
 .navbar-inverse .navbar-nav .nav-link:focus, .navbar-inverse .navbar-nav .nav-link:hover {
-  color: rgba(237, 237, 237, 0.75);
+  color: rgba(128, 171, 175, 0.75);
 }
 
 .navbar-inverse .navbar-nav .nav-link.disabled {
@@ -4387,7 +4387,7 @@ tbody.collapse.show {
 .navbar-inverse .navbar-nav .active > .nav-link,
 .navbar-inverse .navbar-nav .nav-link.open,
 .navbar-inverse .navbar-nav .nav-link.active {
-  color: rgba(237, 237, 237, 0.9);
+  color: rgba(128, 171, 175, 0.8);
 }
 
 .navbar-inverse .navbar-toggler {
