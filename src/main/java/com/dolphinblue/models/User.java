@@ -19,14 +19,16 @@ public class User {
     private String email;
     private String password;
     private String avatar; //Gotten through third party site
-    private boolean new_user;
-    private boolean first_lesson;
+    private boolean user_tutorial;
+    private boolean lesson_tutorial;
+    private boolean cl_tutorial; // create lesson tutorial
+    private boolean ct_tutorial; // create task tutorial
     private List<String> admin_msg;//list of moderator messages received
     private boolean is_moderator;
     @Load private List<Key<Lesson>> lessons; // list of lessons the user has started or completed
     @Load private Key<Lesson> current_lesson; //current lesson user is on
 
-    public User(String user_id,String username, String first_name, String last_name, String email, String password, String avatar, boolean new_user, boolean first_lesson, List<Key<Lesson>> lessons) {
+    public User(String user_id,String username, String first_name, String last_name, String email, String password, String avatar, boolean user_tutorial, boolean lesson_tutorial, List<Key<Lesson>> lessons) {
         this.user_id = user_id;
         this.username=username;
         this.first_name = first_name;
@@ -34,8 +36,8 @@ public class User {
         this.email = email;
         this.password = password;
         this.avatar = avatar;
-        this.new_user = new_user;
-        this.first_lesson = first_lesson;
+        this.user_tutorial = user_tutorial;
+        this.lesson_tutorial = lesson_tutorial;
         this.lessons = lessons;
     }
 
@@ -102,20 +104,36 @@ public class User {
         this.avatar = avatar;
     }
 
-    public boolean isNew_user() {
-        return new_user;
+    public boolean isUser_tutorial() {
+        return user_tutorial;
     }
 
-    public void setNew_user(boolean new_user) {
-        this.new_user = new_user;
+    public void setUser_tutorial(boolean user_tutorial) {
+        this.user_tutorial = user_tutorial;
     }
 
-    public boolean isFirst_lesson() {
-        return first_lesson;
+    public boolean isLesson_tutorial() {
+        return lesson_tutorial;
     }
 
-    public void setFirst_lesson(boolean first_lesson) {
-        this.first_lesson = first_lesson;
+    public void setLesson_tutorial(boolean lesson_tutorial) {
+        this.lesson_tutorial = lesson_tutorial;
+    }
+
+    public boolean isCl_tutorial() {
+        return cl_tutorial;
+    }
+
+    public void setCl_tutorial(boolean cl_tutorial) {
+        this.cl_tutorial = cl_tutorial;
+    }
+
+    public boolean isCt_tutorial() {
+        return ct_tutorial;
+    }
+
+    public void setCt_tutorial(boolean ct_tutorial) {
+        this.ct_tutorial = ct_tutorial;
     }
 
     public List<String> getAdmin_msg() {

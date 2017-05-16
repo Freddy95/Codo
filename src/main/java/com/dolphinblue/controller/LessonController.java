@@ -151,7 +151,7 @@ public class LessonController {
 
         // Load the user's information from the datastore and store it in a user object
         // Add the user information to the thymeleaf model
-        model.addAttribute("new_lesson", user.isFirst_lesson());
+        model.addAttribute("new_lesson", user.isLesson_tutorial());
 
         //check type of task
         if(task.getFreecode() == null){
@@ -414,7 +414,7 @@ public class LessonController {
         resp.setStatus(200);
     }
 
-    @RequestMapping(value = "/lesson/toggle", method = RequestMethod.POST)
+    @RequestMapping(value = "/lesson/toggletutorial", method = RequestMethod.POST)
     public void toggle_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
         // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
@@ -431,7 +431,7 @@ public class LessonController {
         User user = ofy.load().type(User.class).id(userId).now();
 
         // Reset the tutorial booleans and save them to the datastore
-        user.setFirst_lesson(false);
+        user.setLesson_tutorial(false);
 
         // Save the user to the datastore
         ofy.save().entity(user).now();
