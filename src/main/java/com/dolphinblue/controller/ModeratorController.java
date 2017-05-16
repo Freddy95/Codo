@@ -1,7 +1,6 @@
 package com.dolphinblue.controller;
 
 import com.dolphinblue.models.Lesson;
-import com.dolphinblue.models.Message;
 import com.dolphinblue.models.User;
 import com.dolphinblue.service.AuthenticationService;
 import com.dolphinblue.service.CodoUserService;
@@ -11,7 +10,6 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.googlecode.objectify.Objectify;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -37,7 +35,7 @@ public class ModeratorController {
     CodoUserService userService;
 
     @RequestMapping(value = "/lesson/{lesson_id}/report", method = RequestMethod.POST)
-    public void remove_from_public_domain(@CookieValue("token") String token, HttpServletResponse resp, @PathVariable(value = "lesson_id") Long lessonId, Message message){
+    public void remove_from_public_domain(@CookieValue("token") String token, HttpServletResponse resp, @PathVariable(value = "lesson_id") Long lessonId, @RequestBody String message){
         // Check if the user is still authenticated by google
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
         if(!isAuthenticated) {
@@ -64,7 +62,7 @@ public class ModeratorController {
         if(admin_msgs == null){
             admin_msgs = new ArrayList<String>();
         }
-        admin_msgs.add(lesson.getTitle() + ": " + message.getMessage());
+        admin_msgs.add("ALERT! The lesson " + lesson.getTitle() + " has been removed for the following reason: " + message);
         creator.setAdmin_msg(admin_msgs);
 
         // Save the creator user object and lesson object to the datastore

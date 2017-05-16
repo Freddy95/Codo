@@ -77,22 +77,17 @@ function clickRating(){
       rating = newRating;
     }
   });
-
-  
 }
 
 
 function hideLesson(){
   var msg=$("#reportmsg").val();
 
-  var data={};
-  data.message=msg;
-
   $.ajax({
     method:'POST',
     url:'/lesson/'+lesson_id+'/report',
-    data:JSON.stringify(data),
-    contentType:'application/json',
+    data:msg,
+    contentType:"text/plain; charset=utf-8",
     success: function(data){
           $('#reportModal').modal('hide');
       }
