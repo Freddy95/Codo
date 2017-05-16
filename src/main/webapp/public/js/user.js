@@ -22,8 +22,6 @@ function init() {
     // Remove the element once done loading from the page.
     $page_info.remove();
 
-    console.log("The new user is: " + new_user);
-
     if (new_user) {
         // Start the tutorial
         startTutorial();
@@ -94,6 +92,36 @@ function startTutorial() {
         url:"/user/toggletutorial",
         success:function() {
         },error:function() {
+        }
+    });
+}
+
+function createLesson() {
+    if(username===""||username==undefined||username==null){
+        $("#usernameModal").modal('show');
+    }
+    else {
+        window.location.replace("/createlesson");
+    }
+}
+
+/**
+ * creates a username if the user doesn't have one
+ */
+function createUsername() {
+
+    var newUsername = $("#usernametxt").val();
+    username = newUsername;
+
+
+    $.ajax({
+        method:'POST',
+        url:'/editusername',
+        dataType:'text',
+        data:newUsername,
+        success:function(){
+            $("#usernameModal").modal('hide');
+            window.location.replace("/createlesson");
         }
     });
 }

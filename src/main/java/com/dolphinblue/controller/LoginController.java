@@ -52,7 +52,7 @@ public class LoginController{
 
         if(isAuthenticated && isAdded) {
             resp.setStatus(303);
-            return new ModelAndView("redirect:/user");
+            return new ModelAndView("redirect:user");
 
         } else {
             System.out.println("Invalid ID token.");

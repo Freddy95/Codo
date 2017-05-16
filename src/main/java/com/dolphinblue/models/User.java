@@ -28,9 +28,9 @@ public class User {
     @Load private List<Key<Lesson>> lessons; // list of lessons the user has started or completed
     @Load private Key<Lesson> current_lesson; //current lesson user is on
 
-    public User(String user_id,String username, String first_name, String last_name, String email, String password, String avatar, boolean user_tutorial, boolean lesson_tutorial, List<Key<Lesson>> lessons) {
+    public User(String user_id,String username, String first_name, String last_name, String email, String password, String avatar, boolean user_tutorial, boolean lesson_tutorial, boolean cl_tutorial, boolean ct_tutorial, List<Key<Lesson>> lessons) {
         this.user_id = user_id;
-        this.username=username;
+        this.username = username;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -38,6 +38,8 @@ public class User {
         this.avatar = avatar;
         this.user_tutorial = user_tutorial;
         this.lesson_tutorial = lesson_tutorial;
+        this.cl_tutorial = cl_tutorial;
+        this.ct_tutorial = ct_tutorial;
         this.lessons = lessons;
     }
 

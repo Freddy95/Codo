@@ -66,6 +66,8 @@ public class UserController {
                 return "redirect:login";
             }
 
+            model.addAttribute("username",user.getUsername());
+
             // Get the badges for the user
             List<String> badges = userService.get_badges(user.getLessons());
             model.addAttribute("badges", badges);
@@ -86,7 +88,6 @@ public class UserController {
             for (int i = 0; i < main_lessons.size(); i++) {
                 Lesson lesson = main_lessons.get(i);
                 int roundedPercent = lessonService.get_percent_complete(lesson);
-                System.out.println("Percent Complete: " + roundedPercent);
                 lesson.setPercent_complete(roundedPercent);
             }
             model.addAttribute("main_lessons", main_lessons);
@@ -122,10 +123,8 @@ public class UserController {
             if (user.isUser_tutorial()) {
                 if(user.getEmail().contains("cse308")) {
                     user.setIs_moderator(true);
-                    //System.out.println("You are a moderator");
                 } else {
                     user.setIs_moderator(false);
-                    //System.out.println("You are NOT a moderator");
                 }
             }
 
@@ -188,10 +187,10 @@ public class UserController {
         // Check to see if the username already exists
         boolean exists = userService.check_username_exist(newUsername);
 
-        if(exists) {
-            // respond with a bad response
-            resp.setStatus(400);
-        } else {
+        // if(exists) {
+        //     // respond with a bad response
+        //     resp.setStatus(400);
+        // } else {
             // set the new username
             user.setUsername(newUsername);
 
@@ -200,7 +199,7 @@ public class UserController {
 
             // send a good response
             resp.setStatus(200);
-        }
+        // }
     }
 
 }

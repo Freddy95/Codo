@@ -93,13 +93,10 @@ public class CodoUserService {
             } else {
 
                 //TODO: get rid of password field, add default lessons
-                User usr = new User(id, "", first, last, email, "", pictureUrl, true, true, new ArrayList());
+                User usr = new User(id, "", first, last, email, "", pictureUrl, true, true, true, true, new ArrayList());
 
                 //now add the user
-
                 ofy.save().entity(usr).now();
-
-                //System.out.println("You are a new user");
 
                 return true;
             }

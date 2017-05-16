@@ -9,10 +9,12 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/main.css}"></link>
   <link rel="stylesheet" type="text/css" th:href="@{/public/stylesheets/edit-lesson.css}"></link>
+  <link rel="stylesheet" type="text/css" th:href="@{/public/js/lib/intro.js/introjs.css}"></link>
+  <script th:src="@{/public/js/lib/intro.js/intro.js}"></script>
   <script type="text/javascript" th:src="@{/public/js/edit-lesson.js}"></script>
   <script th:inline="javascript">
     var lesson_id = [[${lesson.lesson_id}]];
-    var username = [[${username}]];
+    var creator_tutorial = [[${creator_tutorial}]]
   </script>
 </head>
 <body>
@@ -28,7 +30,7 @@
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <!-- Card to display details of lesson. -->
-      <div class="card" id="details-card">
+      <div class="card step-2" id="details-card">
         <div class="card-header card-title-block">
           <h3 class="card-title">Details</h3>
         </div>
@@ -66,11 +68,11 @@
 
       <!-- The sortable list of tasks.-->
       <!-- TODO: add loop to go through the tasks for a lesson -->
-      <div class="card" id="task-card">
+      <div class="card step-3" id="task-card">
         <div class="card-header card-title-block">
           <h3 class="card-title">Tasks</h3>
           <span class="align-middle">
-            <a class="fa fa-lg fa-vc fa-plus pull-right" data-toggle="modal" data-target=".task-type-modal"></a>
+            <a class="fa fa-lg fa-vc fa-plus pull-right step-5" data-toggle="modal" data-target=".task-type-modal"></a>
           </span>
         </div>
 
@@ -94,7 +96,7 @@
                   <br/>
                 </div>
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-6 step-6">
                     <button type="button" class="btn btn-primary" onClick="addTask('block')">Block Task</button>
                   </div>
 
@@ -130,22 +132,6 @@
       </div>
       <div class="alert alert-success" id="lesson-saved-alert" role="alert">
         <strong>Lesson Saved!</strong> The lesson was saved to our servers.
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="usernameModal" tabindex="-1" role="dialog" aria-labelledby="usernameModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="usernameModalLabel">Create a Username</h5>
-      </div>
-      <div class="modal-body">
-        Please create a username before you post a lesson:<br/>
-        <input  class="w-100 form-control" id = "usernametxt" type="text" placeholder="Username"></input>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onClick="createUsername()">Ok</button>
       </div>
     </div>
   </div>

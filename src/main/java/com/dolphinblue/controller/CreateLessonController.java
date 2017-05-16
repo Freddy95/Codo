@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 
@@ -121,13 +122,15 @@ public class CreateLessonController {
 
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
 
-        model.addAttribute("username",user.getUsername());
-
         model.addAttribute("lesson_id", lesson.getLesson_id());
         List<Key<Task>> task_keys = lesson.getTasks();
         List<Task> tasks = lessonService.get_tasks_by_id(task_keys);
         model.addAttribute("tasks", tasks);
         model.addAttribute("lesson", lesson);
+
+        // Check to see if the tutorial should be played for this page
+        model.addAttribute("creator_tutorial",user.isCl_tutorial());
+
         return "edit-lesson";
     }
 
@@ -325,5 +328,31 @@ public class CreateLessonController {
         ofy.delete().entity(lesson).now();
         return "redirect:/user";
 
+    }
+
+    @RequestMapping(value = "/createlesson/toggletutorial", method = RequestMethod.POST)
+    public void toggle_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
+        // Check if the user is still authenticated by google
+        boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());
+        if(!isAuthenticated){
+            // If the user isn't properly authenticated send them back to the login page
+            resp.setStatus(500);
+        }
+
+        String userId = userService.getUserId(authenticationService.getIdToken(token,new JacksonFactory(),new NetHttpTransport()));
+        // Create the objectify object to store stuff from the datastore
+        Objectify ofy = OfyService.ofy();
+
+        // Get the user object from the datastore
+        User user = ofy.load().type(User.class).id(userId).now();
+
+        // Reset the tutorial booleans and save them to the datastore
+        user.setCl_tutorial(false);
+
+        // Save the user to the datastore
+        ofy.save().entity(user).now();
+
+        //give the ok response
+        resp.setStatus(200);
     }
 }

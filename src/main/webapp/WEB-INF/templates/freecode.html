@@ -30,7 +30,7 @@
 <div class="container h-100" id="page" th:attr="data-test-case=${task.test_case},data-completed=${task.completed},data-next-task=${next_task},data-ex-output=${task.expected_output},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id}">
   <div class="row">
     <div class="col">
-      <div th:replace="lesson-navbar :: navbar"></div>
+      <div th:replace="lesson-navbar :: navbar(canEdit=false)"></div>
     </div>
   </div>
   <div class="row">

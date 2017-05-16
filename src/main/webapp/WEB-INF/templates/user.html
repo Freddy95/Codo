@@ -13,6 +13,9 @@
   <link rel="stylesheet" type="text/css" th:href="@{/public/js/lib/intro.js/introjs.css}"></link>
   <script th:src="@{/public/js/lib/intro.js/intro.js}"></script>
   <script th:src="@{/public/js/user.js}"></script>
+  <script th:inline="javascript">
+    var username = [[${username}]];
+  </script>
   
 </head>
 <body onload="onLoad()">
@@ -119,7 +122,7 @@
         <!-- The tab for a user's lessons. -->
         <div class="tab-pane fade" id="your" role="tabpanel">
           <div class="row justify-content-center add-button">
-            <a class="btn btn-primary" href="/createlesson"
+            <a class="btn btn-primary" onClick="createLesson()"
                 data-toggle="tooltip" data-placement="left" title="Add Lesson">
               <i class="fa fa-lg fa-plus" aria-hidden="true"></i>
             </a>
@@ -135,6 +138,8 @@
       </div>
     </div>
   </div>
+</div>
+<div th:replace="username-modal :: modal">
 </div>
 <div id="page-info" th:attr="data-lesson-id=${lesson.lesson_id},data-new-user=${user_info.user_tutorial}">
 </div>

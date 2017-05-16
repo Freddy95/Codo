@@ -34,16 +34,16 @@ function init() {
             return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
         }
     });
+
+    console.log(creator_tutorial);
+    if(creator_tutorial) {
+        startTutorial();
+    }
 }
 
 // Save data.
 function save(node,taskId) {
     if ($(node).hasClass('disabled')) {
-        return;
-    }
-
-    if(username===""||username==undefined||username==null){
-        $("#usernameModal").modal('show');
         return;
     }
 
@@ -115,35 +115,13 @@ function deleteTask(node) {
     tasksToDelete.push(task_block.attr('id'));
     task_block.parent().remove();
     if ($('#task-list').children().length == 0) {
-        $('#shared').prop(disabled, true);
-        $('#shared').prop(checked, false);
+        $('#shared').prop('disabled', true);
+        $('#shared').prop('checked', false);
     }
 }
 
-
-/**
- * creates a username if the user doesn't have one
- */
-function createUsername() {
-
-    var newUsername = $("#usernametxt").val();
-    username = newUsername;
-
-
-    $.ajax({
-        method:'POST',
-        url:'/editusername',
-        dataType:'text',
-        data:newUsername,
-        success:function(){
-            $("#usernameModal").modal('hide');
-        }
-    });
-
-}
-
 function startTutorial() {
-    new_user = false;
+    creator_tutorial = false;
     // Setup the tutorial intro for the user page
     var tutorial = introJs();
     tutorial.setOptions({
@@ -151,40 +129,35 @@ function startTutorial() {
             {
                 // Focus: welcome message
                 element: '.step-1',
-                intro: 'Welcome to Codo! Let\'s show you around before you get started.',
+                intro: 'Welcome to the Edit Lesson page, before you get started, let us show you around.',
                 position: 'bottom'
             },
             {
-                // Focus: nav-bar
+                // Focus: lesson details
                 element: '.step-2',
-                intro: 'First you can use these buttons to navigate to the search and settings page, as well as logout of the site.',
-                position: 'left'
-            },
-            {
-                // Focus: main lessons
-                element: '.step-3',
-                intro: 'The main lessons offered by the site are displayed here, they teach the basics of JavaScript programming.',
-                position: 'top'
-            },
-            {
-                // Focus: created lessons
-                element: '.step-4',
-                intro: 'To find lessons created by different users of the site, click on the \"Shared Lessons\" tab. To create your own, click on the \"Your Lessons\" tab.',
-                position: 'top'
-            },
-            {
-                // Focus: current lesson
-                element: '.step-5',
-                intro: 'After choosing a lesson, the one you are currently working on will be displayed here. To get started, click on the lesson.',
+                intro: 'These are all of the details for the lesson you are working on. You can change your lesson title and description, as well as decide if you want the lesson to be publicly shared.',
                 position: 'bottom'
+            },
+            {
+                // Focus: task view
+                element: '.step-3',
+                intro: 'All of the tasks you\'ve created for your lesson are displayed here. You can add a task by pressing the \"+\" button and reorganize the order of the tasks by dragging them.',
+                position: 'top'
+            },
+            {
+                // Focus: save and delete lesson
+                element: '.step-4',
+                intro: 'Use the save button to save your progress while making your lesson. You can also delete your lesson at anytime using the delete button.',
+                position: 'top'
+            },
+            {
+                // Focus: task creation
+                element: '.step-5',
+                intro: 'Now let\'s make your first task. Click the \"+\" button and select \"Block Task\" when the pop-up appears.',
+                position: 'top'
             }
         ]
     });
-
-    // Setup the page transition for the tutorial
-    //tutorial.setOption('doneLabel', 'Create Task').start().oncomplete(function() {
-    //    window.location.href = "/lesson/" + lesson_id;
-    //});
 
     tutorial.start();
 
