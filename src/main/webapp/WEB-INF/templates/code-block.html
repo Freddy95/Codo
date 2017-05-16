@@ -71,6 +71,7 @@
     <th:block th:case="*">
         <div class="code-block"
           th:id="${block.block_id}"
+          th:unless="${block.type == T(com.dolphinblue.models.Block$Type).NULL || block.type == null}"
           th:attr="data-children='false',data-type=${block.type}">
           <span class="code-text" th:text="${block.value}"></span>
         </div>
