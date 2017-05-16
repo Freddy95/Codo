@@ -14,7 +14,6 @@
   <script type="text/javascript" th:src="@{/public/js/edit-lesson.js}"></script>
   <script th:inline="javascript">
     var lesson_id = [[${lesson.lesson_id}]];
-    var username = [[${username}]];
     var creator_tutorial = [[${creator_tutorial}]]
   </script>
 </head>
@@ -59,7 +58,7 @@
             <div class="col-sm-10 align-self-center">
               <div class="form-check">
                 <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" id="shared" th:checked="${lesson.shared}">
+                  <input th:disabled="${#lists.isEmpty(tasks)}" class="form-check-input" type="checkbox" id="shared" th:checked="${#lists.isEmpty(tasks)}?false:${lesson.shared}">
                 </label>
               </div>
             </div>
@@ -122,8 +121,8 @@
         </div>
       </div>
 
-      <div id="button-row" class="row justify-content-center step-4">
-        <a id="save-button" th:class="${#lists.isEmpty(tasks)}? 'btn btn-success disabled': 'btn btn-success'" onClick="save(this)">
+      <div id="button-row" class="row justify-content-center">
+        <a id="save-button" class="btn btn-success" onClick="save(this)">
           <i class="fa fa-save" aria-hidden="true"></i>
           Save Changes
         </a>
@@ -133,22 +132,6 @@
       </div>
       <div class="alert alert-success" id="lesson-saved-alert" role="alert">
         <strong>Lesson Saved!</strong> The lesson was saved to our servers.
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="usernameModal" tabindex="-1" role="dialog" aria-labelledby="usernameModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="usernameModalLabel">Create a Username</h5>
-      </div>
-      <div class="modal-body">
-        Please create a username before you post a lesson:<br/>
-        <input  class="w-100 form-control" id = "usernametxt" type="text" placeholder="Username"></input>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onClick="createUsername()">Ok</button>
       </div>
     </div>
   </div>

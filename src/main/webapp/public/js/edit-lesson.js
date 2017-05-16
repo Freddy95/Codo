@@ -47,11 +47,6 @@ function save(node,taskId) {
         return;
     }
 
-    if(username===""||username==undefined||username==null){
-        $("#usernameModal").modal('show');
-        return;
-    }
-
     var data = {};
 
     // Delete every task to delete first.
@@ -120,30 +115,9 @@ function deleteTask(node) {
     tasksToDelete.push(task_block.attr('id'));
     task_block.parent().remove();
     if ($('#task-list').children().length == 0) {
-        $('#save-button').addClass('disabled');
+        $('#shared').prop('disabled', true);
+        $('#shared').prop('checked', false);
     }
-}
-
-
-/**
- * creates a username if the user doesn't have one
- */
-function createUsername() {
-
-    var newUsername = $("#usernametxt").val();
-    username = newUsername;
-
-
-    $.ajax({
-        method:'POST',
-        url:'/editusername',
-        dataType:'text',
-        data:newUsername,
-        success:function(){
-            $("#usernameModal").modal('hide');
-        }
-    });
-
 }
 
 function startTutorial() {

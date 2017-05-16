@@ -95,3 +95,33 @@ function startTutorial() {
         }
     });
 }
+
+function createLesson() {
+    if(username===""||username==undefined||username==null){
+        $("#usernameModal").modal('show');
+    }
+    else {
+        window.location.replace("/createlesson");
+    }
+}
+
+/**
+ * creates a username if the user doesn't have one
+ */
+function createUsername() {
+
+    var newUsername = $("#usernametxt").val();
+    username = newUsername;
+
+
+    $.ajax({
+        method:'POST',
+        url:'/editusername',
+        dataType:'text',
+        data:newUsername,
+        success:function(){
+            $("#usernameModal").modal('hide');
+            window.location.replace("/createlesson");
+        }
+    });
+}
