@@ -69,8 +69,6 @@ public class SettingsController {
     /**
      * Change the username for a particular user
      * @param token -- the login token of the user
-     * @param userId -- the user id of the user to update
-     * @param user -- the user object containing the new username
      * @return -- the HTML page to be loaded
      */
     @RequestMapping(value = "/settings/updateusername", method = RequestMethod.POST)
@@ -100,7 +98,6 @@ public class SettingsController {
     /**
      * Delete a user from the database with the specified user id
      * @param token -- the login token of the user
-     * @param userId -- the id of the user to be deleted
      * @return -- the HTML page to be loaded
      */
     @RequestMapping(value = "/settings/deleteuser", method = RequestMethod.DELETE)
@@ -198,8 +195,8 @@ public class SettingsController {
         User user = ofy.load().type(User.class).id(userId).now();
 
         // Reset the tutorial booleans and save them to the datastore
-        user.setNew_user(true);
-        user.setFirst_lesson(true);
+        user.setUser_tutorial(true);
+        user.setLesson_tutorial(true);
 
         // Save the user to the datastore
         ofy.save().entity(user).now();
