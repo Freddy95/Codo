@@ -122,8 +122,6 @@ public class CreateLessonController {
 
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
 
-        model.addAttribute("username",user.getUsername());
-
         model.addAttribute("lesson_id", lesson.getLesson_id());
         List<Key<Task>> task_keys = lesson.getTasks();
         List<Task> tasks = lessonService.get_tasks_by_id(task_keys);

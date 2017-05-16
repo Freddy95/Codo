@@ -66,6 +66,8 @@ public class UserController {
                 return "redirect:login";
             }
 
+            model.addAttribute("username",user.getUsername());
+
             // Get the badges for the user
             List<String> badges = userService.get_badges(user.getLessons());
             model.addAttribute("badges", badges);
@@ -185,10 +187,10 @@ public class UserController {
         // Check to see if the username already exists
         boolean exists = userService.check_username_exist(newUsername);
 
-        if(exists) {
-            // respond with a bad response
-            resp.setStatus(400);
-        } else {
+        // if(exists) {
+        //     // respond with a bad response
+        //     resp.setStatus(400);
+        // } else {
             // set the new username
             user.setUsername(newUsername);
 
@@ -197,7 +199,7 @@ public class UserController {
 
             // send a good response
             resp.setStatus(200);
-        }
+        // }
     }
 
 }
