@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>  
-  <div th:fragment="block(block)" th:switch="${block.can_edit}">
+  <div th:fragment="block(block)" th:if="${block != null}" th:switch="${block.can_edit}">
     <!-- Code for blocks that can have blocks dropped into them. -->
     <th:block th:case="${true}">
       <th:block th:switch="${block.type}">

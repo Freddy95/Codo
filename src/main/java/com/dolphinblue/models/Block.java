@@ -15,9 +15,11 @@ import java.util.List;
  */
 @Entity
 public class Block {
+    public static Long NULL_BLOCK_ID;
     @Id public Long block_id;
     public String value;
     public Type type;
+    public boolean original;
 
     public boolean can_edit;
     List<Key<Block>> children;
@@ -32,7 +34,8 @@ public class Block {
         CURL,
         SQUARE,
         ELSE,
-        ELSE_IF
+        ELSE_IF,
+        NULL
     }
 
     public Block() {
@@ -116,5 +119,13 @@ public class Block {
 
     public void setChildren(List<Key<Block>> children) {
         this.children = children;
+    }
+
+    public boolean isOriginal() {
+        return original;
+    }
+
+    public void setOriginal(boolean original) {
+        this.original = original;
     }
 }
