@@ -65,6 +65,15 @@ public class UserController {
             }
 
             model.addAttribute("username",user.getUsername());
+            // Get the main site lessons for the user and add them to the thymeleaf model
+            List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
+            Collections.sort(main_lessons);
+            for (int i = 0; i < main_lessons.size(); i++) {
+                Lesson lesson = main_lessons.get(i);
+                int roundedPercent = lessonService.get_percent_complete(lesson);
+                lesson.setPercent_complete(roundedPercent);
+                ofy.save().entity(lesson).now();
+            }
 
             // Get the badges for the user
             List<String> badges = userService.get_badges(user.getLessons());
@@ -80,14 +89,7 @@ public class UserController {
             //clear the admin messages after render
             user.setAdmin_msg(null);
 
-            // Get the main site lessons for the user and add them to the thymeleaf model
-            List<Lesson> main_lessons = lessonService.get_main_lessons_by_user(user);
-            Collections.sort(main_lessons);
-            for (int i = 0; i < main_lessons.size(); i++) {
-                Lesson lesson = main_lessons.get(i);
-                int roundedPercent = lessonService.get_percent_complete(lesson);
-                lesson.setPercent_complete(roundedPercent);
-            }
+
             model.addAttribute("main_lessons", main_lessons);
             // Get the owned lessons for the user
             List<Lesson> own_lessons = lessonService.get_own_lessons(user);
