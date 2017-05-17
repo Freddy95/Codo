@@ -55,7 +55,7 @@ $(function(){
             error:function(e){
               $("#username-edit-form").addClass("has-danger");
               $("#username-text-box").addClass("form-control-danger");
-              alert("Username taken! Try again!");
+              alert("Invalid Username! Try again!");
             }
         });
     });
