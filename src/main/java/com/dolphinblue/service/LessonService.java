@@ -316,9 +316,15 @@ public class LessonService {
         for (int i = 0; i < lessons.size(); i++) {
 
             LessonDetails l = new LessonDetails(lessons.get(i));
-            Lesson original_lesson = ofy.load().type(Lesson.class).id(lessons.get(i).getOriginal_lesson()).now();
-            //search should display average rating
-            l.setRating(get_average_rating(original_lesson));
+            if(lessons.get(i).getOriginal_lesson() == null){
+                //this is your own lesson, no original lesson copy.
+            }else{
+                Lesson original_lesson = ofy.load().type(Lesson.class).id(lessons.get(i).getOriginal_lesson()).now();
+                //search should display average rating
+                l.setRating(get_average_rating(original_lesson));
+            }
+
+
             lessonDetails.add(l);
         }
         return lessonDetails;
