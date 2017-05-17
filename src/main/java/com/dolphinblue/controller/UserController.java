@@ -77,6 +77,7 @@ public class UserController {
 
             // Get the badges for the user
             List<String> badges = userService.get_badges(user.getLessons());
+            badges.add(0,"New User Badge");
             model.addAttribute("badges", badges);
 
             // Create user's own main lesson objects and save them in the datastore
@@ -131,7 +132,6 @@ public class UserController {
                 }
             }
 
-            System.out.println("Messages: " + user.getAdmin_msg());
             // Remove the admin_msgs since the user has been notified
             List<String> new_admin_msg = new ArrayList<>();
             user.setAdmin_msg(new_admin_msg);

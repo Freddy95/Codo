@@ -318,14 +318,21 @@ public class CreateLessonController {
      */
     @RequestMapping(value = "/createlesson/{lessonId}/post", method = RequestMethod.POST)
     public @ResponseBody void save_lesson(@PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model){
-
-
+        // Link to the datastore
         Objectify ofy = OfyService.ofy();
 
+        // Get the lesson using the lesson id
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         lessonService.lesson_model_to_lesson(lesson, lesson_model);
+
+        // check if the lesson is not shared, if it's not, remove all of the children associated with the id
+        if(!lesson.isShared()) {
+            lessonService.remove_children_lessons(id);
+        }
+
         //change date last edited.
         lesson.setLast_edited(new Date());
+        // Save the lesson to the datastore
         ofy.save().entity(lesson).now();
     }
 
