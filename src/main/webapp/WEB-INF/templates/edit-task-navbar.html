@@ -25,13 +25,14 @@
   <div class="navbar-collapse collapse">
     <ul class="navbar-nav mx-auto" th:each="index: ${#numbers.sequence(1, #lists.size(lesson.tasks))}">
       <li class="nav-item">
-        <a th:if="${lesson.tasks[index-1].getId() == task.getTask_id()}" class="active nav-link"
+        <span class="nav-link btn btn-outline-white"
           href="#"
           th:text="${index}"
+          th:if="${lesson.tasks[index-1].getId() == task.getTask_id()}"
           data-toggle="tooltip"
-          th:attr="title=${task_titles[index-1]}"></a>
+          th:attr="title=${task_titles[index-1]}"></span>
         <a th:unless="${lesson.tasks[index-1].getId() == task.getTask_id()}" class="nav-link"
-          th:href="'/lesson/' + ${lesson.getLesson_id()} + '/task/' + ${lesson.tasks[index-1].getId()}"
+          th:href="'/createlesson/' + ${lesson.getLesson_id()} + '/createtask/' + ${lesson.tasks[index-1].getId()}"
           th:text="${index}"
           data-toggle="tooltip"
           th:attr="title=${task_titles[index-1]}"></a>  

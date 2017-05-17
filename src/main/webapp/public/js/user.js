@@ -11,6 +11,8 @@ $(function () {
 });
 
 function init() {
+    onLoad();
+
     // Get the div for the page, we'll use it to get the data attribute
     // Use the dollar sign to signify that page is a jquery dom element
     var $page_info = $("#page-info");

@@ -623,4 +623,13 @@ public class LessonService {
         // Delete the lesson after all the tasks have been deleted
         ofy.delete().entity(lesson).now();
     }
+
+
+    public List<Key<Task>> check_lessons(Lesson lesson, SaveLessonModel lessonModel){
+        List<Key<Task>> keys = new ArrayList<>(lesson.getTasks());
+        for(int i = 0; i < lessonModel.getTasks().size(); i++){
+            keys.remove(Key.create(Task.class, lessonModel.getTasks().get(i)));
+        }
+        return keys;
+    }
 }
