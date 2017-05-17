@@ -28,3 +28,16 @@ body, button, input, optgroup, select, textarea {
 nav {
     margin-bottom: 25px;
 }
+
+.logotitle {
+  font-size: 7em;
+  font-weight: 800;
+}
+
+.g-signin2{
+  width: 100%;
+}
+
+.g-signin2 > div{
+  margin: 0 auto;
+}
