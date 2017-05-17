@@ -15,6 +15,7 @@
   <script th:inline="javascript">
     var lesson_id = [[${lesson.lesson_id}]];
     var creator_tutorial = [[${creator_tutorial}]]
+    var current_delete_id = -1;
   </script>
 </head>
 <body>
@@ -172,5 +173,6 @@
   </div>
 </div>
 <div th:replace="delete-lesson-modal :: modal"></div>
+<div th:replace="delete-task-lesson-modal :: modal"></div>
 </body>
 </html>
