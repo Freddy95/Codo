@@ -37,7 +37,7 @@ public class SearchController {
     CodoUserService userService;
 
     /**
-     *  This is for debugging a block task
+     * Returns the search page.
      * @param model -- the thymeleaf model used to send data to the front end
      * @return -- the HTML page to be loaded
      */
@@ -66,6 +66,12 @@ public class SearchController {
         return "search";
     }
 
+    /*
+     * Requests all lessons given a search term.
+     * 
+     * @param   query   A query containing all the parameters to search by.
+     * @return          List of lesson details.
+     */
     @RequestMapping(value = "/search/request",  method = RequestMethod.POST)
     public @ResponseBody
     List<LessonDetails> search_lessons(@CookieValue("token") String token, @RequestBody SearchObject query) {
