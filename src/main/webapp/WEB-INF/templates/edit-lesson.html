@@ -126,7 +126,7 @@
           <i class="fa fa-save" aria-hidden="true"></i>
           Save Changes
         </a>
-        <a class="btn btn-danger" th:href="'/deletelesson/' + ${lesson.lesson_id}">
+        <a class="btn btn-danger" onClick="showDeletePrompt()">
           <i class="fa fa-trash" aria-hidden="true"></i>Delete Lesson
         </a>
       </div>
@@ -136,5 +136,6 @@
     </div>
   </div>
 </div>
+<div th:replace="delete-lesson-modal :: modal"></div>
 </body>
 </html>

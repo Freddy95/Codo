@@ -53,7 +53,7 @@
     </div>
   </div>
 
-  <div class="row justify-content-center user-section" id="badges">
+  <div class="row justify-content-center user-section" th:unless="${#lists.isEmpty(badges)}" id="badges">
     <div class="col">
       <!-- A container that will eventually contain badges.-->
       <!--<div class="row justify-content-center user-section-header">
