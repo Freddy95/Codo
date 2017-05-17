@@ -34,6 +34,12 @@ $(function(){
         $userNameDone.show();
     });
 
+    $userNameTextbox.keyup(function (event) {
+       if(event.keyCode == 13){
+           $usernameSubmitBtn.click();
+       }
+    });
+
     $usernameSubmitBtn.click(function(){
         //get the username from the
         var newUsername = $userNameTextbox.val();
