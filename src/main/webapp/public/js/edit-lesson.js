@@ -49,15 +49,6 @@ function save(node,taskId) {
 
     var data = {};
 
-    // Delete every task to delete first.
-    while (tasksToDelete.length > 0) {
-        //TODO: Send delete request for each task.
-        var currentTaskId = tasksToDelete.pop();
-        $.ajax({
-            method:'POST',
-            url: '/createlesson/' + lesson_id + '/createtask/' + currentTaskId + '/delete'
-        });
-    }
 
     // Grab detail fields.
     data.title = $('#title').val();

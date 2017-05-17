@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
      * Handle a not found exception and return a 404
      * @return the 404 template
      */
-    @ExceptionHandler(value = NullPointerException.class)
+    //@ExceptionHandler(value = NullPointerException.class)
     public String fourohfour(){
         return "404";
     }
