@@ -48,13 +48,17 @@ $(function(){
             url:'/settings/updateusername',
             data:data,
             success:function(){
+                $("#username-edit-form").removeClass("has-danger");
+                $("#username-text-box").removeClass("form-control-danger");
                 $("#username-text").text(newUsername);
                 $showUserNameEditBtn.show();
                 $userNameDone.show();
                 $userNameEditForm.hide();
             },
             error:function(e){
-                console.error(e.getStacktrace());
+              $("#username-edit-form").addClass("has-danger");
+              $("#username-text-box").addClass("form-control-danger");
+              alert("Username taken! Try again!");
             }
         });
     });

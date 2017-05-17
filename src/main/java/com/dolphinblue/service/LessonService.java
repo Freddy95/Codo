@@ -318,6 +318,7 @@ public class LessonService {
             LessonDetails l = new LessonDetails(lessons.get(i));
             if(lessons.get(i).getOriginal_lesson() == null){
                 //this is your own lesson, no original lesson copy.
+                l.setRating(get_average_rating(lessons.get(i)));
             }else{
                 Lesson original_lesson = ofy.load().type(Lesson.class).id(lessons.get(i).getOriginal_lesson()).now();
                 //search should display average rating
@@ -385,7 +386,10 @@ public class LessonService {
      */
     public List<Lesson> get_own_lessons(User user){
         Objectify ofy = OfyService.ofy();
-        return ofy.load().type(Lesson.class).filter("creator_id", user.getUser_id()).filter("site_owned", false).list();
+        return ofy.load().type(Lesson.class)
+                .filter("creator_id", user.getUser_id())
+                .filter("site_owned", false)
+                .filter("user_id", null).list();
     }
 
     /**
@@ -453,18 +457,7 @@ public class LessonService {
         //check which lessons user already has
         for(int i = 0; i < user_lessons.size(); i++){
             for(int j = 0; j < shared_lessons.size(); j++){
-                if(!shared_lessons.get(j).isShared()){
-                    if(user_lessons.get(i).getOriginal_lesson().equals(shared_lessons.get(j).getLesson_id())){
-                        TaskService taskService = new TaskService();
-                        for(int k = 0; k < user_lessons.get(i).getTasks().size(); k++){
-                            taskService.delete_task(user_lessons.get(i), user_lessons.get(i).getTasks().get(k));
-                            ofy.delete().entity(user_lessons.remove(i)).now();
-                            i--;
-                            break;
-                        }
-                        break;
-                    }
-                }
+
                 if(user_lessons.get(i).getOriginal_lesson().equals(shared_lessons.get(j).getLesson_id())){
                     //user already has this lesson.
                     shared_lessons.remove(j);

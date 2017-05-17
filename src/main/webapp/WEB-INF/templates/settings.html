@@ -37,12 +37,13 @@
               </div>
             </dd>
             <!-- the form to edit the username, hidden originally, then shown then the pencil is pressed -->
+            
             <dd class="input-group" id="username-edit-form" style="display: none;">
-              <input type="text" class="form-control" id="username-textbox" th:text="${user.username}"/>
+            <input type="text" class="form-control" id="username-textbox" th:value="${user.username}"></input>
               <span class="input-group-btn">
                 <button class="btn btn-secondary" id="username-no-btn" type="button">NO</button>
                 <button class="btn btn-secondary" id="username-submit-btn" type="button">OK</button>
-              </span>
+              </span> <br/>
             </dd>
 
             <dt class="col-3" >Email</dt>
