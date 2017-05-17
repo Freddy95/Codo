@@ -96,5 +96,6 @@
 </div>
 <div id="page-info" th:attr="data-title=${task.title},data-type=${task.type},data-test-case=${task.test_case},data-completed=${task.completed},data-next-task=${next_task},data-ex-output=${task.expected_output},data-task-id=${task.task_id},data-lesson-id=${lesson.lesson_id}">
 </div>
+<div th:replace="delete-task-modal :: modal"></div>
 </body>
 </html>

@@ -169,3 +169,11 @@ function startTutorial() {
         }
     });
 }
+
+function showDeletePrompt() {
+    $('#deleteModal').modal('show');
+}
+
+function hideDeletePrompt() {
+    $('#deleteModal').modal('hide');
+}

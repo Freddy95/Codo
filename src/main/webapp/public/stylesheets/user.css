@@ -15,6 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: rgb(237, 237, 237);
 }
 
 #add-button {

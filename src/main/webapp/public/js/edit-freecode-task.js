@@ -5,7 +5,7 @@
 
 //declare this handler up here so we can assign it later
 var save = null;
-var isDirty;
+var isDirty = false;
 $(function () {
     //set up the ace editor
     var editor = ace.edit("freecodeeditor");
@@ -20,8 +20,6 @@ $(function () {
     editor.getSession().on('change', function(e) {
         isDirty = true;
     });
-
-    isDirty = true;
 
     // get the buttons from the dom
     var $instructionsText = $("#instructions"),
@@ -227,4 +225,12 @@ function clean_output(out) {
     var brregex = /<br\/>/g;
     var ret =  out.replace(brregex,"<br>");
     return ret;
+}
+
+function showDeletePrompt() {
+  $('#deleteModal').modal('show');
+}
+
+function hideDeletePrompt() {
+  $('#deleteModal').modal('hide');
 }
