@@ -58,8 +58,8 @@ function startTutorial() {
             {
                 // Focus: nav-bar
                 element: '.step-2',
-                intro: 'First you can use these buttons to navigate to the search and settings page, as well as logout of the site.',
-                position: 'left'
+                intro: 'First you can use the buttons on the right to navigate to the search and settings page, as well as logout of the site.',
+                position: 'bottom'
             },
             {
                 // Focus: main lessons

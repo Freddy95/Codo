@@ -19,9 +19,15 @@
 					"can_edit" : false
 				},
 				{
-					"value" : "while(x<5)",
+					"value" : "while()",
 					"type" : "WHILE",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "x<5",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
         },
 				{
 					"value" : "{",
@@ -29,9 +35,15 @@
 					"can_edit" : false
         },
 				{
-					"value" : "console.log(x);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "x",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
         },
         {
           "value" : "x=x+1;",
@@ -89,9 +101,15 @@
 					"type" : "DECLARE",
 					"can_edit" : false
 				},{
-					"value" : "while(loopBool)",
+					"value" : "while()",
 					"type" : "WHILE",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "loopBool",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
 				}
 				,{
 					"value" : "{",
@@ -99,9 +117,15 @@
 					"can_edit" : false
 				}
 				,{
-					"value" : "console.log('I Love Loops!');",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "'I Love Loops!'",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
 				}
 				,{
 					"value" : "}",
@@ -109,9 +133,15 @@
 					"can_edit" : false
 				}
 				,{
-					"value" : "console.log(str);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "str",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
 				}
 			],
 			"toolbox" : [
@@ -154,9 +184,25 @@
 					"type" : "DECLARE",
 					"can_edit" : false
 				},{
-					"value" : "for(i=0;i<5;i++)",
+					"value" : "for(;;)",
 					"type" : "FOR",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "i=0",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            },
+			        	{
+			              "value" : "i<5",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            },
+			        	{
+			              "value" : "i++",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
 				}
 				,{
 					"value" : "{",
@@ -164,9 +210,15 @@
 					"can_edit" : false
 				}
 				,{
-					"value" : "console.log('I Love Loops!');",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "'I Love Loops!'",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
 				}
 				,{
 					"value" : "}",
@@ -176,9 +228,15 @@
 			],
 			"toolbox" : [
 				{
-					"value" : "console.log(i);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "i",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
 				},{
 					"value" : "x = true;",
 					"type" : "ASSIGN",
@@ -188,9 +246,15 @@
 					"type" : "ASSIGN",
 					"can_edit" : false
 				},{
-					"value" : "console.log(x);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "x",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
 				}
       ]
 		},{
@@ -211,18 +275,40 @@
 					"can_edit" : false
 				},
 				{
-					"value" : "for(x=0;x<2;x++)",
+					"value" : "for(;;)",
 					"type" : "DECLARE",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "x=0",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            },
+			        	{
+			              "value" : "x<2",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            },
+			        	{
+			              "value" : "x++",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
 				},{
 					"value" : "{",
 					"type" : "CURLY",
 					"can_edit" : false
         },
 				{
-					"value" : "console.log(arr[x]);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "arr[x]",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
 				},{
 					"value" : "}",
 					"type" : "CURLY",
@@ -235,17 +321,55 @@
 					"type" : "ASSIGN",
 					"can_edit" : false
 				},{
-					"value" : "console.log(x);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "x",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
 				},{
-					"value" : "for(x=1;x<arr.length;x++)",
+					"value" : "for(;;)",
 					"type" : "FOR",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "x=1",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            },
+			        	{
+			              "value" : "x<arr.length",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            },
+			        	{
+			              "value" : "x++",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
 				},{
-					"value" : "for(x=0;x<arr.length;x++)",
+					"value" : "for(;;)",
 					"type" : "FOR",
-					"can_edit" : false
+					"can_edit" : true,
+			        "children" : [
+			            {
+			              "value" : "x=0",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            },
+			        	{
+			              "value" : "x<arr.length",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            },
+			        	{
+			              "value" : "x++",
+			              "type" : "STATIC",
+			              "can_edit" : false
+			            }]
 				}
 			]
 		},{

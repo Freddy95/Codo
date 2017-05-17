@@ -298,7 +298,7 @@ function startTutorial() {
                 // Focus: test input/output
                 element: '.step-5',
                 intro: 'To make test cases for your program, write variables to use in your program and assign them values in this box. Then in the \"Test Output\" box on the right, write the expected output for that test case.',
-                position: 'right'
+                position: 'top'
             },
             {
                 // Focus: block catalogue
