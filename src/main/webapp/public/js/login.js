@@ -1,4 +1,3 @@
-var baseurl = "http://localhost:8080/"; //TODO: change this!
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -7,7 +6,7 @@ function onSignIn(googleUser) {
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     var token = googleUser.getAuthResponse().id_token;
     $.ajax({
-        url:  baseurl+"login",
+        url:  "/login",
         type:'post',
         headers:{
             'Content-Type':'application/x-www-form-urlencoded',
@@ -17,7 +16,7 @@ function onSignIn(googleUser) {
             console.log('Signed in as: ' + data);
             //store the token in a cookie
             document.cookie="token="+token;
-            window.location.href = baseurl + "user";
+            window.location.href = "/user";
         },
         error: function (e) {
            console.log(e.getStacktrace()) ;
