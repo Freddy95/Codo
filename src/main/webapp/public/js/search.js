@@ -20,7 +20,7 @@ function init() {
         }
     }).on('shown.bs.tab', function(e) {
         sortBy = $(e.target).attr('id');
-        asc = (sortBy === 'rating') ? false : true;
+        asc = (sortBy === 'rating' || sortBy === 'completion') ? false : true;
         $(this).closest('ul').find('.fa').hide();
         if ($(e.target).attr('id') !== 'none') {
             toggleArrow($(this));
