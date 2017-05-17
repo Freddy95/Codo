@@ -158,13 +158,18 @@
       </div>
 
       <div id="button-row" class="row justify-content-center step-4">
-        <a id="save-button" class="btn btn-success" onClick="save(this)">
+        <div class="col-md-4 text-center">
+        <button type="button" id="save-button" class="btn btn-success" onClick="save(this)">
           <i class="fa fa-save" aria-hidden="true"></i>
           Save Changes
-        </a>
-        <a class="btn btn-danger" onClick="showDeletePrompt()">
+
+        </button>
+        </div>
+        <div class="col-md-4 text-center">
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".delete-lesson-modal">
           <i class="fa fa-trash" aria-hidden="true"></i>Delete Lesson
-        </a>
+        </button>
+        </div>
       </div>
       <div class="alert alert-success" id="lesson-saved-alert" role="alert">
         <strong>Lesson Saved!</strong> The lesson was saved to our servers.
