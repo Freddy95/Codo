@@ -68,7 +68,7 @@ public class AuthenticationService {
                 return true;
 
             } else {
-                System.out.println("Invalid ID token.");
+                //System.out.println("Invalid ID token.");
                 return false;
             }
         }else{
