@@ -49,7 +49,7 @@ public class LoginController{
             return new ModelAndView("redirect:user");
 
         } else {
-            System.out.println("Invalid ID token.");
+            //System.out.println("Invalid ID token.");
             resp.setStatus(303);
             return new ModelAndView("redirect:login");
         }

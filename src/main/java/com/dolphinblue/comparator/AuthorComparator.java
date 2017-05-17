@@ -1,6 +1,5 @@
 package com.dolphinblue.comparator;
 
-import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.LessonDetails;
 import com.dolphinblue.models.User;
 import com.dolphinblue.service.OfyService;
