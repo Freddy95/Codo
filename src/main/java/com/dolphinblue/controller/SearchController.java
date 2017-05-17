@@ -38,7 +38,7 @@ public class SearchController {
     CodoUserService userService;
 
     /**
-     *  This is for debugging a block task
+     * Returns the search page.
      * @param model -- the thymeleaf model used to send data to the front end
      * @return -- the HTML page to be loaded
      */
