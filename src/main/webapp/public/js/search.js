@@ -104,9 +104,14 @@ function populateLessons(data) {
             // Build title box.
             var titleBox = $('<div>').addClass('title-box')
                                 .addClass('col-4')
-            titleBox.append(ratingsSpan)
+            if(data[_j].creator_id == user_id){
+                titleBox.append(ratingsSpan)
+                    .append($('<span>').text(data[_j].title));
+            }else{
+                titleBox.append(ratingsSpan)
                     .append($('<span>').text(data[_j].title))
                     .append($('<span>').text(data[_j].percent_complete + '%'));
+            }
 
             // Build description box.
             var descriptionBox = $('<div>').addClass('col-8')

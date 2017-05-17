@@ -120,8 +120,18 @@ function createUsername() {
         dataType:'text',
         data:newUsername,
         success:function(){
+          $("#username-group").removeClass("has-danger");
+          $("usernametxt").removeClass("form-control-danger");
+          $("#error-txt").hide();
             $("#usernameModal").modal('hide');
             window.location.replace("/createlesson");
+        },
+        error: function(){
+         //add the error indication
+          $("#username-group").addClass("has-danger");
+          $("usernametxt").addClass("form-control-danger");
+          $("#error-txt").show();
+
         }
     });
 }
