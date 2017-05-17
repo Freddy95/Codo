@@ -341,6 +341,7 @@ public class CreateLessonController {
 
         Objectify ofy = OfyService.ofy();
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
+        lessonService.remove_children_lessons(lesson.getLesson_id());
         for (int i = 0; i < lesson.getTasks().size(); i++){
             taskService.delete_task(lesson, lesson.getTasks().get(i));
         }
