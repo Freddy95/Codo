@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="war" name="codo:war">
     <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="codo-161419-0.1-SNAPSHOT.war">
+    <root id="archive" name="codo-learning-0.1-SNAPSHOT.war">
       <element id="artifact" artifact-name="codo:war exploded" />
     </root>
   </artifact>

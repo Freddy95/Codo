@@ -7,7 +7,7 @@
 	<version>0.1-SNAPSHOT</version>
 
 	<groupId>com.codo</groupId>
-	<artifactId>codo-161419</artifactId>
+	<artifactId>codo-learning</artifactId>
 
 	<pluginRepositories>
 		<pluginRepository>
