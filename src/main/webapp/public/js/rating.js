@@ -83,6 +83,9 @@ function clickRating(){
 }
 
 
+/*
+ * Hides a lesson from the public and sends the user an alert that their lesson was hidden
+ */
 function hideLesson(){
   var msg=$("#reportmsg").val();
 
@@ -96,3 +99,17 @@ function hideLesson(){
       }
   });
 }
+
+
+/*
+ * Opens a prefilled email so the user can tell all the mods about a bad lesson
+ */
+function sendModMail(){
+  var subject = "Issue with Lesson " + lesson_id,
+    body = "There was an issue with a lesson, check it out at : " + window.location.href,
+  url = 'mailto:codo.programming@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+
+  //open the mailto url to send an email to mod
+  window.open(url);
+}
+
