@@ -35,7 +35,6 @@ function init() {
         }
     });
 
-    console.log(creator_tutorial);
     if(creator_tutorial) {
         startTutorial();
     }
