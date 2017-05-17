@@ -42,6 +42,9 @@ function hoverStar() {
     if($(this).data('pos')<=pos){
       $(this).removeClass("fa-star-o");
       $(this).addClass("fa-star");
+    }else{
+      $(this).addClass("fa-star-o");
+      $(this).removeClass("fa-star");
     }
   });
 }
