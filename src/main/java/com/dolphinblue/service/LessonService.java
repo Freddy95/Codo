@@ -318,6 +318,7 @@ public class LessonService {
             LessonDetails l = new LessonDetails(lessons.get(i));
             if(lessons.get(i).getOriginal_lesson() == null){
                 //this is your own lesson, no original lesson copy.
+                l.setRating(get_average_rating(lessons.get(i)));
             }else{
                 Lesson original_lesson = ofy.load().type(Lesson.class).id(lessons.get(i).getOriginal_lesson()).now();
                 //search should display average rating
