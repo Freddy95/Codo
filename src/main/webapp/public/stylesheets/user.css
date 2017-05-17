@@ -10,13 +10,12 @@
     height: 125px;
     width: 125px;
     border-radius: 50%;
-    border: 2px solid #ddd;
+    border: 3px solid #ddd;
     margin: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: rgb(237, 237, 237);
-    box-shadow: 5px 5px 5px #060a0e;
     font-weight:600;
 }
 
