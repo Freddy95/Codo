@@ -206,6 +206,14 @@ function save() {
   isDirty = false;
 }
 
+function showDeletePrompt() {
+  $('#deleteModal').modal('show');
+}
+
+function hideDeletePrompt() {
+  $('#deleteModal').modal('hide');
+}
+
 function deleteTask() {
   $.ajax({
     method:'POST',
