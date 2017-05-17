@@ -85,8 +85,8 @@ public class CreateLessonController {
 
 
         Lesson l = new Lesson();
-        l.setTitle("Default Title.");
-        l.setDescription("Default Description.");
+        l.setTitle("Default Title");
+        l.setDescription("Default Description");
         l.setCreator_id(id);
         //save lesson to datastore
         ofy.save().entity(l).now();
