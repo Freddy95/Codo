@@ -13,11 +13,21 @@
 <div class="container" id="settings-page" data-firstname="${user.first_name}" data-lastname="${user.last_name}"  data-userid="${user.user_id}">
   <div class="row justify-content-center">
     <div class="col-4">
-      <img th:src="@{/public/images/cat.gif}"/>
+      <img width=400 height=400 th:src="@{/public/images/404logo.png}"/>
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-2">
+    <div class="col text-center">
+      <h1><strong>Error 404</strong></h1>
+      </div>
+    </div>
+<div class="row justify-content-center">
+    <div class="col text-center">
+      <h3>Dodo not found<h3> 
+      </div>
+    </div>
+  <div class="row justify-content-center">
+    <div class="col-2 mx-auto text-center">
       <br/>
       <button type="button" class="btn btn-danger"><a id="home-button" th:href="@{/user}">Return Home</a></button>
     </div>
