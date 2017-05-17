@@ -17,6 +17,7 @@ function loadRatings(){
 
     //iterate over the number of stars
     for(i=0;i<numStars;i++){
+        //created filled stars for the numbe of ratings
         var temp = fillStar.clone();
         temp.data("pos" ,i);
         temp.hover(hoverStar,endHover);
@@ -24,6 +25,7 @@ function loadRatings(){
         $starSpan.append(temp);
     }
     for(i=numStars;i<5;i++){
+        //create outline stars for the stars that are greater than the rating
         var temp = emptyStar.clone();
         temp.data("pos" ,i);
         temp.hover(hoverStar,endHover);
@@ -83,7 +85,7 @@ function clickRating(){
 }
 
 
-/*
+/**
  * Hides a lesson from the public and sends the user an alert that their lesson was hidden
  */
 function hideLesson(){
@@ -101,7 +103,7 @@ function hideLesson(){
 }
 
 
-/*
+/**
  * Opens a prefilled email so the user can tell all the mods about a bad lesson
  */
 function sendModMail(){
