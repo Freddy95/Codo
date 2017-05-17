@@ -1,3 +1,4 @@
+<!-- Search page. -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -55,8 +56,8 @@
     </div>
   </div>
 
-  <!-- Filter bar. -->
   <div class="row">
+    <!-- Filter selection. -->
     <div class="col">
       <div class="form-group form-inline">
         <label for="filter-select" class="navbar-brand">Show:</label>
@@ -69,10 +70,10 @@
       </div>
     </div>
     <div class="col">
+      <!-- Sort selection. -->
       <div class="form-group form-inline pull-right">
         <span class="navbar-brand">Sort By: </span>
         <ul class="nav nav-pills">
-          <!-- The tab for all lessons. -->
           <div th:replace="search-option :: option(active=true, value='none', text='None', toggle='false')"></div>
           <div th:replace="search-option :: option(active=false,value='title', text='Title', toggle='false')"></div>
           <div th:replace="search-option :: option(active=false,value='author', text='Author', toggle='false')"></div>
@@ -81,11 +82,6 @@
         </ul>
       </div>
     </div>
-  </div>
-
-  <!-- Sort by bar. -->
-  <div class="row justify-content-center sort-nav">
-    
   </div>
 
   <!-- Search results. -->
