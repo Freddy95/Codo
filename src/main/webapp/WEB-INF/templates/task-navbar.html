@@ -80,10 +80,17 @@
           <i class="fa fa-lg fa-undo" aria-hidden="true"></i>
         </a>  
       </li>
+      <!-- button to hide a lesson from the public and alert it's creator -->
       <li class="nav-item step-9" th:if="${user.is_moderator and !lesson.site_owned}">
         <a class="nav-link"
-          data-toggle="modal" data-target="#reportModal" title="Report a Lesson">
+          data-toggle="modal" data-target="#reportModal" title="Hide a Lesson">
           <i class="fa fa-lg fa-flag" aria-hidden="true"></i>
+        </a>  
+      </li>
+      <!-- button to open an email client and send an email to a mod -->
+        <li class="nav-item step-9" th:if="${!user.is_moderator and !lesson.site_owned}">
+        <a class="nav-link" title="Report a Lesson" onClick="sendModMail()">
+          <i class="fa fa-lg fa-exclamation-triangle" aria-hidden="true"></i>
         </a>  
       </li>
     </ul>
