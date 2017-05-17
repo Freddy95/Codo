@@ -89,7 +89,7 @@ function hideLesson(){
     data:msg,
     contentType:"text/plain; charset=utf-8",
     success: function(data){
-          $('#reportModal').modal('hide');
+          window.location.href = "/user";
       }
   });
 }
