@@ -4,7 +4,7 @@
 $(function(){
     //on document load fill in the fields for the settings page
     //enable tooltips
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip();
 
 
     //TODO: set up handler for reset less progress
@@ -20,9 +20,6 @@ $(function(){
         $resetLessonBtn=$("#reset-lessons-btn"),
         $deleteAcctBtn=$("#delete-account-btn"),
         $userNameDone=$("#username-done");
-
-    //the base url
-    var baseUrl="http://localhost:8080";
 
     //handler for the edit username button being clicked
     $showUserNameEditBtn.click(function () {
@@ -74,7 +71,7 @@ $(function(){
                 alert("The tutorial could not be restarted. Please try again later.");
             }
         });
-    })
+    });
 
     $resetLessonBtn.click(function(){
       //send a reset request to the server
@@ -96,7 +93,7 @@ $(function(){
             url:"/settings/deleteuser",
             success:function () {
               //go back to the login page
-                window.location.href=baseUrl+"/login";
+                window.location.href="/login";
             },error:function () {
                 alert("Couldn't delete user!");
             }

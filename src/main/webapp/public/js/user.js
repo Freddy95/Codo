@@ -34,11 +34,10 @@ function onLoad() {
     });
 }
 function signOut() {
-    var baseurl = "http://localhost:8080"; //TODO: change this!
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
         console.log('User signed out.');
-        window.location.href = baseurl+"/login";
+        window.location.href = "/login";
         document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
    });
 }
@@ -120,8 +119,18 @@ function createUsername() {
         dataType:'text',
         data:newUsername,
         success:function(){
+          $("#username-group").removeClass("has-danger");
+          $("usernametxt").removeClass("form-control-danger");
+          $("#error-txt").hide();
             $("#usernameModal").modal('hide');
             window.location.replace("/createlesson");
+        },
+        error: function(){
+         //add the error indication
+          $("#username-group").addClass("has-danger");
+          $("usernametxt").addClass("form-control-danger");
+          $("#error-txt").show();
+
         }
     });
 }
