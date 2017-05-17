@@ -12,6 +12,12 @@ import java.util.Comparator;
  * Created by FreddyEstevez on 5/14/17.
  */
 public class AuthorComparator implements Comparator<LessonDetails> {
+    /**
+     * Compares author names for lessons
+     * @param lesson1
+     * @param lesson2
+     * @return
+     */
     public int compare(LessonDetails lesson1, LessonDetails lesson2){
         Objectify ofy = OfyService.ofy();
         if(lesson1.getCreator_id().equals("")){

@@ -24,12 +24,24 @@ public class LoginController{
     @Autowired
     CodoUserService userService;
 
+    /**
+     * Get the long page
+     * @param req
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET)
     public String getLogin(HttpServletRequest req){
 
         return "login";
     }
 
+    /**
+     * Setup the user page after someone has logged in and check to see if they need to be added
+     * @param req
+     * @param resp
+     * @param model
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView postLogin(HttpServletRequest req, HttpServletResponse resp, Model model){
         JacksonFactory jsonFactory = new JacksonFactory();

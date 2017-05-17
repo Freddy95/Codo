@@ -147,6 +147,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Changes the tutorial boolean for user page tutorial to false so it will not play again
+     * @param token
+     * @param resp
+     */
     @RequestMapping(value = "/user/toggletutorial", method = RequestMethod.POST)
     public void toggle_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
         // Check if the user is still authenticated by google
@@ -173,6 +178,12 @@ public class UserController {
         resp.setStatus(200);
     }
 
+    /**
+     * Creates and updates a username for the specified user
+     * @param newUsername
+     * @param token
+     * @param resp
+     */
     @RequestMapping(value = "/editusername", method = RequestMethod.POST)
     public void create_username(@RequestBody String newUsername, @CookieValue("token") String token,HttpServletResponse resp){
         boolean isAuthenticated = authenticationService.isAuthenticated(token,new JacksonFactory(),new NetHttpTransport());

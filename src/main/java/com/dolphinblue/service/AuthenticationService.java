@@ -21,6 +21,13 @@ public class AuthenticationService {
 
     }
 
+    /**
+     * Get the google auth token for a user
+     * @param token
+     * @param jsonFactory
+     * @param transport
+     * @return
+     */
     public GoogleIdToken getIdToken(String token,JacksonFactory jsonFactory,NetHttpTransport transport){
         String CLIENT_ID = "441622834163-c890l3f1krej8tfgv0sl78b3tqqo10fo.apps.googleusercontent.com";
         String idTokenString = token;
@@ -43,6 +50,14 @@ public class AuthenticationService {
         }
         return idToken;
     }
+
+    /**
+     * Checks to see if a user is still authenticated
+     * @param token
+     * @param jsonFactory
+     * @param transport
+     * @return
+     */
     public boolean isAuthenticated(String token, JacksonFactory jsonFactory, NetHttpTransport transport){
         if(token != null && !token.equals("")){
             String CLIENT_ID = "441622834163-c890l3f1krej8tfgv0sl78b3tqqo10fo.apps.googleusercontent.com";

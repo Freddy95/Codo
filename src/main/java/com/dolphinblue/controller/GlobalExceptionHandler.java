@@ -1,7 +1,6 @@
 package com.dolphinblue.controller;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  * Created by Matt on 5/3/17.

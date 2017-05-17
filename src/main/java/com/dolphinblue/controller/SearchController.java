@@ -67,11 +67,11 @@ public class SearchController {
         return "search";
     }
 
-    /*
-     * Requests all lessons given a search term.
-     * 
-     * @param   query   A query containing all the parameters to search by.
-     * @return          List of lesson details.
+    /**
+     * Handle a search request with all of the associated filters
+     * @param token
+     * @param query
+     * @return
      */
     @RequestMapping(value = "/search/request",  method = RequestMethod.POST)
     public @ResponseBody
@@ -150,12 +150,5 @@ public class SearchController {
             return null;
         }
     }
-
-
-
-
-
-
-
 
 }

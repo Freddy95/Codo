@@ -19,7 +19,6 @@ import java.util.List;
 @Service
 public class CodoUserService {
 
-
     public CodoUserService(){
 
     }
@@ -36,27 +35,6 @@ public class CodoUserService {
         }
         return null; // if the token is not valid then return null
 
-    }
-
-    public boolean checkNewUser(GoogleIdToken token) {
-        // Get the payload
-        Payload payload = token.getPayload();
-
-        // Get the user id
-        String id = payload.getSubject();
-
-        // Get the objectify service
-        Objectify ofy = OfyService.ofy();
-        // Check for the user
-        User check = ofy.load().type(User.class).id(id).now();
-
-        // If the user doesn't exist, return true meaning the user is new
-        if (check == null) {
-            return true;
-        } else {
-            // If the user does exist, return false as the user is in the database
-            return false;
-        }
     }
 
     /**
@@ -145,6 +123,11 @@ public class CodoUserService {
         return badges;
     }
 
+    /**
+     * Check to see if the username someone is trying to get already exists in the datastore
+     * @param username
+     * @return
+     */
     public boolean check_username_exist(String username) {
         // Get the contact for the datastore
         Objectify ofy = OfyService.ofy();

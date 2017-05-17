@@ -8,7 +8,6 @@ import com.dolphinblue.service.LessonService;
 import com.dolphinblue.service.OfyService;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +34,13 @@ public class ModeratorController {
     @Autowired
     CodoUserService userService;
 
+    /**
+     * Remove a shared lesson from the public domain
+     * @param token
+     * @param resp
+     * @param lessonId
+     * @param message
+     */
     @RequestMapping(value = "/lesson/{lesson_id}/report", method = RequestMethod.POST)
     public void remove_from_public_domain(@CookieValue("token") String token, HttpServletResponse resp, @PathVariable(value = "lesson_id") Long lessonId, @RequestBody String message){
         // Check if the user is still authenticated by google

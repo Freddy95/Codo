@@ -15,7 +15,6 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -56,15 +55,6 @@ public class SettingsController {
             return "redirect:/login";
         }
     }
-//
-//    @RequestMapping(value = "/settings", method = RequestMethod.GET)
-//    public String get_settings_page(Model model){
-//         Objectify ofy = OfyService.ofy();
-//
-//         User user = ofy.load().type(User.class).id(id).now();
-//         model.addAttribute("user", user);
-//        return "settings";
-//    }
 
     /**
      * Change the username for a particular user
@@ -157,6 +147,11 @@ public class SettingsController {
         resp.setStatus(200);
     }
 
+    /**
+     * Resets all of the lesson progress for a user's entire account
+     * @param token
+     * @param resp
+     */
     @RequestMapping(value = "/settings/resetall", method = RequestMethod.POST)
     public void reset_all(@CookieValue("token") String token,HttpServletResponse resp){
         // Check if the user is still authenticated by google
@@ -193,6 +188,11 @@ public class SettingsController {
         resp.setStatus(200);
     }
 
+    /**
+     * Changes all of the tutorial booleans to be true so they will all replay themselves.
+     * @param token
+     * @param resp
+     */
     @RequestMapping(value = "/settings/resettutorial", method = RequestMethod.POST)
     public void reset_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
         // Check if the user is still authenticated by google

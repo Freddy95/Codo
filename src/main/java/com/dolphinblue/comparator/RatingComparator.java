@@ -1,6 +1,5 @@
 package com.dolphinblue.comparator;
 
-import com.dolphinblue.models.Lesson;
 import com.dolphinblue.models.LessonDetails;
 
 import java.util.Comparator;
@@ -11,6 +10,12 @@ import java.util.Comparator;
  * Created by FreddyEstevez on 5/15/17.
  */
 public class RatingComparator implements Comparator<LessonDetails> {
+    /**
+     * Compares the ratings of two lessons
+     * @param lesson1
+     * @param lesson2
+     * @return
+     */
     public int compare(LessonDetails lesson1, LessonDetails lesson2){
         if(lesson1.getRating() > lesson2.getRating()){
             return -1;

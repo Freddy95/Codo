@@ -310,6 +310,11 @@ public class LessonService {
         return ofy.load().type(Lesson.class).filter("creator_id !=", user.getUser_id()).filter("site_owned", false).filter("shared",true).filter("user_id", user.getUser_id()).list();
     }
 
+    /**
+     * Changes a list of lessons into a list of lessonDetails, this is used for searching
+     * @param lessons
+     * @return
+     */
     public List<LessonDetails> extract_details(List<Lesson> lessons) {
         Objectify ofy = OfyService.ofy();
         List<LessonDetails> lessonDetails = new ArrayList<LessonDetails>();
@@ -525,6 +530,7 @@ public class LessonService {
         }
         return list;
     }
+
     /**
      * searches through list of lessons for lessons that contain @param author.
      * @param lessons -- list of lessons
@@ -551,6 +557,7 @@ public class LessonService {
         }
         return list;
     }
+
     /**
      * searches through list of lessons for lessons that contain @param description.
      * @param lessons
@@ -588,6 +595,7 @@ public class LessonService {
     }
 
     /**
+     * Get the average rating for a lesson
      * @returns average rating of a lesson.
      */
     public int get_average_rating(Lesson lesson){
@@ -600,6 +608,11 @@ public class LessonService {
 
     }
 
+    /**
+     * Removes all of the lessons in the datastore that are not the original
+     * i.e. it removes other user copies, but not the original user's copy
+     * @param original_key
+     */
     public void remove_children_lessons(Long original_key) {
         // Get the ofy service for the datastore
         Objectify ofy = OfyService.ofy();
@@ -613,6 +626,10 @@ public class LessonService {
         }
     }
 
+    /**
+     * Delete a lesson from the datastore
+     * @param lesson
+     */
     public void delete_lesson(Lesson lesson) {
         // Get the connection to the datastore
         Objectify ofy = OfyService.ofy();
@@ -624,7 +641,12 @@ public class LessonService {
         ofy.delete().entity(lesson).now();
     }
 
-
+    /**
+     * Does something....
+     * @param lesson
+     * @param lessonModel
+     * @return
+     */
     public List<Key<Task>> check_lessons(Lesson lesson, SaveLessonModel lessonModel){
         List<Key<Task>> keys = new ArrayList<>(lesson.getTasks());
         for(int i = 0; i < lessonModel.getTasks().size(); i++){
