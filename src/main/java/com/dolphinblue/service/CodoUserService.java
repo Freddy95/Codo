@@ -128,6 +128,7 @@ public class CodoUserService {
                 double percent = lesson.getPercent_complete();
                 if(percent == 100.0 && Lesson.MAIN_LESSON_KEYS.contains(lesson.getOriginal_lesson())) {
                     String title = lesson.getTitle();
+                    System.out.println("Title: " + title);
                     if(title.contains("Logical Operators")) {
                         title.replace(" ","<br>");
                     }
