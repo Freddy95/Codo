@@ -249,8 +249,8 @@
 					"type" : "STATIC",
 					"can_edit" : false
 				},{
-					"value" : "console.log(cats);",
-					"type" : "STATIC",
+					"value" : "console.log();",
+					"type" : "LOG",
 					"can_edit" : true,
 					"children" : [
 						{

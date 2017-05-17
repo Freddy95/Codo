@@ -16,10 +16,10 @@ public class AuthorComparator implements Comparator<LessonDetails> {
     public int compare(LessonDetails lesson1, LessonDetails lesson2){
         Objectify ofy = OfyService.ofy();
         if(lesson1.getCreator_id().equals("")){
-            return 1;
+            return -1;
         }
         if (lesson2.getCreator_id().equals("")){
-            return -1;
+            return 1;
         }
         User user1 = ofy.load().type(User.class).id(lesson1.getCreator_id()).now();
         User user2 = ofy.load().type(User.class).id(lesson2.getCreator_id()).now();
