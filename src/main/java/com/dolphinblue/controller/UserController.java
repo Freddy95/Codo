@@ -77,7 +77,7 @@ public class UserController {
 
             // Get the badges for the user
             List<String> badges = userService.get_badges(user.getLessons());
-            badges.add(0,"New User Badge");
+            badges.add(0,"New User<br>Badge");
             model.addAttribute("badges", badges);
 
             // Create user's own main lesson objects and save them in the datastore

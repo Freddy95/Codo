@@ -127,7 +127,12 @@ public class CodoUserService {
                 Long id = lesson.getOriginal_lesson();
                 double percent = lesson.getPercent_complete();
                 if(percent == 100.0 && Lesson.MAIN_LESSON_KEYS.contains(lesson.getOriginal_lesson())) {
-                    badges.add("Completed " + lesson.getTitle() + " Lesson");
+                    String title = lesson.getTitle();
+                    System.out.println("Title: " + title);
+                    if(title.contains("Logical Operators")) {
+                        title.replace(" ","<br>");
+                    }
+                    badges.add(title + "<br>Badge");
                 }
             }catch (Exception e){
                 //lesson has been deleted.
