@@ -14,16 +14,28 @@
 			"hint" : "Make sure that the \"Hello\" block is above the \"World!\" one.",
 			"program_blocks":[
 				{
-					"value" : "console.log(\"Hello\");",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "\"Hello\"",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				}
 			],
 			"toolbox":[
 				{
-					"value" : "console.log(\"World!\");",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "\"World!\"",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				}
 			]
 		},{
@@ -107,21 +119,39 @@
 					"type" : "STATIC",
 					"can_edit" : false
 				},{
-					"value" : "console.log(x + y);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "x + y",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				},{
-					"value" : "console.log(3 + 6);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "3 + 6",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				},{
 					"value" : "var total = x + y;",
 					"type" : "STATIC",
 					"can_edit" : false
 				},{
-					"value" : "console.log(total);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "total",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				},{
 					"value" : "var total = 3 + 6;",
 					"type" : "STATIC",
@@ -170,20 +200,38 @@
 					"type" : "STATIC",
 					"can_edit" : false
 				},{
-					"value" : "console.log(\"Alice\" + \"Bob\");",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "\"Alice\" + \"Bob\"",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				}
 			],
 			"toolbox" : [
 				{
 					"value" : "console.log(alice + age);",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "alice + age",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				},{
-					"value" : "console.log(20 + \" Cats\");",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "20 + \" Cats\"",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				},{
 					"value" : "age++;",
 					"type" : "STATIC",
@@ -203,7 +251,13 @@
 				},{
 					"value" : "console.log(cats);",
 					"type" : "STATIC",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "cats",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				}
 
 			]
@@ -220,9 +274,15 @@
 					"type" : "STATIC",
 					"can_edit" : false
 				},{
-					"value" : "console.log(x);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "x",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				}
 			],
 			"toolbox" : [
@@ -231,9 +291,15 @@
 					"type" : "STATIC",
 					"can_edit" : false
 				},{
-					"value" : "console.log(\"Multiplying\" * \"Strings\");",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "\"Multiplying\" * \"Strings\"",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				}
 
 			]

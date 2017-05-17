@@ -27,7 +27,13 @@
 				},{
 					"value" : "console.log(x);",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "x",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				}
 
 			]
@@ -66,9 +72,15 @@
                     "can_edit" : false
                 },
 				{
-					"value" : "console.log(x<y);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "x<y",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				},
                                 {
 					"value" : "// This is a comment",
@@ -85,9 +97,15 @@
 			"hint" : "Try changing the values of x and y so they will equal -16.5 when multiplied together.",
 			"program_blocks" : [
 				{
-					"value" : "console.log(x||y);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "x||y",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 			    }
                         ],
 			"toolbox" : [
@@ -132,9 +150,15 @@
 					"type" : "STATIC",
 					"can_edit" : false
 				},{
-					"value" : "console.log(x && y);",
+					"value" : "console.log();",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [
+						{
+							"value" : "x && y",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				}
 			],
 			"toolbox" : [
@@ -167,7 +191,12 @@
 				},{
 					"value" : "console.log(!x);",
 					"type" : "LOG",
-					"can_edit" : false
+					"can_edit" : true,
+					"children" : [{
+							"value" : "!x",
+							"type" : "STATIC",
+							"can_edit" : false
+						}]
 				}
 			],
 			"toolbox" : [
