@@ -159,4 +159,12 @@ public class LessonDetails {
     public void setLast_accessed(Date last_accessed) {
         this.last_accessed = last_accessed;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
