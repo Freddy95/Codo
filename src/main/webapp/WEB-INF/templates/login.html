@@ -13,13 +13,22 @@
 <body>
 <div class="container">
     <div class="row justify-content-center">
-        <img th:src="@{public/images/codo.png}"/>
+        <img width=300 height=300 th:src="@{public/images/darklogo.png}"/>
     </div>
     <div class="row justify-content-center">
-        <div class="card col-md-2 ">
-            <div class="card-block">
-                <div class="g-signin2" style="width:100%;margin:0 auto;" data-onsuccess="onSignIn"></div>
-            </div>
+      <div class="col text-center">
+        <h1 class="logotitle">Codo</h1>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col text-center">
+        <h3>Fly through code, block by block!</h3>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-2 mx-auto text-center">
+          <div class="g-signin2" data-onsuccess="onSignIn"></div>
         </div>
     </div>
 </div>
