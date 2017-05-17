@@ -67,6 +67,12 @@ public class SearchController {
         return "search";
     }
 
+    /**
+     * Handle a search request with all of the associated filters
+     * @param token
+     * @param query
+     * @return
+     */
     @RequestMapping(value = "/search/request",  method = RequestMethod.POST)
     public @ResponseBody
     List<LessonDetails> search_lessons(@CookieValue("token") String token, @RequestBody SearchObject query) {
@@ -144,12 +150,5 @@ public class SearchController {
             return null;
         }
     }
-
-
-
-
-
-
-
 
 }

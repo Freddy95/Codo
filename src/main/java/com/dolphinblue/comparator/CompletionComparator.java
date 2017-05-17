@@ -8,6 +8,12 @@ import java.util.Comparator;
  * Created by Devon on 5/17/17.
  */
 public class CompletionComparator implements Comparator<LessonDetails> {
+    /**
+     * Compares the percent complete for lessons
+     * @param lesson1
+     * @param lesson2
+     * @return
+     */
     public int compare(LessonDetails lesson1, LessonDetails lesson2){
         if(lesson1.getPercent_complete() > lesson2.getPercent_complete()){
             return -1;

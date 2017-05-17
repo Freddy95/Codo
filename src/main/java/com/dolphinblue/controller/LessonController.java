@@ -128,7 +128,6 @@ public class LessonController {
         if(original_lesson.getLast_edited().compareTo(l.getLast_accessed()) > 0){
             //the lesson has been changed
             //System.out.println("LESSON UPDATED");
-            //TODO: Make prompt to user to see if they want to continue with old version.
         }
         l.setLast_accessed(new Date());
         model.addAttribute("lesson", l);
@@ -213,8 +212,13 @@ public class LessonController {
         return blocks;
     }
 
-
-
+    /**
+     * This updates the freecode task for a lesson
+     * @param token
+     * @param taskId
+     * @param taskModel
+     * @return
+     */
     @RequestMapping(value = "/savelesson/{lessonId}/freecodetask/{taskId}",  method = RequestMethod.POST)
     public @ResponseBody
     SaveTaskModel update_freecode_task(@CookieValue("token") String token, @PathVariable(value = "taskId") Long taskId, @RequestBody SaveTaskModel taskModel) {
@@ -239,6 +243,7 @@ public class LessonController {
         return taskModel;
 
     }
+
     /**
      * Method for restarting a lesson
      * @param token -- the login token of the user
@@ -325,7 +330,11 @@ public class LessonController {
         return "index";
     }
 
-
+    /**
+     * A Test method
+     * @param list
+     * @return
+     */
     @RequestMapping(value = "/test", method = RequestMethod.POST)
     public @ResponseBody
     SaveTaskModel test(@RequestBody SaveTaskModel list){
@@ -333,6 +342,12 @@ public class LessonController {
         return list;
     }
 
+    /**
+     * A test method for populating a freecode task
+     * @param token
+     * @param model
+     * @return
+     */
     @RequestMapping(value="/freecode" , method=RequestMethod.GET)
     public String getFreeCode(@CookieValue("token")String token,Model model){
         //TODO: change the route this takes
@@ -379,6 +394,13 @@ public class LessonController {
         return "freecode";
     }
 
+    /**
+     * Update the rating for a particular lesson
+     * @param token
+     * @param resp
+     * @param lessonId
+     * @param rating
+     */
     @RequestMapping(value = "/lesson/{lesson_id}/updaterating/{rating}", method = RequestMethod.POST)
     public void update_rating(@CookieValue("token") String token, HttpServletResponse resp, @PathVariable(value = "lesson_id") Long lessonId, @PathVariable(value = "rating") int rating) {
         // Check if the user is still authenticated by google
@@ -407,6 +429,11 @@ public class LessonController {
         resp.setStatus(200);
     }
 
+    /**
+     * Changes the lesson tutorial button so it is false
+     * @param token
+     * @param resp
+     */
     @RequestMapping(value = "/lesson/toggletutorial", method = RequestMethod.POST)
     public void toggle_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
         // Check if the user is still authenticated by google

@@ -10,11 +10,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class TestController {
 
+    /**
+     * Test for lesson card
+     * @return
+     */
     @RequestMapping(value="test/lesson-card",method = RequestMethod.GET)
     public String lessonCard(){
         return "lessoncard";
     }
 
+    /**
+     * Test for draggable sections
+     * @return
+     */
     @RequestMapping(value="test/draggable",method = RequestMethod.GET)
     public String draggable(){
         return "draggable";

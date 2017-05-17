@@ -95,8 +95,6 @@ public class CreateLessonController {
         return "redirect:" + requestUrl;
     }
 
-
-
     /**
      * This route should be called when a user wants to open their own created lesson.
      * Should add lesson_id, lesson, and list of tasks in lesson to model.
@@ -136,15 +134,12 @@ public class CreateLessonController {
         return "edit-lesson";
     }
 
-
-
     /**
      * This route should be called when a user wants to add a new task to a created lesson.
      * Creates task object, saves it in datastore, and save it to list of tasks in lesson object.
      * @param model -- thymeleaf model
      * @param id -- lesson id
      * @return -- create task page
-     * TODO: add query parameter to determine if task created should be block or freecode.
      */
     @RequestMapping(value = "/createlesson/{lessonId}/createtask", method = RequestMethod.GET)
     @ResponseBody
@@ -163,7 +158,6 @@ public class CreateLessonController {
         return task.getTask_id();
     }
 
-
     /**
      * This route should be called when a user wants edit an already created task.
      * Gets task and adds it to thymeleaf model.
@@ -171,8 +165,6 @@ public class CreateLessonController {
      * @param id -- lesson id
      * @param taskId -- task id
      * @return -- create task page
-     * TODO: add query parameter to determine if task created should be block or freecode.
-     * TODO: send list of block objects in editor with their actual values not just keys.
      */
     @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}", method = RequestMethod.GET)
     public String get_create_task_page(@CookieValue("token") String token, Model model, @PathVariable(value = "lessonId") long id, @PathVariable(value = "taskId") long taskId){
@@ -256,8 +248,6 @@ public class CreateLessonController {
         return "edit-freecode-task";
     }
 
-
-
     /**
      * Deletes the current task in the lesson user is creating.
      * @param id -- lesson id
@@ -279,15 +269,13 @@ public class CreateLessonController {
         ofy.save().entity(lesson).now();
     }
 
-
     /**
      * Saves the current task in the lesson user is creating.
      * @param token -- user access token
      * @param id -- lesson id
      * @param taskId -- id of task to delete
      * @param model -- thymeleaf model
-     * TODO: return create task page?
-     * @return --
+     * @return
      */
     @RequestMapping(value = "/createlesson/{lessonId}/createtask/{taskId}", method = RequestMethod.POST)
     @ResponseBody
@@ -313,10 +301,11 @@ public class CreateLessonController {
         return new ResponseEntity<String>(HttpStatus.OK);
     }
 
-
     /**
      * This route should be called when a user wants to save a created lesson.
      * Creates a lesson object and saves it in the datastore.
+     * @param id
+     * @param lesson_model
      */
     @RequestMapping(value = "/createlesson/{lessonId}/post", method = RequestMethod.POST)
     public @ResponseBody void save_lesson(@PathVariable(value = "lessonId") long id, @RequestBody SaveLessonModel lesson_model){
@@ -343,7 +332,6 @@ public class CreateLessonController {
         ofy.save().entity(lesson).now();
     }
 
-
     /**
      * This route should be called when a user wants to delete a lesson
      * Deletes lesson and all its tasks from the datastore.
@@ -364,6 +352,11 @@ public class CreateLessonController {
 
     }
 
+    /**
+     * Changes the create lesson tutorial boolean so it's false
+     * @param token
+     * @param resp
+     */
     @RequestMapping(value = "/createlesson/toggletutorial", method = RequestMethod.POST)
     public void toggle_lesson_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
         // Check if the user is still authenticated by google
@@ -390,6 +383,11 @@ public class CreateLessonController {
         resp.setStatus(200);
     }
 
+    /**
+     * Changes the create task tutorial so it's false
+     * @param token
+     * @param resp
+     */
     @RequestMapping(value = "/createblocktask/toggletutorial", method = RequestMethod.POST)
     public void toggle_task_tutorial(@CookieValue("token") String token,HttpServletResponse resp){
         // Check if the user is still authenticated by google
