@@ -135,7 +135,7 @@ public class TaskService {
      * @param task_key -- key of task to deleted
      * @return -- index of deleted task. Returns -1 if task is not in lesson.
      */
-    public int delete_task(Lesson lesson, Key task_key){
+    public int delete_task(Lesson lesson, Key<Task> task_key){
         BlockService blockService = new BlockService();
         int index = -1;
         if(lesson.getTasks().contains(task_key)){

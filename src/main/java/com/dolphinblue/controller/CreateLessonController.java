@@ -269,7 +269,7 @@ public class CreateLessonController {
     public @ResponseBody void delete_task(@PathVariable(value = "lessonId") long id,  @PathVariable(value = "taskId") long taskId){
         Objectify ofy = OfyService.ofy();
         //get key of task
-        Key task_key = Key.create(Task.class, taskId);
+        Key<Task> task_key = Key.create(Task.class, taskId);
 
         //Get lesson and delete the task key from the list of tasks.
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
@@ -301,9 +301,11 @@ public class CreateLessonController {
 
         Objectify ofy = OfyService.ofy();
         Task task = ofy.load().type(Task.class).id(taskId).now();
-
+        Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
         taskService.task_model_to_task(task, task_model);
         ofy.save().entity(task).now();
+        //updated lesson so delete old lessons
+        lessonService.remove_children_lessons(id);
         model.addAttribute("task", task);
         model.addAttribute("task_id", taskId);
         model.addAttribute("lesson_id", id);
@@ -323,12 +325,17 @@ public class CreateLessonController {
 
         // Get the lesson using the lesson id
         Lesson lesson = ofy.load().type(Lesson.class).id(id).now();
+        List<Key<Task>> delete_tasks = lessonService.check_lessons(lesson, lesson_model);
+        for(int i = 0; i < delete_tasks.size(); i++){
+            delete_task(id, delete_tasks.get(i).getId());
+        }
+
         lessonService.lesson_model_to_lesson(lesson, lesson_model);
 
-        // check if the lesson is not shared, if it's not, remove all of the children associated with the id
-        if(!lesson.isShared()) {
-            lessonService.remove_children_lessons(id);
-        }
+        //want to remove children lessons due to update
+        lessonService.remove_children_lessons(id);
+
+
 
         //change date last edited.
         lesson.setLast_edited(new Date());

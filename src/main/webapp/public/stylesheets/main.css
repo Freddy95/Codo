@@ -41,3 +41,10 @@ nav {
 .g-signin2 > div{
   margin: 0 auto;
 }
+
+.btn-outline-white {
+  color: #ededed;
+  border: 1px solid #ededed;
+  border-radius: .25rem;
+  width: 2.5em;
+}
