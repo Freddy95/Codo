@@ -315,7 +315,13 @@ public class LessonService {
         List<LessonDetails> lessonDetails = new ArrayList<LessonDetails>();
         for (int i = 0; i < lessons.size(); i++) {
 
-            LessonDetails l = new LessonDetails(lessons.get(i));
+            LessonDetails l = null;
+            if((lessons.get(i).getCreator_id() != null) && (lessons.get(i).getCreator_id().length() != 0)){
+                User u = ofy.load().type(User.class).id(lessons.get(i).getCreator_id()).now();
+                l = new LessonDetails(lessons.get(i), u.getUsername());
+            }else{
+                l = new LessonDetails(lessons.get(i),"");
+            }
             if(lessons.get(i).getOriginal_lesson() == null){
                 //this is your own lesson, no original lesson copy.
                 l.setRating(get_average_rating(lessons.get(i)));

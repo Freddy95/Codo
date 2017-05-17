@@ -23,6 +23,7 @@ public class LessonDetails {
     private boolean shared;
     private boolean site_owned;
     private String description;
+    private String username;
     private Long index;
     private int rating;
     //Date when lesson was last edited or changed.
@@ -30,7 +31,7 @@ public class LessonDetails {
     //Date when this lesson was last access by user working on it
     private Date last_accessed;
 
-    public LessonDetails(Long lesson_id, String title, String user, String creator, boolean shared, int rating, boolean site_owned) {
+    public LessonDetails(Long lesson_id, String title, String user, String creator,String username, boolean shared, int rating, boolean site_owned) {
         this.lesson_id = lesson_id;
         this.title = title;
         this.user_id = user;
@@ -38,9 +39,11 @@ public class LessonDetails {
         this.shared = shared;
         this.rating = rating;
         this.site_owned = site_owned;
+        this.username = username;
     }
 
-    public LessonDetails(Lesson l) {
+    public LessonDetails(Lesson l, String username) {
+
         this.lesson_id = l.getLesson_id();
         this.title = l.getTitle();
         this.user_id = l.getUser_id();
@@ -52,6 +55,7 @@ public class LessonDetails {
         this.last_edited = l.getLast_edited();
         this.last_accessed = l.getLast_accessed();
         this.index = l.getIndex();
+        this.username = username;
     }
 
     public Long getLesson_id() {

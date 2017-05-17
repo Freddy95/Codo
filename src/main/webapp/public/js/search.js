@@ -27,6 +27,12 @@ function init() {
         }
         search();
     });
+
+    $('#search-term').keypress(function(e) {
+        if(e.which == 13) {
+            search();
+        }
+    });
 }
 
 function toggleArrow(node) {
