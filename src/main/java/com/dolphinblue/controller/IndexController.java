@@ -23,7 +23,6 @@ public class IndexController {
     public String index(@CookieValue(value="token",defaultValue = "") String token) {
             boolean isAuthenticated = authenticationService.isAuthenticated(token, new JacksonFactory(), new NetHttpTransport());
             if (isAuthenticated) {
-//            GoogleIdToken googleIdToken = authenticationService.getIdToken(token, new JacksonFactory(), new NetHttpTransport());
                 return "redirect:/user";
             } else {
                 return "redirect:/login";

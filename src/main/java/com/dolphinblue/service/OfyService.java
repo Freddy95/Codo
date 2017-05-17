@@ -22,11 +22,19 @@ public class OfyService {
     public OfyService(){
     }
 
+    /**
+     * Create the objectify instance
+     * @return
+     */
     public static Objectify ofy() {
         return ObjectifyService.ofy().consistency(ReadPolicy.Consistency.STRONG);//prior to v.4.0 use .begin() ,
         //since v.4.0  use ObjectifyService.ofy();
     }
 
+    /**
+     * Return the objectify instance
+     * @return
+     */
     public static ObjectifyFactory factory() {
         return ObjectifyService.factory();
     }

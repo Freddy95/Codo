@@ -1,6 +1,7 @@
 package com.dolphinblue.controller;
 
 import com.dolphinblue.comparator.AuthorComparator;
+import com.dolphinblue.comparator.CompletionComparator;
 import com.dolphinblue.comparator.RatingComparator;
 import com.dolphinblue.comparator.TitleComparator;
 import com.dolphinblue.models.*;
@@ -37,7 +38,7 @@ public class SearchController {
     CodoUserService userService;
 
     /**
-     *  This is for debugging a block task
+     * Returns the search page.
      * @param model -- the thymeleaf model used to send data to the front end
      * @return -- the HTML page to be loaded
      */
@@ -66,6 +67,12 @@ public class SearchController {
         return "search";
     }
 
+    /**
+     * Handle a search request with all of the associated filters
+     * @param token
+     * @param query
+     * @return
+     */
     @RequestMapping(value = "/search/request",  method = RequestMethod.POST)
     public @ResponseBody
     List<LessonDetails> search_lessons(@CookieValue("token") String token, @RequestBody SearchObject query) {
@@ -131,6 +138,8 @@ public class SearchController {
                 Collections.sort(lesson_details_list, new AuthorComparator());
             }else if(query.getSortBy().equals("rating")){
                 Collections.sort(lesson_details_list, new RatingComparator());
+            }else if(query.getSortBy().equals("completion")){
+                Collections.sort(lesson_details_list, new CompletionComparator());
             }
             if (!query.getAsc() && !query.getSortBy().equals("none")){
                 Collections.reverse(lesson_details_list);
@@ -141,12 +150,5 @@ public class SearchController {
             return null;
         }
     }
-
-
-
-
-
-
-
 
 }

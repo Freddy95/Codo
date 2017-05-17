@@ -1,3 +1,4 @@
+<!-- The settings page. -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -27,6 +28,7 @@
         </div>
         <div class="col-4">
           <dl class="row">
+            <!-- Username field. -->
             <dt class="col-3">Username</dt>
             <dd class="col-9" id="username-done" >
                 <span id="username-text" th:text="${user.username}"></span>
@@ -45,11 +47,13 @@
               </span> <br/>
             </dd>
 
+            <!-- Email field. -->
             <dt class="col-3" >Email</dt>
             <dd class="col-9" id="email" th:text="${user.email}">
               fake.user@gmail.com
             </dd>
 
+            <!-- Name field. -->
             <dt class="col-3">Name</dt>
             <dd class="col-9" th:text="${user.first_name}" >
               John Doe
@@ -69,16 +73,7 @@
       <div class="col-md-3">
         <button class="btn btn-danger" id="delete-account-btn" type="button" href="#" data-toggle="tooltip" data-placement="bottom" title="Delete your account from our service">Delete Account</button>
       </div>
-    <!--<div class="col-4 text-center">-->
-      <!--<i class="fa fa-lg fa-repeat" aria-hidden="true"></i>-->
-      <!--Reset Account Progress-->
-    <!--</div>-->
-    <!--<div class="col-4 text-center">-->
-      <!--<i class="fa fa-lg fa-trash" aria-hidden="true"></i>-->
-      <!--Delete Account-->
-    <!--</div>-->
   </div>
 </div>
- 
 </body>
 </html>

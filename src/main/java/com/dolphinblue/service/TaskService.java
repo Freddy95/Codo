@@ -19,7 +19,7 @@ import java.util.Map;
 public class TaskService {
 
     /**
-     * Returns a default block catalog.
+     * Returns a default block catalog. Used for testing.
      */
     public List<Block> get_catalog() {
         List<Block> catalog = new ArrayList<Block>();
@@ -191,7 +191,5 @@ public class TaskService {
         task.setFreecode(task_model.getFreecode());
         return task;
     }
-
-
 
 }

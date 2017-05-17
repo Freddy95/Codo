@@ -15,6 +15,11 @@ import java.util.List;
 @Service
 public class BlockService {
 
+    /**
+     * Save a list of blocks to the datastore
+     * @param block_list
+     * @return
+     */
     public List<Key<Block>> save_list_blocks(List<SaveBlockModel> block_list){
         Objectify ofy = OfyService.ofy();
         List<Key<Block>> block_keys = new ArrayList<>();
@@ -33,6 +38,12 @@ public class BlockService {
         return block_keys;
     }
 
+    /**
+     * Save a particular block to the datastore
+     * @param block
+     * @param block_model
+     * @return
+     */
     public Key<Block> save_block_model(Block block, SaveBlockModel block_model){
 
         block.setCan_edit(block_model.isCan_edit());
@@ -58,7 +69,12 @@ public class BlockService {
         return OfyService.ofy().save().entity(block).now();
     }
 
-
+    /**
+     * Wrapper for saving blocks that have key values
+     * @param block
+     * @param block_model
+     * @return
+     */
     public Key<Block> save_block_model_work(Block block, SaveBlockModel block_model){
 
         block.setCan_edit(block_model.isCan_edit());
@@ -69,6 +85,11 @@ public class BlockService {
         return OfyService.ofy().save().entity(block).now();
     }
 
+    /**
+     * Changes a block to a block object model
+     * @param block
+     * @return
+     */
     public SaveBlockModel block_to_block_model(Block block){
         SaveBlockModel block_model = new SaveBlockModel();
         block_model.setBlock_id(block.getBlock_id());
@@ -83,6 +104,11 @@ public class BlockService {
 
     }
 
+    /**
+     * Get a list of blocks from the datastore
+     * @param blocks
+     * @return
+     */
     public List<SaveBlockModel> get_list_blocks(List<Block> blocks){
         List<SaveBlockModel> list = new ArrayList<>();
         for(int i = 0; i < blocks.size(); i++){
@@ -91,6 +117,10 @@ public class BlockService {
         return list;
     }
 
+    /**
+     * Delete a block from the datastore
+     * @param block
+     */
     public void delete_block(Block block){
         Objectify ofy = OfyService.ofy();
         if(!block.isOriginal()){
@@ -102,7 +132,5 @@ public class BlockService {
         }
 
     }
-
-
 
 }
