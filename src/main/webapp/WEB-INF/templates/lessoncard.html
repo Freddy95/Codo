@@ -11,7 +11,7 @@
       <!-- The left portion contains the title and progress. -->
       <div class="col-4 title-box">
         <span th:text="${lesson.title}"></span><br/>
-        <span th:text="${lesson.percent_complete} + '%'"></span>
+        <span th:text="${lesson.percent_complete} + '%'" th:if = "${lesson.original_lesson}"></span>
       </div>
 
       <!-- The right portion contains the description. -->
