@@ -101,10 +101,20 @@ function addTask(type) {
 
 }
 
-function deleteTask(node) {
+function showDeleteTaskPrompt(node) {
     var task_block = $(node).closest('.task-block');
-    tasksToDelete.push(task_block.attr('id'));
-    task_block.parent().remove();
+    current_delete_id = task_block.attr('id');
+    $('#deleteTaskModal').modal('show');
+}
+
+function hideDeleteTaskPrompt() {
+    $('#deleteTaskModal').modal('hide');
+}   
+
+function deleteTask(node) {
+    tasksToDelete.push(current_delete_id);
+    $('#' + current_delete_id).parent().remove();
+    $('#deleteTaskModal').modal('hide');
     if ($('#task-list').children().length == 0) {
         $('#shared').prop('disabled', true);
         $('#shared').prop('checked', false);

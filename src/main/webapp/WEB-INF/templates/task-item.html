@@ -12,7 +12,7 @@
           <a class="fa fa-pencil" aria-hidden="true" th:href="'/createlesson/'+${lesson.lesson_id}+'/createtask/'+${task.task_id}"></a>
         </span>
         <span class="task-button delete-task-button">
-          <i class="fa fa-trash" aria-hidden="true" onClick="deleteTask(this)"></i>
+          <i class="fa fa-trash" aria-hidden="true" onClick="showDeleteTaskPrompt(this)"></i>
         </span>
       </span>
     </li>

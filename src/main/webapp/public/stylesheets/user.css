@@ -7,15 +7,16 @@
 }
 
 .badge-item {
-    height: 150px;
-    width: 150px;
+    height: 125px;
+    width: 125px;
     border-radius: 50%;
-    border: 1px solid #ddd;
+    border: 3px solid #ddd;
     margin: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: rgb(237, 237, 237);
+    font-weight:600;
 }
 
 #add-button {
