@@ -95,6 +95,8 @@ function populateLessons(data) {
             var ratingsSpan = $('<span>').attr('data-toggle', 'tooltip')
                                     .attr('title', rating + ' stars');
 
+            var authorSpan = $('<span>').append($('<i>').text(data[_j].site_owned ? 'Main Lesson' : data[_j].username));
+
             for (_r = 0; _r < 5; _r++) {
                 if (_r < rating - 1) {
                     ratingsSpan.append($('<i>').addClass('fa').addClass('fa-star'));
@@ -110,13 +112,11 @@ function populateLessons(data) {
             // Build title box.
             var titleBox = $('<div>').addClass('title-box')
                                 .addClass('col-4')
-            if(data[_j].creator_id == user_id){
-                titleBox.append(ratingsSpan)
-                    .append($('<span>').text(data[_j].title));
-            }else{
-                titleBox.append(ratingsSpan)
-                    .append($('<span>').text(data[_j].title))
-                    .append($('<span>').text(data[_j].percent_complete + '%'));
+                                .append(ratingsSpan)
+                                .append($('<span>').text(data[_j].title))
+                                .append(authorSpan);
+            if(data[_j].creator_id != user_id){
+                titleBox.append($('<span>').text(data[_j].percent_complete + '%'));
             }
 
             // Build description box.

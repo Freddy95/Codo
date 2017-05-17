@@ -43,7 +43,6 @@ public class LessonDetails {
     }
 
     public LessonDetails(Lesson l, String username) {
-
         this.lesson_id = l.getLesson_id();
         this.title = l.getTitle();
         this.user_id = l.getUser_id();
