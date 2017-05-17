@@ -314,33 +314,6 @@ public class LessonController {
         return "redirect:" + requestUrl;
     }
 
-    /**
-     * Creates a lesson and saves it in the datastore via JSON.
-     * NOTE: when supplying the path in url it should be WEB-INF/FILENAME.json
-     * dont put quotes ex - "WEB-INF-/FILENAME.json"
-     * @param path - path to json file
-     * @return -- the HTML page to be loaded
-     */
-    @RequestMapping(value = "/jsonlesson")
-    public String lessons_from_json(@RequestParam(value = "path") String path) {
-        // Create a lesson from JSON
-        LessonJSONService.create_lesson_from_JSON(path);
-
-        // Return the HTML page to be loaded
-        return "index";
-    }
-
-    /**
-     * A Test method
-     * @param list
-     * @return
-     */
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public @ResponseBody
-    SaveTaskModel test(@RequestBody SaveTaskModel list){
-        //System.out.println(list.toString());
-        return list;
-    }
 
     /**
      * A test method for populating a freecode task
