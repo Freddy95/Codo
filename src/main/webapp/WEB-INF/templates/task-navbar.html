@@ -40,11 +40,11 @@
 ">
     <ul class="navbar-nav mx-auto" th:each="index: ${#numbers.sequence(1, #lists.size(lesson.tasks))}">
       <li class="nav-item">
-        <a th:if="${lesson.tasks[index-1].getId() == task.getTask_id()}" class="active nav-link"
+        <span th:if="${lesson.tasks[index-1].getId() == task.getTask_id()}" class="nav-link btn btn-outline-white"
           href="#"
           th:text="${index}"
           data-toggle="tooltip"
-          th:attr="title=${task_titles[index-1]}"></a>
+          th:attr="title=${task_titles[index-1]}"></span>
         <a th:unless="${lesson.tasks[index-1].getId() == task.getTask_id()}" th:class="${task_statuses[index-1]}? 'nav-link' : 'nav-link disabled'"
           th:href="${task_statuses[index-1]}? '/lesson/' + ${lesson.getLesson_id()} + '/task/' + ${lesson.tasks[index-1].getId()} : '#'"
           th:text="${index}"
